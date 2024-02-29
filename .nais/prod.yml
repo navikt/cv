@@ -1,0 +1,3 @@
+ingress: "https://arbeidsplassen.nav.no/personbruker"
+loglevel: "debug"
+namespace: "teampam"
