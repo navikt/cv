@@ -44,3 +44,8 @@ spec:
   env:
     - name: PORT
       value: "8095"
+  accessPolicy:
+    outbound:
+      rules:
+        - application: nav-dekoratoren
+          namespace: personbruker
