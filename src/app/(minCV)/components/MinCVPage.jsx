@@ -7,7 +7,7 @@ import { useState } from "react";
 import DelingAvCV from "@/app/(minCV)/components/delingAvCV/DelingAvCV";
 import Personalia from "@/app/(minCV)/components/personalia/Personalia";
 import Jobbonsker from "@/app/(minCV)/components/jobbonsker/Jobbonsker";
-import Utdanning from "@/app/(minCV)/components/utdanning/Utdanning";
+import Utdanninger from "@/app/(minCV)/components/utdanninger/Utdanninger";
 
 export default function MinCVPage() {
     const [activeStep, setActiveStep] = useState(1);
@@ -72,7 +72,7 @@ export default function MinCVPage() {
                         <Stepper.Step as="button">Deling av CV</Stepper.Step>
                         <Stepper.Step as="button">Personalia</Stepper.Step>
                         <Stepper.Step as="button">Jobbønsker</Stepper.Step>
-                        <Stepper.Step as="button">Utdanning</Stepper.Step>
+                        <Stepper.Step as="button">Utdanninger</Stepper.Step>
                         <Stepper.Step as="button">Fagbrev</Stepper.Step>
                         <Stepper.Step as="button">Arbeidsforhold</Stepper.Step>
                         <Stepper.Step as="button">Andre erfaringer</Stepper.Step>
@@ -91,7 +91,7 @@ export default function MinCVPage() {
                                 <DelingAvCV />
                                 <Personalia />
                                 <Jobbonsker />
-                                <Utdanning />
+                                <Utdanninger />
                             </VStack>
                         </HStack>
                     </Box>
