@@ -1,9 +1,10 @@
 import { BodyLong, Box, Heading, HStack, Link } from "@navikt/ds-react";
+import styles from "../../../page.module.css";
 
 export default function DelingAvCV() {
     return (
         <div>
-            <Box background="surface-default" padding="10" style={{ width: "600px" }}>
+            <Box background="surface-default" padding="10" style={{ width: "600px", marginBottom: "2rem" }}>
                 <Heading level="2" size="large" align="start" spacing>
                     Deling av CV
                 </Heading>
@@ -162,7 +163,9 @@ export default function DelingAvCV() {
                 <BodyLong spacing>
                     Du kan lese mer om EURES eller endre status på deling ved å bruke lenken under.
                 </BodyLong>
-                <Link inlineText>Les mer om deling med EURES</Link>
+                <Link className={styles.mb6} inlineText>
+                    Les mer om deling med EURES
+                </Link>
             </Box>
         </div>
     );

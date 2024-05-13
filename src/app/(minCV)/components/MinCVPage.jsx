@@ -5,6 +5,7 @@ import "@navikt/ds-css";
 import { Box, Heading, Stepper, HStack, VStack, Hide, BodyShort, Show, Detail, Tag } from "@navikt/ds-react";
 import { useState } from "react";
 import DelingAvCV from "@/app/(minCV)/components/delingAvCV/DelingAvCV";
+import Personalia from "@/app/(minCV)/components/personalia/Personalia";
 
 export default function MinCVPage() {
     const [activeStep, setActiveStep] = useState(1);
@@ -86,6 +87,7 @@ export default function MinCVPage() {
                         <HStack gap="4">
                             <VStack>
                                 <DelingAvCV />
+                                <Personalia />
                             </VStack>
                         </HStack>
                     </Box>

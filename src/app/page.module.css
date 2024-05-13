@@ -247,3 +247,8 @@
         display: none;
     }
 }
+
+.divider {
+    border-top: 1px solid #bbb;
+    margin-bottom: 1.5rem;
+}
