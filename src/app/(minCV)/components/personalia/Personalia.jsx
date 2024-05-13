@@ -19,9 +19,7 @@ export default function Personalia() {
                 <div className={styles.divider}></div>
                 <BodyLong weight="semibold">Adresse</BodyLong>
                 <BodyLong spacing>Alderaan gate 24, 0661 Oslo</BodyLong>
-                <Button variant="primary">
-                    Endre
-                </Button>
+                <Button variant="primary">Endre</Button>
             </Box>
         </div>
     );
