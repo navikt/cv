@@ -15,7 +15,7 @@ export default function MinCVPage() {
     return (
         <>
             <Heading level="1" size="xlarge" align="center" className={styles.mb12}>
-                Header
+                Header TEST
             </Heading>
 
             <HStack style={{ display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
