@@ -6,6 +6,7 @@ import { Box, Heading, Stepper, HStack, VStack, Hide, BodyShort, Show, Detail, T
 import { useState } from "react";
 import DelingAvCV from "@/app/(minCV)/components/delingAvCV/DelingAvCV";
 import Personalia from "@/app/(minCV)/components/personalia/Personalia";
+import Jobbonsker from "@/app/(minCV)/components/jobbonsker/Jobbonsker";
 
 export default function MinCVPage() {
     const [activeStep, setActiveStep] = useState(1);
@@ -88,6 +89,7 @@ export default function MinCVPage() {
                             <VStack>
                                 <DelingAvCV />
                                 <Personalia />
+                                <Jobbonsker />
                             </VStack>
                         </HStack>
                     </Box>
