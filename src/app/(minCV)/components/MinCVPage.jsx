@@ -2,8 +2,9 @@
 
 import styles from "../../page.module.css";
 import "@navikt/ds-css";
-import { Box, Heading, Stepper, HStack, VStack, BodyLong, Hide, BodyShort, Show, Detail, Tag } from "@navikt/ds-react";
+import { Box, Heading, Stepper, HStack, VStack, Hide, BodyShort, Show, Detail, Tag } from "@navikt/ds-react";
 import { useState } from "react";
+import DelingAvCV from "@/app/(minCV)/components/delingAvCV/DelingAvCV";
 
 export default function MinCVPage() {
     const [activeStep, setActiveStep] = useState(1);
@@ -33,7 +34,6 @@ export default function MinCVPage() {
                                 <Hide below="md">
                                     <HStack gap="4" align="center">
                                         <BodyShort size="small">LUKE SKYWALKER</BodyShort>
-
                                         <svg
                                             width="4"
                                             height="4"
@@ -84,7 +84,9 @@ export default function MinCVPage() {
                 <div>
                     <Box className={styles.main}>
                         <HStack gap="4">
-                            <VStack></VStack>
+                            <VStack>
+                                <DelingAvCV />
+                            </VStack>
                         </HStack>
                     </Box>
                 </div>
