@@ -222,3 +222,28 @@
         transform: rotate(0deg);
     }
 }
+
+.mb6 {
+    margin-bottom: var(--a-spacing-6) !important;
+}
+
+.mb12 {
+    margin-bottom: var(--a-spacing-12) !important;
+}
+
+.sidebar2 {
+    position: sticky;
+    top: 0;
+    right: 0;
+    padding-top: 100px;
+    padding-left: 25px;
+    width: 25%;
+    height: 100vh;
+    max-height: 100vh;
+}
+
+@media (max-width: 767px) {
+    .hideStepper {
+        display: none;
+    }
+}
