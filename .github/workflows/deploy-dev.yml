@@ -21,6 +21,8 @@ jobs:
       id-token: write
       packages: write
       security-events: write
-    secrets: inherit
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
+    secrets:
+      NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+      OPTIONAL_SECRET: ${{ secrets.READER_TOKEN }}
