@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function MinCVPage() {
     const [activeStep, setActiveStep] = useState(1);
 
-    function onStepChange(x){
+    function onStepChange(x) {
         setActiveStep(x);
     }
 
@@ -45,8 +45,7 @@ export default function MinCVPage() {
                 <div>
                     <Box className={styles.main}>
                         <HStack gap="4">
-                            <VStack>
-                            </VStack>
+                            <VStack></VStack>
                         </HStack>
                     </Box>
                 </div>
