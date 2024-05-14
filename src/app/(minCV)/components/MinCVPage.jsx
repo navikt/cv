@@ -16,6 +16,7 @@ import OffentligeGodkjenninger from "@/app/(minCV)/components/offentligeGodkjenn
 import AndreGodkjenninger from "@/app/(minCV)/components/andreGodkjenninger/AndreGodkjenninger";
 import Sprak from "@/app/(minCV)/components/sprak/Sprak";
 import Forerkort from "@/app/(minCV)/components/forerkort/Forerkort";
+import Kurs from "@/app/(minCV)/components/kurs/Kurs";
 
 export default function MinCVPage() {
     const [activeStep, setActiveStep] = useState(1);
@@ -92,6 +93,7 @@ export default function MinCVPage() {
                         <Stepper.Step as="button">Andre godkjenninger</Stepper.Step>
                         <Stepper.Step as="button">Språk</Stepper.Step>
                         <Stepper.Step as="button">Førerkort</Stepper.Step>
+                        <Stepper.Step as="button">Kurs</Stepper.Step>
                         <Stepper.Step as="button">Sammendrag</Stepper.Step>
                     </Stepper>
                 </div>
@@ -111,6 +113,7 @@ export default function MinCVPage() {
                                 <AndreGodkjenninger />
                                 <Sprak />
                                 <Forerkort />
+                                <Kurs />
                             </VStack>
                         </HStack>
                     </Box>
