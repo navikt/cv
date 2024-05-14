@@ -14,6 +14,9 @@ export default function MinCVPage() {
 
     function onStepChange(x) {
         setActiveStep(x);
+
+        const element = document.getElementById(x);
+        element.scrollIntoView({ behavior: "smooth" });
     }
 
     return (

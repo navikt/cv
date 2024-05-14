@@ -4,7 +4,7 @@ import styles from "../../../page.module.css";
 export default function DelingAvCV() {
     return (
         <div>
-            <Box background="surface-default" padding="10" style={{ width: "600px", marginBottom: "2rem" }}>
+            <Box id="1" background="surface-default" padding="10" style={{ width: "600px", marginBottom: "2rem" }}>
                 <Heading level="2" size="large" align="start" spacing>
                     Deling av CV
                 </Heading>

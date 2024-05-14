@@ -4,7 +4,7 @@ import styles from "@/app/page.module.css";
 export default function Jobbonsker() {
     return (
         <div>
-            <Box background="surface-default" padding="10" style={{ width: "600px", marginBottom: "2rem" }}>
+            <Box id="3" background="surface-default" padding="10" style={{ width: "600px", marginBottom: "2rem" }}>
                 <Heading level="2" size="large" align="start" spacing>
                     Jobbønsker
                 </Heading>
