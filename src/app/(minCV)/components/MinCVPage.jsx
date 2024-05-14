@@ -10,9 +10,10 @@ import Jobbonsker from "@/app/(minCV)/components/jobbonsker/Jobbonsker";
 import Utdanninger from "@/app/(minCV)/components/utdanninger/Utdanninger";
 import Fagbrev from "@/app/(minCV)/components/fagbrev/Fagbrev";
 import Arbeidsforhold from "@/app/(minCV)/components/arbeidsforhold/Arbeidsforhold";
-import AndreErfaringer from "@/app/(minCV)/components/andre erfaringer/AndreErfaringer";
+import AndreErfaringer from "@/app/(minCV)/components/andreErfaringer/AndreErfaringer";
 import Kompetanser from "@/app/(minCV)/components/kompetanser/Kompetanser";
 import OffentligeGodkjenninger from "@/app/(minCV)/components/offentligeGodkjenninger/OffentligeGodkjenninger";
+import AndreGodkjenninger from "@/app/(minCV)/components/andreGodkjenninger/AndreGodkjenninger";
 
 export default function MinCVPage() {
     const [activeStep, setActiveStep] = useState(1);
@@ -105,6 +106,7 @@ export default function MinCVPage() {
                                 <AndreErfaringer />
                                 <Kompetanser />
                                 <OffentligeGodkjenninger />
+                                <AndreGodkjenninger />
                             </VStack>
                         </HStack>
                     </Box>
