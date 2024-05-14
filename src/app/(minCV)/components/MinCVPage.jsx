@@ -17,6 +17,7 @@ import AndreGodkjenninger from "@/app/(minCV)/components/andreGodkjenninger/Andr
 import Sprak from "@/app/(minCV)/components/sprak/Sprak";
 import Forerkort from "@/app/(minCV)/components/forerkort/Forerkort";
 import Kurs from "@/app/(minCV)/components/kurs/Kurs";
+import Sammendrag from "@/app/(minCV)/components/sammendrag/Sammendrag";
 
 export default function MinCVPage() {
     const [activeStep, setActiveStep] = useState(1);
@@ -114,6 +115,7 @@ export default function MinCVPage() {
                                 <Sprak />
                                 <Forerkort />
                                 <Kurs />
+                                <Sammendrag />
                             </VStack>
                         </HStack>
                     </Box>
