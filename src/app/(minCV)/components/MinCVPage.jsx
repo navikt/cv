@@ -14,6 +14,7 @@ import AndreErfaringer from "@/app/(minCV)/components/andreErfaringer/AndreErfar
 import Kompetanser from "@/app/(minCV)/components/kompetanser/Kompetanser";
 import OffentligeGodkjenninger from "@/app/(minCV)/components/offentligeGodkjenninger/OffentligeGodkjenninger";
 import AndreGodkjenninger from "@/app/(minCV)/components/andreGodkjenninger/AndreGodkjenninger";
+import Sprak from "@/app/(minCV)/components/sprak/Sprak";
 
 export default function MinCVPage() {
     const [activeStep, setActiveStep] = useState(1);
@@ -107,6 +108,7 @@ export default function MinCVPage() {
                                 <Kompetanser />
                                 <OffentligeGodkjenninger />
                                 <AndreGodkjenninger />
+                                <Sprak />
                             </VStack>
                         </HStack>
                     </Box>
