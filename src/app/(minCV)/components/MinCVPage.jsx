@@ -8,6 +8,7 @@ import DelingAvCV from "@/app/(minCV)/components/delingAvCV/DelingAvCV";
 import Personalia from "@/app/(minCV)/components/personalia/Personalia";
 import Jobbonsker from "@/app/(minCV)/components/jobbonsker/Jobbonsker";
 import Utdanninger from "@/app/(minCV)/components/utdanninger/Utdanninger";
+import Fagbrev from "@/app/(minCV)/components/fagbrev/Fagbrev";
 
 export default function MinCVPage() {
     const [activeStep, setActiveStep] = useState(1);
@@ -95,6 +96,7 @@ export default function MinCVPage() {
                                 <Personalia />
                                 <Jobbonsker />
                                 <Utdanninger />
+                                <Fagbrev />
                             </VStack>
                         </HStack>
                     </Box>
