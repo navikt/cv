@@ -10,6 +10,7 @@ import Jobbonsker from "@/app/(minCV)/components/jobbonsker/Jobbonsker";
 import Utdanninger from "@/app/(minCV)/components/utdanninger/Utdanninger";
 import Fagbrev from "@/app/(minCV)/components/fagbrev/Fagbrev";
 import Arbeidsforhold from "@/app/(minCV)/components/arbeidsforhold/Arbeidsforhold";
+import AndreErfaringer from "@/app/(minCV)/components/andre erfaringer/AndreErfaringer";
 
 export default function MinCVPage() {
     const [activeStep, setActiveStep] = useState(1);
@@ -99,6 +100,7 @@ export default function MinCVPage() {
                                 <Utdanninger />
                                 <Fagbrev />
                                 <Arbeidsforhold />
+                                <AndreErfaringer />
                             </VStack>
                         </HStack>
                     </Box>
