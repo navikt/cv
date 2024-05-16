@@ -231,11 +231,11 @@
     margin-bottom: var(--a-spacing-12) !important;
 }
 
-.sidebar2 {
+.sidepanel {
     position: sticky;
     top: 0;
     right: 0;
-    padding-top: 1.5rem;
+    padding-top: 3.5rem;
     width: 18%;
     height: 100vh;
     max-height: 100vh;
@@ -250,4 +250,9 @@
 .divider {
     border-top: 1px solid #bbb;
     margin-bottom: 1.5rem;
+}
+
+.box {
+    width: 600px;
+    margin-top: 4rem;
 }

@@ -4,7 +4,7 @@ import styles from "@/app/page.module.css";
 export default function Kurs() {
     return (
         <div>
-            <Box id="13" background="surface-default" padding="10" style={{ width: "600px", marginBottom: "2rem" }}>
+            <Box id="13" background="surface-default" padding="10" className={styles.box}>
                 <Heading level="2" size="large" align="start" spacing>
                     Kurs
                 </Heading>

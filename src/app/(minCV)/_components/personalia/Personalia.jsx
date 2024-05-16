@@ -7,7 +7,7 @@ export default function Personalia() {
 
     return (
         <div>
-            <Box id="2" background="surface-default" padding="10" style={{ width: "600px", marginBottom: "2rem" }}>
+            <Box id="2" background="surface-default" padding="10" className={styles.box}>
                 <Heading level="2" size="large" align="start" spacing>
                     Personalia
                 </Heading>

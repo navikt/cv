@@ -31,7 +31,7 @@ export default function MinCVPage() {
         <>
             <HeaderPanel />
             <HStack style={{ display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
-                <div className={styles.sidebar2}>
+                <div className={styles.sidepanel}>
                     <Stepper
                         aria-labelledby="stepper-heading"
                         orientation="vertical"
