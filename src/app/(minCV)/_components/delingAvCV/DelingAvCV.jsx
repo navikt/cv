@@ -1,7 +1,7 @@
 import { BodyLong, Box, Heading, HStack, Link } from "@navikt/ds-react";
 import styles from "../../../page.module.css";
 
-function StarsEUIcon () {
+function StarsEUIcon() {
     return (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
@@ -20,7 +20,6 @@ function StarsEUIcon () {
             />
         </svg>
     );
-
 }
 
 function EuresLogoIcon() {
@@ -162,12 +161,7 @@ function EuresLogoIcon() {
 export default function DelingAvCV() {
     return (
         <div>
-            <Box
-                id="1"
-                background="surface-default"
-                padding="10"
-                className={styles.box}
-            >
+            <Box id="1" background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <StarsEUIcon />
                 </HStack>
@@ -199,9 +193,7 @@ export default function DelingAvCV() {
                 <BodyLong spacing>
                     Du kan lese mer om EURES eller endre status på deling ved å bruke lenken under.
                 </BodyLong>
-                <Link style={{ marginBottom: "4rem" }}>
-                    Les mer om deling med EURES
-                </Link>
+                <Link style={{ marginBottom: "4rem" }}>Les mer om deling med EURES</Link>
             </Box>
         </div>
     );
