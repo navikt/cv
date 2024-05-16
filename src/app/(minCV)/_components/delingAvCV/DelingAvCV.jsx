@@ -193,7 +193,7 @@ export default function DelingAvCV() {
                 <BodyLong spacing>
                     Du kan lese mer om EURES eller endre status på deling ved å bruke lenken under.
                 </BodyLong>
-                <Link style={{ marginBottom: "4rem" }}>Les mer om deling med EURES</Link>
+                <Link className={styles.mb16}>Les mer om deling med EURES</Link>
             </Box>
         </div>
     );

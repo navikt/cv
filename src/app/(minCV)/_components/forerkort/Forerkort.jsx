@@ -1,5 +1,6 @@
 import { BodyLong, Box, Button, Heading } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
+import { PlusIcon } from "@navikt/aksel-icons";
 
 export default function Forerkort() {
     return (
@@ -11,8 +12,10 @@ export default function Forerkort() {
                 <BodyLong weight="semibold" spacing>
                     Du har ikke lagt til noen førerkort i CV-en
                 </BodyLong>
-                <BodyLong className={styles.mb12}>Her kan du sette inn alle ulike førerkort, f.eks lastebil</BodyLong>
-                <Button variant="primary">+ Legg til</Button>
+                <BodyLong className={styles.mb12}>Her kan du sette inn alle ulike førerkort, f.eks lastebil.</BodyLong>
+                <Button icon={<PlusIcon aria-hidden />} variant="primary">
+                    Legg til
+                </Button>
             </Box>
         </div>
     );

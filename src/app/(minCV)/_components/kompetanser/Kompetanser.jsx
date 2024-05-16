@@ -1,5 +1,6 @@
 import { BodyLong, Box, Button, Heading } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
+import { PlusIcon } from "@navikt/aksel-icons";
 
 export default function Fagbrev() {
     return (
@@ -15,7 +16,9 @@ export default function Fagbrev() {
                     Her kan du sette inn de ulike kompetanser som spesifikke egenskaper f.eks undervisning eller
                     butikkarbeid.
                 </BodyLong>
-                <Button variant="primary">+ Legg til flere</Button>
+                <Button icon={<PlusIcon aria-hidden />} variant="primary">
+                    Legg til
+                </Button>
             </Box>
         </div>
     );

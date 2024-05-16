@@ -231,14 +231,16 @@
     margin-bottom: var(--a-spacing-12) !important;
 }
 
+.mb16 {
+    margin-bottom: var(--a-spacing-16) !important;
+}
+
 .sidepanel {
     position: sticky;
     top: 0;
     right: 0;
     padding-top: 3.5rem;
     width: 18%;
-    height: 100vh;
-    max-height: 100vh;
 }
 
 @media (max-width: 767px) {

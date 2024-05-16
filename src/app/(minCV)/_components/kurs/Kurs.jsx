@@ -1,5 +1,6 @@
 import { BodyLong, Box, Button, Heading } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
+import { PlusIcon } from "@navikt/aksel-icons";
 
 export default function Kurs() {
     return (
@@ -12,7 +13,9 @@ export default function Kurs() {
                     Du har ikke lagt til noen kurs i CV-en
                 </BodyLong>
                 <BodyLong className={styles.mb12}>Her kan du sette inn kurs som du har tatt, f.eks skredkurs.</BodyLong>
-                <Button variant="primary">+ Legg til</Button>
+                <Button icon={<PlusIcon aria-hidden />} variant="primary">
+                    Legg til
+                </Button>
             </Box>
         </div>
     );

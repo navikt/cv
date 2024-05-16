@@ -14,6 +14,7 @@ import {
 } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useState } from "react";
+import { FloppydiskIcon, PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 
 export default function Utdanninger() {
     const [leggTilUtdanning, setLeggTilUtdanning] = useState(false);
@@ -47,11 +48,15 @@ export default function Utdanninger() {
                     </FormSummary.Answers>
                 </FormSummary>
                 <HStack justify="space-between" className={styles.mb12}>
-                    <Button variant="tertiary">Endre</Button>
-                    <Button variant="tertiary">Fjern</Button>
+                    <Button icon={<PencilIcon aria-hidden />} variant="tertiary">
+                        Endre
+                    </Button>
+                    <Button icon={<TrashIcon aria-hidden />} variant="tertiary">
+                        Fjern
+                    </Button>
                 </HStack>
-                <Button variant="primary" onClick={() => setLeggTilUtdanning(true)}>
-                    + Legg til flere
+                <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => setLeggTilUtdanning(true)}>
+                    Legg til flere
                 </Button>
             </Box>
             <Modal
@@ -174,7 +179,9 @@ export default function Utdanninger() {
                 </Modal.Body>
                 <Modal.Footer>
                     <HStack gap="4">
-                        <Button variant="primary">Lagre</Button>
+                        <Button icon={<FloppydiskIcon aria-hidden />} variant="primary">
+                            Lagre
+                        </Button>
                         <Button variant="secondary" onClick={() => setLeggTilUtdanning(false)}>
                             Avbryt
                         </Button>

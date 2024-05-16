@@ -1,5 +1,6 @@
 import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
+import { PencilIcon, TrashIcon } from "@navikt/aksel-icons";
 
 export default function Jobbonsker() {
     return (
@@ -33,10 +34,14 @@ export default function Jobbonsker() {
                 </BodyLong>
                 <div className={styles.divider}></div>
                 <BodyLong weight="semibold">Oppstart</BodyLong>
-                <BodyLong spacing>Jeg har 3 måneders oppsigelse</BodyLong>
+                <BodyLong className={styles.mb16}>Jeg har 3 måneders oppsigelse</BodyLong>
                 <HStack justify="space-between">
-                    <Button variant="primary">Endre</Button>
-                    <Button variant="secondary">Fjern</Button>
+                    <Button icon={<PencilIcon aria-hidden />} variant="primary">
+                        Endre
+                    </Button>
+                    <Button icon={<TrashIcon aria-hidden />} variant="secondary">
+                        Fjern
+                    </Button>
                 </HStack>
             </Box>
         </div>

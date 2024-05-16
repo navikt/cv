@@ -1,5 +1,6 @@
 import { BodyLong, Box, Button, Heading } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
+import { PlusIcon } from "@navikt/aksel-icons";
 
 export default function Sammendrag() {
     return (
@@ -12,9 +13,11 @@ export default function Sammendrag() {
                     Din beskrivelse av deg selv
                 </BodyLong>
                 <BodyLong className={styles.mb12}>
-                    Her kan du beskrive deg selv, hvordan du er som arbeidstaker og ulike personlige egenskaper
+                    Her kan du beskrive deg selv, hvordan du er som arbeidstaker og ulike personlige egenskaper.
                 </BodyLong>
-                <Button variant="primary">+ Legg til</Button>
+                <Button icon={<PlusIcon aria-hidden />} variant="primary">
+                    Legg til
+                </Button>
             </Box>
         </div>
     );

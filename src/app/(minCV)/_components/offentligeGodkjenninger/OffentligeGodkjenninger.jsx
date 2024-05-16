@@ -1,5 +1,6 @@
 import { BodyLong, Box, Button, Heading } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
+import { PlusIcon } from "@navikt/aksel-icons";
 
 export default function OffentligeGodkjenninger() {
     return (
@@ -15,7 +16,9 @@ export default function OffentligeGodkjenninger() {
                     En offentlig godkjenning er utsendt av et statlig organ, som f.eks truckførerbevis eller
                     autorisasjon som sykepleier.
                 </BodyLong>
-                <Button variant="primary">+ Legg til flere</Button>
+                <Button icon={<PlusIcon aria-hidden />} variant="primary">
+                    Legg til
+                </Button>
             </Box>
         </div>
     );

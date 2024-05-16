@@ -1,5 +1,6 @@
 import { BodyLong, Box, Button, Heading } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
+import { PlusIcon } from "@navikt/aksel-icons";
 
 export default function Sprak() {
     return (
@@ -11,8 +12,10 @@ export default function Sprak() {
                 <BodyLong weight="semibold" spacing>
                     Du har ikke lagt til noen språk i CV-en
                 </BodyLong>
-                <BodyLong className={styles.mb12}>Her kan du si hvilke språk du kan, og hvor god du er i dem</BodyLong>
-                <Button variant="primary">+ Legg til</Button>
+                <BodyLong className={styles.mb12}>Her kan du si hvilke språk du kan, og hvor god du er i dem.</BodyLong>
+                <Button icon={<PlusIcon aria-hidden />} variant="primary">
+                    Legg til
+                </Button>
             </Box>
         </div>
     );
