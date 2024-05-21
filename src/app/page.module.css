@@ -247,6 +247,15 @@
     .hideStepper {
         display: none;
     }
+    .element {
+        width: 100%;
+    }
+}
+
+@media (min-width: 767px) {
+    .element {
+        width: 48%;
+    }
 }
 
 .divider {

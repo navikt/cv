@@ -1,7 +1,7 @@
-import { BodyLong, Box, Button, Heading, HStack, Modal, TextField } from "@navikt/ds-react";
+import { BodyLong, Box, Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useState } from "react";
-import { PencilIcon } from "@navikt/aksel-icons";
+import { PencilIcon, PersonCircleIcon } from "@navikt/aksel-icons";
 
 function PersonaliaIcon() {
     return (
@@ -58,51 +58,69 @@ export default function Personalia() {
             </Box>
             <Modal
                 open={leggTilPersonalia}
-                aria-label="Tilbakemelding"
+                aria-label="Endre personalia"
                 onClose={() => setLeggTilPersonalia(false)}
                 width="medium"
             >
                 <Modal.Header closeButton={true}>
-                    <Heading align="center" level="3" size="medium">
-                        Legg til personalia
+                    <Heading align="start" level="3" size="medium">
+                        <HStack gap="1" align="center">
+                            <PersonCircleIcon fontSize="1.5rem" />
+                            Legg til personalia
+                        </HStack>
                     </Heading>
                 </Modal.Header>
-                <Modal.Body>
-                    <BodyLong>
-                        <b>Fornavn</b> *obligatorisk
-                    </BodyLong>
-                    <TextField label="" className={styles.mb6} />
-                    <BodyLong>
-                        <b>Etternavn</b> *obligatorisk
-                    </BodyLong>
-                    <TextField label="" className={styles.mb6} />
-                    <BodyLong>
-                        <b>E-post</b> *obligatorisk
-                    </BodyLong>
-                    <TextField label="" description="Eksempel: navn@mail.no" className={styles.mb6} />
-                    <BodyLong>
-                        <b>Gateadresse</b> *obligatorisk
-                    </BodyLong>
-                    <TextField label="" className={styles.mb6} />
-                    <BodyLong>
-                        <b>Postnummer</b> *obligatorisk
-                    </BodyLong>
-                    <TextField label="" className={styles.mb6} />
-                    <BodyLong>
-                        <b>Sted</b> *obligatorisk
-                    </BodyLong>
-                    <TextField label="" className={styles.mb6} />
-                    <BodyLong>
-                        <b>Fødselsdato</b> -kan ikke endres
-                    </BodyLong>
-                    <TextField label="" className={styles.mb6} />
+                <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }}>
+                    <HStack justify="space-between">
+                        <VStack className={styles.element}>
+                            <TextField value="Luke" label="Fornavn" description="Må fylles ut" className={styles.mb6} />
+                        </VStack>
+                        <VStack className={styles.element}>
+                            <TextField
+                                value="Skywalker"
+                                label="Etternavn"
+                                description="Må fylles ut"
+                                className={styles.mb6}
+                            />
+                        </VStack>
+                    </HStack>
+                    <HStack justify="space-between">
+                        <VStack className={styles.element}>
+                            <TextField
+                                value="Luke@jedi.no"
+                                type="email"
+                                label="E-post"
+                                description="Må fylles ut"
+                                className={styles.mb6}
+                            />
+                        </VStack>
+                        <VStack className={styles.element}>
+                            <TextField
+                                value="+47 99 99 99 99"
+                                type="tel"
+                                label="Telefon"
+                                description="Må fylles ut"
+                                className={styles.mb6}
+                            />
+                        </VStack>
+                    </HStack>
+                    <TextField value="Alderaan gate 24" label="Gateadresse" className={styles.mb6} />
+                    <HStack justify="space-between">
+                        <VStack className={styles.element}>
+                            <TextField value="0661" label="Postnummer" className={styles.mb6} />
+                        </VStack>
+                        <VStack className={styles.element}>
+                            <TextField value="Oslo" label="Sted" className={styles.mb6} />
+                        </VStack>
+                    </HStack>
+                    <TextField label="Fødselsdato" description="Kan ikke endres" readOnly />
                 </Modal.Body>
                 <Modal.Footer>
                     <HStack gap="4">
-                        <Button variant="primary">Lagre</Button>
                         <Button variant="secondary" onClick={() => setLeggTilPersonalia(false)}>
                             Avbryt
                         </Button>
+                        <Button variant="primary">Lagre</Button>
                     </HStack>
                 </Modal.Footer>
             </Modal>
