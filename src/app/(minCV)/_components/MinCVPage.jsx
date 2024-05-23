@@ -2,7 +2,7 @@
 
 import styles from "../../page.module.css";
 import "@navikt/ds-css";
-import { Box, Stepper, HStack, VStack, Hide, Show, Accordion } from "@navikt/ds-react";
+import { Box, Stepper, HStack, VStack, Hide, Show } from "@navikt/ds-react";
 import { useState } from "react";
 import DelingAvCV from "@/app/(minCV)/_components/delingAvCV/DelingAvCV";
 import Personalia from "@/app/(minCV)/_components/personalia/Personalia";
@@ -81,92 +81,20 @@ export default function MinCVPage() {
                 </HStack>
             </Hide>
             <Show below="md">
-                <Accordion>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>1: Deling av CV</Accordion.Header>
-                        <Accordion.Content>
-                            <DelingAvCV />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>2: Personalia</Accordion.Header>
-                        <Accordion.Content>
-                            <Personalia />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>3: Jobbønsker</Accordion.Header>
-                        <Accordion.Content>
-                            <Jobbonsker />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>4: Utdanninger</Accordion.Header>
-                        <Accordion.Content>
-                            <Utdanninger />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>5: Fagbrev</Accordion.Header>
-                        <Accordion.Content>
-                            <Fagbrev />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>6: Arbeidsforhold</Accordion.Header>
-                        <Accordion.Content>
-                            <Arbeidsforhold />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>7: Andre erfaringer</Accordion.Header>
-                        <Accordion.Content>
-                            <AndreErfaringer />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>8: Kompetanser</Accordion.Header>
-                        <Accordion.Content>
-                            <Kompetanser />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>9: Offentlige godkjenninger</Accordion.Header>
-                        <Accordion.Content>
-                            <OffentligeGodkjenninger />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>10: Andre godkjenninger</Accordion.Header>
-                        <Accordion.Content>
-                            <AndreGodkjenninger />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>11: Språk</Accordion.Header>
-                        <Accordion.Content>
-                            <Sprak />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>12: Førerkort</Accordion.Header>
-                        <Accordion.Content>
-                            <Forerkort />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>13: Kurs</Accordion.Header>
-                        <Accordion.Content>
-                            <Kurs />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                    <Accordion.Item defaultOpen>
-                        <Accordion.Header>14: Sammendrag</Accordion.Header>
-                        <Accordion.Content>
-                            <Sammendrag />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                </Accordion>
+                <DelingAvCV />
+                <Personalia />
+                <Jobbonsker />
+                <Utdanninger />
+                <Fagbrev />
+                <Arbeidsforhold />
+                <AndreErfaringer />
+                <Kompetanser />
+                <OffentligeGodkjenninger />
+                <AndreGodkjenninger />
+                <Sprak />
+                <Forerkort />
+                <Kurs />
+                <Sammendrag />
             </Show>
         </>
     );
