@@ -14,7 +14,7 @@ import {
 } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useState } from "react";
-import { FloppydiskIcon, PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
+import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 
 export default function Utdanninger() {
     const [leggTilUtdanning, setLeggTilUtdanning] = useState(false);
@@ -66,7 +66,7 @@ export default function Utdanninger() {
                 width="medium"
             >
                 <Modal.Header closeButton={true}>
-                    <Heading align="center" level="3" size="medium">
+                    <Heading align="start" level="3" size="medium">
                         Legg til utdanning
                     </Heading>
                 </Modal.Header>
@@ -179,12 +179,10 @@ export default function Utdanninger() {
                 </Modal.Body>
                 <Modal.Footer>
                     <HStack gap="4">
-                        <Button icon={<FloppydiskIcon aria-hidden />} variant="primary">
-                            Lagre
-                        </Button>
                         <Button variant="secondary" onClick={() => setLeggTilUtdanning(false)}>
                             Avbryt
                         </Button>
+                        <Button variant="primary">Lagre</Button>
                     </HStack>
                 </Modal.Footer>
             </Modal>

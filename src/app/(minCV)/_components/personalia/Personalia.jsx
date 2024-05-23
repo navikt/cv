@@ -1,7 +1,7 @@
-import { BodyLong, Box, Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-react";
-import styles from "@/app/page.module.css";
 import { useState } from "react";
+import { BodyLong, Box, Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-react";
 import { PencilIcon, PersonCircleIcon } from "@navikt/aksel-icons";
+import styles from "@/app/page.module.css";
 
 function PersonaliaIcon() {
     return (
@@ -26,6 +26,13 @@ function PersonaliaIcon() {
 
 export default function Personalia() {
     const [leggTilPersonalia, setLeggTilPersonalia] = useState(false);
+    const [fornavn, setFornavn] = useState("Luke");
+    const [etternavn, setEtternavn] = useState("Skywalker");
+    const [epost, setEpost] = useState("Luke@jedi.no");
+    const [telefon, setTelefon] = useState("+47 99 99 99 99");
+    const [adresse, setAdresse] = useState("Alderaan gate 24");
+    const [postnummer, setPostnummer] = useState("0661");
+    const [sted, setSted] = useState("Oslo");
 
     return (
         <div>
@@ -73,44 +80,68 @@ export default function Personalia() {
                 <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }}>
                     <HStack justify="space-between">
                         <VStack className={styles.element}>
-                            <TextField value="Luke" label="Fornavn" description="Må fylles ut" className={styles.mb6} />
+                            <TextField
+                                className={styles.mb6}
+                                label="Fornavn"
+                                description="Må fylles ut"
+                                value={fornavn}
+                                onChange={(e) => setFornavn(e.target.value)}
+                            />
                         </VStack>
                         <VStack className={styles.element}>
                             <TextField
-                                value="Skywalker"
+                                className={styles.mb6}
                                 label="Etternavn"
                                 description="Må fylles ut"
-                                className={styles.mb6}
+                                value={etternavn}
+                                onChange={(e) => setEtternavn(e.target.value)}
                             />
                         </VStack>
                     </HStack>
                     <HStack justify="space-between">
                         <VStack className={styles.element}>
                             <TextField
-                                value="Luke@jedi.no"
+                                className={styles.mb6}
                                 type="email"
                                 label="E-post"
                                 description="Må fylles ut"
-                                className={styles.mb6}
+                                value={epost}
+                                onChange={(e) => setEpost(e.target.value)}
                             />
                         </VStack>
                         <VStack className={styles.element}>
                             <TextField
-                                value="+47 99 99 99 99"
+                                className={styles.mb6}
                                 type="tel"
                                 label="Telefon"
                                 description="Må fylles ut"
-                                className={styles.mb6}
+                                value={telefon}
+                                onChange={(e) => setTelefon(e.target.value)}
                             />
                         </VStack>
                     </HStack>
-                    <TextField value="Alderaan gate 24" label="Gateadresse" className={styles.mb6} />
+                    <TextField
+                        className={styles.mb6}
+                        label="Gateadresse"
+                        value={adresse}
+                        onChange={(e) => setAdresse(e.target.value)}
+                    />
                     <HStack justify="space-between">
                         <VStack className={styles.element}>
-                            <TextField value="0661" label="Postnummer" className={styles.mb6} />
+                            <TextField
+                                className={styles.mb6}
+                                label="Postnummer"
+                                value={postnummer}
+                                onChange={(e) => setPostnummer(e.target.value)}
+                            />
                         </VStack>
                         <VStack className={styles.element}>
-                            <TextField value="Oslo" label="Sted" className={styles.mb6} />
+                            <TextField
+                                className={styles.mb6}
+                                label="Sted"
+                                value={sted}
+                                onChange={(e) => setSted(e.target.value)}
+                            />
                         </VStack>
                     </HStack>
                     <TextField label="Fødselsdato" description="Kan ikke endres" readOnly />
