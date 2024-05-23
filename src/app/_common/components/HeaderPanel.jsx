@@ -5,12 +5,12 @@ function HeaderPanel() {
         <Box as="header" borderWidth="0 0 4 0" borderColor="surface-info">
             <Box background="surface-default" paddingInline="4" paddingBlock="6 6">
                 <VStack align="center">
-                    <HStack align="start" gap="8">
+                    <HStack align="start" gap="6">
                         <Hide below="md">
                             <Pictogram />
                         </Hide>
-                        <VStack gap={{ xs: "4", md: "5" }}>
-                            <HStack gap="8">
+                        <VStack gap={{ xs: "3", md: "3" }}>
+                            <HStack gap="6" align="center">
                                 <Heading level="1" size="large">
                                     Din CV
                                 </Heading>
@@ -30,13 +30,13 @@ function HeaderPanel() {
                                     >
                                         <circle id="Ellipse 16" cx="2" cy="2" r="2" fill="#B5F1FF" />
                                     </svg>
-                                    <Detail>Sist endret 13. mai 2024</Detail>
+                                    <Detail>Sist endret 23. mai 2024</Detail>
                                 </HStack>
                             </Hide>
                             <Show below="md">
                                 <VStack gap="2">
                                     <BodyShort size="small">LUKE SKYWALKER</BodyShort>
-                                    <Detail>Sist endret 13. mai 2024</Detail>
+                                    <Detail>Sist endret 23. mai 2024</Detail>
                                 </VStack>
                             </Show>
                         </VStack>
