@@ -250,20 +250,22 @@
     .element {
         width: 100%;
     }
+    .box {
+        margin: 2rem -0.8rem -2.8rem;
+    }
 }
 
-@media (min-width: 767px) {
+@media (min-width: 768px) {
     .element {
         width: 48%;
+    }
+    .box {
+        width: 600px;
+        margin-top: 4rem;
     }
 }
 
 .divider {
     border-top: 1px solid #bbb;
     margin-bottom: 1.5rem;
-}
-
-.box {
-    width: 600px;
-    margin-top: 4rem;
 }
