@@ -223,6 +223,10 @@
     }
 }
 
+.mb3 {
+    margin-bottom: var(--a-spacing-3) !important;
+}
+
 .mb6 {
     margin-bottom: var(--a-spacing-6) !important;
 }
