@@ -65,7 +65,7 @@ export default function Personalia() {
             </Box>
             <Modal
                 open={leggTilPersonalia}
-                aria-label="Endre personalia"
+                aria-label="Legg til personalia"
                 onClose={() => setLeggTilPersonalia(false)}
                 width="medium"
             >

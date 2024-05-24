@@ -61,7 +61,7 @@ export default function Utdanninger() {
             </Box>
             <Modal
                 open={leggTilUtdanning}
-                aria-label="Tilbakemelding"
+                aria-label="Legg til utdanning"
                 onClose={() => setLeggTilUtdanning(false)}
                 width="medium"
             >

@@ -66,7 +66,7 @@ export default function Jobbonsker() {
             </Box>
             <Modal
                 open={leggTilJobbonske}
-                aria-label="Endre personalia"
+                aria-label="Legg til jobbønske"
                 onClose={() => setLeggTilJobbonske(false)}
                 width="medium"
             >
