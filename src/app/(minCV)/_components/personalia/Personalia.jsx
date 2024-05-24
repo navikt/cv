@@ -73,7 +73,7 @@ export default function Personalia() {
                     <Heading align="start" level="3" size="medium">
                         <HStack gap="1" align="center">
                             <PersonCircleIcon fontSize="1.5rem" />
-                            Legg til personalia
+                            Legg til Personalia
                         </HStack>
                     </Heading>
                 </Modal.Header>

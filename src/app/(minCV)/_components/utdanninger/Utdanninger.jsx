@@ -67,7 +67,7 @@ export default function Utdanninger() {
             >
                 <Modal.Header closeButton={true}>
                     <Heading align="start" level="3" size="medium">
-                        Legg til utdanning
+                        Legg til Utdanning
                     </Heading>
                 </Modal.Header>
                 <Modal.Body>
