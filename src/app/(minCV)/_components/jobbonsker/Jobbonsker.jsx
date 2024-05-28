@@ -20,8 +20,8 @@ export default function Jobbonsker() {
     const [hvorKanDuJobbe, setHvorKanDuJobbe] = useState();
 
     return (
-        <div>
-            <Box id="3" background="surface-default" padding="10" className={styles.box}>
+        <div id="3">
+            <Box background="surface-default" padding="10" className={styles.box}>
                 <Heading level="2" size="large" align="start" spacing>
                     Jobbønsker
                 </Heading>

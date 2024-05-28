@@ -25,6 +25,9 @@ export default function MinCVPage() {
 
     function onStepChange(x) {
         setActiveStep(x);
+
+        const element = document.getElementById(x);
+        element.scrollIntoView({ behavior: "smooth" });
     }
 
     return (
@@ -60,20 +63,20 @@ export default function MinCVPage() {
                         <Box className={styles.main}>
                             <HStack gap="4">
                                 <VStack>
-                                    {activeStep === 1 && <DelingAvCV />}
-                                    {activeStep === 2 && <Personalia />}
-                                    {activeStep === 3 && <Jobbonsker />}
-                                    {activeStep === 4 && <Utdanninger />}
-                                    {activeStep === 5 && <Fagbrev />}
-                                    {activeStep === 6 && <Arbeidsforhold />}
-                                    {activeStep === 7 && <AndreErfaringer />}
-                                    {activeStep === 8 && <Kompetanser />}
-                                    {activeStep === 9 && <OffentligeGodkjenninger />}
-                                    {activeStep === 10 && <AndreGodkjenninger />}
-                                    {activeStep === 11 && <Sprak />}
-                                    {activeStep === 12 && <Forerkort />}
-                                    {activeStep === 13 && <Kurs />}
-                                    {activeStep === 14 && <Sammendrag />}
+                                    <DelingAvCV />
+                                    <Personalia />
+                                    <Jobbonsker />
+                                    <Utdanninger />
+                                    <Fagbrev />
+                                    <Arbeidsforhold />
+                                    <AndreErfaringer />
+                                    <Kompetanser />
+                                    <OffentligeGodkjenninger />
+                                    <AndreGodkjenninger />
+                                    <Sprak />
+                                    <Forerkort />
+                                    <Kurs />
+                                    <Sammendrag />
                                 </VStack>
                             </HStack>
                         </Box>

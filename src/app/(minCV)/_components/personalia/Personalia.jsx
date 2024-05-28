@@ -35,8 +35,8 @@ export default function Personalia() {
     const [sted, setSted] = useState("Oslo");
 
     return (
-        <div>
-            <Box id="2" background="surface-default" padding="10" className={styles.box}>
+        <div id="2">
+            <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <PersonaliaIcon />
                 </HStack>

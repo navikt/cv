@@ -4,8 +4,8 @@ import { PlusIcon } from "@navikt/aksel-icons";
 
 export default function Sammendrag() {
     return (
-        <div>
-            <Box id="14" background="surface-default" padding="10" className={styles.box}>
+        <div id="14">
+            <Box background="surface-default" padding="10" className={styles.box}>
                 <Heading level="2" size="large" align="start" spacing>
                     Om meg
                 </Heading>

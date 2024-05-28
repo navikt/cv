@@ -4,8 +4,8 @@ import { PlusIcon } from "@navikt/aksel-icons";
 
 export default function Fagbrev() {
     return (
-        <div>
-            <Box id="8" background="surface-default" padding="10" className={styles.box}>
+        <div id="8">
+            <Box background="surface-default" padding="10" className={styles.box}>
                 <Heading level="2" size="large" align="start" spacing>
                     Kompetanser
                 </Heading>

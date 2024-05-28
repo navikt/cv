@@ -4,8 +4,8 @@ import { PlusIcon } from "@navikt/aksel-icons";
 
 export default function AndreErfaringer() {
     return (
-        <div>
-            <Box id="7" background="surface-default" padding="10" className={styles.box}>
+        <div id="7">
+            <Box background="surface-default" padding="10" className={styles.box}>
                 <Heading level="2" size="large" align="start" spacing>
                     Andre erfaringer
                 </Heading>

@@ -4,8 +4,8 @@ import { PlusIcon } from "@navikt/aksel-icons";
 
 export default function AndreGodkjenninger() {
     return (
-        <div>
-            <Box id="10" background="surface-default" padding="10" className={styles.box}>
+        <div id="10">
+            <Box background="surface-default" padding="10" className={styles.box}>
                 <Heading level="2" size="large" align="start" spacing>
                     Andre godkjenninger
                 </Heading>

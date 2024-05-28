@@ -160,8 +160,8 @@ function EuresLogoIcon() {
 
 export default function DelingAvCV() {
     return (
-        <div>
-            <Box id="1" background="surface-default" padding="10" className={styles.box}>
+        <div id="1">
+            <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <StarsEUIcon />
                 </HStack>

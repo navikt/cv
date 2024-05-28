@@ -9,8 +9,8 @@ export default function Fagbrev() {
     const [fagdokumentasjon, setFagdokumentasjon] = useState();
 
     return (
-        <div>
-            <Box id="5" background="surface-default" padding="10" className={styles.box}>
+        <div id="5">
+            <Box background="surface-default" padding="10" className={styles.box}>
                 <Heading className={styles.mb6} level="2" size="large" align="start" spacing>
                     Fagbrev
                 </Heading>

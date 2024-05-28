@@ -4,8 +4,8 @@ import { PlusIcon } from "@navikt/aksel-icons";
 
 export default function OffentligeGodkjenninger() {
     return (
-        <div>
-            <Box id="9" background="surface-default" padding="10" className={styles.box}>
+        <div id="9">
+            <Box background="surface-default" padding="10" className={styles.box}>
                 <Heading level="2" size="large" align="start" spacing>
                     Offentlige godkjenninger
                 </Heading>

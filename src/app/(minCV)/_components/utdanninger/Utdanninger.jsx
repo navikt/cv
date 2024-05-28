@@ -20,8 +20,8 @@ export default function Utdanninger() {
     const [leggTilUtdanning, setLeggTilUtdanning] = useState(false);
 
     return (
-        <div>
-            <Box id="4" background="surface-default" padding="10" className={styles.box}>
+        <div id="4">
+            <Box background="surface-default" padding="10" className={styles.box}>
                 <Heading level="2" size="large" align="start" spacing>
                     Utdanninger
                 </Heading>

@@ -26,8 +26,8 @@ export default function Arbeidsforhold() {
     const [bekreftJobbJegHarNa, setBekreftJobbJegHarNa] = useState(false);
 
     return (
-        <div>
-            <Box id="6" background="surface-default" padding="10" className={styles.box}>
+        <div id="6">
+            <Box background="surface-default" padding="10" className={styles.box}>
                 <Heading level="2" size="large" align="start" spacing>
                     Arbeidsforhold
                 </Heading>
