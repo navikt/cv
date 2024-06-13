@@ -2,7 +2,8 @@
 
 import styles from "../../page.module.css";
 import "@navikt/ds-css";
-import { Box, Stepper, HStack, VStack, Hide, Show } from "@navikt/ds-react";
+import { Box, Stepper, HStack, VStack, Hide, Show, Button } from "@navikt/ds-react";
+import { DownloadIcon, EyeIcon } from "@navikt/aksel-icons";
 import { useState } from "react";
 import DelingAvCV from "@/app/(minCV)/_components/delingAvCV/DelingAvCV";
 import Personalia from "@/app/(minCV)/_components/personalia/Personalia";
@@ -80,6 +81,16 @@ export default function MinCVPage() {
                                 </VStack>
                             </HStack>
                         </Box>
+                    </div>
+                    <div className={styles.sidepanel2}>
+                        <VStack gap="4">
+                            <Button icon={<EyeIcon aria-hidden />} variant="primary">
+                                Forhåndsvis CV
+                            </Button>
+                            <Button icon={<DownloadIcon aria-hidden />} variant="secondary">
+                                Last ned CV
+                            </Button>
+                        </VStack>
                     </div>
                 </HStack>
             </Hide>
