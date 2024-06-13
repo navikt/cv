@@ -53,7 +53,7 @@ export default function Fagbrev() {
                 )}
                 {fagbrev && (
                     <>
-                        <BodyLong weight="semibold">Yrkeskompetanse mediedesigner</BodyLong>
+                        <BodyLong weight="semibold">Yrkeskompetanse Pilot</BodyLong>
                         <HStack justify="space-between" className={styles.mb3}>
                             <Button icon={<PencilIcon aria-hidden />} variant="tertiary">
                                 Endre
@@ -63,7 +63,7 @@ export default function Fagbrev() {
                             </Button>
                         </HStack>
                         <div className={styles.divider}></div>
-                        <BodyLong weight="semibold">Svennebrev profileringsdesigner</BodyLong>
+                        <BodyLong weight="semibold">Svennebrev Moisture farmer</BodyLong>
                         <HStack justify="space-between" className={styles.mb3}>
                             <Button icon={<PencilIcon aria-hidden />} variant="tertiary">
                                 Endre
@@ -73,7 +73,7 @@ export default function Fagbrev() {
                             </Button>
                         </HStack>
                         <div className={styles.divider}></div>
-                        <BodyLong weight="semibold">Mesterbrev profileringsdesigner</BodyLong>
+                        <BodyLong weight="semibold">Mesterbrev Jedi Knight</BodyLong>
                         <HStack justify="space-between" className={styles.mb12}>
                             <Button icon={<PencilIcon aria-hidden />} variant="tertiary">
                                 Endre

@@ -51,14 +51,12 @@ export default function Jobbonsker() {
                 </Heading>
                 <BodyLong weight="semibold">Jobber og yrker</BodyLong>
                 <BodyLong spacing>
-                    Design Architect, Designer, Designer av tilbehør, Fiskearbeider (fiskehandel), Baker,
-                    Dagbruddsoperatør, Administrasjonsdirektør, Subeditor, Ergoterapeut, Oralkirurg, Kamera-assistent,
-                    Arbeidere innen treindustrien, Industriarbeider
+                    Jedi master, Bounty hunter, Smuggler, Sith lord, Stormtrooper, Moisture farmer, Pilot
                 </BodyLong>
                 <div className={styles.divider}></div>
                 <BodyLong weight="semibold">Områder</BodyLong>
                 <BodyLong spacing>
-                    Deatnu-Tana, Agdenes, Aust-Agder, Bjørnafjorden, Oslo, Eidsvoll, Larvik, Bardu, Folldal
+                    Tatooine, Coruscant, Naboo, Bespin, Endor, Hoth, Dagobah, Mustafar, Geonosis, Kamino
                 </BodyLong>
                 <div className={styles.divider}></div>
                 <BodyLong weight="semibold">Heltid eller deltid</BodyLong>
