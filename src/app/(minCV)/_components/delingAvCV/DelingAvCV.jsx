@@ -1,5 +1,6 @@
 import { BodyLong, Box, Heading, HStack, Link } from "@navikt/ds-react";
 import styles from "../../../page.module.css";
+import {useInView} from "react-intersection-observer";
 
 function StarsEUIcon() {
     return (
@@ -158,9 +159,11 @@ function EuresLogoIcon() {
     );
 }
 
-export default function DelingAvCV() {
+export default function DelingAvCV({inViewChange}) {
+    const { ref, inView, entry } = useInView({ delay: 1000, trackVisibility: true,  threshold: 0.4, onChange: inViewChange });
+
     return (
-        <div id="1">
+        <div id="1" ref={ref}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <StarsEUIcon />

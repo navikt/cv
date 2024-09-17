@@ -13,6 +13,7 @@ import {
 import styles from "@/app/page.module.css";
 import { PencilIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useState } from "react";
+import {useInView} from "react-intersection-observer";
 
 function JobbonskerIcon() {
     return (
@@ -35,13 +36,14 @@ function JobbonskerIcon() {
     );
 }
 
-export default function Jobbonsker() {
+export default function Jobbonsker({inViewChange}) {
+    const { ref, inView, entry } = useInView({ delay: 1000, trackVisibility: true,  threshold: 0.4, onChange: inViewChange });
     const [leggTilJobbonske, setLeggTilJobbonske] = useState(false);
     const [jobberOgYrker, setJobberOgYrker] = useState();
     const [hvorKanDuJobbe, setHvorKanDuJobbe] = useState();
 
     return (
-        <div id="3">
+        <div id="3" ref={ref}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <JobbonskerIcon />

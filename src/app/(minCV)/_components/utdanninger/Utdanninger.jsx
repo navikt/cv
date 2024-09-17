@@ -15,6 +15,7 @@ import {
 import styles from "@/app/page.module.css";
 import { useState } from "react";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
+import {useInView} from "react-intersection-observer";
 
 function UtdanningerIcon() {
     return (
@@ -37,11 +38,12 @@ function UtdanningerIcon() {
     );
 }
 
-export default function Utdanninger() {
+export default function Utdanninger({inViewChange}) {
+    const { ref, inView, entry } = useInView({ delay: 1000, trackVisibility: true,  threshold: 0.4, onChange: inViewChange });
     const [leggTilUtdanning, setLeggTilUtdanning] = useState(false);
 
     return (
-        <div id="4">
+        <div id="4" ref={ref}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <UtdanningerIcon />

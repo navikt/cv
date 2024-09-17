@@ -20,34 +20,78 @@ import Kurs from "@/app/(minCV)/_components/kurs/Kurs";
 import Sammendrag from "@/app/(minCV)/_components/sammendrag/Sammendrag";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import Hovedmeny from "@/app/_common/components/meny/Hovedmeny";
+import {useState} from "react";
 
 export default function MinCVPage() {
+    const [activeStep, setActiveStep] = useState(1);
+    const [stepsInView, setStepsInView] = useState([1, 2])
+    const [isAutoscrolling, setIsAutoscrolling] = useState(false)
+
+    const inViewChange = (inView, entry) => {
+        if (isAutoscrolling) return
+
+        let visibleSteps = [...new Set(stepsInView)]
+        const stepNumber = parseInt(entry.target.id)
+        const indexNumber = visibleSteps.indexOf(stepNumber)
+
+        if (inView && indexNumber === -1) visibleSteps.push(stepNumber)
+        else if (!inView && indexNumber >= 0) visibleSteps.splice(stepsInView.indexOf(stepNumber), 1)
+        visibleSteps.sort((a, b) => a - b)
+
+
+        if (inView) {
+            trimVisipleSteps(visibleSteps, stepNumber)
+        }
+
+        setStepsInView(visibleSteps)
+        setActiveStep(visibleSteps[0])
+    }
+
+    const trimVisipleSteps = (visibleSteps, stepNumber) => {
+        const indexOfCurrentStep = visibleSteps.indexOf(stepNumber)
+
+        for (let i = 0; i < indexOfCurrentStep; i++) {
+            if (!visibleSteps.includes(stepNumber - (i+1))) {
+                visibleSteps.slice(stepNumber - i, visibleSteps.length - 1)
+                break
+            }
+        }
+
+        for (let i = 1; indexOfCurrentStep + i < visibleSteps.length; i++)
+            if (!visibleSteps.includes(stepNumber + i)) {
+                visibleSteps.slice(0, stepNumber + i)
+            }
+
+        return visibleSteps;
+    }
+
+    console.log(activeStep, stepsInView)
     return (
         <>
             <HeaderPanel />
             <Hide below="md">
                 <HStack style={{ display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
                     <div className={styles.sidepanel}>
-                        <Hovedmeny />
+                        <Hovedmeny activeStep={activeStep} setActiveStep={setActiveStep} setStepsInView={setStepsInView} setIsAutoscrolling={setIsAutoscrolling}/>
                     </div>
                     <div>
                         <Box className={styles.main}>
                             <HStack gap="4">
                                 <VStack>
-                                    <DelingAvCV />
-                                    <Personalia />
-                                    <Jobbonsker />
-                                    <Utdanninger />
-                                    <Fagbrev />
-                                    <Arbeidsforhold />
-                                    <AndreErfaringer />
-                                    <Kompetanser />
-                                    <OffentligeGodkjenninger />
-                                    <AndreGodkjenninger />
-                                    <Sprak />
-                                    <Forerkort />
-                                    <Kurs />
-                                    <Sammendrag />
+                                    <DelingAvCV inViewChange={inViewChange} />
+                                    <Personalia inViewChange={inViewChange} />
+                                    <Jobbonsker inViewChange={inViewChange} />
+                                    <Utdanninger inViewChange={inViewChange} />
+                                    <Fagbrev inViewChange={inViewChange} />
+                                    <Arbeidsforhold inViewChange={inViewChange} />
+                                    <AndreErfaringer inViewChange={inViewChange} />
+                                    <Kompetanser inViewChange={inViewChange} />
+                                    <OffentligeGodkjenninger inViewChange={inViewChange} />
+                                    <AndreGodkjenninger inViewChange={inViewChange} />
+                                    <Sprak inViewChange={inViewChange} />
+                                    <Forerkort inViewChange={inViewChange} />
+                                    <Kurs inViewChange={inViewChange} />
+                                    <Sammendrag inViewChange={inViewChange} />
                                 </VStack>
                             </HStack>
                         </Box>
@@ -65,20 +109,20 @@ export default function MinCVPage() {
                 </HStack>
             </Hide>
             <Show below="md">
-                <DelingAvCV />
-                <Personalia />
-                <Jobbonsker />
-                <Utdanninger />
-                <Fagbrev />
-                <Arbeidsforhold />
-                <AndreErfaringer />
-                <Kompetanser />
-                <OffentligeGodkjenninger />
-                <AndreGodkjenninger />
-                <Sprak />
-                <Forerkort />
-                <Kurs />
-                <Sammendrag />
+                <DelingAvCV inViewChange={inViewChange}/>
+                <Personalia inViewChange={inViewChange}/>
+                <Jobbonsker inViewChange={inViewChange}/>
+                <Utdanninger inViewChange={inViewChange}/>
+                <Fagbrev inViewChange={inViewChange}/>
+                <Arbeidsforhold inViewChange={inViewChange}/>
+                <AndreErfaringer inViewChange={inViewChange}/>
+                <Kompetanser inViewChange={inViewChange}/>
+                <OffentligeGodkjenninger inViewChange={inViewChange}/>
+                <AndreGodkjenninger inViewChange={inViewChange}/>
+                <Sprak inViewChange={inViewChange}/>
+                <Forerkort inViewChange={inViewChange}/>
+                <Kurs inViewChange={inViewChange}/>
+                <Sammendrag inViewChange={inViewChange}/>
             </Show>
         </>
     );

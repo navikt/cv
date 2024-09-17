@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BodyLong, Box, Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-react";
 import { PencilIcon, PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
+import {useInView} from "react-intersection-observer";
 
 function PersonaliaIcon() {
     return (
@@ -24,7 +25,8 @@ function PersonaliaIcon() {
     );
 }
 
-export default function Personalia() {
+export default function Personalia({inViewChange}) {
+    const { ref, inView, entry } = useInView({ delay: 1000, trackVisibility: true,  threshold: 0.4, onChange: inViewChange });
     const [leggTilPersonalia, setLeggTilPersonalia] = useState(false);
     const [fornavn, setFornavn] = useState("Luke");
     const [etternavn, setEtternavn] = useState("Skywalker");
@@ -35,7 +37,7 @@ export default function Personalia() {
     const [sted, setSted] = useState("Oslo");
 
     return (
-        <div id="2">
+        <div id="2" ref={ref}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <PersonaliaIcon />

@@ -2,8 +2,10 @@ import { BodyLong, Box, Button, Heading, HStack, Modal, TextField } from "@navik
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useState } from "react";
+import {useInView} from "react-intersection-observer";
 
-export default function Fagbrev() {
+export default function Fagbrev({inViewChange}) {
+    const { ref, inView, entry } = useInView({ delay: 1000, trackVisibility: true,  threshold: 0.4, onChange: inViewChange });
     const [fagbrev, setFagbrev] = useState(true);
     const [leggTilFagbrev, setLeggTilFagbrev] = useState(false);
     const [fagdokumentasjon, setFagdokumentasjon] = useState();
@@ -30,7 +32,7 @@ export default function Fagbrev() {
     }
 
     return (
-        <div id="5">
+        <div id="5" ref={ref}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <FagbrevIcon />

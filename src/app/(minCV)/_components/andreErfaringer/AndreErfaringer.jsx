@@ -1,10 +1,13 @@
 import { BodyLong, Box, Button, Heading } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PlusIcon } from "@navikt/aksel-icons";
+import {useInView} from "react-intersection-observer";
 
-export default function AndreErfaringer() {
+export default function AndreErfaringer({inViewChange}) {
+    const { ref, inView, entry } = useInView({ delay: 1000, trackVisibility: true,  threshold: 0.4, onChange: inViewChange });
+
     return (
-        <div id="7">
+        <div id="7" ref={ref}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <Heading level="2" size="large" align="start" spacing>
                     Andre erfaringer

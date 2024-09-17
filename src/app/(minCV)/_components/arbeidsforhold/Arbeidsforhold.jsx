@@ -15,8 +15,10 @@ import {
 import styles from "@/app/page.module.css";
 import { useState } from "react";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
+import {useInView} from "react-intersection-observer";
 
-export default function Arbeidsforhold() {
+export default function Arbeidsforhold({inViewChange}) {
+    const { ref, inView, entry } = useInView({ delay: 1000, trackVisibility: true,  threshold: 0.4, onChange: inViewChange });
     const [arbeidsforhold, setArbeidsforhold] = useState(true);
     const [leggTilArbeidsforhold, setLeggTilArbeidsforhold] = useState(false);
     const [stillingYrke, setStillingYrke] = useState();
@@ -47,7 +49,7 @@ export default function Arbeidsforhold() {
     }
 
     return (
-        <div id="6">
+        <div id="6" ref={ref}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <ArbeidsforholdIcon />

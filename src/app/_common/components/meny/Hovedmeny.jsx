@@ -2,13 +2,17 @@ import { BodyLong, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useState } from "react";
 
-function Hovedmeny() {
-    const [activeStep, setActiveStep] = useState(1);
-
+function Hovedmeny({activeStep, setActiveStep, setStepsInView, setIsAutoscrolling}) {
     function onStepChange(i) {
+        setIsAutoscrolling(true)
         const element = document.getElementById(i);
         element.scrollIntoView({ behavior: "smooth" });
+        if (i < 14) setStepsInView([i, i+1])
+        else (setStepsInView([i]))
         setActiveStep(i);
+        setTimeout(function(){
+            setIsAutoscrolling(false);
+        }, 1000);
     }
 
     return (
