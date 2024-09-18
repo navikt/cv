@@ -9,16 +9,16 @@ const inter = Inter({ subsets: ["latin"] });
 const RootLayout = async (props) => {
     const { children } = props;
     const Decorator = await fetchDecoratorReact({
-        env: "dev"
+        env: "dev",
     });
 
     return (
         <html lang="no">
-        <head>
-            <title>Din CV - nav.no</title>
-            {Decorator.HeadAssets()}
-        </head>
-        <body className={inter.className}>
+            <head>
+                <title>Din CV - nav.no</title>
+                {Decorator.HeadAssets()}
+            </head>
+            <body className={inter.className}>
                 {Decorator.Header()}
                 {children}
                 {Decorator.Footer()}
