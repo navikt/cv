@@ -11,6 +11,8 @@ const RootLayout = async (props) => {
     const Decorator = await fetchDecoratorReact({
         env: "dev",
         params: {
+            context: "privatperson",
+            redirectToApp: true,
             breadcrumbs: [
                 {
                     title: "Min side",
