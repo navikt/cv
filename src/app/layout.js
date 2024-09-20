@@ -10,6 +10,18 @@ const RootLayout = async (props) => {
     const { children } = props;
     const Decorator = await fetchDecoratorReact({
         env: "dev",
+        params: {
+            breadcrumbs: [
+                {
+                    title: "Min side",
+                    url: "https://www.ansatt.dev.nav.no/minside",
+                },
+                {
+                    title: "Din CV",
+                    url: "/personbruker",
+                },
+            ],
+        },
     });
 
     return (
