@@ -7,12 +7,17 @@ import {
     Heading,
     HStack,
     Modal,
+    Radio,
+    RadioGroup,
     TextField,
     VStack,
 } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, TrashIcon } from "@navikt/aksel-icons";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
+import { AnsettelsesformEnum, ArbeidstidEnum, OmfangEnum, StarttidspunktEnum } from "@/app/enums/cvEnums";
+import { formatterListeAvObjekterTilTekst } from "@/app/enums/enumUtils";
 
 function JobbonskerIcon() {
     return (
@@ -36,9 +41,32 @@ function JobbonskerIcon() {
 }
 
 export default function Jobbonsker() {
-    const [leggTilJobbonske, setLeggTilJobbonske] = useState(false);
-    const [jobberOgYrker, setJobberOgYrker] = useState();
-    const [hvorKanDuJobbe, setHvorKanDuJobbe] = useState();
+    const cvContext = useContext(CvOgPersonContext).cv;
+
+    const [leggTilJobbonske, setleggTilJobbonske] = useState(false);
+    const [yrker, setYrker] = useState([]);
+    const [lokasjoner, setLokasjoner] = useState([]);
+    const [omfang, setOmfang] = useState([]);
+    const [ansettelsesform, setAnsettelsesform] = useState([]);
+    const [arbeidstid, setArbeidstid] = useState([]);
+    const [starttidspunkt, setStarttidspunkt] = useState("");
+
+    useEffect(() => {
+        const oppdaterJobbønsker = (jobbønsker) => {
+            setYrker(jobbønsker.occupations);
+            setLokasjoner(jobbønsker.locations);
+            setOmfang(jobbønsker.workLoadTypes);
+            setAnsettelsesform(jobbønsker.occupationTypes);
+            setArbeidstid(jobbønsker.workScheduleTypes);
+            setStarttidspunkt(jobbønsker.startOption);
+        };
+
+        if (cvContext.status === "success") oppdaterJobbønsker(cvContext.data.jobboensker || {});
+    }, [cvContext]);
+
+    const lagreJobbønsker = () => {
+        setleggTilJobbonske(false);
+    };
 
     return (
         <div id="3">
@@ -49,35 +77,35 @@ export default function Jobbonsker() {
                 <Heading level="2" size="large" align="start" spacing>
                     Jobbønsker
                 </Heading>
+
                 <BodyLong weight="semibold">Jobber og yrker</BodyLong>
-                <BodyLong spacing>
-                    Jedi master, Bounty hunter, Smuggler, Sith lord, Stormtrooper, Moisture farmer, Pilot
-                </BodyLong>
+                <BodyLong spacing>{formatterListeAvObjekterTilTekst(yrker, "title")}</BodyLong>
                 <div className={styles.divider}></div>
+
                 <BodyLong weight="semibold">Områder</BodyLong>
-                <BodyLong spacing>
-                    Tatooine, Coruscant, Naboo, Bespin, Endor, Hoth, Dagobah, Mustafar, Geonosis, Kamino
-                </BodyLong>
+                <BodyLong spacing>{formatterListeAvObjekterTilTekst(lokasjoner, "location")}</BodyLong>
                 <div className={styles.divider}></div>
+
                 <BodyLong weight="semibold">Heltid eller deltid</BodyLong>
-                <BodyLong spacing>Heltid</BodyLong>
+                <BodyLong spacing>{omfang.map((e) => OmfangEnum[e]).join(", ")}</BodyLong>
                 <div className={styles.divider}></div>
+
                 <BodyLong weight="semibold">Arbeidstider</BodyLong>
-                <BodyLong spacing>Ukedager, Lørdag, Søndag, Skift, Vakt, Turnus, Dagtid, Kveld, Natt</BodyLong>
+                <BodyLong spacing>{arbeidstid.map((e) => ArbeidstidEnum[e]).join(", ")}</BodyLong>
                 <div className={styles.divider}></div>
+
                 <BodyLong weight="semibold">Ansettelsesform</BodyLong>
-                <BodyLong spacing>
-                    Fast, Vikariat, Engasjement, Prosjekt, Sesong, Lærling, Selvstendig næringsdrivende, Feriejobb,
-                    Annet
-                </BodyLong>
+                <BodyLong spacing>{ansettelsesform.map((e) => AnsettelsesformEnum[e]).join(", ")}</BodyLong>
                 <div className={styles.divider}></div>
+
                 <BodyLong weight="semibold">Oppstart</BodyLong>
-                <BodyLong className={styles.mb16}>Jeg har 3 måneders oppsigelse</BodyLong>
+                <BodyLong className={styles.mb16}>{StarttidspunktEnum[starttidspunkt]}</BodyLong>
+
                 <HStack justify="space-between">
                     <Button
                         icon={<PencilIcon aria-hidden />}
                         variant="primary"
-                        onClick={() => setLeggTilJobbonske(true)}
+                        onClick={() => setleggTilJobbonske(true)}
                     >
                         Endre
                     </Button>
@@ -86,10 +114,11 @@ export default function Jobbonsker() {
                     </Button>
                 </HStack>
             </Box>
+
             <Modal
                 open={leggTilJobbonske}
                 aria-label="Legg til jobbønske"
-                onClose={() => setLeggTilJobbonske(false)}
+                onClose={() => setleggTilJobbonske(false)}
                 width="medium"
             >
                 <Modal.Header closeButton={true}>
@@ -106,8 +135,8 @@ export default function Jobbonsker() {
                                 className={styles.mb6}
                                 label="Jobber og yrker"
                                 description="Må fylles ut"
-                                value={jobberOgYrker}
-                                onChange={(e) => setJobberOgYrker(e.target.value)}
+                                value={formatterListeAvObjekterTilTekst(yrker, "title")}
+                                onChange={(e) => setYrker(e.target.value)}
                             />
                         </VStack>
                         <VStack className={styles.element}>
@@ -115,8 +144,8 @@ export default function Jobbonsker() {
                                 className={styles.mb6}
                                 label="Hvor kan du jobbe"
                                 description="Må fylles ut"
-                                value={hvorKanDuJobbe}
-                                onChange={(e) => setHvorKanDuJobbe(e.target.value)}
+                                value={formatterListeAvObjekterTilTekst(lokasjoner, "location")}
+                                onChange={(e) => setLokasjoner(e.target.value)}
                             />
                         </VStack>
                     </HStack>
@@ -126,88 +155,56 @@ export default function Jobbonsker() {
                             <Checkbox value="deltid">Deltid</Checkbox>
                         </HStack>
                     </CheckboxGroup>
-                    <CheckboxGroup className={styles.mb6} legend="Når kan du jobbe?">
+                    <CheckboxGroup
+                        className={styles.mb6}
+                        onChange={setArbeidstid}
+                        value={arbeidstid}
+                        legend="Når kan du jobbe?"
+                    >
                         <HStack>
-                            <Checkbox className={styles.checkbox} value="dagtid">
-                                Dagtid
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="kveld">
-                                Kveld
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="natt">
-                                Natt
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="ukedager">
-                                Ukedager
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="lordag">
-                                Lørdag
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="sondag">
-                                Søndag
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="skift">
-                                Skift
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="vakt">
-                                Vakt
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="turnus">
-                                Turnus
-                            </Checkbox>
+                            {Object.keys(ArbeidstidEnum).map((verdi) => (
+                                <Checkbox className={styles.checkbox} key={verdi} value={verdi}>
+                                    {ArbeidstidEnum[verdi]}
+                                </Checkbox>
+                            ))}
                         </HStack>
                     </CheckboxGroup>
-                    <CheckboxGroup className={styles.mb6} legend="Hva slags ansettelse ønsker du?">
+                    <CheckboxGroup
+                        className={styles.mb6}
+                        onChange={setAnsettelsesform}
+                        value={ansettelsesform}
+                        legend="Hva slags ansettelse ønsker du?"
+                    >
                         <HStack>
-                            <Checkbox className={styles.checkbox} value="fast">
-                                Fast
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="vikariat">
-                                Vikariat
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="engasjement">
-                                Engasjement
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="prosjekt">
-                                Prosjekt
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="sesong">
-                                Sesong
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="larling">
-                                Lærling
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="selvstendig">
-                                Selvstendig næringsdrivende
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="feriejobb">
-                                Feriejobb
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="annet">
-                                Annet
-                            </Checkbox>
+                            {Object.keys(AnsettelsesformEnum).map((verdi) => (
+                                <Checkbox className={styles.checkbox} key={verdi} value={verdi}>
+                                    {AnsettelsesformEnum[verdi]}
+                                </Checkbox>
+                            ))}
                         </HStack>
                     </CheckboxGroup>
-                    <CheckboxGroup legend="Når kan du begynne i ny jobb?">
+                    <RadioGroup
+                        legend="Når kan du begynne i ny jobb?"
+                        onChange={setStarttidspunkt}
+                        value={starttidspunkt}
+                    >
                         <HStack>
-                            <Checkbox className={styles.checkbox} value="kanBegynneNa">
-                                Jeg kan begynne nå
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="3MånedersOppsigelse">
-                                Jeg har 3 måneders oppsigelse
-                            </Checkbox>
-                            <Checkbox className={styles.checkbox} value="begynneEtterNarmereAvtale">
-                                Jeg kan begynne etter nærmere avtale
-                            </Checkbox>
+                            {Object.keys(StarttidspunktEnum).map((verdi) => (
+                                <Radio className={styles.checkbox} key={verdi} value={verdi}>
+                                    {StarttidspunktEnum[verdi]}
+                                </Radio>
+                            ))}
                         </HStack>
-                    </CheckboxGroup>
+                    </RadioGroup>
                 </Modal.Body>
                 <Modal.Footer>
                     <HStack gap="4">
-                        <Button variant="secondary" onClick={() => setLeggTilJobbonske(false)}>
+                        <Button variant="secondary" onClick={() => setleggTilJobbonske(false)}>
                             Avbryt
                         </Button>
-                        <Button variant="primary">Lagre</Button>
+                        <Button variant="primary" onClick={lagreJobbønsker}>
+                            Lagre
+                        </Button>
                     </HStack>
                 </Modal.Footer>
             </Modal>

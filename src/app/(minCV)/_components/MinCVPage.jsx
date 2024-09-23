@@ -20,10 +20,11 @@ import Kurs from "@/app/(minCV)/_components/kurs/Kurs";
 import Sammendrag from "@/app/(minCV)/_components/sammendrag/Sammendrag";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import Hovedmeny from "@/app/_common/components/meny/Hovedmeny";
+import CvOgPersonProvider, { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
 
 export default function MinCVPage() {
     return (
-        <>
+        <CvOgPersonProvider>
             <HeaderPanel />
             <Hide below="md">
                 <HStack style={{ display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
@@ -80,6 +81,6 @@ export default function MinCVPage() {
                 <Kurs />
                 <Sammendrag />
             </Show>
-        </>
+        </CvOgPersonProvider>
     );
 }

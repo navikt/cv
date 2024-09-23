@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BodyLong, Box, Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-react";
 import { PencilIcon, PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
+import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
+import * as personMock from "@/app/mocks/personMock.json";
+import * as cvMock from "@/app/mocks/cvMock.json";
 
 function PersonaliaIcon() {
     return (
@@ -26,13 +29,47 @@ function PersonaliaIcon() {
 
 export default function Personalia() {
     const [leggTilPersonalia, setLeggTilPersonalia] = useState(false);
-    const [fornavn, setFornavn] = useState("Luke");
-    const [etternavn, setEtternavn] = useState("Skywalker");
-    const [epost, setEpost] = useState("Luke@jedi.no");
-    const [telefon, setTelefon] = useState("+47 99 99 99 99");
-    const [adresse, setAdresse] = useState("Alderaan gate 24");
-    const [postnummer, setPostnummer] = useState("0661");
-    const [sted, setSted] = useState("Oslo");
+    const personContext = useContext(CvOgPersonContext).person;
+
+    const [fornavn, setFornavn] = useState("");
+    const [etternavn, setEtternavn] = useState("");
+    const [epost, setEpost] = useState("");
+    const [telefon, setTelefon] = useState("");
+    const [adresse, setAdresse] = useState("");
+    const [postnummer, setPostnummer] = useState("");
+    const [sted, setSted] = useState("");
+    const [fødselsdato, setFødselsdato] = useState("");
+
+    useEffect(() => {
+        const oppdaterPersonalia = (personalia) => {
+            setFornavn(personalia.fornavn);
+            setEtternavn(personalia.etternavn);
+            setEpost(personalia.epost);
+            setTelefon(personalia.telefonnummer);
+            setAdresse(personalia.adresse);
+            setPostnummer(personalia.postnummer);
+            setSted(personalia.poststed);
+            setFødselsdato(personalia.foedselsdato);
+        };
+
+        if (personContext.status === "success") oppdaterPersonalia(personContext.data.personalia || {});
+    }, [personContext]);
+
+    const formatterTelefon = (telefonnummer) => {
+        return telefonnummer;
+    };
+
+    const formatterAdresse = (adresse, postnummer, sted) => {
+        if (adresse && postnummer && sted) return `${adresse}, ${postnummer} ${sted}`;
+        else if (adresse && postnummer) return `${adresse}, ${postnummer}`;
+        else if (adresse && sted) return `${adresse}, ${sted}`;
+        else if (postnummer && sted) return `${postnummer} ${sted}`;
+        else return adresse || postnummer || sted || "";
+    };
+
+    const lagrePersonalia = () => {
+        setLeggTilPersonalia(false);
+    };
 
     return (
         <div id="2">
@@ -44,16 +81,18 @@ export default function Personalia() {
                     Personalia
                 </Heading>
                 <BodyLong weight="semibold">Navn</BodyLong>
-                <BodyLong spacing>Luke Skywalker</BodyLong>
+                <BodyLong spacing>
+                    {fornavn} {etternavn}
+                </BodyLong>
                 <div className={styles.divider}></div>
                 <BodyLong weight="semibold">Telefon</BodyLong>
-                <BodyLong spacing>+47 99 99 99 99</BodyLong>
+                <BodyLong spacing>{formatterTelefon(telefon)}</BodyLong>
                 <div className={styles.divider}></div>
                 <BodyLong weight="semibold">E-post</BodyLong>
-                <BodyLong spacing>Luke@jedi.no</BodyLong>
+                <BodyLong spacing>{epost}</BodyLong>
                 <div className={styles.divider}></div>
                 <BodyLong weight="semibold">Adresse</BodyLong>
-                <BodyLong className={styles.mb16}>Alderaan gate 24, 0661 Oslo</BodyLong>
+                <BodyLong className={styles.mb16}>{formatterAdresse(adresse, postnummer, sted)}</BodyLong>
                 <Button
                     className={styles.mb6}
                     icon={<PencilIcon aria-hidden />}
@@ -115,7 +154,7 @@ export default function Personalia() {
                                 type="tel"
                                 label="Telefon"
                                 description="Må fylles ut"
-                                value={telefon}
+                                value={formatterTelefon(telefon)}
                                 onChange={(e) => setTelefon(e.target.value)}
                             />
                         </VStack>
@@ -144,14 +183,16 @@ export default function Personalia() {
                             />
                         </VStack>
                     </HStack>
-                    <TextField label="Fødselsdato" description="Kan ikke endres" readOnly />
+                    <TextField label="Fødselsdato" description="Kan ikke endres" value={fødselsdato} readOnly />
                 </Modal.Body>
                 <Modal.Footer>
                     <HStack gap="4">
                         <Button variant="secondary" onClick={() => setLeggTilPersonalia(false)}>
                             Avbryt
                         </Button>
-                        <Button variant="primary">Lagre</Button>
+                        <Button variant="primary" onClick={() => lagrePersonalia()}>
+                            Lagre
+                        </Button>
                     </HStack>
                 </Modal.Footer>
             </Modal>

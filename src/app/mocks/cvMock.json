@@ -1,0 +1,267 @@
+{
+    "harBil": false,
+    "arbeidserfaring": [
+        {
+            "employer": "The Jedi Temple",
+            "jobTitle": "Jedi Knight",
+            "alternativeJobTitle": null,
+            "conceptId": "55309",
+            "location": "Coruscant gate 1",
+            "description": null,
+            "fromDate": "2020-01-01T02:00:00+01:00",
+            "toDate": null,
+            "styrkkode": "1111",
+            "ikkeAktueltForFremtiden": false,
+            "ongoing": true
+        },
+        {
+            "employer": "Yoda’s camp for Force-sensitive children",
+            "jobTitle": "Padawan",
+            "alternativeJobTitle": null,
+            "conceptId": "55309",
+            "location": "Dagobah system 17",
+            "description": null,
+            "fromDate": "2017-09-01T02:00:00+01:00",
+            "toDate": "2019-11-30T02:00:00+01:00",
+            "styrkkode": "1111",
+            "ikkeAktueltForFremtiden": false,
+            "ongoing": true
+        }
+    ],
+    "utdanning": [
+        {
+            "institution": "The Jedi Temple",
+            "field": "Jedi training",
+            "nuskode": "4",
+            "hasAuthorization": false,
+            "vocationalCollege": null,
+            "startDate": "2022-04-01T00:00:00+01:00",
+            "endDate": null,
+            "ongoing": true,
+            "description": "Jedi-knight in training"
+        }
+    ],
+    "andreGodkjenninger": [
+        {
+            "certificateName": "X-Wing serisert",
+            "alternativeName": null,
+            "conceptId": null,
+            "issuer": "Fasd",
+            "fromDate": "2001-02-01T00:00:00+01:00",
+            "toDate": "2043-07-01T00:00:00+02:00"
+        }
+    ],
+    "foererkort": [
+        {
+            "type": "X - X-Wing",
+            "acquiredDate": null,
+            "expiryDate": null
+        },
+        {
+            "type": "LS34 - X-34 Landspeeder",
+            "acquiredDate": null,
+            "expiryDate": null
+        }
+    ],
+    "annenErfaring": [
+        {
+            "description": "Vant Sabacc-turneringen i Mos Eisley for et par år siden",
+            "role": "Sabacc",
+            "fromDate": "1998-02-01T00:00:00+01:00",
+            "toDate": null,
+            "ongoing": true
+        }
+    ],
+    "kurs": [
+        {
+            "title": "Sertifikat for bruk av robotiske lemmer",
+            "issuer": "Antilles BioGen",
+            "duration": 144,
+            "durationUnit": "DAG",
+            "date": "2311-12-31T00:00:00+01:00"
+        }
+    ],
+    "spraak": [
+        {
+            "language": "Galactic Basic",
+            "iso3Code": "gb",
+            "oralProficiency": "FOERSTESPRAAK",
+            "writtenProficiency": "FOERSTESPRAAK"
+        },
+        {
+            "language": "Binary",
+            "iso3Code": "bin",
+            "oralProficiency": "GODT",
+            "writtenProficiency": "NYBEGYNNER"
+        },
+        {
+            "language": "Jawaese",
+            "iso3Code": "dag",
+            "oralProficiency": "GODT",
+            "writtenProficiency": "IKKE_OPPGITT"
+        }
+    ],
+    "offentligeGodkjenninger": [
+        {
+            "title": "Jedi Knight",
+            "conceptId": "403787",
+            "issuer": "Gass AB",
+            "fromDate": "2024-08-21T00:00:00+02:00",
+            "toDate": "2024-10-31T00:00:00+01:00"
+        }
+    ],
+    "fagbrev": [
+        {
+            "title": "Yrkeskompetanse Pilot",
+            "type": "SVENNEBREV_FAGBREV",
+            "conceptId": "350794"
+        },
+        {
+            "title": "Svennebrev Moisture farmer",
+            "type": "SVENNEBREV_FAGBREV",
+            "conceptId": "351269"
+        },
+        {
+            "title": "Mesterbrev Jedi Knight",
+            "type": "SVENNEBREV_FAGBREV",
+            "conceptId": "351038"
+        }
+    ],
+    "kompetanser": [
+        {
+            "title": "The Force",
+            "conceptId": 1119
+        },
+        {
+            "title": "Lyssabel",
+            "conceptId": 212040
+        }
+    ],
+    "sammendrag": "Selvlært pilot. Erfaring med tungt arbeid gjennom sommerjobb hos Owen's Moisture LTD. Lærevillig, men blir fort litt furten om ting ikke går som jeg vil.",
+    "jobboensker": {
+        "active": true,
+        "startOption": "ETTER_TRE_MND",
+        "occupations": [
+            {
+                "id": null,
+                "title": "Jedi master",
+                "conceptId": 99999,
+                "styrk08": "9999"
+            },
+            {
+                "id": null,
+                "title": "Bounty hunter",
+                "conceptId": 99999,
+                "styrk08": "9999"
+            },
+            {
+                "id": null,
+                "title": "Smuggler",
+                "conceptId": 99999,
+                "styrk08": "9999"
+            },
+            {
+                "id": null,
+                "title": "Sith lord",
+                "conceptId": 99999,
+                "styrk08": "9999"
+            },
+            {
+                "id": null,
+                "title": "Stormtrooper",
+                "conceptId": 99999,
+                "styrk08": "9999"
+            },
+            {
+                "id": null,
+                "title": "Moisture farmer",
+                "conceptId": 99999,
+                "styrk08": "9999"
+            },
+            {
+                "id": null,
+                "title": "Pilot",
+                "conceptId": 99999,
+                "styrk08": "9999"
+            }
+        ],
+        "occupationDrafts": [],
+        "locations": [
+            {
+                "id": null,
+                "location": "Tatooine",
+                "code": "NO14",
+                "conceptId": 380465
+            },
+            {
+                "id": null,
+                "location": "Coruscant",
+                "code": "NO14",
+                "conceptId": 380465
+            },
+            {
+                "id": null,
+                "location": "Naboo",
+                "code": "NO14",
+                "conceptId": 380465
+            },
+            {
+                "id": null,
+                "location": "Bespin",
+                "code": "NO14",
+                "conceptId": 380465
+            },
+            {
+                "id": null,
+                "location": "Endor",
+                "code": "NO14",
+                "conceptId": 380465
+            },
+            {
+                "id": null,
+                "location": "Hoth",
+                "code": "NO14",
+                "conceptId": 380465
+            },
+            {
+                "id": null,
+                "location": "Dagobah",
+                "code": "NO14",
+                "conceptId": 380465
+            },
+            {
+                "id": null,
+                "location": "Mustafar",
+                "code": "NO14",
+                "conceptId": 380465
+            },
+            {
+                "id": null,
+                "location": "Geonosis",
+                "code": "NO14",
+                "conceptId": 380465
+            },
+            {
+                "id": null,
+                "location": "Kamino",
+                "code": "NO14",
+                "conceptId": 380465
+            }
+        ],
+        "occupationTypes": [
+            "FAST",
+            "VIKARIAT",
+            "ENGASJEMENT",
+            "PROSJEKT",
+            "SESONG",
+            "LAERLING",
+            "SELVSTENDIG_NAERINGSDRIVENDE",
+            "FERIEJOBB",
+            "ANNET"
+        ],
+        "workLoadTypes": ["HELTID"],
+        "workScheduleTypes": ["UKEDAGER", "LOERDAG", "SOENDAG", "SKIFT", "VAKT", "TURNUS", "DAGTID", "KVELD", "NATT"]
+    },
+    "sistEndretAvNav": false,
+    "sistEndret": "2024-09-17T16:04:42.612136961+02:00"
+}
