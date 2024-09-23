@@ -3,8 +3,7 @@ import { BodyLong, Box, Button, Heading, HStack, Modal, TextField, VStack } from
 import { PencilIcon, PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
-import * as personMock from "@/app/mocks/personMock.json";
-import * as cvMock from "@/app/mocks/cvMock.json";
+import { formatterAdresse, formatterTelefon } from "@/app/utils/stringUtils";
 
 function PersonaliaIcon() {
     return (
@@ -54,18 +53,6 @@ export default function Personalia() {
 
         if (personContext.status === "success") oppdaterPersonalia(personContext.data.personalia || {});
     }, [personContext]);
-
-    const formatterTelefon = (telefonnummer) => {
-        return telefonnummer;
-    };
-
-    const formatterAdresse = (adresse, postnummer, sted) => {
-        if (adresse && postnummer && sted) return `${adresse}, ${postnummer} ${sted}`;
-        else if (adresse && postnummer) return `${adresse}, ${postnummer}`;
-        else if (adresse && sted) return `${adresse}, ${sted}`;
-        else if (postnummer && sted) return `${postnummer} ${sted}`;
-        else return adresse || postnummer || sted || "";
-    };
 
     const lagrePersonalia = () => {
         setLeggTilPersonalia(false);

@@ -17,7 +17,7 @@ import { PencilIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
 import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
 import { AnsettelsesformEnum, ArbeidstidEnum, OmfangEnum, StarttidspunktEnum } from "@/app/enums/cvEnums";
-import { formatterListeAvObjekterTilTekst } from "@/app/enums/enumUtils";
+import { formatterListeAvObjekterTilTekst } from "@/app/utils/stringUtils";
 
 function JobbonskerIcon() {
     return (
