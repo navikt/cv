@@ -1,20 +1,11 @@
-import {
-    BodyLong,
-    Box,
-    Button,
-    Checkbox,
-    CheckboxGroup,
-    FormSummary,
-    Heading,
-    HStack,
-    Modal,
-    Select,
-    Textarea,
-    TextField,
-} from "@navikt/ds-react";
+import { Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
+import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
+import { UtdanningsnivåEnum } from "@/app/enums/cvEnums";
+import { formatterDato } from "@/app/utils/stringUtils";
+import { UtdanningModal } from "@/app/(minCV)/_components/utdanninger/UtdanningModal";
 
 function UtdanningerIcon() {
     return (
@@ -38,7 +29,37 @@ function UtdanningerIcon() {
 }
 
 export default function Utdanninger() {
-    const [leggTilUtdanning, setLeggTilUtdanning] = useState(false);
+    const cvContext = useContext(CvOgPersonContext).cv;
+
+    const [modalÅpen, setModalÅpen] = useState(false);
+    const [utdanninger, setUtdanninger] = useState([]);
+    const [gjeldendeUtdanning, setGjeldendeUtdanning] = useState(-1);
+
+    useEffect(() => {
+        const oppdaterUtdanninger = (utdanning) => setUtdanninger(utdanning);
+        if (cvContext.status === "success") oppdaterUtdanninger(cvContext.data.utdanning || {});
+    }, [cvContext]);
+
+    const toggleModal = (åpen, index) => {
+        setGjeldendeUtdanning(index >= 0 ? index : -1);
+        setModalÅpen(åpen);
+    };
+
+    const lagreUtdanning = (utdanning) => {
+        const oppdaterteUtdanninger = [...utdanninger];
+        if (gjeldendeUtdanning >= 0) oppdaterteUtdanninger.splice(gjeldendeUtdanning, 1, utdanning);
+        else oppdaterteUtdanninger.push(utdanning);
+
+        // TODO: Send oppdatering til backend og oppdater data med responsen / feilmelding
+        setUtdanninger(oppdaterteUtdanninger);
+        setModalÅpen(false);
+    };
+
+    const slettUtdanning = (index) => {
+        const oppdaterteUtdanninger = [...utdanninger];
+        oppdaterteUtdanninger.splice(index, 1);
+        setUtdanninger(oppdaterteUtdanninger);
+    };
 
     return (
         <div id="4">
@@ -49,167 +70,67 @@ export default function Utdanninger() {
                 <Heading level="2" size="large" align="start" spacing>
                     Utdanninger
                 </Heading>
-                <FormSummary style={{ marginBottom: "2rem" }}>
-                    <FormSummary.Header id="4">
-                        <FormSummary.Heading level="2">Doktorgrad</FormSummary.Heading>
-                    </FormSummary.Header>
+                {utdanninger.map((utdanning, index) => (
+                    <div key={index}>
+                        <FormSummary style={{ marginBottom: "2rem" }}>
+                            <FormSummary.Header id="4">
+                                <FormSummary.Heading level="2">
+                                    {UtdanningsnivåEnum[utdanning.nuskode]}
+                                </FormSummary.Heading>
+                            </FormSummary.Header>
 
-                    <FormSummary.Answers>
-                        <FormSummary.Answer>
-                            <FormSummary.Label>Skole/studiested</FormSummary.Label>
-                            <FormSummary.Value>The Jedi Temple</FormSummary.Value>
-                        </FormSummary.Answer>
+                            <FormSummary.Answers>
+                                <FormSummary.Answer>
+                                    <FormSummary.Label>Grad og utdanningsretning</FormSummary.Label>
+                                    <FormSummary.Value>{utdanning.field}</FormSummary.Value>
+                                </FormSummary.Answer>
 
-                        <FormSummary.Answer>
-                            <FormSummary.Label>Start- og sluttdato</FormSummary.Label>
-                            <FormSummary.Value>April 2022 - nå</FormSummary.Value>
-                        </FormSummary.Answer>
+                                <FormSummary.Answer>
+                                    <FormSummary.Label>Skole/studiested</FormSummary.Label>
+                                    <FormSummary.Value>{utdanning.institution}</FormSummary.Value>
+                                </FormSummary.Answer>
 
-                        <FormSummary.Answer>
-                            <FormSummary.Label>Beskrivelse</FormSummary.Label>
-                            <FormSummary.Value>Jedi-knight in training</FormSummary.Value>
-                        </FormSummary.Answer>
-                    </FormSummary.Answers>
-                </FormSummary>
-                <HStack justify="space-between" className={styles.mb12}>
-                    <Button icon={<PencilIcon aria-hidden />} variant="tertiary">
-                        Endre
-                    </Button>
-                    <Button icon={<TrashIcon aria-hidden />} variant="tertiary">
-                        Fjern
-                    </Button>
-                </HStack>
-                <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => setLeggTilUtdanning(true)}>
+                                <FormSummary.Answer>
+                                    <FormSummary.Label>Start- og sluttdato</FormSummary.Label>
+                                    <FormSummary.Value>
+                                        {formatterDato(utdanning.startDate)} - {formatterDato(utdanning.endDate)}
+                                    </FormSummary.Value>
+                                </FormSummary.Answer>
+
+                                <FormSummary.Answer>
+                                    <FormSummary.Label>Beskrivelse</FormSummary.Label>
+                                    <FormSummary.Value>{utdanning.description}</FormSummary.Value>
+                                </FormSummary.Answer>
+                            </FormSummary.Answers>
+                        </FormSummary>
+                        <HStack justify="space-between" className={styles.mb12}>
+                            <Button
+                                icon={<PencilIcon aria-hidden />}
+                                variant="tertiary"
+                                onClick={() => toggleModal(true, index)}
+                            >
+                                Endre
+                            </Button>
+                            <Button
+                                icon={<TrashIcon aria-hidden />}
+                                variant="tertiary"
+                                onClick={() => slettUtdanning(index)}
+                            >
+                                Fjern
+                            </Button>
+                        </HStack>
+                    </div>
+                ))}
+                <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
                     Legg til flere
                 </Button>
             </Box>
-            <Modal
-                open={leggTilUtdanning}
-                aria-label="Legg til utdanning"
-                onClose={() => setLeggTilUtdanning(false)}
-                width="medium"
-            >
-                <Modal.Header closeButton={true}>
-                    <Heading align="start" level="3" size="medium">
-                        Legg til Utdanning
-                    </Heading>
-                </Modal.Header>
-                <Modal.Body>
-                    <BodyLong>
-                        <b>Utdanningsnivå</b> *obligatorisk
-                    </BodyLong>
-                    <Select id="test" label="Hvilken type utdanning har du gått?" className={styles.mb6}>
-                        <option value="">Velg</option>
-                        <option value="grunnskole">Grunnskole</option>
-                        <option value="folkehøgskole">Folkehøgskole</option>
-                        <option value="videregående/yrkesskole">Videregående/yrkesskole</option>
-                        <option value="fagskole">Fagskole</option>
-                        <option value="høyere utdanning, 1-4 år">Høyere utdanning, 1-4 år</option>
-                        <option value="høyere utdanning, 4+ år">Høyere utdanning, 4+ år</option>
-                        <option value="doktorgrad">Doktorgrad</option>
-                    </Select>
-                    <TextField
-                        label="Grad og utdanningsretning"
-                        description="Eksempel: elektrofag, bachelor i historie"
-                        className={styles.mb6}
-                    />
-                    <TextField
-                        label="Skole/studiested"
-                        description="Eksempel: Drammen videregående, Universitetet i Tromsø"
-                        className={styles.mb6}
-                    />
-                    <Textarea
-                        label="Beskriv utdanningen"
-                        description="Eksempel: Studieretning eller fag du har fordypet deg i"
-                        className={styles.mb6}
-                    />
-                    <CheckboxGroup legend="" className={styles.mb6}>
-                        <Checkbox value="utdanning">Utdanning jeg tar nå</Checkbox>
-                    </CheckboxGroup>
-                    <HStack gap="32">
-                        <BodyLong>
-                            <b>Fra</b> *obligatorisk
-                        </BodyLong>
-                        <BodyLong>
-                            <b>Til</b> *obligatorisk
-                        </BodyLong>
-                    </HStack>
-                    <HStack gap="8">
-                        <HStack gap="4">
-                            <Select label="">
-                                <option value="måned">Måned</option>
-                                <option value="januar">Januar</option>
-                                <option value="februar">Februar</option>
-                                <option value="mars">Mars</option>
-                                <option value="april">April</option>
-                                <option value="mai">Mai</option>
-                                <option value="juni">Juni</option>
-                                <option value="juli">Juli</option>
-                                <option value="august">August</option>
-                                <option value="september">September</option>
-                                <option value="oktober">Oktober</option>
-                                <option value="november">November</option>
-                                <option value="desember">Desember</option>
-                            </Select>
-                            <Select label="">
-                                <option value="år">År</option>
-                                <option value="2024">2024</option>
-                                <option value="2023">2023</option>
-                                <option value="2022">2022</option>
-                                <option value="2021">2021</option>
-                                <option value="2020">2020</option>
-                                <option value="2019">2019</option>
-                                <option value="2018">2018</option>
-                                <option value="2017">2017</option>
-                                <option value="2016">2016</option>
-                                <option value="2015">2015</option>
-                                <option value="2014">2014</option>
-                                <option value="2013">2013</option>
-                            </Select>
-                        </HStack>
-                        <HStack gap="4">
-                            <Select label="">
-                                <option value="måned">Måned</option>
-                                <option value="januar">Januar</option>
-                                <option value="februar">Februar</option>
-                                <option value="mars">Mars</option>
-                                <option value="april">April</option>
-                                <option value="mai">Mai</option>
-                                <option value="juni">Juni</option>
-                                <option value="juli">Juli</option>
-                                <option value="august">August</option>
-                                <option value="september">September</option>
-                                <option value="oktober">Oktober</option>
-                                <option value="november">November</option>
-                                <option value="desember">Desember</option>
-                            </Select>
-                            <Select label="">
-                                <option value="år">År</option>
-                                <option value="2024">2024</option>
-                                <option value="2023">2023</option>
-                                <option value="2022">2022</option>
-                                <option value="2021">2021</option>
-                                <option value="2020">2020</option>
-                                <option value="2019">2019</option>
-                                <option value="2018">2018</option>
-                                <option value="2017">2017</option>
-                                <option value="2016">2016</option>
-                                <option value="2015">2015</option>
-                                <option value="2014">2014</option>
-                                <option value="2013">2013</option>
-                            </Select>
-                        </HStack>
-                    </HStack>
-                </Modal.Body>
-                <Modal.Footer>
-                    <HStack gap="4">
-                        <Button variant="secondary" onClick={() => setLeggTilUtdanning(false)}>
-                            Avbryt
-                        </Button>
-                        <Button variant="primary">Lagre</Button>
-                    </HStack>
-                </Modal.Footer>
-            </Modal>
+            <UtdanningModal
+                modalÅpen={modalÅpen}
+                toggleModal={toggleModal}
+                utdanning={utdanninger[gjeldendeUtdanning]}
+                lagreUtdanning={lagreUtdanning}
+            />
         </div>
     );
 }
