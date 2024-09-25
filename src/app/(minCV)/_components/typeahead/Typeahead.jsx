@@ -1,6 +1,6 @@
 import { UNSAFE_Combobox } from "@navikt/ds-react";
-import {useEffect, useState} from "react";
-import {mapTypeaheadResponse} from "@/app/utils/fetchUtils";
+import { useEffect, useState } from "react";
+import { mapTypeaheadResponse } from "@/app/utils/fetchUtils";
 
 // TODO: Bytt mock med url ved kobling mot backend
 export const Typeahead = ({ mockData, oppdaterValg, valgtVerdi, label, description, multiselect }) => {
@@ -8,7 +8,7 @@ export const Typeahead = ({ mockData, oppdaterValg, valgtVerdi, label, descripti
 
     const hentTypeahead = () => {
         // TODO: Hent fra URL
-        const data = mapTypeaheadResponse(mockData)
+        const data = mapTypeaheadResponse(mockData);
         setTypeahead(data);
     };
 

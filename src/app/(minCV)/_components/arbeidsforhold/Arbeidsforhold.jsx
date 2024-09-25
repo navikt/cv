@@ -31,7 +31,8 @@ export default function Arbeidsforhold() {
 
     const lagreArbeidsforhold = (oppdatertArbeidsforhold) => {
         const oppdaterteArbeidsforhold = [...arbeidsforhold];
-        if (gjeldendeArbeidsforhold >= 0) oppdaterteArbeidsforhold.splice(gjeldendeArbeidsforhold, 1, oppdatertArbeidsforhold);
+        if (gjeldendeArbeidsforhold >= 0)
+            oppdaterteArbeidsforhold.splice(gjeldendeArbeidsforhold, 1, oppdatertArbeidsforhold);
         else oppdaterteArbeidsforhold.push(oppdatertArbeidsforhold);
 
         // TODO: Send oppdatering til backend og oppdater data med responsen / feilmelding

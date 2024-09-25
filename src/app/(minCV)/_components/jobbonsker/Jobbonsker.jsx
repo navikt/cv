@@ -102,11 +102,7 @@ export default function Jobbonsker() {
                 <BodyLong className={styles.mb16}>{StarttidspunktEnum[starttidspunkt]}</BodyLong>
 
                 <HStack justify="space-between">
-                    <Button
-                        icon={<PencilIcon aria-hidden />}
-                        variant="primary"
-                        onClick={() => setmodalÅpen(true)}
-                    >
+                    <Button icon={<PencilIcon aria-hidden />} variant="primary" onClick={() => setmodalÅpen(true)}>
                         Endre
                     </Button>
                     <Button icon={<TrashIcon aria-hidden />} variant="secondary">
@@ -115,12 +111,7 @@ export default function Jobbonsker() {
                 </HStack>
             </Box>
 
-            <Modal
-                open={modalÅpen}
-                aria-label="Legg til jobbønske"
-                onClose={() => setmodalÅpen(false)}
-                width="medium"
-            >
+            <Modal open={modalÅpen} aria-label="Legg til jobbønske" onClose={() => setmodalÅpen(false)} width="medium">
                 <Modal.Header closeButton={true}>
                     <Heading align="start" level="3" size="medium">
                         <HStack gap="1" align="center">

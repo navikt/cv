@@ -8,7 +8,8 @@ import {
     Modal,
     Select,
     Textarea,
-    TextField, VStack,
+    TextField,
+    VStack,
 } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { MånedEnum, UtdanningsnivåEnum } from "@/app/enums/cvEnums";
