@@ -43,7 +43,7 @@ function JobbonskerIcon() {
 export default function Jobbonsker() {
     const cvContext = useContext(CvOgPersonContext).cv;
 
-    const [leggTilJobbonske, setleggTilJobbonske] = useState(false);
+    const [modalÅpen, setmodalÅpen] = useState(false);
     const [yrker, setYrker] = useState([]);
     const [lokasjoner, setLokasjoner] = useState([]);
     const [omfang, setOmfang] = useState([]);
@@ -65,7 +65,7 @@ export default function Jobbonsker() {
     }, [cvContext]);
 
     const lagreJobbønsker = () => {
-        setleggTilJobbonske(false);
+        setmodalÅpen(false);
     };
 
     return (
@@ -102,11 +102,7 @@ export default function Jobbonsker() {
                 <BodyLong className={styles.mb16}>{StarttidspunktEnum[starttidspunkt]}</BodyLong>
 
                 <HStack justify="space-between">
-                    <Button
-                        icon={<PencilIcon aria-hidden />}
-                        variant="primary"
-                        onClick={() => setleggTilJobbonske(true)}
-                    >
+                    <Button icon={<PencilIcon aria-hidden />} variant="primary" onClick={() => setmodalÅpen(true)}>
                         Endre
                     </Button>
                     <Button icon={<TrashIcon aria-hidden />} variant="secondary">
@@ -115,12 +111,7 @@ export default function Jobbonsker() {
                 </HStack>
             </Box>
 
-            <Modal
-                open={leggTilJobbonske}
-                aria-label="Legg til jobbønske"
-                onClose={() => setleggTilJobbonske(false)}
-                width="medium"
-            >
+            <Modal open={modalÅpen} aria-label="Legg til jobbønske" onClose={() => setmodalÅpen(false)} width="medium">
                 <Modal.Header closeButton={true}>
                     <Heading align="start" level="3" size="medium">
                         <HStack gap="1" align="center">
@@ -199,7 +190,7 @@ export default function Jobbonsker() {
                 </Modal.Body>
                 <Modal.Footer>
                     <HStack gap="4">
-                        <Button variant="secondary" onClick={() => setleggTilJobbonske(false)}>
+                        <Button variant="secondary" onClick={() => setmodalÅpen(false)}>
                             Avbryt
                         </Button>
                         <Button variant="primary" onClick={lagreJobbønsker}>

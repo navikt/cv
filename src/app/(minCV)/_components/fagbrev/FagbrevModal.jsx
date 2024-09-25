@@ -1,12 +1,10 @@
 import { Button, Heading, HStack, Modal } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
-import fagbrevMock from "../../../mocks/fagbrevMock.json";
+import fagbrevMock from "../../../mocks/fagbrevTypeaheadMock.json";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 
 export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFagbrev }) {
     const [valgtFagbrev, setValgtFagbrev] = useState(fagbrev || null);
-
-    console.log("Fagbrev", fagbrev);
 
     useEffect(() => {
         const oppdaterFagbrev = (fagbrev) => setValgtFagbrev(fagbrev);
@@ -39,9 +37,10 @@ export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFa
             </Modal.Header>
             <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
                 <Typeahead
-                    mockData={fagbrevMock.fagbrev}
+                    label="Fagdokumentasjon"
+                    description="Må fylles ut"
+                    mockData={fagbrevMock}
                     oppdaterValg={setValgtFagbrev}
-                    visningsfelt="label"
                     valgtVerdi={valgtFagbrev?.title}
                 />
             </Modal.Body>
