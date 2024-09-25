@@ -8,7 +8,7 @@ import {
     Modal,
     Select,
     Textarea,
-    TextField,
+    TextField, VStack,
 } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { MånedEnum, UtdanningsnivåEnum } from "@/app/enums/cvEnums";
@@ -33,11 +33,11 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
             setBeskrivelse(utdanning?.description || "");
 
             const startDato = utdanning ? new Date(utdanning.startDate) : null;
-            setStartmåned(startDato?.getMonth() || -1);
+            setStartmåned(startDato?.getMonth() >= 0 ? startDato?.getMonth() : -1);
             setStartår(startDato?.getFullYear() || -1);
 
             const sluttDato = utdanning && utdanning.endDate ? new Date(utdanning.endDate) : null;
-            setSluttmåned(sluttDato?.getMonth() || -1);
+            setSluttmåned(sluttDato?.getMonth() >= 0 ? sluttDato?.getMonth() : -1);
             setSluttår(sluttDato?.getFullYear() || -1);
 
             setPågår(utdanning && utdanning.ongoing ? [true] : []);
@@ -111,39 +111,14 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
                 <CheckboxGroup legend="Utdanning jeg tar nå" className={styles.mb6} value={pågår} onChange={setPågår}>
                     <Checkbox value={true}>Utdanning jeg tar nå</Checkbox>
                 </CheckboxGroup>
-                <HStack gap="32">
-                    <BodyLong>
-                        <b>Fra</b> *obligatorisk
-                    </BodyLong>
-                    {!pågår.includes(true) && (
-                        <BodyLong>
-                            <b>Til</b> *obligatorisk
-                        </BodyLong>
-                    )}
-                </HStack>
-                <HStack gap="8">
-                    <HStack gap="4">
-                        <Select label="" value={startmåned} onChange={(e) => setStartmåned(e.target.value)}>
-                            <option value={-1}>Måned</option>
-                            {Object.keys(MånedEnum).map((måned) => (
-                                <option key={måned} value={måned}>
-                                    {MånedEnum[måned]}
-                                </option>
-                            ))}
-                        </Select>
-                        <Select label="" value={startår} onChange={(e) => setStartår(e.target.value)}>
-                            <option value={-1}>År</option>
-                            {årspenn.map((år) => (
-                                <option key={år} value={år}>
-                                    {år}
-                                </option>
-                            ))}
-                        </Select>
-                    </HStack>
 
-                    {!pågår.includes(true) && (
+                <HStack gap="8">
+                    <VStack>
+                        <BodyLong>
+                            <b>Fra</b> *obligatorisk
+                        </BodyLong>
                         <HStack gap="4">
-                            <Select label="" value={sluttmåned} onChange={(e) => setSluttmåned(e.target.value)}>
+                            <Select label="" value={startmåned} onChange={(e) => setStartmåned(e.target.value)}>
                                 <option value={-1}>Måned</option>
                                 {Object.keys(MånedEnum).map((måned) => (
                                     <option key={måned} value={måned}>
@@ -151,7 +126,7 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
                                     </option>
                                 ))}
                             </Select>
-                            <Select label="" value={sluttår} onChange={(e) => setSluttår(e.target.value)}>
+                            <Select label="" value={startår} onChange={(e) => setStartår(e.target.value)}>
                                 <option value={-1}>År</option>
                                 {årspenn.map((år) => (
                                     <option key={år} value={år}>
@@ -160,6 +135,32 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
                                 ))}
                             </Select>
                         </HStack>
+                    </VStack>
+
+                    {!pågår.includes(true) && (
+                        <VStack>
+                            <BodyLong>
+                                <b>Til</b> *obligatorisk
+                            </BodyLong>
+                            <HStack gap="4">
+                                <Select label="" value={sluttmåned} onChange={(e) => setSluttmåned(e.target.value)}>
+                                    <option value={-1}>Måned</option>
+                                    {Object.keys(MånedEnum).map((måned) => (
+                                        <option key={måned} value={måned}>
+                                            {MånedEnum[måned]}
+                                        </option>
+                                    ))}
+                                </Select>
+                                <Select label="" value={sluttår} onChange={(e) => setSluttår(e.target.value)}>
+                                    <option value={-1}>År</option>
+                                    {årspenn.map((år) => (
+                                        <option key={år} value={år}>
+                                            {år}
+                                        </option>
+                                    ))}
+                                </Select>
+                            </HStack>
+                        </VStack>
                     )}
                 </HStack>
             </Modal.Body>

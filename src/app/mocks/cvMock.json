@@ -17,15 +17,15 @@
         {
             "employer": "Yoda’s camp for Force-sensitive children",
             "jobTitle": "Padawan",
-            "alternativeJobTitle": null,
+            "alternativeJobTitle": "Løpegutt",
             "conceptId": "55309",
             "location": "Dagobah system 17",
-            "description": null,
+            "description": "Hoppet litt i skogen og hang med pappa i en hule :)",
             "fromDate": "2017-09-01T02:00:00+01:00",
             "toDate": "2019-11-30T02:00:00+01:00",
             "styrkkode": "1111",
             "ikkeAktueltForFremtiden": false,
-            "ongoing": true
+            "ongoing": false
         }
     ],
     "utdanning": [

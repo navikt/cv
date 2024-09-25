@@ -43,7 +43,7 @@ function JobbonskerIcon() {
 export default function Jobbonsker() {
     const cvContext = useContext(CvOgPersonContext).cv;
 
-    const [leggTilJobbonske, setleggTilJobbonske] = useState(false);
+    const [modalÅpen, setmodalÅpen] = useState(false);
     const [yrker, setYrker] = useState([]);
     const [lokasjoner, setLokasjoner] = useState([]);
     const [omfang, setOmfang] = useState([]);
@@ -65,7 +65,7 @@ export default function Jobbonsker() {
     }, [cvContext]);
 
     const lagreJobbønsker = () => {
-        setleggTilJobbonske(false);
+        setmodalÅpen(false);
     };
 
     return (
@@ -105,7 +105,7 @@ export default function Jobbonsker() {
                     <Button
                         icon={<PencilIcon aria-hidden />}
                         variant="primary"
-                        onClick={() => setleggTilJobbonske(true)}
+                        onClick={() => setmodalÅpen(true)}
                     >
                         Endre
                     </Button>
@@ -116,9 +116,9 @@ export default function Jobbonsker() {
             </Box>
 
             <Modal
-                open={leggTilJobbonske}
+                open={modalÅpen}
                 aria-label="Legg til jobbønske"
-                onClose={() => setleggTilJobbonske(false)}
+                onClose={() => setmodalÅpen(false)}
                 width="medium"
             >
                 <Modal.Header closeButton={true}>
@@ -199,7 +199,7 @@ export default function Jobbonsker() {
                 </Modal.Body>
                 <Modal.Footer>
                     <HStack gap="4">
-                        <Button variant="secondary" onClick={() => setleggTilJobbonske(false)}>
+                        <Button variant="secondary" onClick={() => setmodalÅpen(false)}>
                             Avbryt
                         </Button>
                         <Button variant="primary" onClick={lagreJobbønsker}>

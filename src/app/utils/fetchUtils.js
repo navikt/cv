@@ -21,3 +21,10 @@ export const hentData = async (setData, responseMock, url, headers) => {
         }));
     }
 };
+
+export const mapTypeaheadResponse = (json) => {
+    return json.data.map((e) => ({
+        ...e,
+        title: e.label,
+    }));
+};
