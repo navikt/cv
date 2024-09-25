@@ -9,14 +9,14 @@ const inter = Inter({ subsets: ["latin"] });
 const RootLayout = async (props) => {
     const { children } = props;
     const Decorator = await fetchDecoratorReact({
-        env: "dev",
+        env: process.env.ENV_DEKORATOR,
         params: {
             context: "privatperson",
             redirectToApp: true,
             breadcrumbs: [
                 {
                     title: "Min side",
-                    url: "https://www.ansatt.dev.nav.no/minside",
+                    url: process.env.NAV_MINSIDE_URL,
                 },
                 {
                     title: "Din CV",
