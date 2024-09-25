@@ -1,12 +1,41 @@
-import { BodyLong, Box, Button, Heading, HStack, Modal, TextField } from "@navikt/ds-react";
+import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
+import FagbrevModal from "@/app/(minCV)/_components/fagbrev/FagbrevModal";
 
 export default function Fagbrev() {
-    const [fagbrev, setFagbrev] = useState(true);
-    const [leggTilFagbrev, setLeggTilFagbrev] = useState(false);
-    const [fagdokumentasjon, setFagdokumentasjon] = useState();
+    const cvContext = useContext(CvOgPersonContext).cv;
+    const [fagbrev, setFagbrev] = useState([]);
+    const [modalÅpen, setModalÅpen] = useState(false);
+    const [gjeldendeFagbrev, setGjeldendeFagbrev] = useState(-1);
+
+    useEffect(() => {
+        const oppdaterFagbrev = (fagbrev) => setFagbrev(fagbrev);
+        if (cvContext.status === "success") oppdaterFagbrev(cvContext.data.fagbrev || []);
+    }, [cvContext]);
+
+    const toggleModal = (åpen, index) => {
+        setGjeldendeFagbrev(index >= 0 ? index : -1);
+        setModalÅpen(åpen);
+    };
+
+    const lagreFagbrev = (oppdatertFagbrev) => {
+        const oppdaterteFagbrev = [...fagbrev];
+        if (gjeldendeFagbrev >= 0) oppdaterteFagbrev.splice(gjeldendeFagbrev, 1, oppdatertFagbrev);
+        else oppdaterteFagbrev.push(oppdatertFagbrev);
+
+        // TODO: Send oppdatering til backend og oppdater data med responsen / feilmelding
+        setFagbrev(oppdaterteFagbrev);
+        setModalÅpen(false);
+    };
+
+    const slettFagbrev = (index) => {
+        const oppdaterteFagbrev = [...fagbrev];
+        oppdaterteFagbrev.splice(index, 1);
+        setFagbrev(oppdaterteFagbrev);
+    };
 
     function FagbrevIcon() {
         return (
@@ -38,91 +67,55 @@ export default function Fagbrev() {
                 <Heading className={styles.mb6} level="2" size="large" align="start" spacing>
                     Fagbrev
                 </Heading>
-                {!fagbrev && (
-                    <>
-                        <BodyLong weight="semibold" spacing>
-                            Du har ikke lagt til noen fagbrev i CV-en
-                        </BodyLong>
-                        <BodyLong className={styles.mb12}>
-                            Her kan du sette inn ulike fagbrev som du har tatt, f.eks i bilpleie.
-                        </BodyLong>
-                        <Button icon={<PlusIcon aria-hidden />} variant="primary">
-                            Legg til
-                        </Button>
-                    </>
-                )}
-                {fagbrev && (
-                    <>
-                        <BodyLong weight="semibold">Yrkeskompetanse Pilot</BodyLong>
-                        <HStack justify="space-between" className={styles.mb3}>
-                            <Button icon={<PencilIcon aria-hidden />} variant="tertiary">
-                                Endre
-                            </Button>
-                            <Button icon={<TrashIcon aria-hidden />} variant="tertiary">
-                                Fjern
-                            </Button>
-                        </HStack>
-                        <div className={styles.divider}></div>
-                        <BodyLong weight="semibold">Svennebrev Moisture farmer</BodyLong>
-                        <HStack justify="space-between" className={styles.mb3}>
-                            <Button icon={<PencilIcon aria-hidden />} variant="tertiary">
-                                Endre
-                            </Button>
-                            <Button icon={<TrashIcon aria-hidden />} variant="tertiary">
-                                Fjern
-                            </Button>
-                        </HStack>
-                        <div className={styles.divider}></div>
-                        <BodyLong weight="semibold">Mesterbrev Jedi Knight</BodyLong>
-                        <HStack justify="space-between" className={styles.mb12}>
-                            <Button icon={<PencilIcon aria-hidden />} variant="tertiary">
-                                Endre
-                            </Button>
-                            <Button icon={<TrashIcon aria-hidden />} variant="tertiary">
-                                Fjern
-                            </Button>
-                        </HStack>
-                        <Button
-                            icon={<PlusIcon aria-hidden />}
-                            variant="primary"
-                            onClick={() => setLeggTilFagbrev(true)}
-                        >
-                            Legg til flere
-                        </Button>
-                    </>
-                )}
+                <>
+                    {fagbrev.length === 0 ? (
+                        <div>
+                            <BodyLong weight="semibold" spacing>
+                                Du har ikke lagt til noen fagbrev i CV-en
+                            </BodyLong>
+                            <BodyLong className={styles.mb12}>
+                                Her kan du sette inn ulike fagbrev som du har tatt, f.eks i bilpleie.
+                            </BodyLong>
+                        </div>
+                    ) : (
+                        <div className={styles.mb6}>
+                            {fagbrev.map((fb, index) => (
+                                <div key={index}>
+                                    <BodyLong weight="semibold">• {fb.title}</BodyLong>
+                                    <HStack justify="space-between" className={styles.mb3}>
+                                        <Button
+                                            icon={<PencilIcon aria-hidden />}
+                                            variant="tertiary"
+                                            onClick={() => toggleModal(true, index)}
+                                        >
+                                            Endre
+                                        </Button>
+                                        <Button
+                                            icon={<TrashIcon aria-hidden />}
+                                            variant="tertiary"
+                                            onClick={() => slettFagbrev(index)}
+                                        >
+                                            Fjern
+                                        </Button>
+                                    </HStack>
+                                    {index < fagbrev.length - 1 && <div className={styles.divider}></div>}
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                        Legg til
+                    </Button>
+                </>
             </Box>
-            <Modal
-                open={leggTilFagbrev}
-                aria-label="Legg til fagbrev"
-                onClose={() => setLeggTilFagbrev(false)}
-                width="medium"
-            >
-                <Modal.Header closeButton={true}>
-                    <Heading align="start" level="3" size="medium">
-                        <HStack gap="1" align="center">
-                            Legg til Fagbrev
-                        </HStack>
-                    </Heading>
-                </Modal.Header>
-                <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }}>
-                    <TextField
-                        className={styles.mb6}
-                        label="Fagdokumentasjon"
-                        description="Må fylles ut"
-                        value={fagdokumentasjon}
-                        onChange={(e) => setFagdokumentasjon(e.target.value)}
-                    />
-                </Modal.Body>
-                <Modal.Footer>
-                    <HStack gap="4">
-                        <Button variant="secondary" onClick={() => setLeggTilFagbrev(false)}>
-                            Avbryt
-                        </Button>
-                        <Button variant="primary">Lagre</Button>
-                    </HStack>
-                </Modal.Footer>
-            </Modal>
+            {modalÅpen && (
+                <FagbrevModal
+                    modalÅpen={modalÅpen}
+                    toggleModal={toggleModal}
+                    fagbrev={fagbrev[gjeldendeFagbrev]}
+                    lagreFagbrev={lagreFagbrev}
+                />
+            )}
         </div>
     );
 }
