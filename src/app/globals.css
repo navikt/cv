@@ -73,3 +73,8 @@ a {
         color-scheme: dark;
     }
 }
+
+/* Brukes slik at typeahead-forslag legger seg over modalene de er inni */
+.overflow-visible {
+    overflow: visible !important;
+}

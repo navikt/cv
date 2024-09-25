@@ -37,7 +37,7 @@ export default function Utdanninger() {
 
     useEffect(() => {
         const oppdaterUtdanninger = (utdanning) => setUtdanninger(utdanning);
-        if (cvContext.status === "success") oppdaterUtdanninger(cvContext.data.utdanning || {});
+        if (cvContext.status === "success") oppdaterUtdanninger(cvContext.data.utdanning || []);
     }, [cvContext]);
 
     const toggleModal = (åpen, index) => {
