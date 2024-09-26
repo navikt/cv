@@ -78,3 +78,8 @@ a {
 .overflow-visible {
     overflow: visible !important;
 }
+
+/* Hack for datovelger som av en eller annen grunn har satt feil vidde i års-feltet*/
+.navds-date__caption__year {
+    width: unset !important;
+}
