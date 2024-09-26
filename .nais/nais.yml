@@ -44,6 +44,10 @@ spec:
   env:
     - name: PORT
       value: "8095"
+    - name: NEXT_PUBLIC_ENV_DEKORATOR
+      value: {{ env_dekorator }}
+    - name: NEXT_PUBLIC_NAV_MIN_SIDE_URL
+      value: {{ nav_min_side_url }}
   accessPolicy:
     outbound:
       rules:

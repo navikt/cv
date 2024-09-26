@@ -16,7 +16,7 @@ const RootLayout = async (props) => {
             breadcrumbs: [
                 {
                     title: "Min side",
-                    url: process.env.NEXT_PUBLIC_NAV_MINSIDE_URL,
+                    url: process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL,
                 },
                 {
                     title: "Din CV",
