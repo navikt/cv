@@ -65,9 +65,16 @@
     ],
     "annenErfaring": [
         {
-            "description": "Vant Sabacc-turneringen i Mos Eisley for et par år siden",
-            "role": "Sabacc",
-            "fromDate": "1998-02-01T00:00:00+01:00",
+            "description": "I have a very bad feeling about this",
+            "role": "Lightsaber construction",
+            "fromDate": "2021-05-01T00:00:00+01:00",
+            "toDate": "2024-02-01T00:00:00+01:00",
+            "ongoing": false
+        },
+        {
+            "description": "Confronting fear is the destiny of a Jedi",
+            "role": "The Force",
+            "fromDate": "1977-09-01T00:00:00+01:00",
             "toDate": null,
             "ongoing": true
         }
