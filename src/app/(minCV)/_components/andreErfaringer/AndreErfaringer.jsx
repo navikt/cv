@@ -3,9 +3,7 @@ import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
 import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
-import { UtdanningsnivåEnum } from "@/app/enums/cvEnums";
 import { formatterDato } from "@/app/utils/stringUtils";
-import { UtdanningModal } from "@/app/(minCV)/_components/utdanninger/UtdanningModal";
 import { AndreErfaringerModal } from "@/app/(minCV)/_components/andreErfaringer/AndreErfaringerModal";
 
 export default function AndreErfaringer() {

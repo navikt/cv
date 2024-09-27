@@ -1,0 +1,254 @@
+{
+    "data": [
+        {
+            "konseptId": 46206,
+            "label": "Fabasoft (ECM)",
+            "type": ""
+        },
+        {
+            "konseptId": 425890,
+            "label": "Fabrikasjonsprosess",
+            "type": ""
+        },
+        {
+            "konseptId": 156359,
+            "label": "Fabrikasjonsteknologi",
+            "type": ""
+        },
+        {
+            "konseptId": 5050,
+            "label": "Fabrikkmontering",
+            "type": ""
+        },
+        {
+            "konseptId": 5051,
+            "label": "Fabrikkmontering av automatiske urverk",
+            "type": ""
+        },
+        {
+            "konseptId": 5052,
+            "label": "Fabrikkmontering av kronografverk",
+            "type": ""
+        },
+        {
+            "konseptId": 400542,
+            "label": "Fabrikkrenhold",
+            "type": ""
+        },
+        {
+            "konseptId": 400367,
+            "label": "Fabrikktesting",
+            "type": ""
+        },
+        {
+            "konseptId": 356202,
+            "label": "Fabrikktråler",
+            "type": ""
+        },
+        {
+            "konseptId": 32816,
+            "label": "Facebook",
+            "type": ""
+        },
+        {
+            "konseptId": 401105,
+            "label": "Facebook Ads Manager",
+            "type": ""
+        },
+        {
+            "konseptId": 319734,
+            "label": "Facebook Analytics",
+            "type": ""
+        },
+        {
+            "konseptId": 608441,
+            "label": "Facebook Android SDK",
+            "type": ""
+        },
+        {
+            "konseptId": 401627,
+            "label": "Facebookannonser",
+            "type": ""
+        },
+        {
+            "konseptId": 611577,
+            "label": "Facebook API",
+            "type": ""
+        },
+        {
+            "konseptId": 319727,
+            "label": "Facebook Audience Network",
+            "type": ""
+        },
+        {
+            "konseptId": 595873,
+            "label": "Facebook Blueprint",
+            "type": ""
+        },
+        {
+            "konseptId": 804743,
+            "label": "Facebook Blueprint Sertifikat",
+            "type": ""
+        },
+        {
+            "konseptId": 402192,
+            "label": "Facebook Business Manager",
+            "type": ""
+        },
+        {
+            "konseptId": 319735,
+            "label": "Facebook Developer Circles",
+            "type": ""
+        },
+        {
+            "konseptId": 319737,
+            "label": "Facebook Live API",
+            "type": ""
+        },
+        {
+            "konseptId": 214734,
+            "label": "Facebook Mentions",
+            "type": ""
+        },
+        {
+            "konseptId": 319787,
+            "label": "Facebook Messenger",
+            "type": ""
+        },
+        {
+            "konseptId": 405638,
+            "label": "Facebook Pixel",
+            "type": ""
+        },
+        {
+            "konseptId": 214340,
+            "label": "Facebook Query Language (FQL)",
+            "type": ""
+        },
+        {
+            "konseptId": 405637,
+            "label": "Facebook Retargeting",
+            "type": ""
+        },
+        {
+            "konseptId": 405637,
+            "label": "Facebook Re-targeting",
+            "type": ""
+        },
+        {
+            "konseptId": 319792,
+            "label": "Facebook Safety Check",
+            "type": ""
+        },
+        {
+            "konseptId": 319788,
+            "label": "Facebook Social Jobs Partnership",
+            "type": ""
+        },
+        {
+            "konseptId": 319739,
+            "label": "Facebook ThreatExchange",
+            "type": ""
+        },
+        {
+            "konseptId": 754895,
+            "label": "Facelets",
+            "type": ""
+        },
+        {
+            "konseptId": 1028549,
+            "label": "Facet 5 personlighetstest sertifikat",
+            "type": ""
+        },
+        {
+            "konseptId": 839962,
+            "label": "FaceTime",
+            "type": ""
+        },
+        {
+            "konseptId": 371197,
+            "label": "Facility services",
+            "type": ""
+        },
+        {
+            "konseptId": 224904,
+            "label": "Factoring",
+            "type": ""
+        },
+        {
+            "konseptId": 400513,
+            "label": "Factory Acceptance Test",
+            "type": ""
+        },
+        {
+            "konseptId": 400513,
+            "label": "Factory Acceptance Test FAT",
+            "type": ""
+        },
+        {
+            "konseptId": 2476843,
+            "label": "FactoryCast",
+            "type": ""
+        },
+        {
+            "konseptId": 583248,
+            "label": "Factual SDK",
+            "type": ""
+        },
+        {
+            "konseptId": 615114,
+            "label": "Facturaplus software",
+            "type": ""
+        },
+        {
+            "konseptId": 401296,
+            "label": "Fagansvaret for tappeseksjonen",
+            "type": ""
+        },
+        {
+            "konseptId": 364453,
+            "label": "Fagdidaktikk",
+            "type": ""
+        },
+        {
+            "konseptId": 364454,
+            "label": "Fagdidaktikk billedkunst",
+            "type": ""
+        },
+        {
+            "konseptId": 364463,
+            "label": "Fagdidaktikk dans",
+            "type": ""
+        },
+        {
+            "konseptId": 364465,
+            "label": "Fagdidaktikk elektroteknikk",
+            "type": ""
+        },
+        {
+            "konseptId": 364461,
+            "label": "Fagdidaktikk fremmedspråk",
+            "type": ""
+        },
+        {
+            "konseptId": 364466,
+            "label": "Fagdidaktikk informatikk",
+            "type": ""
+        },
+        {
+            "konseptId": 364455,
+            "label": "Fagdidaktikk matematikk",
+            "type": ""
+        },
+        {
+            "konseptId": 53699,
+            "label": "Fagdidaktikk media",
+            "type": ""
+        },
+        {
+            "konseptId": 364460,
+            "label": "Fagdidaktikk morsmål",
+            "type": ""
+        }
+    ]
+}

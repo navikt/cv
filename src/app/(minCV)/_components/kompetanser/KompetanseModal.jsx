@@ -1,23 +1,23 @@
 import { Button, Heading, HStack, Modal } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
-import fagbrevMock from "../../../mocks/typeahead/fagbrevTypeaheadMock.json";
+import kompetanseMock from "../../../mocks/typeahead/kompetanserTypeaheadMock.json";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 
-export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFagbrev }) {
-    const [valgtFagbrev, setValgtFagbrev] = useState(fagbrev || null);
+export default function KompetanseModal({ modalÅpen, toggleModal, kompetanse, lagreKompetanse }) {
+    const [valgtKompetanse, setValgtKompetanse] = useState(kompetanse || null);
 
     useEffect(() => {
-        const oppdaterFagbrev = (fagbrev) => setValgtFagbrev(fagbrev);
-        oppdaterFagbrev(fagbrev || []);
-    }, [fagbrev]);
+        const oppdaterKompetanse = (kompetanse) => setValgtKompetanse(kompetanse);
+        oppdaterKompetanse(kompetanse || []);
+    }, [kompetanse]);
 
     const lagre = () => {
-        lagreFagbrev({
-            title: valgtFagbrev.label || valgtFagbrev.title,
-            type: valgtFagbrev.type,
-            conceptId: valgtFagbrev.conceptId,
+        lagreKompetanse({
+            title: valgtKompetanse.label || valgtKompetanse.title,
+            type: valgtKompetanse.type,
+            conceptId: valgtKompetanse.conceptId,
         });
-        setValgtFagbrev(null);
+        setValgtKompetanse(null);
     };
 
     return (
@@ -31,7 +31,7 @@ export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFa
             <Modal.Header closeButton={true}>
                 <Heading align="start" level="3" size="medium">
                     <HStack gap="1" align="center">
-                        Legg til Fagbrev
+                        Legg til Kompetanse
                     </HStack>
                 </Heading>
             </Modal.Header>
@@ -39,9 +39,9 @@ export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFa
                 <Typeahead
                     label="Fagdokumentasjon"
                     description="Må fylles ut"
-                    mockData={fagbrevMock}
-                    oppdaterValg={setValgtFagbrev}
-                    valgtVerdi={valgtFagbrev?.title}
+                    mockData={kompetanseMock}
+                    oppdaterValg={setValgtKompetanse}
+                    valgtVerdi={valgtKompetanse?.title}
                 />
             </Modal.Body>
             <Modal.Footer>
@@ -49,7 +49,7 @@ export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFa
                     <Button variant="secondary" onClick={() => toggleModal(false)}>
                         Avbryt
                     </Button>
-                    <Button variant="primary" onClick={() => lagre(valgtFagbrev)}>
+                    <Button variant="primary" onClick={() => lagre(valgtKompetanse)}>
                         Lagre
                     </Button>
                 </HStack>

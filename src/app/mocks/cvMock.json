@@ -43,22 +43,22 @@
     ],
     "andreGodkjenninger": [
         {
-            "certificateName": "X-Wing serisert",
+            "certificateName": "Nerf Herder",
             "alternativeName": null,
             "conceptId": null,
-            "issuer": "Fasd",
+            "issuer": "Tatooine Agricultural Academy",
             "fromDate": "2001-02-01T00:00:00+01:00",
             "toDate": "2043-07-01T00:00:00+02:00"
         }
     ],
     "foererkort": [
         {
-            "type": "X - X-Wing",
-            "acquiredDate": null,
-            "expiryDate": null
+            "type": "C1E - Lett lastebil med tilhenger",
+            "acquiredDate": "2001-02-01T00:00:00+01:00",
+            "expiryDate": "2043-07-01T00:00:00+02:00"
         },
         {
-            "type": "LS34 - X-34 Landspeeder",
+            "type": "B 78 - Personbil med automatgir",
             "acquiredDate": null,
             "expiryDate": null
         }
@@ -110,9 +110,9 @@
     ],
     "offentligeGodkjenninger": [
         {
-            "title": "Jedi Knight",
+            "title": "Council member",
             "conceptId": "403787",
-            "issuer": "Gass AB",
+            "issuer": "The Jedi Temple",
             "fromDate": "2024-08-21T00:00:00+02:00",
             "toDate": "2024-10-31T00:00:00+01:00"
         }
@@ -136,11 +136,15 @@
     ],
     "kompetanser": [
         {
-            "title": "The Force",
+            "title": "Sith Lightning",
             "conceptId": 1119
         },
         {
-            "title": "Lyssabel",
+            "title": "Bounty hunting",
+            "conceptId": 212040
+        },
+        {
+            "title": "Force push",
             "conceptId": 212040
         }
     ],
