@@ -130,7 +130,6 @@ export default function Sprak() {
                     toggleModal={toggleModal}
                     språk={språk[gjeldendeSpråk]}
                     lagreSpråk={lagreSpråk}
-
                 />
             )}
         </div>

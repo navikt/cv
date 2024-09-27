@@ -11,7 +11,7 @@ export const Typeahead = ({
     description,
     multiselect,
     forhåndshentet = false,
-    className
+    className,
 }) => {
     const [typeaheadData, setTypeaheadData] = useState([]);
     const [typeaheadValg, setTypeaheadValg] = useState([]);
@@ -28,7 +28,9 @@ export const Typeahead = ({
         if (!verdi) return;
 
         if (forhåndshentet) {
-            const filtrertTypeahead = typeaheadData.map((e) => e.title).filter((e) => e.toLowerCase().includes(verdi.toLowerCase()))
+            const filtrertTypeahead = typeaheadData
+                .map((e) => e.title)
+                .filter((e) => e.toLowerCase().includes(verdi.toLowerCase()));
             setTypeaheadValg(filtrertTypeahead);
         } else {
             hentTypeaheadData(verdi);
@@ -39,7 +41,7 @@ export const Typeahead = ({
         // TODO: Hent fra URL
         const data = mapTypeaheadResponse(mockData);
         setTypeaheadData(data);
-        setTypeaheadValg(data.map((e) => e.title))
+        setTypeaheadValg(data.map((e) => e.title));
     };
 
     const velgVerdi = (verdi) => {

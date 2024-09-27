@@ -1,11 +1,11 @@
-import {Button, Heading, HStack, Modal, Select, VStack} from "@navikt/ds-react";
+import { Button, Heading, HStack, Modal, Select, VStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import fagbrevMock from "../../../mocks/typeahead/fagbrevTypeaheadMock.json";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";
 import { SpråkEnum } from "@/app/enums/cvEnums";
 import { gyldigeFørerkort } from "@/app/data/førerkort.json";
-import {Datovelger} from "@/app/(minCV)/_components/datovelger/Datovelger";
+import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 
 export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, lagreFørerkort }) {
     const [valgtFørerkort, setValgtFørerkort] = useState(førerkort || null);
@@ -65,8 +65,19 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
                     </Select>
                     {kreverDato && (
                         <HStack gap="8">
-                            <Datovelger valgtDato={gyldigFra} oppdaterDato={setGyldigFra} label="Gyldig fra" obligatorisk />
-                            <Datovelger valgtDato={gyldigTil} oppdaterDato={setGyldigTil} label="Gyldig til" obligatorisk fremtid />
+                            <Datovelger
+                                valgtDato={gyldigFra}
+                                oppdaterDato={setGyldigFra}
+                                label="Gyldig fra"
+                                obligatorisk
+                            />
+                            <Datovelger
+                                valgtDato={gyldigTil}
+                                oppdaterDato={setGyldigTil}
+                                label="Gyldig til"
+                                obligatorisk
+                                fremtid
+                            />
                         </HStack>
                     )}
                 </VStack>

@@ -46,14 +46,14 @@ export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpr�
                 </Heading>
             </Modal.Header>
             <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
-                    <Typeahead
-                        className={styles.mb6}
-                        label={"Språk"}
-                        valgtVerdi={valgtSpråk?.language}
-                        oppdaterValg={setValgtSpråk}
-                        mockData={språkMock}
-                        forhåndshentet={true}
-                    />
+                <Typeahead
+                    className={styles.mb6}
+                    label={"Språk"}
+                    valgtVerdi={valgtSpråk?.language}
+                    oppdaterValg={setValgtSpråk}
+                    mockData={språkMock}
+                    forhåndshentet={true}
+                />
                 <Select
                     id="Muntlig"
                     label="Muntlig"
