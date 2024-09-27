@@ -24,3 +24,20 @@ jobs:
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
     secrets: inherit
+  setup-dekorator:
+    name: Setup dekorator
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          registry-url: 'https://npm.pkg.github.com'
+      - name: Install dependencies
+        run:
+          npm install --package-lock-only
+          npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
