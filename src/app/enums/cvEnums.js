@@ -57,3 +57,11 @@ export const MånedEnum = Object.freeze({
     10: "November",
     11: "Desember",
 });
+
+export const SpråkEnum = Object.freeze({
+    IKKE_OPPGITT: "Ikke oppgitt",
+    NYBEGYNNER: "Nybegynner",
+    GODT: "Godt",
+    VELDIG_GODT: "Veldig godt",
+    FOERSTESPRAAK: "Førstespråk (morsmål)",
+});

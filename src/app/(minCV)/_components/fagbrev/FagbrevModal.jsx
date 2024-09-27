@@ -1,6 +1,6 @@
 import { Button, Heading, HStack, Modal } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
-import fagbrevMock from "../../../mocks/fagbrevTypeaheadMock.json";
+import fagbrevMock from "../../../mocks/typeahead/fagbrevTypeaheadMock.json";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 
 export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFagbrev }) {

@@ -14,7 +14,7 @@ import {
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
-import stillingstittelMock from "../../../mocks/stillingstittelTypeaheadMock.json";
+import stillingstittelMock from "../../../mocks/typeahead/stillingstittelTypeaheadMock.json";
 import { MånedEnum } from "@/app/enums/cvEnums";
 
 export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, lagreArbeidsforhold }) => {
