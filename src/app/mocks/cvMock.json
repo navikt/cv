@@ -53,12 +53,12 @@
     ],
     "foererkort": [
         {
-            "type": "X - X-Wing",
-            "acquiredDate": null,
-            "expiryDate": null
+            "type": "C1E - Lett lastebil med tilhenger",
+            "acquiredDate": "2001-02-01T00:00:00+01:00",
+            "expiryDate": "2043-07-01T00:00:00+02:00"
         },
         {
-            "type": "LS34 - X-34 Landspeeder",
+            "type": "B 78 - Personbil med automatgir",
             "acquiredDate": null,
             "expiryDate": null
         }

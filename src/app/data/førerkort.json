@@ -1,0 +1,76 @@
+{
+  "gyldigeFørerkort": [
+    {
+      "type": "A - Motorsykkel",
+      "kreverDato": false
+    },
+    {
+      "type": "A1 - Lett motorsykkel",
+      "kreverDato": false
+    },
+    {
+      "type": "A2 - Mellomtung motorsykkel",
+      "kreverDato": false
+    },
+    {
+      "type": "AM - Moped",
+      "kreverDato": false
+    },
+    {
+      "type": "AM 147 - Mopedbil",
+      "kreverDato": false
+    },
+    {
+      "type": "B - Personbil",
+      "kreverDato": false
+    },
+    {
+      "type": "B 78 - Personbil med automatgir",
+      "kreverDato": false
+    },
+    {
+      "type": "BE - Personbil med tilhenger",
+      "kreverDato": false
+    },
+    {
+      "type": "C - Lastebil",
+      "kreverDato": true
+    },
+    {
+      "type": "C1 - Lett lastebil",
+      "kreverDato": true
+    },
+    {
+      "type": "C1E - Lett lastebil med tilhenger",
+      "kreverDato": true
+    },
+    {
+      "type": "CE - Lastebil med tilhenger",
+      "kreverDato": true
+    },
+    {
+      "type": "D - Buss",
+      "kreverDato": true
+    },
+    {
+      "type": "D1 - Minibuss",
+      "kreverDato": true
+    },
+    {
+      "type": "D1E - Minibuss med tilhenger",
+      "kreverDato": true
+    },
+    {
+      "type": "DE - Buss med tilhenger",
+      "kreverDato": true
+    },
+    {
+      "type": "S - Snøscooter",
+      "kreverDato": false
+    },
+    {
+      "type": "T - Traktor",
+      "kreverDato": false
+    }
+  ]
+}
