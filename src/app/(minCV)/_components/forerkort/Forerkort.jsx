@@ -86,7 +86,7 @@ export default function Forerkort() {
                     </div>
                 )}
                 <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                    Legg til
+                    Legg til flere
                 </Button>
             </Box>
             {modalÅpen && (
