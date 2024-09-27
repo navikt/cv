@@ -1,5 +1,3 @@
 ingress: "https://arbeidsplassen.nav.no/personbruker"
 loglevel: "debug"
 namespace: "teampam"
-env_dekorator: "prod"
-nav_min_side_url: "https://www.nav.no/minside"
