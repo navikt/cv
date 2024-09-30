@@ -1,9 +1,9 @@
 FROM gcr.io/distroless/nodejs20-debian12
 
-ENV NODE_ENV production
-ENV TZ "Europe/Oslo"
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
+ENV NODE_ENV=production
+ENV TZ="Europe/Oslo"
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
 WORKDIR /app
 
