@@ -34,3 +34,9 @@ export const formatterDato = (dato) => {
     const date = new Date(dato);
     return `${MånedEnum[date.getMonth()]} ${date.getFullYear()}`;
 };
+
+export const formatterFullDato = (dato) => {
+    if (!dato) return "nå";
+    const date = new Date(dato);
+    return `${date.getDate()}. ${MånedEnum[date.getMonth()].toLowerCase()} ${date.getFullYear()}`;
+};
