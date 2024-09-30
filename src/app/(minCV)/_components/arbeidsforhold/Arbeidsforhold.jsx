@@ -70,7 +70,7 @@ export default function Arbeidsforhold() {
                 <Heading level="2" size="large" align="start" spacing>
                     Arbeidsforhold
                 </Heading>
-                {!arbeidsforhold && (
+                {arbeidsforhold.length === 0 ? (
                     <>
                         <BodyLong weight="semibold" spacing>
                             Vil du hente inn dine tidligere arbeidsforhold?
@@ -81,11 +81,12 @@ export default function Arbeidsforhold() {
                         </BodyLong>
                         <HStack justify="space-between">
                             <Button variant="primary">Hent arbeidsforhold</Button>
-                            <Button variant="secondary">Jeg vil legge til selv</Button>
+                            <Button variant="secondary" onClick={() => toggleModal(true)}>
+                                Jeg vil legge til selv
+                            </Button>
                         </HStack>
                     </>
-                )}
-                {arbeidsforhold && (
+                ) : (
                     <>
                         {arbeidsforhold.map((erfaring, index) => (
                             <div key={index}>
