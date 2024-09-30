@@ -1,4 +1,4 @@
-import { MånedEnum } from "@/app/enums/cvEnums";
+import { MånedEnum, TidsenhetEnum } from "@/app/enums/cvEnums";
 
 export const formatterTelefon = (telefonnummer) => {
     if (telefonnummer.length === 8 || telefonnummer.length === 11) {
@@ -39,4 +39,14 @@ export const formatterFullDato = (dato) => {
     if (!dato) return "nå";
     const date = new Date(dato);
     return `${date.getDate()}. ${MånedEnum[date.getMonth()].toLowerCase()} ${date.getFullYear()}`;
+};
+
+export const formatterTidsenhet = (enhet, antall) => {
+    if (enhet === TidsenhetEnum.UKJENT) return "Ukjent";
+    const endelse = enhet.slice(-1) === "E" ? "r" : "er";
+    return `${TidsenhetEnum[enhet]}${antall > 1 && endelse}`;
+};
+
+export const storForbokstav = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
 };

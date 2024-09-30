@@ -65,3 +65,10 @@ export const SpråkEnum = Object.freeze({
     VELDIG_GODT: "Veldig godt",
     FOERSTESPRAAK: "Førstespråk (morsmål)",
 });
+
+export const TidsenhetEnum = Object.freeze({
+    UKE: "uke",
+    DAG: "dag",
+    TIME: "time",
+    MND: "måned",
+});

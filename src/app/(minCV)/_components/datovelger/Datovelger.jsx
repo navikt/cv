@@ -1,7 +1,7 @@
 import { BodyLong, DatePicker, HStack, useDatepicker, VStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 
-export const Datovelger = ({ valgtDato, oppdaterDato, label, fremtid = false, obligatorisk = false }) => {
+export const Datovelger = ({ valgtDato, oppdaterDato, label, fremtid = false, obligatorisk = false, className }) => {
     const [error, setError] = useState(false);
 
     useEffect(() => {
@@ -23,7 +23,7 @@ export const Datovelger = ({ valgtDato, oppdaterDato, label, fremtid = false, ob
     });
 
     return (
-        <VStack>
+        <VStack className={className}>
             <BodyLong>
                 <b>{label}</b> {obligatorisk && "*obligatorisk"}
             </BodyLong>
