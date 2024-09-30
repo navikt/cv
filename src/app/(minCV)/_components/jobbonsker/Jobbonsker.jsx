@@ -13,7 +13,7 @@ import {
     VStack,
 } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { PencilIcon, TrashIcon } from "@navikt/aksel-icons";
+import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
 import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
 import { AnsettelsesformEnum, ArbeidstidEnum, OmfangEnum, StarttidspunktEnum } from "@/app/enums/cvEnums";
@@ -42,8 +42,8 @@ function JobbonskerIcon() {
 
 export default function Jobbonsker() {
     const cvContext = useContext(CvOgPersonContext).cv;
-
-    const [modalÅpen, setmodalÅpen] = useState(false);
+    const [jobbønsker, setJobbønsker] = useState(null);
+    const [modalÅpen, setModalÅpen] = useState(false);
     const [yrker, setYrker] = useState([]);
     const [lokasjoner, setLokasjoner] = useState([]);
     const [omfang, setOmfang] = useState([]);
@@ -53,19 +53,42 @@ export default function Jobbonsker() {
 
     useEffect(() => {
         const oppdaterJobbønsker = (jobbønsker) => {
-            setYrker(jobbønsker.occupations);
-            setLokasjoner(jobbønsker.locations);
-            setOmfang(jobbønsker.workLoadTypes);
-            setAnsettelsesform(jobbønsker.occupationTypes);
-            setArbeidstid(jobbønsker.workScheduleTypes);
-            setStarttidspunkt(jobbønsker.startOption);
+            setJobbønsker(jobbønsker);
+            setYrker(jobbønsker?.occupations || []);
+            setLokasjoner(jobbønsker?.locations) || [];
+            setOmfang(jobbønsker?.workLoadTypes || []);
+            setAnsettelsesform(jobbønsker.occupationTypes || []);
+            setArbeidstid(jobbønsker.workScheduleTypes || []);
+            setStarttidspunkt(jobbønsker.startOption || "");
         };
 
         if (cvContext.status === "success") oppdaterJobbønsker(cvContext.data.jobboensker || {});
     }, [cvContext]);
 
     const lagreJobbønsker = () => {
-        setmodalÅpen(false);
+        setJobbønsker({
+            ...jobbønsker,
+            occupations: yrker,
+            locations: lokasjoner,
+            workLoadTypes: omfang,
+            occupationTypes: ansettelsesform,
+            workScheduleTypes: arbeidstid,
+            startOption: starttidspunkt,
+        });
+
+        // TODO: Send til backend og konsumer respons-CV
+        setModalÅpen(false);
+    };
+
+    const slettJobbønsker = () => {
+        setJobbønsker(null);
+        setYrker([]);
+        setLokasjoner([]);
+        setOmfang([]);
+        setAnsettelsesform([]);
+        setArbeidstid([]);
+        setStarttidspunkt("");
+        // TODO: Send til backend og konsumer respons-CV
     };
 
     return (
@@ -78,40 +101,64 @@ export default function Jobbonsker() {
                     Jobbønsker
                 </Heading>
 
-                <BodyLong weight="semibold">Jobber og yrker</BodyLong>
-                <BodyLong spacing>{formatterListeAvObjekterTilTekst(yrker, "title")}</BodyLong>
-                <div className={styles.divider}></div>
+                {!jobbønsker ? (
+                    <div>
+                        <BodyLong weight="semibold" spacing>
+                            Du har ikke lagt til noen jobbønsker i CV-en
+                        </BodyLong>
+                        <BodyLong className={styles.mb12}>
+                            Når du skal legge til jobbønsker velger du hvilke yrker du er interessert i å jobbe som
+                        </BodyLong>
+                        <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => setModalÅpen(true)}>
+                            Legg til
+                        </Button>
+                    </div>
+                ) : (
+                    <>
+                        <BodyLong weight="semibold">Jobber og yrker</BodyLong>
+                        <BodyLong spacing>{formatterListeAvObjekterTilTekst(yrker, "title")}</BodyLong>
+                        <div className={styles.divider}></div>
 
-                <BodyLong weight="semibold">Områder</BodyLong>
-                <BodyLong spacing>{formatterListeAvObjekterTilTekst(lokasjoner, "location")}</BodyLong>
-                <div className={styles.divider}></div>
+                        <BodyLong weight="semibold">Områder</BodyLong>
+                        <BodyLong spacing>{formatterListeAvObjekterTilTekst(lokasjoner, "location")}</BodyLong>
+                        <div className={styles.divider}></div>
 
-                <BodyLong weight="semibold">Heltid eller deltid</BodyLong>
-                <BodyLong spacing>{omfang.map((e) => OmfangEnum[e]).join(", ")}</BodyLong>
-                <div className={styles.divider}></div>
+                        <BodyLong weight="semibold">Heltid eller deltid</BodyLong>
+                        <BodyLong spacing>{omfang.map((e) => OmfangEnum[e]).join(", ")}</BodyLong>
+                        <div className={styles.divider}></div>
 
-                <BodyLong weight="semibold">Arbeidstider</BodyLong>
-                <BodyLong spacing>{arbeidstid.map((e) => ArbeidstidEnum[e]).join(", ")}</BodyLong>
-                <div className={styles.divider}></div>
+                        <BodyLong weight="semibold">Arbeidstider</BodyLong>
+                        <BodyLong spacing>{arbeidstid.map((e) => ArbeidstidEnum[e]).join(", ")}</BodyLong>
+                        <div className={styles.divider}></div>
 
-                <BodyLong weight="semibold">Ansettelsesform</BodyLong>
-                <BodyLong spacing>{ansettelsesform.map((e) => AnsettelsesformEnum[e]).join(", ")}</BodyLong>
-                <div className={styles.divider}></div>
+                        <BodyLong weight="semibold">Ansettelsesform</BodyLong>
+                        <BodyLong spacing>{ansettelsesform.map((e) => AnsettelsesformEnum[e]).join(", ")}</BodyLong>
+                        <div className={styles.divider}></div>
 
-                <BodyLong weight="semibold">Oppstart</BodyLong>
-                <BodyLong className={styles.mb16}>{StarttidspunktEnum[starttidspunkt]}</BodyLong>
+                        <BodyLong weight="semibold">Oppstart</BodyLong>
+                        <BodyLong className={styles.mb16}>{StarttidspunktEnum[starttidspunkt]}</BodyLong>
 
-                <HStack justify="space-between">
-                    <Button icon={<PencilIcon aria-hidden />} variant="primary" onClick={() => setmodalÅpen(true)}>
-                        Endre
-                    </Button>
-                    <Button icon={<TrashIcon aria-hidden />} variant="secondary">
-                        Fjern
-                    </Button>
-                </HStack>
+                        <HStack justify="space-between">
+                            <Button
+                                icon={<PencilIcon aria-hidden />}
+                                variant="primary"
+                                onClick={() => setModalÅpen(true)}
+                            >
+                                Endre
+                            </Button>
+                            <Button
+                                icon={<TrashIcon aria-hidden />}
+                                variant="secondary"
+                                onClick={() => slettJobbønsker()}
+                            >
+                                Fjern
+                            </Button>
+                        </HStack>
+                    </>
+                )}
             </Box>
 
-            <Modal open={modalÅpen} aria-label="Legg til jobbønske" onClose={() => setmodalÅpen(false)} width="medium">
+            <Modal open={modalÅpen} aria-label="Legg til jobbønske" onClose={() => setModalÅpen(false)} width="medium">
                 <Modal.Header closeButton={true}>
                     <Heading align="start" level="3" size="medium">
                         <HStack gap="1" align="center">
@@ -140,10 +187,18 @@ export default function Jobbonsker() {
                             />
                         </VStack>
                     </HStack>
-                    <CheckboxGroup className={styles.mb6} legend="Vil du jobbe heltid eller deltid?">
+                    <CheckboxGroup
+                        className={styles.mb6}
+                        onChange={setOmfang}
+                        value={omfang}
+                        legend="Vil du jobbe heltid eller deltid?"
+                    >
                         <HStack gap="4">
-                            <Checkbox value="heltid">Heltid</Checkbox>
-                            <Checkbox value="deltid">Deltid</Checkbox>
+                            {Object.keys(OmfangEnum).map((key) => (
+                                <Checkbox value={key} key={key}>
+                                    {OmfangEnum[key]}
+                                </Checkbox>
+                            ))}
                         </HStack>
                     </CheckboxGroup>
                     <CheckboxGroup
@@ -190,7 +245,7 @@ export default function Jobbonsker() {
                 </Modal.Body>
                 <Modal.Footer>
                     <HStack gap="4">
-                        <Button variant="secondary" onClick={() => setmodalÅpen(false)}>
+                        <Button variant="secondary" onClick={() => setModalÅpen(false)}>
                             Avbryt
                         </Button>
                         <Button variant="primary" onClick={lagreJobbønsker}>
