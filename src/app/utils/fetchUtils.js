@@ -26,5 +26,6 @@ export const mapTypeaheadResponse = (json) => {
     return json.data.map((e) => ({
         ...e,
         title: e.label || e.term,
+        conceptId: e.konseptId,
     }));
 };

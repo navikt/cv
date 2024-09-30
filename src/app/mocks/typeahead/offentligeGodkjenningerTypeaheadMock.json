@@ -1,0 +1,144 @@
+{
+    "data": [
+        {
+            "konseptId": 403829,
+            "label": "Farledsbevis"
+        },
+        {
+            "konseptId": 2693146,
+            "label": "ADR-kompetansebevis Klasse 3: Brannfarlige væsker"
+        },
+        {
+            "konseptId": 2693155,
+            "label": "ADR-kompetansebevis Klasse 4.1: Brannfarlige faste stoffer"
+        },
+        {
+            "konseptId": 2693157,
+            "label": "ADR- kompetansebevis Klasse 4.3: Stoffer som utvikler brannfarlige gasser ved kontakt med vann"
+        },
+        {
+            "konseptId": 2693179,
+            "label": "ADR-kompetansebevis Klasse 9: Forskjellige farlige stoffer og gjenstander"
+        },
+        {
+            "konseptId": 381384,
+            "label": "Autorisasjon som helsefagarbeider"
+        },
+        {
+            "konseptId": 381619,
+            "label": "Autorisasjon som provisorfarmasøyt"
+        },
+        {
+            "konseptId": 381625,
+            "label": "Autorisasjon som reseptarfarmasøyt"
+        },
+        {
+            "konseptId": 381824,
+            "label": "Class 1 - Surface orientated diver (for dykking offshore, godkjent av Ptil) \"International Diving Schools Association (IDSA) Level -3\"."
+        },
+        {
+            "konseptId": 1052325,
+            "label": "Flysertifikat for lette luftfartøy, fly (LAPL (A))"
+        },
+        {
+            "konseptId": 1052374,
+            "label": "Flysertifikat for lette luftfartøy helikopter (LAPL(H)"
+        },
+        {
+            "konseptId": 1052412,
+            "label": "Flyteknikersertifikat på komplett luftfartøy – M"
+        },
+        {
+            "konseptId": 1013988,
+            "label": "Godkjenning/autorisasjon som faglig ansvarlig for arbeid knyttet til andres elektriske anlegg"
+        },
+        {
+            "konseptId": 1013980,
+            "label": "Godkjenning/autorisasjon som faglig ansvarlig for arbeid knyttet til arbeidsgivers egne elektriske lav- og høyspenningsanlegg"
+        },
+        {
+            "konseptId": 1013998,
+            "label": "Godkjenning/autorisasjon som faglig ansvarlig for drift og vedlikehold av arbeidsgiverens egne elektriske lavspenningsanlegg eller små, enkle høyspenningsanlegg"
+        },
+        {
+            "konseptId": 1014003,
+            "label": "Godkjenning/autorisasjon som faglig ansvarlig for offentlig tilsyn med elektriske anlegg"
+        },
+        {
+            "konseptId": 1014006,
+            "label": "Godkjenning/autorisasjon som faglig ansvarlig for prosjektering av elektriske anlegg"
+        },
+        {
+            "konseptId": 1052796,
+            "label": "Godkjenning som ansvarlig leder ved godkjent fartskriververksted"
+        },
+        {
+            "konseptId": 1052430,
+            "label": "Godkjenning som fagansvarlig dammsikkerhet"
+        },
+        {
+            "konseptId": 1052785,
+            "label": "Godkjenning som faglig leder ved trafikkskole"
+        },
+        {
+            "konseptId": 551470,
+            "label": "Godkjent opplæring innen fallsikring"
+        },
+        {
+            "konseptId": 2695891,
+            "label": "Godkjent vedlikehold av spesialiseringen innen familiepsykology"
+        },
+        {
+            "konseptId": 1052012,
+            "label": "ICC Kvalifikasjonsbevis som 1. maskinist på fiskefartøy"
+        },
+        {
+            "konseptId": 2394735,
+            "label": "Kompetansebevis for sertifisert sikkerhetsopplæring for C1 Teleskoptruck med fast tårn"
+        },
+        {
+            "konseptId": 1904232,
+            "label": "Kranførerbevis: G20 Fastmontert hydraulisk kran"
+        },
+        {
+            "konseptId": 1052012,
+            "label": "Kvalifikasjonsbevis som 1. maskinist på fiskefartøy"
+        },
+        {
+            "konseptId": 381384,
+            "label": "Norsk autorisasjon som helsefagarbeider"
+        },
+        {
+            "konseptId": 2695890,
+            "label": "Spesialisering i familiepsykologi"
+        },
+        {
+            "konseptId": 381480,
+            "label": "Spesialistgodkjenning innen klinisk farmakologi"
+        },
+        {
+            "konseptId": 381507,
+            "label": "Spesialistgodkjenning innen maxillofacial kirurgi"
+        },
+        {
+            "konseptId": 2693145,
+            "label": "Transport av farlig gods klasse 2: gasser"
+        },
+        {
+            "konseptId": 2693156,
+            "label": "Transport av farlig gods klasse 4.2 - selvantennende stoffer"
+        },
+        {
+            "konseptId": 2693160,
+            "label": "Transport av farlig gods klasse 5.2 - organiske peroksider"
+        },
+        {
+            "konseptId": 1903725,
+            "label": "Transport av farlig gods på fly EATA og AFMAN"
+        },
+        {
+            "konseptId": 1904251,
+            "label": "Truckførerbevis C1 Teleskoptruck med fast tårn"
+        }
+    ]
+}

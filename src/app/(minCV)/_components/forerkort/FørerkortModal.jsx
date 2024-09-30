@@ -4,7 +4,7 @@ import fagbrevMock from "../../../mocks/typeahead/fagbrevTypeaheadMock.json";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";
 import { SpråkEnum } from "@/app/enums/cvEnums";
-import { gyldigeFørerkort } from "@/app/data/førerkort.json";
+import førerkortData from "@/app/data/førerkort.json";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 
 export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, lagreFørerkort }) {
@@ -12,6 +12,8 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
     const [gyldigFra, setGyldigFra] = useState(førerkort?.acquiredDate ? new Date(førerkort.acquiredDate) : null);
     const [gyldigTil, setGyldigTil] = useState(førerkort?.expiryDate ? new Date(førerkort.expiryDate) : null);
     const [kreverDato, setKreverDato] = useState(!!førerkort?.acquiredDate);
+
+    const gyldigeFørerkort = førerkortData.gyldigeFørerkort;
 
     useEffect(() => {
         const oppdaterFørerkort = (førerkort) => setValgtFørerkort(førerkort);
