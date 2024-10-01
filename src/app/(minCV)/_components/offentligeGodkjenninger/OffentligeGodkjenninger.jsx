@@ -58,7 +58,7 @@ export default function OffentligeGodkjenninger() {
     );
 
     return (
-        <div id="9">
+        <div data-section id="9">
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <OffentligeGodkjenningerIcon />

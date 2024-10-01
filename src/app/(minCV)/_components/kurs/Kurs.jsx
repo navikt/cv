@@ -64,7 +64,7 @@ export default function Kurs() {
     );
 
     return (
-        <div id="13">
+        <div data-section id="13">
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <KursIcon />

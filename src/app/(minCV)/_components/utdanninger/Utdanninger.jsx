@@ -62,7 +62,7 @@ export default function Utdanninger() {
     };
 
     return (
-        <div id="4">
+        <div data-section id="4">
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <UtdanningerIcon />
