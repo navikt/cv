@@ -1,21 +1,9 @@
-import {
-    BodyLong,
-    Button,
-    Checkbox,
-    CheckboxGroup,
-    Heading,
-    HStack,
-    Modal,
-    Select,
-    Textarea,
-    TextField,
-    VStack,
-} from "@navikt/ds-react";
+import { Button, Checkbox, CheckboxGroup, Heading, HStack, Modal, Textarea, TextField, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import stillingstittelMock from "../../../mocks/typeahead/stillingstittelTypeaheadMock.json";
-import { MånedEnum } from "@/app/enums/cvEnums";
+import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 
 export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, lagreArbeidsforhold }) => {
     const [arbeidsgiver, setArbeidsgiver] = useState("");
@@ -23,10 +11,8 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, l
     const [arbeidssted, setArbeidssted] = useState("");
     const [arbeidsoppgaver, setArbeidsoppgaver] = useState("");
 
-    const [startmåned, setStartmåned] = useState(-1);
-    const [startår, setStartår] = useState(-1);
-    const [sluttmåned, setSluttmåned] = useState(-1);
-    const [sluttår, setSluttår] = useState(-1);
+    const [startdato, setStartdato] = useState(null);
+    const [sluttdato, setSluttdato] = useState(null);
     const [pågår, setPågår] = useState([]);
 
     const [stillingstittel, setStillingstittel] = useState(arbeidsforhold?.jobTitle || "");
@@ -44,14 +30,8 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, l
             setKonseptId(arbeidsforhold?.conceptId || "");
             setStyrk(arbeidsforhold?.styrkkode || "");
 
-            const startDato = arbeidsforhold ? new Date(arbeidsforhold.fromDate) : null;
-            setStartmåned(startDato?.getMonth() >= 0 ? startDato?.getMonth() : -1);
-            setStartår(startDato?.getFullYear() || -1);
-
-            const sluttDato = arbeidsforhold && arbeidsforhold.toDate ? new Date(arbeidsforhold.toDate) : null;
-            setSluttmåned(sluttDato?.getMonth() >= 0 ? sluttDato?.getMonth() : -1);
-            setSluttår(sluttDato?.getFullYear() || -1);
-
+            setStartdato(arbeidsforhold ? new Date(arbeidsforhold.fromDate) : null);
+            setSluttdato(arbeidsforhold && arbeidsforhold?.toDate ? new Date(arbeidsforhold.toDate) : null);
             setPågår(arbeidsforhold && arbeidsforhold.ongoing ? [true] : []);
         };
 
@@ -69,8 +49,8 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, l
             alternativeJobTitle: alternativTittel,
             location: arbeidssted,
             description: arbeidsoppgaver,
-            fromDate: new Date(startår, startmåned, 1, 12),
-            toDate: erPågående ? null : new Date(sluttår, sluttmåned, 1, 12),
+            fromDate: startdato,
+            toDate: erPågående ? null : sluttdato,
             ongoing: erPågående,
         });
     };
@@ -144,54 +124,10 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, l
                 </CheckboxGroup>
 
                 <HStack gap="8">
-                    <VStack>
-                        <BodyLong>
-                            <b>Fra</b> *obligatorisk
-                        </BodyLong>
-                        <HStack gap="4">
-                            <Select label="" value={startmåned} onChange={(e) => setStartmåned(e.target.value)}>
-                                <option value={-1}>Måned</option>
-                                {Object.keys(MånedEnum).map((måned) => (
-                                    <option key={måned} value={måned}>
-                                        {MånedEnum[måned]}
-                                    </option>
-                                ))}
-                            </Select>
-                            <Select label="" value={startår} onChange={(e) => setStartår(e.target.value)}>
-                                <option value={-1}>År</option>
-                                {årspenn.map((år) => (
-                                    <option key={år} value={år}>
-                                        {år}
-                                    </option>
-                                ))}
-                            </Select>
-                        </HStack>
-                    </VStack>
+                    <Datovelger valgtDato={startdato} oppdaterDato={setStartdato} label="Fra" obligatorisk />
 
                     {!pågår.includes(true) && (
-                        <VStack>
-                            <BodyLong>
-                                <b>Til</b> *obligatorisk
-                            </BodyLong>
-                            <HStack gap="4">
-                                <Select label="" value={sluttmåned} onChange={(e) => setSluttmåned(e.target.value)}>
-                                    <option value={-1}>Måned</option>
-                                    {Object.keys(MånedEnum).map((måned) => (
-                                        <option key={måned} value={måned}>
-                                            {MånedEnum[måned]}
-                                        </option>
-                                    ))}
-                                </Select>
-                                <Select label="" value={sluttår} onChange={(e) => setSluttår(e.target.value)}>
-                                    <option value={-1}>År</option>
-                                    {årspenn.map((år) => (
-                                        <option key={år} value={år}>
-                                            {år}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </HStack>
-                        </VStack>
+                        <Datovelger valgtDato={sluttdato} oppdaterDato={setSluttdato} label="Til" obligatorisk />
                     )}
                 </HStack>
             </Modal.Body>

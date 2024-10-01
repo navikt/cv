@@ -9,21 +9,19 @@ import {
     Select,
     Textarea,
     TextField,
-    VStack,
 } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { MånedEnum, UtdanningsnivåEnum } from "@/app/enums/cvEnums";
+import { UtdanningsnivåEnum } from "@/app/enums/cvEnums";
 import { useEffect, useState } from "react";
+import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 
 export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdanning }) => {
     const [utdanningsnivå, setUtdanningsnivå] = useState("");
     const [gradOgRetning, setGradOgRetning] = useState("");
     const [institusjon, setInstitusjon] = useState("");
     const [beskrivelse, setBeskrivelse] = useState("");
-    const [startmåned, setStartmåned] = useState(-1);
-    const [startår, setStartår] = useState(-1);
-    const [sluttmåned, setSluttmåned] = useState(-1);
-    const [sluttår, setSluttår] = useState(-1);
+    const [startdato, setStartdato] = useState(null);
+    const [sluttdato, setSluttdato] = useState(null);
     const [pågår, setPågår] = useState([]);
 
     useEffect(() => {
@@ -32,15 +30,8 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
             setGradOgRetning(utdanning?.field || "");
             setInstitusjon(utdanning?.institution || "");
             setBeskrivelse(utdanning?.description || "");
-
-            const startDato = utdanning ? new Date(utdanning.startDate) : null;
-            setStartmåned(startDato?.getMonth() >= 0 ? startDato?.getMonth() : -1);
-            setStartår(startDato?.getFullYear() || -1);
-
-            const sluttDato = utdanning && utdanning.endDate ? new Date(utdanning.endDate) : null;
-            setSluttmåned(sluttDato?.getMonth() >= 0 ? sluttDato?.getMonth() : -1);
-            setSluttår(sluttDato?.getFullYear() || -1);
-
+            setStartdato(utdanning ? new Date(utdanning.startDate) : null);
+            setSluttdato(utdanning && utdanning?.endDate ? new Date(utdanning.endDate) : null);
             setPågår(utdanning && utdanning.ongoing ? [true] : []);
         };
 
@@ -55,8 +46,8 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
             field: gradOgRetning,
             institution: institusjon,
             description: beskrivelse,
-            startDate: new Date(startår, startmåned, 1, 12),
-            endDate: erPågående ? null : new Date(sluttår, sluttmåned, 1, 12),
+            startDate: startdato,
+            endDate: erPågående ? null : sluttdato,
             ongoing: erPågående,
         });
     };
@@ -114,54 +105,10 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
                 </CheckboxGroup>
 
                 <HStack gap="8">
-                    <VStack>
-                        <BodyLong>
-                            <b>Fra</b> *obligatorisk
-                        </BodyLong>
-                        <HStack gap="4">
-                            <Select label="" value={startmåned} onChange={(e) => setStartmåned(e.target.value)}>
-                                <option value={-1}>Måned</option>
-                                {Object.keys(MånedEnum).map((måned) => (
-                                    <option key={måned} value={måned}>
-                                        {MånedEnum[måned]}
-                                    </option>
-                                ))}
-                            </Select>
-                            <Select label="" value={startår} onChange={(e) => setStartår(e.target.value)}>
-                                <option value={-1}>År</option>
-                                {årspenn.map((år) => (
-                                    <option key={år} value={år}>
-                                        {år}
-                                    </option>
-                                ))}
-                            </Select>
-                        </HStack>
-                    </VStack>
+                    <Datovelger valgtDato={startdato} oppdaterDato={setStartdato} label="Fra" obligatorisk />
 
                     {!pågår.includes(true) && (
-                        <VStack>
-                            <BodyLong>
-                                <b>Til</b> *obligatorisk
-                            </BodyLong>
-                            <HStack gap="4">
-                                <Select label="" value={sluttmåned} onChange={(e) => setSluttmåned(e.target.value)}>
-                                    <option value={-1}>Måned</option>
-                                    {Object.keys(MånedEnum).map((måned) => (
-                                        <option key={måned} value={måned}>
-                                            {MånedEnum[måned]}
-                                        </option>
-                                    ))}
-                                </Select>
-                                <Select label="" value={sluttår} onChange={(e) => setSluttår(e.target.value)}>
-                                    <option value={-1}>År</option>
-                                    {årspenn.map((år) => (
-                                        <option key={år} value={år}>
-                                            {år}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </HStack>
-                        </VStack>
+                        <Datovelger valgtDato={sluttdato} oppdaterDato={setSluttdato} label="Til" obligatorisk />
                     )}
                 </HStack>
             </Modal.Body>
