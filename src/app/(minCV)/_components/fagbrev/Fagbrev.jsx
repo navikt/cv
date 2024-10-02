@@ -59,7 +59,7 @@ export default function Fagbrev() {
     }
 
     return (
-        <div id="5">
+        <div data-section id="5">
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <FagbrevIcon />

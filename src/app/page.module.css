@@ -3,7 +3,6 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding-top: 2rem;
     min-height: 100vh;
 }
 
@@ -243,7 +242,7 @@
     position: sticky;
     top: 0;
     right: 0;
-    padding-top: 4rem;
+    padding-top: 5.5rem;
     width: 18%;
 }
 
@@ -251,7 +250,7 @@
     position: sticky;
     top: 0;
     right: 0;
-    padding-top: 4rem;
+    padding-top: 5.5rem;
     margin-left: 3rem;
 }
 
@@ -263,7 +262,7 @@
         width: 100%;
     }
     .box {
-        margin-top: 4rem;
+        margin-top: 5.5rem;
     }
 }
 
@@ -273,7 +272,7 @@
     }
     .box {
         width: 600px;
-        margin-top: 4rem;
+        margin-top: 5.5rem;
     }
 }
 

@@ -58,7 +58,7 @@ export default function Forerkort() {
     );
 
     return (
-        <div id="12">
+        <div data-section id="12">
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <FørerkortIcon />

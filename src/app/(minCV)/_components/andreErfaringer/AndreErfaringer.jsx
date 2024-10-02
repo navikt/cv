@@ -59,7 +59,7 @@ export default function AndreErfaringer() {
     );
 
     return (
-        <div id="7">
+        <div data-section id="7">
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <AndreErfaringerIcon />

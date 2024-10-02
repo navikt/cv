@@ -62,7 +62,7 @@ export default function Arbeidsforhold() {
     }
 
     return (
-        <div id="6">
+        <div data-section id="6">
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <ArbeidsforholdIcon />

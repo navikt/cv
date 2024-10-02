@@ -1,22 +1,46 @@
 import { BodyLong, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Hovedmeny() {
-    const [activeStep, setActiveStep] = useState(1);
+    const [activeSection, setActiveSection] = useState();
+    const sections = useRef([]);
 
-    function onStepChange(i) {
+    const onSectionChange = (i) => {
         const element = document.getElementById(i);
         element.scrollIntoView({ behavior: "smooth" });
-        setActiveStep(i);
-    }
+    };
+
+    const handleScroll = () => {
+        const scrollY = window.scrollY + 1;
+        let newActiveSection = null;
+        sections.current.forEach((section) => {
+            const sectionOffsetTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+
+            if (scrollY >= sectionOffsetTop && scrollY < sectionOffsetTop + sectionHeight) {
+                newActiveSection = section.id;
+            }
+        });
+
+        setActiveSection(newActiveSection);
+    };
+
+    useEffect(() => {
+        sections.current = document.querySelectorAll("[data-section]");
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     return (
         <>
             <HStack>
-                <a href="#delingAvCV" className={styles.meny} onClick={() => onStepChange(1)}>
+                <a href="#delingAvCV" className={styles.meny} onClick={() => onSectionChange("1")}>
                     <HStack align="center">
-                        {activeStep === 1 ? (
+                        {activeSection === "1" ? (
                             <div className={styles["icon-deling-av-cv--active"]} />
                         ) : (
                             <div className={styles["icon-deling-av-cv"]} />
@@ -29,9 +53,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#personalia" className={styles.meny} onClick={() => onStepChange(2)}>
+                <a href="#personalia" className={styles.meny} onClick={() => onSectionChange("2")}>
                     <HStack align="center">
-                        {activeStep === 2 ? (
+                        {activeSection === "2" ? (
                             <div className={styles["icon-personalia--active"]} />
                         ) : (
                             <div className={styles["icon-personalia"]} />
@@ -44,9 +68,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#jobbonsker" className={styles.meny} onClick={() => onStepChange(3)}>
+                <a href="#jobbonsker" className={styles.meny} onClick={() => onSectionChange("3")}>
                     <HStack align="center">
-                        {activeStep === 3 ? (
+                        {activeSection === "3" ? (
                             <div className={styles["icon-jobbonsker--active"]} />
                         ) : (
                             <div className={styles["icon-jobbonsker"]} />
@@ -59,9 +83,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#utdanninger" className={styles.meny} onClick={() => onStepChange(4)}>
+                <a href="#utdanninger" className={styles.meny} onClick={() => onSectionChange("4")}>
                     <HStack align="center">
-                        {activeStep === 4 ? (
+                        {activeSection === "4" ? (
                             <div className={styles["icon-utdanninger--active"]} />
                         ) : (
                             <div className={styles["icon-utdanninger"]} />
@@ -74,9 +98,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#fagbrev" className={styles.meny} onClick={() => onStepChange(5)}>
+                <a href="#fagbrev" className={styles.meny} onClick={() => onSectionChange("5")}>
                     <HStack align="center">
-                        {activeStep === 5 ? (
+                        {activeSection === "5" ? (
                             <div className={styles["icon-fagbrev--active"]} />
                         ) : (
                             <div className={styles["icon-fagbrev"]} />
@@ -89,9 +113,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#arbeidsforhold" className={styles.meny} onClick={() => onStepChange(6)}>
+                <a href="#arbeidsforhold" className={styles.meny} onClick={() => onSectionChange("6")}>
                     <HStack align="center">
-                        {activeStep === 6 ? (
+                        {activeSection === "6" ? (
                             <div className={styles["icon-arbeidsforhold--active"]} />
                         ) : (
                             <div className={styles["icon-arbeidsforhold"]} />
@@ -104,9 +128,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#andreErfaringer" className={styles.meny} onClick={() => onStepChange(7)}>
+                <a href="#andreErfaringer" className={styles.meny} onClick={() => onSectionChange("7")}>
                     <HStack align="center">
-                        {activeStep === 7 ? (
+                        {activeSection === "7" ? (
                             <div className={styles["icon-andre-erfaringer--active"]} />
                         ) : (
                             <div className={styles["icon-andre-erfaringer"]} />
@@ -119,9 +143,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#kompetanser" className={styles.meny} onClick={() => onStepChange(8)}>
+                <a href="#kompetanser" className={styles.meny} onClick={() => onSectionChange("8")}>
                     <HStack align="center">
-                        {activeStep === 8 ? (
+                        {activeSection === "8" ? (
                             <div className={styles["icon-kompetanser--active"]} />
                         ) : (
                             <div className={styles["icon-kompetanser"]} />
@@ -134,9 +158,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#offentligeGodkjenninger" className={styles.meny} onClick={() => onStepChange(9)}>
+                <a href="#offentligeGodkjenninger" className={styles.meny} onClick={() => onSectionChange("9")}>
                     <HStack align="center">
-                        {activeStep === 9 ? (
+                        {activeSection === "9" ? (
                             <div className={styles["icon-offentlige-godkjenninger--active"]} />
                         ) : (
                             <div className={styles["icon-offentlige-godkjenninger"]} />
@@ -149,9 +173,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#andreGodkjenninger" className={styles.meny} onClick={() => onStepChange(10)}>
+                <a href="#andreGodkjenninger" className={styles.meny} onClick={() => onSectionChange("10")}>
                     <HStack align="center">
-                        {activeStep === 10 ? (
+                        {activeSection === "10" ? (
                             <div className={styles["icon-andre-godkjenninger--active"]} />
                         ) : (
                             <div className={styles["icon-andre-godkjenninger"]} />
@@ -164,9 +188,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#sprak" className={styles.meny} onClick={() => onStepChange(11)}>
+                <a href="#sprak" className={styles.meny} onClick={() => onSectionChange("11")}>
                     <HStack align="center">
-                        {activeStep === 11 ? (
+                        {activeSection === "11" ? (
                             <div className={styles["icon-sprak--active"]} />
                         ) : (
                             <div className={styles["icon-sprak"]} />
@@ -179,9 +203,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#forerkort" className={styles.meny} onClick={() => onStepChange(12)}>
+                <a href="#forerkort" className={styles.meny} onClick={() => onSectionChange("12")}>
                     <HStack align="center">
-                        {activeStep === 12 ? (
+                        {activeSection === "12" ? (
                             <div className={styles["icon-forerkort--active"]} />
                         ) : (
                             <div className={styles["icon-forerkort"]} />
@@ -194,9 +218,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#kurs" className={styles.meny} onClick={() => onStepChange(13)}>
+                <a href="#kurs" className={styles.meny} onClick={() => onSectionChange("13")}>
                     <HStack align="center">
-                        {activeStep === 13 ? (
+                        {activeSection === "13" ? (
                             <div className={styles["icon-kurs--active"]} />
                         ) : (
                             <div className={styles["icon-kurs"]} />
@@ -209,9 +233,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#sammendrag" className={styles.meny} onClick={() => onStepChange(14)}>
+                <a href="#sammendrag" className={styles.meny} onClick={() => onSectionChange("14")}>
                     <HStack align="center">
-                        {activeStep === 14 ? (
+                        {activeSection === "14" ? (
                             <div className={styles["icon-sammendrag--active"]} />
                         ) : (
                             <div className={styles["icon-sammendrag"]} />

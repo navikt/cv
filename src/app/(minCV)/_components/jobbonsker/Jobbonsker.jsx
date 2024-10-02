@@ -92,7 +92,7 @@ export default function Jobbonsker() {
     };
 
     return (
-        <div id="3">
+        <div data-section id="3">
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <JobbonskerIcon />

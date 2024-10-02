@@ -51,7 +51,7 @@ export default function Sammendrag() {
     );
 
     return (
-        <div id="14">
+        <div data-section id="14">
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <SammendragIcon />

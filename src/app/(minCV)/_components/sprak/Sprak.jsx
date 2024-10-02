@@ -60,7 +60,7 @@ export default function Sprak() {
     );
 
     return (
-        <div id="11">
+        <div data-section id="11">
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <SpråkIcon />
