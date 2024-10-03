@@ -26,7 +26,6 @@ export const hentData = async (setData, responseMock, url, headers) => {
 };
 
 export const mapTypeaheadResponse = (json, visningsfelt = "title") => {
-    console.log("Her er hele jsonen", json);
     return json.map((e) => ({
         ...e,
         [visningsfelt]: e.label || e.term || e.location,
