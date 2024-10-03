@@ -3,50 +3,47 @@ import Script from "next/script";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "./page.module.css";
-import logger from "@/app/_common/utils/logger";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const RootLayout = async (props) => {
     const { children } = props;
     const miljø = process.env.NEXT_PUBLIC_ENV_DEKORATOR;
-    const minSideUrl = process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL;
 
-    logger.info(`Henter dekoratør for miljø ${miljø} og 'Min Side'-url ${minSideUrl}`);
-    console.log(`Henter dekoratør for miljø ${miljø} og 'Min Side'-url ${minSideUrl}`);
+    const hentDekoratørForMiljø = async (miljø) =>
+        await fetchDecoratorReact({
+            env: miljø,
+            params: {
+                context: "privatperson",
+                redirectToApp: true,
+                breadcrumbs: [
+                    {
+                        title: "Min side",
+                        url: miljø === "prod" ? "https://www.nav.no/minside" : "https://www.ansatt.dev.nav.no/minside",
+                    },
+                    {
+                        title: "Din CV",
+                        url: "/personbruker",
+                    },
+                ],
+            },
+        });
 
-    const Decorator = await fetchDecoratorReact({
-        env: miljø,
-        params: {
-            context: "privatperson",
-            redirectToApp: true,
-            breadcrumbs: [
-                {
-                    title: "Min side",
-                    url: minSideUrl,
-                },
-                {
-                    title: "Din CV",
-                    url: "/personbruker",
-                },
-            ],
-        },
-    });
-
-    logger.info(`Hentet Decorator ${Decorator}`);
-    console.log(`Hentet Decorator ${Decorator}`);
+    const ProdDekoratør = await hentDekoratørForMiljø("prod");
+    const DevDekoratør = await hentDekoratørForMiljø("dev");
+    const Dekoratør = miljø === "prod" ? ProdDekoratør : DevDekoratør;
 
     return (
         <html lang="no">
             <head>
                 <title>Din CV - nav.no</title>
-                {Decorator.HeadAssets()}
+                {Dekoratør.HeadAssets()}
             </head>
             <body className={inter.className}>
-                {Decorator.Header()}
+                {Dekoratør.Header()}
                 {children}
-                {Decorator.Footer()}
-                {Decorator.Scripts({ loader: Script })}
+                {Dekoratør.Footer()}
+                {Dekoratør.Scripts({ loader: Script })}
             </body>
         </html>
     );

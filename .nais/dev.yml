@@ -1,3 +1,2 @@
 ingress: "https://arbeidsplassen.intern.dev.nav.no/personbruker"
-next_public_env_dekorator: "dev"
-next_public_nav_min_side_url: https://www.ansatt.dev.nav.no/minside
+next_public_environment: "dev"

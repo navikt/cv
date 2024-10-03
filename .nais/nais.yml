@@ -48,10 +48,8 @@ spec:
       value: "http://pam-cv-api-gcp/pam-cv-api/rest"
     - name: PAM_ONTOLOGI_BASEURL
       value: "http://pam-ontologi/rest/typeahead"
-    - name: NEXT_PUBLIC_ENV_DEKORATOR
-      value: {{ next_public_env_dekorator }}
-    - name: NEXT_PUBLIC_NAV_MIN_SIDE_URL
-      value: {{ next_public_nav_min_side_url }}
+    - name: NEXT_PUBLIC_ENVIRONMENT
+      value: {{ next_public_environment }}
   accessPolicy:
     outbound:
       rules:

@@ -1,3 +1,2 @@
 ingress: "https://arbeidsplassen.nav.no/personbruker"
-next_public_env_dekorator: "prod"
-next_public_nav_min_side_url: https://www.nav.no/minside
+next_public_environment: "prod"
