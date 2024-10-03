@@ -3,11 +3,22 @@ import Script from "next/script";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "./page.module.css";
+import logger from "@/app/_common/utils/logger";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const RootLayout = async (props) => {
     const { children } = props;
+    logger.info(
+        "Dekoratør process.enver:",
+        process.env.NEXT_PUBLIC_ENV_DEKORATOR,
+        process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL,
+    );
+    console.log(
+        "Dekoratør process.enver:",
+        process.env.NEXT_PUBLIC_ENV_DEKORATOR,
+        process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL,
+    );
     const Decorator = await fetchDecoratorReact({
         env: process.env.NEXT_PUBLIC_ENV_DEKORATOR,
         params: {

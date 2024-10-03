@@ -18,6 +18,17 @@ export async function GET(request, context) {
         headers: requestHeaders,
     });
 
+    logger.info(
+        "Dekoratør process.enver:",
+        process.env.NEXT_PUBLIC_ENV_DEKORATOR,
+        process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL,
+    );
+    console.log(
+        "Dekoratør process.enver:",
+        process.env.NEXT_PUBLIC_ENV_DEKORATOR,
+        process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL,
+    );
+
     if (!response.ok) {
         logger.warn(
             `Feil ved henting av typeahead ${type} med query ${query}. Status code: ${response.status}. CallId: ${callId}`,
