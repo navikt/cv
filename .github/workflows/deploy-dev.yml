@@ -23,6 +23,7 @@ jobs:
       security-events: write
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
+      NAIS_VARS: .nais/dev.yml
     secrets: inherit
   setup-dekorator:
     name: Setup dekorator
