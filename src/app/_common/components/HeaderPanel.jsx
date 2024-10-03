@@ -1,6 +1,23 @@
 import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Tag, VStack } from "@navikt/ds-react";
+import { useContext, useEffect, useState } from "react";
+import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
+import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 
 function HeaderPanel() {
+    const personContext = useContext(CvOgPersonContext).person;
+
+    const [navn, setNavn] = useState("");
+    const [sistEndret, setSistEndret] = useState(null);
+
+    useEffect(() => {
+        const oppdaterPersonalia = (personalia) => {
+            setNavn(`${personalia.fornavn} ${personalia.etternavn}`.toUpperCase());
+            setSistEndret(new Date(personalia.sistEndret));
+        };
+
+        if (personContext.status === "success") oppdaterPersonalia(personContext.data.personalia || {});
+    }, [personContext]);
+
     return (
         <Box as="header" borderWidth="0 0 4 0" borderColor="surface-info">
             <Box background="surface-default" paddingInline="4" paddingBlock="6 6">
@@ -20,7 +37,7 @@ function HeaderPanel() {
                             </HStack>
                             <Hide below="md">
                                 <HStack gap="4" align="center">
-                                    <BodyShort size="small">LUKE SKYWALKER</BodyShort>
+                                    <BodyShort size="small">{navn}</BodyShort>
                                     <svg
                                         width="4"
                                         height="4"
@@ -30,13 +47,13 @@ function HeaderPanel() {
                                     >
                                         <circle id="Ellipse 16" cx="2" cy="2" r="2" fill="#B5F1FF" />
                                     </svg>
-                                    <Detail>Sist endret 26. juli 2024</Detail>
+                                    <Detail>{`Sist endret ${sistEndret ? formatterFullDato(sistEndret) : ""}`}</Detail>
                                 </HStack>
                             </Hide>
                             <Show below="md">
                                 <VStack gap="2">
-                                    <BodyShort size="small">LUKE SKYWALKER</BodyShort>
-                                    <Detail>Sist endret 26. juli 2024</Detail>
+                                    <BodyShort size="small">{navn}</BodyShort>
+                                    <Detail>{`Sist endret ${sistEndret ? formatterFullDato(sistEndret) : ""}`}</Detail>
                                 </VStack>
                             </Show>
                         </VStack>
