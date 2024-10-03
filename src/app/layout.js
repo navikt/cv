@@ -12,6 +12,8 @@ const RootLayout = async (props) => {
     const miljø = process.env.NEXT_PUBLIC_ENV_DEKORATOR;
     const minSideUrl = process.env.NEXT_PUBLIC_ENV_DEKORATOR;
 
+    logger.info(`Henter dekoratør med miljø: ${miljø} og min-side-url: ${minSideUrl}`);
+    console.log(`Henter dekoratør med miljø: ${miljø} og min-side-url: ${minSideUrl}`);
     const Decorator = await fetchDecoratorReact({
         env: miljø,
         params: {
