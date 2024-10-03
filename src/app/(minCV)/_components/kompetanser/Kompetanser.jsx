@@ -3,7 +3,6 @@ import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
 import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
-import { formatterDato } from "@/app/utils/stringUtils";
 import KompetanseModal from "@/app/(minCV)/_components/kompetanser/KompetanseModal";
 
 export default function Kompetanser() {

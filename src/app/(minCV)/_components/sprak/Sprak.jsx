@@ -3,8 +3,7 @@ import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
 import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
-import { formatterDato } from "@/app/utils/stringUtils";
-import { SpråkEnum } from "@/app/enums/cvEnums";
+import { SpråkEnum } from "@/app/_common/enums/cvEnums";
 import SpråkModal from "@/app/(minCV)/_components/sprak/SpråkModal";
 
 export default function Sprak() {

@@ -1,7 +1,7 @@
 import { Button, Heading, HStack, Modal } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
-import kompetanseMock from "../../../mocks/typeahead/kompetanserTypeaheadMock.json";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
+import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
 export default function KompetanseModal({ modalÅpen, toggleModal, kompetanse, lagreKompetanse }) {
     const [valgtKompetanse, setValgtKompetanse] = useState(kompetanse || null);
@@ -18,6 +18,10 @@ export default function KompetanseModal({ modalÅpen, toggleModal, kompetanse, l
             conceptId: valgtKompetanse.conceptId,
         });
         setValgtKompetanse(null);
+    };
+
+    const oppdaterValgtKompetanse = (verdi, erValgt) => {
+        setValgtKompetanse(erValgt ? verdi : null);
     };
 
     return (
@@ -39,8 +43,8 @@ export default function KompetanseModal({ modalÅpen, toggleModal, kompetanse, l
                 <Typeahead
                     label="Fagdokumentasjon"
                     description="Må fylles ut"
-                    mockData={kompetanseMock}
-                    oppdaterValg={setValgtKompetanse}
+                    type={TypeaheadEnum.KOMPETANSE}
+                    oppdaterValg={oppdaterValgtKompetanse}
                     valgtVerdi={valgtKompetanse?.title}
                 />
             </Modal.Body>

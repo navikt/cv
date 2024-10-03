@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
 import { ArbeidsforholdModal } from "@/app/(minCV)/_components/arbeidsforhold/ArbeidsforholdModal";
-import { formatterDato } from "@/app/utils/stringUtils";
+import { formatterDato } from "@/app/_common/utils/stringUtils";
 
 export default function Arbeidsforhold() {
     const cvContext = useContext(CvOgPersonContext).cv;

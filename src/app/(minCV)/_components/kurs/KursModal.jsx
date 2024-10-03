@@ -2,8 +2,8 @@ import { Button, Heading, HStack, Modal, Select, TextField } from "@navikt/ds-re
 import { useEffect, useState } from "react";
 import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
-import { TidsenhetEnum } from "@/app/enums/cvEnums";
-import { formatterTidsenhet, storForbokstav } from "@/app/utils/stringUtils";
+import { TidsenhetEnum } from "@/app/_common/enums/cvEnums";
+import { formatterTidsenhet, storForbokstav } from "@/app/_common/utils/stringUtils";
 
 export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs }) {
     const [valgtKurs, setValgtKurs] = useState(kurs || null);

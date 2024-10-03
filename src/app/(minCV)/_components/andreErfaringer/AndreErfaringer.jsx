@@ -3,7 +3,7 @@ import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
 import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
-import { formatterDato } from "@/app/utils/stringUtils";
+import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { AndreErfaringerModal } from "@/app/(minCV)/_components/andreErfaringer/AndreErfaringerModal";
 
 export default function AndreErfaringer() {

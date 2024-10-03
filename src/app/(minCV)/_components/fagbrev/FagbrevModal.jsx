@@ -1,7 +1,7 @@
 import { Button, Heading, HStack, Modal } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
-import fagbrevMock from "../../../mocks/typeahead/fagbrevTypeaheadMock.json";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
+import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
 export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFagbrev }) {
     const [valgtFagbrev, setValgtFagbrev] = useState(fagbrev || null);
@@ -18,6 +18,10 @@ export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFa
             conceptId: valgtFagbrev.conceptId,
         });
         setValgtFagbrev(null);
+    };
+
+    const oppdaterValgtFagbrev = (verdi, erValgt) => {
+        setValgtFagbrev(erValgt ? verdi : null);
     };
 
     return (
@@ -39,8 +43,8 @@ export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFa
                 <Typeahead
                     label="Fagdokumentasjon"
                     description="Må fylles ut"
-                    mockData={fagbrevMock}
-                    oppdaterValg={setValgtFagbrev}
+                    type={TypeaheadEnum.FAGBREV}
+                    oppdaterValg={oppdaterValgtFagbrev}
                     valgtVerdi={valgtFagbrev?.title}
                 />
             </Modal.Body>

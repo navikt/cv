@@ -1,9 +1,9 @@
 import { Button, Heading, HStack, Modal, Select, TextField } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
-import andreGodkjenningerMock from "../../../mocks/typeahead/andreGodkjenningerTypeaheadMock.json";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
+import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
 export default function AndreGodkjenningerModal({ modalÅpen, toggleModal, godkjenning, lagreGodkjenning }) {
     const [valgtGodkjenning, setValgtGodkjenning] = useState(godkjenning || null);
@@ -36,6 +36,10 @@ export default function AndreGodkjenningerModal({ modalÅpen, toggleModal, godkj
         setValgtGodkjenning(null);
     };
 
+    const oppdaterValgtGodkjenning = (verdi, erValgt) => {
+        setValgtGodkjenning(erValgt ? verdi : null);
+    };
+
     return (
         <Modal
             open={modalÅpen}
@@ -56,9 +60,9 @@ export default function AndreGodkjenningerModal({ modalÅpen, toggleModal, godkj
                     className={styles.mb6}
                     label="Annen godkjenning"
                     description="Yrkessertifikater, attester, bevis o.l."
-                    mockData={andreGodkjenningerMock}
-                    oppdaterValg={setValgtGodkjenning}
-                    valgtVerdi={valgtGodkjenning?.title}
+                    type={TypeaheadEnum.ANDRE_GODKJENNINGER}
+                    oppdaterValg={oppdaterValgtGodkjenning}
+                    valgtVerdi={valgtGodkjenning?.certificateName || valgtGodkjenning?.title}
                 />
                 <TextField
                     className={styles.mb6}

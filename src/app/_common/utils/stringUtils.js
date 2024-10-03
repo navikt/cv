@@ -1,4 +1,4 @@
-import { MånedEnum, TidsenhetEnum } from "@/app/enums/cvEnums";
+import { MånedEnum, TidsenhetEnum } from "@/app/_common/enums/cvEnums";
 
 export const formatterTelefon = (telefonnummer) => {
     if (telefonnummer.length === 8 || telefonnummer.length === 11) {

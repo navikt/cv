@@ -3,8 +3,8 @@ import styles from "@/app/page.module.css";
 import { useContext, useEffect, useState } from "react";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
-import { UtdanningsnivåEnum } from "@/app/enums/cvEnums";
-import { formatterDato } from "@/app/utils/stringUtils";
+import { UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
+import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { UtdanningModal } from "@/app/(minCV)/_components/utdanninger/UtdanningModal";
 
 function UtdanningerIcon() {
