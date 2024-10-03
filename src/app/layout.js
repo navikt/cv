@@ -9,23 +9,18 @@ const inter = Inter({ subsets: ["latin"] });
 
 const RootLayout = async (props) => {
     const { children } = props;
-    logger.info(
-        `Dekoratør process.enver i layout.js: ${process.env.NEXT_PUBLIC_ENV_DEKORATOR} - ${process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL}`,
-    );
-    console.log(
-        "Dekoratør process.enver layout.js:",
-        process.env.NEXT_PUBLIC_ENV_DEKORATOR,
-        process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL,
-    );
+    const miljø = process.env.NEXT_PUBLIC_ENV_DEKORATOR;
+    const minSideUrl = process.env.NEXT_PUBLIC_ENV_DEKORATOR;
+
     const Decorator = await fetchDecoratorReact({
-        env: process.env.NEXT_PUBLIC_ENV_DEKORATOR,
+        env: miljø,
         params: {
             context: "privatperson",
             redirectToApp: true,
             breadcrumbs: [
                 {
                     title: "Min side",
-                    url: process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL,
+                    url: minSideUrl,
                 },
                 {
                     title: "Din CV",
