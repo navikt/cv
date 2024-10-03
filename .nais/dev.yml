@@ -1,2 +1,2 @@
 ingress: "https://arbeidsplassen.intern.dev.nav.no/personbruker"
-next_public_environment: "prod"
+next_public_environment: "dev"
