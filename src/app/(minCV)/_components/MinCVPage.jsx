@@ -20,7 +20,7 @@ import Kurs from "@/app/(minCV)/_components/kurs/Kurs";
 import Sammendrag from "@/app/(minCV)/_components/sammendrag/Sammendrag";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import Hovedmeny from "@/app/_common/components/meny/Hovedmeny";
-import CvOgPersonProvider, { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
+import CvOgPersonProvider from "@/app/(minCV)/_components/context/CvContext";
 
 export default function MinCVPage() {
     return (
