@@ -10,12 +10,8 @@ const inter = Inter({ subsets: ["latin"] });
 const RootLayout = async (props) => {
     const { children } = props;
     const miljø = process.env.NEXT_PUBLIC_ENV_DEKORATOR;
-    const minSideUrl = process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL;
 
-    logger.info(`Henter dekoratør for miljø ${miljø} og 'Min Side'-url ${minSideUrl}`);
-    console.log(`Henter dekoratør for miljø ${miljø} og 'Min Side'-url ${minSideUrl}`);
-
-    const Decorator = await fetchDecoratorReact({
+    const hentDekoratørProps = (miljø, minSideUrl) => ({
         env: miljø,
         params: {
             context: "privatperson",
@@ -33,20 +29,26 @@ const RootLayout = async (props) => {
         },
     });
 
-    logger.info(`Hentet Decorator ${Decorator}`);
-    console.log(`Hentet Decorator ${Decorator}`);
+    const ProdDekorator = await fetchDecoratorReact(hentDekoratørProps("prod", "https://www.nav.no/minside"));
+    const DevDekoratør = await fetchDecoratorReact(hentDekoratørProps("dev", "https://www.ansatt.dev.nav.no/minside"));
+
+    const headAssets = miljø === "prod" ? ProdDekorator.HeadAssets() : DevDekoratør.HeadAssets();
+    const header = miljø === "prod" ? ProdDekorator.Header() : DevDekoratør.Header();
+    const footer = miljø === "prod" ? ProdDekorator.Footer() : DevDekoratør.Footer();
+    const scripts =
+        miljø === "prod" ? ProdDekorator.Scripts({ loader: Script }) : DevDekoratør.Scripts({ loader: Script });
 
     return (
         <html lang="no">
             <head>
                 <title>Din CV - nav.no</title>
-                {Decorator.HeadAssets()}
+                {headAssets}
             </head>
             <body className={inter.className}>
-                {Decorator.Header()}
+                {header}
                 {children}
-                {Decorator.Footer()}
-                {Decorator.Scripts({ loader: Script })}
+                {footer}
+                {scripts}
             </body>
         </html>
     );
