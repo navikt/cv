@@ -9,23 +9,21 @@ const inter = Inter({ subsets: ["latin"] });
 
 const RootLayout = async (props) => {
     const { children } = props;
-    logger.info(
-        `Dekoratør process.enver i layout.js: ${process.env.NEXT_PUBLIC_ENV_DEKORATOR} - ${process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL}`,
-    );
-    console.log(
-        "Dekoratør process.enver layout.js:",
-        process.env.NEXT_PUBLIC_ENV_DEKORATOR,
-        process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL,
-    );
+    const miljø = process.env.NEXT_PUBLIC_ENV_DEKORATOR;
+    const minSideUrl = process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL;
+
+    logger.info(`Henter dekoratør for miljø ${miljø} og 'Min Side'-url ${minSideUrl}`);
+    console.log(`Henter dekoratør for miljø ${miljø} og 'Min Side'-url ${minSideUrl}`);
+
     const Decorator = await fetchDecoratorReact({
-        env: process.env.NEXT_PUBLIC_ENV_DEKORATOR,
+        env: miljø,
         params: {
             context: "privatperson",
             redirectToApp: true,
             breadcrumbs: [
                 {
                     title: "Min side",
-                    url: process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL,
+                    url: minSideUrl,
                 },
                 {
                     title: "Din CV",
@@ -34,6 +32,9 @@ const RootLayout = async (props) => {
             ],
         },
     });
+
+    logger.info(`Hentet Decorator ${Decorator}`);
+    console.log(`Hentet Decorator ${Decorator}`);
 
     return (
         <html lang="no">
