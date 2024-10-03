@@ -3,20 +3,22 @@ import Script from "next/script";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "./page.module.css";
+import { cvConfig } from "@/app/_common/config";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const RootLayout = async (props) => {
     const { children } = props;
+
     const Decorator = await fetchDecoratorReact({
-        env: process.env.NEXT_PUBLIC_ENV_DEKORATOR,
+        env: cvConfig.dekoratoren.miljø,
         params: {
             context: "privatperson",
             redirectToApp: true,
             breadcrumbs: [
                 {
                     title: "Min side",
-                    url: process.env.NEXT_PUBLIC_NAV_MIN_SIDE_URL,
+                    url: cvConfig.dekoratoren.minSideUrl,
                 },
                 {
                     title: "Din CV",

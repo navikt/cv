@@ -3,7 +3,7 @@ import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
 import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
-import { formatterFullDato, formatterTidsenhet } from "@/app/utils/stringUtils";
+import { formatterFullDato, formatterTidsenhet } from "@/app/_common/utils/stringUtils";
 import KursModal from "@/app/(minCV)/_components/kurs/KursModal";
 
 export default function Kurs() {

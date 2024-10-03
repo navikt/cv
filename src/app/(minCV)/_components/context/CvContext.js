@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import React from "react";
-import * as cvMock from "../../../mocks/cvMock.json";
-import * as personMock from "../../../mocks/personMock.json";
-import { hentData } from "@/app/utils/fetchUtils";
+import * as cvMock from "@/app/_common/mocks/cvMock.json";
+import * as personMock from "@/app/_common/mocks/personMock.json";
+import { hentData } from "@/app/_common/utils/fetchUtils";
 
 export const CvOgPersonContext = React.createContext({ cv: {}, person: {} });
 

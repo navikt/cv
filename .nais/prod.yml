@@ -1,3 +1,2 @@
 ingress: "https://arbeidsplassen.nav.no/personbruker"
-loglevel: "debug"
-namespace: "teampam"
+next_public_environment: "prod"

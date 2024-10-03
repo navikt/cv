@@ -3,7 +3,7 @@ import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
 import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
-import { formatterFullDato } from "@/app/utils/stringUtils";
+import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import OffentligeGodkjenningerModal from "@/app/(minCV)/_components/offentligeGodkjenninger/OffentligeGodkjenningerModal";
 
 export default function OffentligeGodkjenninger() {

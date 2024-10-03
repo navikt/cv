@@ -3,7 +3,7 @@ import { BodyLong, Box, Button, Heading, HStack, Modal, TextField, VStack } from
 import { PencilIcon, PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
-import { formatterAdresse, formatterTelefon } from "@/app/utils/stringUtils";
+import { formatterAdresse, formatterTelefon } from "@/app/_common/utils/stringUtils";
 
 function PersonaliaIcon() {
     return (

@@ -11,7 +11,7 @@ import {
     TextField,
 } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { UtdanningsnivåEnum } from "@/app/enums/cvEnums";
+import { UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 
@@ -51,8 +51,6 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
             ongoing: erPågående,
         });
     };
-
-    const årspenn = Array.from({ length: 100 }, (år, index) => new Date().getFullYear() - index);
 
     return (
         <Modal open={modalÅpen} aria-label="Legg til utdanning" onClose={() => toggleModal(false)} width="medium">

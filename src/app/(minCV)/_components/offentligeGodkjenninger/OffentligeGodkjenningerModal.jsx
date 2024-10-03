@@ -1,9 +1,9 @@
 import { Button, Heading, HStack, Modal, Select, TextField } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
-import offentligeGodkjenningerMock from "../../../mocks/typeahead/offentligeGodkjenningerTypeaheadMock.json";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
+import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
 export default function OffentligeGodkjenningerModal({ modalÅpen, toggleModal, godkjenning, lagreGodkjenning }) {
     const [valgtGodkjenning, setValgtGodkjenning] = useState(godkjenning || null);
@@ -19,9 +19,6 @@ export default function OffentligeGodkjenningerModal({ modalÅpen, toggleModal, 
         const oppdaterGodkjenning = (godkjenning) => {
             setValgtGodkjenning(godkjenning);
             setUtsteder(godkjenning?.issuer || "");
-
-            console.log("Fra dato", godkjenning.fromDate, "Til dato", godkjenning.toDate);
-
             setGodkjenningFraDato(godkjenning?.fromDate ? new Date(godkjenning.fromDate) : null);
             setGodkjenningTilDato(godkjenning?.toDate ? new Date(godkjenning.toDate) : null);
         };
@@ -37,6 +34,10 @@ export default function OffentligeGodkjenningerModal({ modalÅpen, toggleModal, 
             toDate: godkjenningTilDato,
         });
         setValgtGodkjenning(null);
+    };
+
+    const oppdaterValgtGodkjenning = (verdi, erValgt) => {
+        setValgtGodkjenning(erValgt ? verdi : null);
     };
 
     return (
@@ -59,8 +60,8 @@ export default function OffentligeGodkjenningerModal({ modalÅpen, toggleModal, 
                     className={styles.mb6}
                     label="Offentlig godkjenning"
                     description="Autorisasjoner, førerbevis, tjenestebevis m.m"
-                    mockData={offentligeGodkjenningerMock}
-                    oppdaterValg={setValgtGodkjenning}
+                    type={TypeaheadEnum.OFFENTLIGE_GODKJENNINGER}
+                    oppdaterValg={oppdaterValgtGodkjenning}
                     valgtVerdi={valgtGodkjenning?.title}
                 />
                 <TextField

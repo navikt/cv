@@ -1,10 +1,7 @@
 import { Button, Heading, HStack, Modal, Select, VStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
-import fagbrevMock from "../../../mocks/typeahead/fagbrevTypeaheadMock.json";
-import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";
-import { SpråkEnum } from "@/app/enums/cvEnums";
-import førerkortData from "@/app/data/førerkort.json";
+import førerkortData from "@/app/_common/data/førerkort.json";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 
 export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, lagreFørerkort }) {

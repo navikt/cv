@@ -44,8 +44,16 @@ spec:
   env:
     - name: PORT
       value: "8095"
+    - name: PAM_CV_API_BASEURL
+      value: "http://pam-cv-api-gcp/pam-cv-api/rest"
+    - name: PAM_ONTOLOGI_BASEURL
+      value: "http://pam-ontologi/rest/typeahead"
+    - name: NEXT_PUBLIC_ENVIRONMENT
+      value: {{ next_public_environment }}
   accessPolicy:
     outbound:
       rules:
         - application: nav-dekoratoren
           namespace: personbruker
+        - application: pam-cv-api-gcp
+        - application: pam-ontologi

@@ -1,52 +1,61 @@
 import { UNSAFE_Combobox } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
-import { mapTypeaheadResponse } from "@/app/utils/fetchUtils";
+import { hentTypeahead } from "@/app/_common/utils/fetchUtils";
 
-// TODO: Bytt mock med url ved kobling mot backend
 export const Typeahead = ({
-    mockData,
+    type,
     oppdaterValg,
     valgtVerdi,
     label,
     description,
-    multiselect,
+    visningsfelt = "title",
+    multiselect = false,
     forhåndshentet = false,
     className,
 }) => {
     const [typeaheadData, setTypeaheadData] = useState([]);
-    const [typeaheadValg, setTypeaheadValg] = useState([]);
+    const [typeaheadForslag, setTypeaheadForslag] = useState([]);
 
     useEffect(() => {
         if (forhåndshentet) hentTypeaheadData();
     }, []);
 
     useEffect(() => {
-        if (!forhåndshentet) setTypeaheadValg(typeaheadData.map((e) => e.title));
-    }, [typeaheadData]);
+        if (!forhåndshentet) oppdaterTypeaheadForslag(typeaheadData.map((e) => e[visningsfelt]));
+    }, [typeaheadData, valgtVerdi]);
 
     const oppdaterTypeahead = (verdi) => {
         if (!verdi) return;
 
         if (forhåndshentet) {
             const filtrertTypeahead = typeaheadData
-                .map((e) => e.title)
+                .map((e) => e[visningsfelt])
                 .filter((e) => e.toLowerCase().includes(verdi.toLowerCase()));
-            setTypeaheadValg(filtrertTypeahead);
+            oppdaterTypeaheadForslag(filtrertTypeahead);
         } else {
             hentTypeaheadData(verdi);
         }
     };
 
-    const hentTypeaheadData = (verdi) => {
-        // TODO: Hent fra URL
-        const data = mapTypeaheadResponse(mockData);
+    const hentTypeaheadData = async (verdi) => {
+        const data = await hentTypeahead(verdi, type, visningsfelt);
         setTypeaheadData(data);
-        setTypeaheadValg(data.map((e) => e.title));
+        oppdaterTypeaheadForslag(data.map((e) => e[visningsfelt]));
     };
 
-    const velgVerdi = (verdi) => {
-        const valgtTypeahead = typeaheadData.find((e) => e.title === verdi);
-        oppdaterValg(valgtTypeahead);
+    const oppdaterTypeaheadForslag = (forslag) => {
+        const alleForslag = [...hentAlleredeValgteVerdier(), ...forslag];
+        setTypeaheadForslag([...new Set(alleForslag)]);
+    };
+
+    const velgVerdi = (verdi, erValgt) => {
+        const valgtTypeahead = typeaheadData.find((e) => e[visningsfelt] === verdi) || { [visningsfelt]: verdi };
+        oppdaterValg(valgtTypeahead, erValgt);
+    };
+
+    const hentAlleredeValgteVerdier = () => {
+        if (multiselect) return valgtVerdi.map((e) => e[visningsfelt]);
+        return valgtVerdi ? [valgtVerdi] : [];
     };
 
     return (
@@ -54,13 +63,13 @@ export const Typeahead = ({
             className={className}
             label={label}
             description={description}
-            options={typeaheadValg}
-            filteredOptions={typeaheadValg}
+            options={typeaheadForslag}
+            filteredOptions={typeaheadForslag}
             shouldAutocomplete={false}
             isMultiSelect={multiselect || false}
-            defaultValue={valgtVerdi || ""}
+            selectedOptions={hentAlleredeValgteVerdier()}
             onChange={(e) => oppdaterTypeahead(e?.target?.value || "")}
-            onToggleSelected={(e) => velgVerdi(e)}
+            onToggleSelected={(e, isSelected) => velgVerdi(e, isSelected)}
         />
     );
 };

@@ -2,8 +2,8 @@ import { Button, Checkbox, CheckboxGroup, Heading, HStack, Modal, Textarea, Text
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
-import stillingstittelMock from "../../../mocks/typeahead/stillingstittelTypeaheadMock.json";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
+import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
 export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, lagreArbeidsforhold }) => {
     const [arbeidsgiver, setArbeidsgiver] = useState("");
@@ -55,13 +55,11 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, l
         });
     };
 
-    const setStillingTypeahead = (stilling) => {
-        setStillingstittel(stilling.label);
-        setKonseptId(stilling.konseptId);
-        setStyrk(stilling.styrk08);
+    const setStillingTypeahead = (stilling, erValgt) => {
+        setStillingstittel(erValgt ? stilling.label : "");
+        setKonseptId(erValgt ? stilling.konseptId : "");
+        setStyrk(erValgt ? stilling.styrk08 : "");
     };
-
-    const årspenn = Array.from({ length: 100 }, (år, index) => new Date().getFullYear() - index);
 
     return (
         <Modal open={modalÅpen} aria-label="Legg til arbeidsforhold" onClose={() => toggleModal(false)} width="medium">
@@ -79,7 +77,7 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, l
                             className={styles.mb6}
                             label="Stilling/yrke"
                             description="Må fylles ut"
-                            mockData={stillingstittelMock}
+                            type={TypeaheadEnum.STILLING}
                             oppdaterValg={setStillingTypeahead}
                             valgtVerdi={stillingstittel}
                         />

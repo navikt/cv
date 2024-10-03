@@ -1,10 +1,9 @@
-import { BodyLong, Button, Heading, HStack, Modal, Select } from "@navikt/ds-react";
+import { Button, Heading, HStack, Modal, Select } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
-import språkMock from "../../../mocks/typeahead/språkDropdownMock.json";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
-import { SpråkEnum, UtdanningsnivåEnum } from "@/app/enums/cvEnums";
+import { SpråkEnum } from "@/app/_common/enums/cvEnums";
 import styles from "@/app/page.module.css";
-import { mapTypeaheadResponse } from "@/app/utils/fetchUtils";
+import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
 export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpråk }) {
     const [valgtSpråk, setValgtSpråk] = useState(språk || null);
@@ -30,6 +29,10 @@ export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpr�
         setValgtSpråk(null);
     };
 
+    const oppdaterValgtSpråk = (verdi, erValgt) => {
+        setValgtSpråk(erValgt ? verdi : null);
+    };
+
     return (
         <Modal
             open={modalÅpen}
@@ -49,9 +52,9 @@ export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpr�
                 <Typeahead
                     className={styles.mb6}
                     label={"Språk"}
-                    valgtVerdi={valgtSpråk?.language}
-                    oppdaterValg={setValgtSpråk}
-                    mockData={språkMock}
+                    valgtVerdi={valgtSpråk?.language || valgtSpråk?.title}
+                    oppdaterValg={oppdaterValgtSpråk}
+                    type={TypeaheadEnum.SPRÅK}
                     forhåndshentet={true}
                 />
                 <Select

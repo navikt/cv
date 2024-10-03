@@ -167,31 +167,7 @@
             },
             {
                 "id": null,
-                "title": "Smuggler",
-                "conceptId": 99999,
-                "styrk08": "9999"
-            },
-            {
-                "id": null,
                 "title": "Sith lord",
-                "conceptId": 99999,
-                "styrk08": "9999"
-            },
-            {
-                "id": null,
-                "title": "Stormtrooper",
-                "conceptId": 99999,
-                "styrk08": "9999"
-            },
-            {
-                "id": null,
-                "title": "Moisture farmer",
-                "conceptId": 99999,
-                "styrk08": "9999"
-            },
-            {
-                "id": null,
-                "title": "Pilot",
                 "conceptId": 99999,
                 "styrk08": "9999"
             }
@@ -213,48 +189,6 @@
             {
                 "id": null,
                 "location": "Naboo",
-                "code": "NO14",
-                "conceptId": 380465
-            },
-            {
-                "id": null,
-                "location": "Bespin",
-                "code": "NO14",
-                "conceptId": 380465
-            },
-            {
-                "id": null,
-                "location": "Endor",
-                "code": "NO14",
-                "conceptId": 380465
-            },
-            {
-                "id": null,
-                "location": "Hoth",
-                "code": "NO14",
-                "conceptId": 380465
-            },
-            {
-                "id": null,
-                "location": "Dagobah",
-                "code": "NO14",
-                "conceptId": 380465
-            },
-            {
-                "id": null,
-                "location": "Mustafar",
-                "code": "NO14",
-                "conceptId": 380465
-            },
-            {
-                "id": null,
-                "location": "Geonosis",
-                "code": "NO14",
-                "conceptId": 380465
-            },
-            {
-                "id": null,
-                "location": "Kamino",
                 "code": "NO14",
                 "conceptId": 380465
             }

@@ -1,23 +1,11 @@
-import {
-    BodyLong,
-    Box,
-    Button,
-    Checkbox,
-    CheckboxGroup,
-    Heading,
-    HStack,
-    Modal,
-    Radio,
-    RadioGroup,
-    TextField,
-    VStack,
-} from "@navikt/ds-react";
+import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
 import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
-import { AnsettelsesformEnum, ArbeidstidEnum, OmfangEnum, StarttidspunktEnum } from "@/app/enums/cvEnums";
-import { formatterListeAvObjekterTilTekst } from "@/app/utils/stringUtils";
+import { AnsettelsesformEnum, ArbeidstidEnum, OmfangEnum, StarttidspunktEnum } from "@/app/_common/enums/cvEnums";
+import { formatterListeAvObjekterTilTekst } from "@/app/_common/utils/stringUtils";
+import { JobbonskerModal } from "@/app/(minCV)/_components/jobbonsker/JobbonskerModal";
 
 function JobbonskerIcon() {
     return (
@@ -44,51 +32,24 @@ export default function Jobbonsker() {
     const cvContext = useContext(CvOgPersonContext).cv;
     const [jobbønsker, setJobbønsker] = useState(null);
     const [modalÅpen, setModalÅpen] = useState(false);
-    const [yrker, setYrker] = useState([]);
-    const [lokasjoner, setLokasjoner] = useState([]);
-    const [omfang, setOmfang] = useState([]);
-    const [ansettelsesform, setAnsettelsesform] = useState([]);
-    const [arbeidstid, setArbeidstid] = useState([]);
-    const [starttidspunkt, setStarttidspunkt] = useState("");
 
     useEffect(() => {
         const oppdaterJobbønsker = (jobbønsker) => {
             setJobbønsker(jobbønsker);
-            setYrker(jobbønsker?.occupations || []);
-            setLokasjoner(jobbønsker?.locations) || [];
-            setOmfang(jobbønsker?.workLoadTypes || []);
-            setAnsettelsesform(jobbønsker.occupationTypes || []);
-            setArbeidstid(jobbønsker.workScheduleTypes || []);
-            setStarttidspunkt(jobbønsker.startOption || "");
         };
 
         if (cvContext.status === "success") oppdaterJobbønsker(cvContext.data.jobboensker || {});
     }, [cvContext]);
 
-    const lagreJobbønsker = () => {
-        setJobbønsker({
-            ...jobbønsker,
-            occupations: yrker,
-            locations: lokasjoner,
-            workLoadTypes: omfang,
-            occupationTypes: ansettelsesform,
-            workScheduleTypes: arbeidstid,
-            startOption: starttidspunkt,
-        });
-
+    const lagreJobbønsker = (jobbønsker) => {
         // TODO: Send til backend og konsumer respons-CV
+        setJobbønsker(jobbønsker);
         setModalÅpen(false);
     };
 
     const slettJobbønsker = () => {
-        setJobbønsker(null);
-        setYrker([]);
-        setLokasjoner([]);
-        setOmfang([]);
-        setAnsettelsesform([]);
-        setArbeidstid([]);
-        setStarttidspunkt("");
         // TODO: Send til backend og konsumer respons-CV
+        setJobbønsker(null);
     };
 
     return (
@@ -116,27 +77,33 @@ export default function Jobbonsker() {
                 ) : (
                     <>
                         <BodyLong weight="semibold">Jobber og yrker</BodyLong>
-                        <BodyLong spacing>{formatterListeAvObjekterTilTekst(yrker, "title")}</BodyLong>
+                        <BodyLong spacing>{formatterListeAvObjekterTilTekst(jobbønsker.occupations, "title")}</BodyLong>
                         <div className={styles.divider}></div>
 
                         <BodyLong weight="semibold">Områder</BodyLong>
-                        <BodyLong spacing>{formatterListeAvObjekterTilTekst(lokasjoner, "location")}</BodyLong>
+                        <BodyLong spacing>
+                            {formatterListeAvObjekterTilTekst(jobbønsker.locations, "location")}
+                        </BodyLong>
                         <div className={styles.divider}></div>
 
                         <BodyLong weight="semibold">Heltid eller deltid</BodyLong>
-                        <BodyLong spacing>{omfang.map((e) => OmfangEnum[e]).join(", ")}</BodyLong>
+                        <BodyLong spacing>{jobbønsker.workLoadTypes.map((e) => OmfangEnum[e]).join(", ")}</BodyLong>
                         <div className={styles.divider}></div>
 
                         <BodyLong weight="semibold">Arbeidstider</BodyLong>
-                        <BodyLong spacing>{arbeidstid.map((e) => ArbeidstidEnum[e]).join(", ")}</BodyLong>
+                        <BodyLong spacing>
+                            {jobbønsker.workScheduleTypes.map((e) => ArbeidstidEnum[e]).join(", ")}
+                        </BodyLong>
                         <div className={styles.divider}></div>
 
                         <BodyLong weight="semibold">Ansettelsesform</BodyLong>
-                        <BodyLong spacing>{ansettelsesform.map((e) => AnsettelsesformEnum[e]).join(", ")}</BodyLong>
+                        <BodyLong spacing>
+                            {jobbønsker.occupationTypes.map((e) => AnsettelsesformEnum[e]).join(", ")}
+                        </BodyLong>
                         <div className={styles.divider}></div>
 
                         <BodyLong weight="semibold">Oppstart</BodyLong>
-                        <BodyLong className={styles.mb16}>{StarttidspunktEnum[starttidspunkt]}</BodyLong>
+                        <BodyLong className={styles.mb16}>{StarttidspunktEnum[jobbønsker.startOption]}</BodyLong>
 
                         <HStack justify="space-between">
                             <Button
@@ -157,103 +124,14 @@ export default function Jobbonsker() {
                     </>
                 )}
             </Box>
-
-            <Modal open={modalÅpen} aria-label="Legg til jobbønske" onClose={() => setModalÅpen(false)} width="medium">
-                <Modal.Header closeButton={true}>
-                    <Heading align="start" level="3" size="medium">
-                        <HStack gap="1" align="center">
-                            Legg til Jobbønsker
-                        </HStack>
-                    </Heading>
-                </Modal.Header>
-                <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }}>
-                    <HStack justify="space-between">
-                        <VStack className={styles.element}>
-                            <TextField
-                                className={styles.mb6}
-                                label="Jobber og yrker"
-                                description="Må fylles ut"
-                                value={formatterListeAvObjekterTilTekst(yrker, "title")}
-                                onChange={(e) => setYrker(e.target.value)}
-                            />
-                        </VStack>
-                        <VStack className={styles.element}>
-                            <TextField
-                                className={styles.mb6}
-                                label="Hvor kan du jobbe"
-                                description="Må fylles ut"
-                                value={formatterListeAvObjekterTilTekst(lokasjoner, "location")}
-                                onChange={(e) => setLokasjoner(e.target.value)}
-                            />
-                        </VStack>
-                    </HStack>
-                    <CheckboxGroup
-                        className={styles.mb6}
-                        onChange={setOmfang}
-                        value={omfang}
-                        legend="Vil du jobbe heltid eller deltid?"
-                    >
-                        <HStack gap="4">
-                            {Object.keys(OmfangEnum).map((key) => (
-                                <Checkbox value={key} key={key}>
-                                    {OmfangEnum[key]}
-                                </Checkbox>
-                            ))}
-                        </HStack>
-                    </CheckboxGroup>
-                    <CheckboxGroup
-                        className={styles.mb6}
-                        onChange={setArbeidstid}
-                        value={arbeidstid}
-                        legend="Når kan du jobbe?"
-                    >
-                        <HStack>
-                            {Object.keys(ArbeidstidEnum).map((verdi) => (
-                                <Checkbox className={styles.checkbox} key={verdi} value={verdi}>
-                                    {ArbeidstidEnum[verdi]}
-                                </Checkbox>
-                            ))}
-                        </HStack>
-                    </CheckboxGroup>
-                    <CheckboxGroup
-                        className={styles.mb6}
-                        onChange={setAnsettelsesform}
-                        value={ansettelsesform}
-                        legend="Hva slags ansettelse ønsker du?"
-                    >
-                        <HStack>
-                            {Object.keys(AnsettelsesformEnum).map((verdi) => (
-                                <Checkbox className={styles.checkbox} key={verdi} value={verdi}>
-                                    {AnsettelsesformEnum[verdi]}
-                                </Checkbox>
-                            ))}
-                        </HStack>
-                    </CheckboxGroup>
-                    <RadioGroup
-                        legend="Når kan du begynne i ny jobb?"
-                        onChange={setStarttidspunkt}
-                        value={starttidspunkt}
-                    >
-                        <HStack>
-                            {Object.keys(StarttidspunktEnum).map((verdi) => (
-                                <Radio className={styles.checkbox} key={verdi} value={verdi}>
-                                    {StarttidspunktEnum[verdi]}
-                                </Radio>
-                            ))}
-                        </HStack>
-                    </RadioGroup>
-                </Modal.Body>
-                <Modal.Footer>
-                    <HStack gap="4">
-                        <Button variant="secondary" onClick={() => setModalÅpen(false)}>
-                            Avbryt
-                        </Button>
-                        <Button variant="primary" onClick={lagreJobbønsker}>
-                            Lagre
-                        </Button>
-                    </HStack>
-                </Modal.Footer>
-            </Modal>
+            {modalÅpen && (
+                <JobbonskerModal
+                    toggleModal={setModalÅpen}
+                    modalÅpen={modalÅpen}
+                    jobbønsker={jobbønsker}
+                    lagreJobbønsker={lagreJobbønsker}
+                />
+            )}
         </div>
     );
 }
