@@ -12,10 +12,10 @@ For lokal kjøring vil dekoratøren kun være til pynt. Vi bruker wonderwall lok
 
 1. Sett opp `pam-docker-compose-shared`, les om det [her](https://github.com/navikt/pam-docker-compose-shared/blob/main/README.md).
 2. `pam-cv-api-gcp` lokalt i samme mappe som dette prosjektet, slik at det ligger på `../pam-cv-api-gcp`. Dette trengs for at scriptet for avhengigheter får tak i applikasjonen. Sørg for at du kan bygge `pam-cv-api-gcp` ved å kjøre `./gradlew clean build` i prosjektets mappe.
-3. Sørg for at du har tilgang til @navikt sine npm-pakker, dette er beskrevet [her](#tilgang-til-navs-npm-registry). 
+3. Sørg for at du har tilgang til @navikt sine npm-pakker, dette er beskrevet [i eget avsnitt](#tilgang-til-navs-npm-registry).
 4. Start Docker Desktop / Kolima
 
-### Kjør lokalt
+### Start avhengigheter og applikasjonen
 
 ```bash
 $ npm install # Installerer NPM-avhengigheter
