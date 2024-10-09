@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CV
 
-## Getting Started
+## Beskrivelse
 
-First, run the development server:
+Frontend-applikasjon for CV på nav.no/min-side.
+
+## Lokal kjøring
+
+For lokal kjøring vil dekoratøren kun være til pynt. Vi bruker wonderwall lokalt som tar for seg innlogging og legger på authorization-token på alle requester.
+
+### Forbered avhengigheter
+
+1. Sett opp `pam-docker-compose-shared`, les om det [her](https://github.com/navikt/pam-docker-compose-shared/blob/main/README.md).
+2. Start Docker Desktop / Kolima
+3. Ha `pam-cv-api-gcp` lokalt i samme mappe som dette prosjektet, slik at det ligger på `../pam-cv-api-gcp`. Dette trengs for at scriptet for avhengigheter får tak i applikasjonen.
+
+### Kjør lokalt
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+$ npm install # Installerer NPM-avhengigheter
+$ npm run dependencies # Starter docker-containere for wonderwall, redis og mock-oauth2, og starter Lokal versjon av pam-cv-api-gcp
+$ npm run dev # Kjører dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Da kan du nå applikasjonen med innlogging på [http://localhost:3000/personbruker](http://localhost:3000/personbruker)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+> [!TIP]
+> Selve applikasjonen kjører på http://localhost:3001, men siden alle requester må routes gjennom Wonderwall som kjører på port 3000 vil det fortsatt være https://localhost:3000 som gjelder
