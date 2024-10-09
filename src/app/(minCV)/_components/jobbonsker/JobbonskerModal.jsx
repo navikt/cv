@@ -81,6 +81,8 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
                             oppdaterValg={oppdaterYrker}
                             valgtVerdi={yrker}
                             multiselect={true}
+                            placeholder={"Søk og legg til yrker"}
+                            multiselectText={"Yrker"}
                         />
                     </VStack>
                     <VStack className={styles.element}>
@@ -93,6 +95,8 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
                             valgtVerdi={lokasjoner}
                             visningsfelt={"location"}
                             multiselect={true}
+                            placeholder={"Søk og legg til steder"}
+                            multiselectText={"Steder"}
                         />
                     </VStack>
                 </HStack>

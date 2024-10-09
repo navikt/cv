@@ -238,6 +238,10 @@
     margin-bottom: var(--a-spacing-16) !important;
 }
 
+.mt6 {
+    margin-top: var(--a-spacing-6) !important;
+}
+
 .sidepanel {
     position: sticky;
     top: 0;
