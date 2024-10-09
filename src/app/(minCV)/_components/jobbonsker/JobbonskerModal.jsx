@@ -71,31 +71,31 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
                 </Heading>
             </Modal.Header>
             <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }}>
-                <HStack justify="space-between">
-                    <VStack className={styles.element}>
-                        <Typeahead
-                            className={styles.mb6}
-                            label="Jobber og yrker"
-                            description="Må fylles ut"
-                            type={TypeaheadEnum.STILLING}
-                            oppdaterValg={oppdaterYrker}
-                            valgtVerdi={yrker}
-                            multiselect={true}
-                        />
-                    </VStack>
-                    <VStack className={styles.element}>
-                        <Typeahead
-                            className={styles.mb6}
-                            label="Hvor kan du jobbe"
-                            description="Må fylles ut"
-                            type={TypeaheadEnum.STED}
-                            oppdaterValg={oppdaterLokasjoner}
-                            valgtVerdi={lokasjoner}
-                            visningsfelt={"location"}
-                            multiselect={true}
-                        />
-                    </VStack>
-                </HStack>
+                <VStack justify="space-between">
+                    <Typeahead
+                        className={styles.mb6}
+                        label="Jobber og yrker"
+                        description="Må fylles ut"
+                        type={TypeaheadEnum.STILLING}
+                        oppdaterValg={oppdaterYrker}
+                        valgtVerdi={yrker}
+                        multiselect={true}
+                        placeholder={"Søk og legg til yrker"}
+                        multiselectText={"Yrker"}
+                    />
+                    <Typeahead
+                        className={styles.mb6}
+                        label="Hvor kan du jobbe"
+                        description="Må fylles ut"
+                        type={TypeaheadEnum.STED}
+                        oppdaterValg={oppdaterLokasjoner}
+                        valgtVerdi={lokasjoner}
+                        visningsfelt={"location"}
+                        multiselect={true}
+                        placeholder={"Søk og legg til steder"}
+                        multiselectText={"Steder"}
+                    />
+                </VStack>
                 <CheckboxGroup
                     className={styles.mb6}
                     onChange={setOmfang}

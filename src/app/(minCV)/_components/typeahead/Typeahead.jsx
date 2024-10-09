@@ -1,6 +1,7 @@
-import { UNSAFE_Combobox } from "@navikt/ds-react";
+import { BodyLong, Chips, HStack, UNSAFE_Combobox, VStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { hentTypeahead } from "@/app/_common/utils/fetchUtils";
+import styles from "@/app/page.module.css";
 
 export const Typeahead = ({
     type,
@@ -12,6 +13,8 @@ export const Typeahead = ({
     multiselect = false,
     forhåndshentet = false,
     className,
+    placeholder,
+    multiselectText,
 }) => {
     const [typeaheadData, setTypeaheadData] = useState([]);
     const [typeaheadForslag, setTypeaheadForslag] = useState([]);
@@ -44,8 +47,8 @@ export const Typeahead = ({
     };
 
     const oppdaterTypeaheadForslag = (forslag) => {
-        const alleForslag = [...hentAlleredeValgteVerdier(), ...forslag];
-        setTypeaheadForslag([...new Set(alleForslag)]);
+        const filtrerteForslag = forslag.filter((e) => !hentAlleredeValgteVerdier().includes(e));
+        setTypeaheadForslag([...new Set(filtrerteForslag)]);
     };
 
     const velgVerdi = (verdi, erValgt) => {
@@ -59,17 +62,42 @@ export const Typeahead = ({
     };
 
     return (
-        <UNSAFE_Combobox
-            className={className}
-            label={label}
-            description={description}
-            options={typeaheadForslag}
-            filteredOptions={typeaheadForslag}
-            shouldAutocomplete={false}
-            isMultiSelect={multiselect || false}
-            selectedOptions={hentAlleredeValgteVerdier()}
-            onChange={(e) => oppdaterTypeahead(e?.target?.value || "")}
-            onToggleSelected={(e, isSelected) => velgVerdi(e, isSelected)}
-        />
+        <VStack className={className}>
+            <UNSAFE_Combobox
+                label={label}
+                description={description}
+                options={typeaheadForslag}
+                filteredOptions={typeaheadForslag}
+                shouldAutocomplete={false}
+                isMultiSelect={false}
+                selectedOptions={hentAlleredeValgteVerdier()}
+                shouldShowSelectedOptions={!multiselect}
+                onChange={(e) => oppdaterTypeahead(e?.target?.value || "")}
+                onToggleSelected={(e, isSelected) => velgVerdi(e, isSelected)}
+                placeholder={placeholder || "Søk og velg et alternativ"}
+            />
+            {multiselect && (
+                <VStack className={[styles.mt6]}>
+                    {hentAlleredeValgteVerdier().length === 0 ? (
+                        <BodyLong weight="regular" size="small" className={styles.mb3}>
+                            {`Du har ikke lagt til noen ${multiselectText.toLowerCase()}`}
+                        </BodyLong>
+                    ) : (
+                        <VStack>
+                            <BodyLong weight="regular" size="small" className={styles.mb3}>
+                                {`${multiselectText} du har lagt til:`}
+                            </BodyLong>
+                            <Chips>
+                                {hentAlleredeValgteVerdier().map((valg) => (
+                                    <Chips.Removable key={valg} onClick={() => velgVerdi(valg, false)}>
+                                        {valg}
+                                    </Chips.Removable>
+                                ))}
+                            </Chips>
+                        </VStack>
+                    )}
+                </VStack>
+            )}
+        </VStack>
     );
 };
