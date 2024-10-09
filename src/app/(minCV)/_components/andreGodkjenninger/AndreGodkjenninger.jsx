@@ -2,40 +2,40 @@ import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
+import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import AndreGodkjenningerModal from "@/app/(minCV)/_components/andreGodkjenninger/AndreGodkjenningerModal";
+import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
 
 export default function AndreGodkjenninger() {
-    const cvContext = useContext(CvOgPersonContext).cv;
+    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
     const [andreGodkjenninger, setAndreGodkjenninger] = useState([]);
     const [modalÅpen, setModalÅpen] = useState(false);
     const [gjeldendeGodkjenning, setGjeldendeGodkjenning] = useState(-1);
 
     useEffect(() => {
         const oppdaterGodkjenninger = (andreGodkjenninger) => setAndreGodkjenninger(andreGodkjenninger);
-        if (cvContext.status === "success") oppdaterGodkjenninger(cvContext.data.andreGodkjenninger || []);
-    }, [cvContext]);
+        if (cv.status === "success") oppdaterGodkjenninger(cv.data.andreGodkjenninger || []);
+    }, [cv]);
 
     const toggleModal = (åpen, index) => {
         setGjeldendeGodkjenning(index >= 0 ? index : -1);
         setModalÅpen(åpen);
     };
 
-    const lagreGodkjenning = (oppdatertGodkjenning) => {
+    const lagreGodkjenning = async (oppdatertGodkjenning) => {
         const oppdaterteGodkjenninger = [...andreGodkjenninger];
         if (gjeldendeGodkjenning >= 0) oppdaterteGodkjenninger.splice(gjeldendeGodkjenning, 1, oppdatertGodkjenning);
         else oppdaterteGodkjenninger.push(oppdatertGodkjenning);
 
-        // TODO: Send oppdatering til backend og oppdater data med responsen / feilmelding
-        setAndreGodkjenninger(oppdaterteGodkjenninger);
+        await oppdaterCvSeksjon(oppdaterteGodkjenninger, CvSeksjonEnum.ANDRE_GODKJENNINGER);
         setModalÅpen(false);
     };
 
-    const slettGodkjenning = (index) => {
+    const slettGodkjenning = async (index) => {
         const oppdaterteGodkjenninger = [...andreGodkjenninger];
         oppdaterteGodkjenninger.splice(index, 1);
-        setAndreGodkjenninger(oppdaterteGodkjenninger);
+        await oppdaterCvSeksjon(oppdaterteGodkjenninger, CvSeksjonEnum.ANDRE_GODKJENNINGER);
     };
 
     const AndreGodkjenningerIcon = () => (

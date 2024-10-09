@@ -72,3 +72,18 @@ export const TidsenhetEnum = Object.freeze({
     TIME: "time",
     MND: "måned",
 });
+
+export const CvSeksjonEnum = Object.freeze({
+    ARBEIDSFORHOLD: "arbeidserfaring",
+    UTDANNING: "utdanning",
+    ANDRE_GODKJENNINGER: "andreGodkjenninger",
+    FØRERKORT: "foererkort",
+    ANDRE_ERFARINGER: "annenErfaring",
+    KURS: "kurs",
+    SPRÅK: "spraak",
+    OFFENTLIGE_GODKJENNINGER: "offentligeGodkjenninger",
+    FAGBREV: "fagbrev",
+    KOMPETANSER: "kompetanser",
+    SAMMENDRAG: "sammendrag",
+    JOBBØNSKER: "jobboensker",
+});

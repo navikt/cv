@@ -7,20 +7,20 @@ import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
 export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpråk }) {
     const [valgtSpråk, setValgtSpråk] = useState(språk || null);
-    const [muntligEvne, setMuntligEvne] = useState(SpråkEnum.IKKE_OPPGITT);
-    const [skriftligEvne, setSkriftligEvne] = useState(SpråkEnum.IKKE_OPPGITT);
+    const [muntligEvne, setMuntligEvne] = useState("IKKE_OPPGITT");
+    const [skriftligEvne, setSkriftligEvne] = useState("IKKE_OPPGITT");
 
     useEffect(() => {
         const oppdaterSpråk = (språk) => {
             setValgtSpråk(språk);
-            setMuntligEvne(språk?.oralProficiency || SpråkEnum.IKKE_OPPGITT);
-            setSkriftligEvne(språk?.writtenProficiency || SpråkEnum.IKKE_OPPGITT);
+            setMuntligEvne(språk?.oralProficiency || "IKKE_OPPGITT");
+            setSkriftligEvne(språk?.writtenProficiency || "IKKE_OPPGITT");
         };
         oppdaterSpråk(språk || []);
     }, [språk]);
 
-    const lagre = () => {
-        lagreSpråk({
+    const lagre = async () => {
+        await lagreSpråk({
             language: valgtSpråk.language || valgtSpråk.title,
             iso3Code: valgtSpråk.iso3Code || valgtSpråk.kode,
             oralProficiency: muntligEvne,

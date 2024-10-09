@@ -1,21 +1,30 @@
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { v4 as uuidv4 } from "uuid";
 
-export const hentData = async (setData, responseMock, url, headers) => {
+export const apiRequest = async (setData, url, method = "GET", body = null, dataTransformator = null) => {
     setData((prevState) => ({
         ...prevState,
         status: "pending",
     }));
 
-    // const response = await fetch(url, {credentials: "same-origin"})*/
-    const response = { status: 200, json: async () => responseMock };
+    const fetchOptions = {
+        method: method,
+        credentials: "same-origin",
+        headers: {
+            "Nav-CallId": `min-side-cv-${uuidv4()}`,
+        },
+    };
+
+    if (body !== null) fetchOptions["body"] = JSON.stringify(body);
+
+    const response = await fetch(url, fetchOptions);
 
     if (response.status === 200) {
         const json = await response.json();
         setData((prevState) => ({
             ...prevState,
             status: "success",
-            data: json,
+            data: dataTransformator ? dataTransformator(prevState, json) : json,
         }));
     } else {
         setData((prevState) => ({

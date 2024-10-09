@@ -2,10 +2,11 @@ import { Alert, BodyLong, Box, Button, Heading, HStack, Modal, Textarea, VStack 
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
+import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
 
 export default function Sammendrag() {
-    const cvContext = useContext(CvOgPersonContext).cv;
+    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
     const [sammendrag, setSammendrag] = useState("");
     const [sammendragTekst, setSammendragTekst] = useState("");
     const [modalÅpen, setModalÅpen] = useState(false);
@@ -16,19 +17,16 @@ export default function Sammendrag() {
             setSammendragTekst(sammendrag);
         };
 
-        if (cvContext.status === "success") oppdaterSammendrag(cvContext.data.sammendrag || "");
-    }, [cvContext]);
+        if (cv.status === "success") oppdaterSammendrag(cv.data.sammendrag || "");
+    }, [cv]);
 
-    const lagreSammendrag = () => {
-        // TODO: Send til backend og hent CV via respons
-        setSammendrag(sammendragTekst);
+    const lagreSammendrag = async () => {
+        await oppdaterCvSeksjon(sammendragTekst, CvSeksjonEnum.SAMMENDRAG);
         setModalÅpen(false);
     };
 
-    const slettSammendrag = () => {
-        // TODO: Slett sammendrag og hent CV via respons
-        setSammendrag("");
-        setSammendragTekst("");
+    const slettSammendrag = async () => {
+        await oppdaterCvSeksjon("", CvSeksjonEnum.SAMMENDRAG);
     };
 
     const SammendragIcon = () => (

@@ -20,74 +20,77 @@ import Kurs from "@/app/(minCV)/_components/kurs/Kurs";
 import Sammendrag from "@/app/(minCV)/_components/sammendrag/Sammendrag";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import Hovedmeny from "@/app/_common/components/meny/Hovedmeny";
-import CvOgPersonProvider from "@/app/(minCV)/_components/context/CvContext";
+import PersonOgCvProvider from "@/app/_common/contexts/PersonOgCvContext";
+import AuthenticationProvider from "@/app/_common/contexts/AuthenticationProvider";
 
 export default function MinCVPage() {
     return (
-        <CvOgPersonProvider>
-            <HeaderPanel />
-            <Hide below="md">
-                <HStack
-                    style={{
-                        display: "flex",
-                        alignItems: "flex-start",
-                        justifyContent: "center",
-                        paddingBottom: "4rem",
-                    }}
-                >
-                    <div className={styles.sidepanel}>
-                        <Hovedmeny />
-                    </div>
-                    <div>
-                        <Box className={styles.main}>
-                            <HStack gap="4">
-                                <VStack>
-                                    <DelingAvCV />
-                                    <Personalia />
-                                    <Jobbonsker />
-                                    <Utdanninger />
-                                    <Fagbrev />
-                                    <Arbeidsforhold />
-                                    <AndreErfaringer />
-                                    <Kompetanser />
-                                    <OffentligeGodkjenninger />
-                                    <AndreGodkjenninger />
-                                    <Sprak />
-                                    <Forerkort />
-                                    <Kurs />
-                                    <Sammendrag />
-                                </VStack>
-                            </HStack>
-                        </Box>
-                    </div>
-                    <div className={styles.sidepanel2}>
-                        <VStack gap="4">
-                            <Button icon={<EyeIcon aria-hidden />} variant="primary">
-                                Forhåndsvis CV
-                            </Button>
-                            <Button icon={<DownloadIcon aria-hidden />} variant="secondary">
-                                Last ned CV
-                            </Button>
-                        </VStack>
-                    </div>
-                </HStack>
-            </Hide>
-            <Show below="md">
-                <DelingAvCV />
-                <Personalia />
-                <Jobbonsker />
-                <Utdanninger />
-                <Fagbrev />
-                <Arbeidsforhold />
-                <AndreErfaringer />
-                <Kompetanser />
-                <OffentligeGodkjenninger />
-                <AndreGodkjenninger />
-                <Sprak />
-                <Forerkort />
-                <Kurs />
-                <Sammendrag />
-            </Show>
-        </CvOgPersonProvider>
+        <AuthenticationProvider>
+            <PersonOgCvProvider>
+                <HeaderPanel />
+                <Hide below="md">
+                    <HStack
+                        style={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            justifyContent: "center",
+                            paddingBottom: "4rem",
+                        }}
+                    >
+                        <div className={styles.sidepanel}>
+                            <Hovedmeny />
+                        </div>
+                        <div>
+                            <Box className={styles.main}>
+                                <HStack gap="4">
+                                    <VStack>
+                                        <DelingAvCV />
+                                        <Personalia />
+                                        <Jobbonsker />
+                                        <Utdanninger />
+                                        <Fagbrev />
+                                        <Arbeidsforhold />
+                                        <AndreErfaringer />
+                                        <Kompetanser />
+                                        <OffentligeGodkjenninger />
+                                        <AndreGodkjenninger />
+                                        <Sprak />
+                                        <Forerkort />
+                                        <Kurs />
+                                        <Sammendrag />
+                                    </VStack>
+                                </HStack>
+                            </Box>
+                        </div>
+                        <div className={styles.sidepanel2}>
+                            <VStack gap="4">
+                                <Button icon={<EyeIcon aria-hidden />} variant="primary">
+                                    Forhåndsvis CV
+                                </Button>
+                                <Button icon={<DownloadIcon aria-hidden />} variant="secondary">
+                                    Last ned CV
+                                </Button>
+                            </VStack>
+                        </div>
+                    </HStack>
+                </Hide>
+                <Show below="md">
+                    <DelingAvCV />
+                    <Personalia />
+                    <Jobbonsker />
+                    <Utdanninger />
+                    <Fagbrev />
+                    <Arbeidsforhold />
+                    <AndreErfaringer />
+                    <Kompetanser />
+                    <OffentligeGodkjenninger />
+                    <AndreGodkjenninger />
+                    <Sprak />
+                    <Forerkort />
+                    <Kurs />
+                    <Sammendrag />
+                </Show>
+            </PersonOgCvProvider>
+        </AuthenticationProvider>
     );
 }

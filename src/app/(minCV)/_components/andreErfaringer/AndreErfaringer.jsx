@@ -2,12 +2,13 @@ import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
+import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { AndreErfaringerModal } from "@/app/(minCV)/_components/andreErfaringer/AndreErfaringerModal";
+import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
 
 export default function AndreErfaringer() {
-    const cvContext = useContext(CvOgPersonContext).cv;
+    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
 
     const [modalÅpen, setModalÅpen] = useState(false);
     const [andreErfaringer, setAndreErfaringer] = useState([]);
@@ -15,28 +16,27 @@ export default function AndreErfaringer() {
 
     useEffect(() => {
         const oppdaterAndreErfaringer = (erfaringer) => setAndreErfaringer(erfaringer);
-        if (cvContext.status === "success") oppdaterAndreErfaringer(cvContext.data.annenErfaring || []);
-    }, [cvContext]);
+        if (cv.status === "success") oppdaterAndreErfaringer(cv.data.annenErfaring || []);
+    }, [cv]);
 
     const toggleModal = (åpen, index) => {
         setGjeldendeErfaring(index >= 0 ? index : -1);
         setModalÅpen(åpen);
     };
 
-    const slettErfaring = (index) => {
-        const oppdaterteErfaringer = [...andreErfaringer];
-        oppdaterteErfaringer.splice(index, 1);
-        setAndreErfaringer(oppdaterteErfaringer);
-    };
-
-    const lagreErfaring = (oppdatertErfaring) => {
+    const lagreErfaring = async (oppdatertErfaring) => {
         const oppdaterteErfaringer = [...andreErfaringer];
         if (gjeldendeErfaring >= 0) oppdaterteErfaringer.splice(gjeldendeErfaring, 1, oppdatertErfaring);
         else oppdaterteErfaringer.push(oppdatertErfaring);
 
-        // TODO: Send oppdatering til backend og oppdater data med responsen / feilmelding
-        setAndreErfaringer(oppdaterteErfaringer);
+        await oppdaterCvSeksjon(oppdaterteErfaringer, CvSeksjonEnum.ANDRE_ERFARINGER);
         setModalÅpen(false);
+    };
+
+    const slettErfaring = async (index) => {
+        const oppdaterteErfaringer = [...andreErfaringer];
+        oppdaterteErfaringer.splice(index, 1);
+        await oppdaterCvSeksjon(oppdaterteErfaringer, CvSeksjonEnum.ANDRE_ERFARINGER);
     };
 
     const AndreErfaringerIcon = () => (
