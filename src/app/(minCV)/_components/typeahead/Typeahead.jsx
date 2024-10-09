@@ -77,14 +77,14 @@ export const Typeahead = ({
                 placeholder={placeholder || "Søk og velg et alternativ"}
             />
             {multiselect && (
-                <VStack className={styles.mt6}>
+                <VStack className={[styles.mt6]}>
                     {hentAlleredeValgteVerdier().length === 0 ? (
-                        <BodyLong weight="semibold" size={"small"}>
+                        <BodyLong weight="regular" size="small" className={styles.mb3}>
                             {`Du har ikke lagt til noen ${multiselectText.toLowerCase()}`}
                         </BodyLong>
                     ) : (
                         <VStack>
-                            <BodyLong weight="semibold" className={styles.mb3} size={"small"}>
+                            <BodyLong weight="regular" size="small" className={styles.mb3}>
                                 {`${multiselectText} du har lagt til:`}
                             </BodyLong>
                             <Chips>
