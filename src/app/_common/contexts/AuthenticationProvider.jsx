@@ -14,25 +14,21 @@ export const AuthenticationStatus = {
 function AuthenticationProvider({ children }) {
     const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
 
-    const fetchIsAuthenticated = () => {
+    const fetchIsAuthenticated = async () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
 
-        fetch(`/personbruker/api/isAuthenticated`, {
-            credentials: "include",
-            cache: "no-store",
-        })
-            .then((response) => {
-                if (response.status === 200) {
-                    setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
-                } else if (response.status === 401) {
-                    setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-                } else {
-                    setAuthenticationStatus(AuthenticationStatus.FAILURE);
-                }
-            })
-            .catch(() => {
-                setAuthenticationStatus(AuthenticationStatus.FAILURE);
+        try {
+            const response = await fetch(`/personbruker/api/isAuthenticated`, {
+                credentials: "include",
+                cache: "no-store",
             });
+
+            if (response.status === 200) setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
+            else if (response.status === 401) setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+            else setAuthenticationStatus(AuthenticationStatus.FAILURE);
+        } catch (error) {
+            setAuthenticationStatus(AuthenticationStatus.FAILURE);
+        }
     };
 
     useEffect(() => {
