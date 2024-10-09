@@ -2,11 +2,12 @@ import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
-import KompetanseModal from "@/app/(minCV)/_components/kompetanser/KompetanseModal";
+import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import KompetanserModal from "@/app/(minCV)/_components/kompetanser/KompetanserModal";
+import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
 
 export default function Kompetanser() {
-    const cvContext = useContext(CvOgPersonContext).cv;
+    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
 
     const [modalÅpen, setModalÅpen] = useState(false);
     const [kompetanser, setKompetanser] = useState([]);
@@ -14,28 +15,27 @@ export default function Kompetanser() {
 
     useEffect(() => {
         const oppdaterKompetanser = (kompetanser) => setKompetanser(kompetanser);
-        if (cvContext.status === "success") oppdaterKompetanser(cvContext.data.kompetanser || []);
-    }, [cvContext]);
+        if (cv.status === "success") oppdaterKompetanser(cv.data.kompetanser || []);
+    }, [cv]);
 
     const toggleModal = (åpen, index) => {
         setGjeldendeKompetanse(index >= 0 ? index : -1);
         setModalÅpen(åpen);
     };
 
-    const slettKompetanse = (index) => {
-        const oppdaterteKompetanser = [...kompetanser];
-        oppdaterteKompetanser.splice(index, 1);
-        setKompetanser(oppdaterteKompetanser);
-    };
-
-    const lagreKompetanse = (oppdatertKompetanse) => {
+    const lagreKompetanse = async (oppdatertKompetanse) => {
         const oppdaterteKompetanser = [...kompetanser];
         if (gjeldendeKompetanse >= 0) oppdaterteKompetanser.splice(gjeldendeKompetanse, 1, oppdatertKompetanse);
         else oppdaterteKompetanser.push(oppdatertKompetanse);
 
-        // TODO: Send oppdatering til backend og oppdater data med responsen / feilmelding
-        setKompetanser(oppdaterteKompetanser);
+        await oppdaterCvSeksjon(oppdaterteKompetanser, CvSeksjonEnum.KOMPETANSER);
         setModalÅpen(false);
+    };
+
+    const slettKompetanse = async (index) => {
+        const oppdaterteKompetanser = [...kompetanser];
+        oppdaterteKompetanser.splice(index, 1);
+        await oppdaterCvSeksjon(oppdaterteKompetanser, CvSeksjonEnum.KOMPETANSER);
     };
 
     const KompetanserIcon = () => (
@@ -109,7 +109,7 @@ export default function Kompetanser() {
                 </Button>
             </Box>
             {modalÅpen && (
-                <KompetanseModal
+                <KompetanserModal
                     modalÅpen={modalÅpen}
                     toggleModal={toggleModal}
                     kompetanse={kompetanser[gjeldendeKompetanse]}

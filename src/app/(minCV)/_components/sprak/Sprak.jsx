@@ -2,12 +2,12 @@ import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
-import { SpråkEnum } from "@/app/_common/enums/cvEnums";
+import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvSeksjonEnum, SpråkEnum } from "@/app/_common/enums/cvEnums";
 import SpråkModal from "@/app/(minCV)/_components/sprak/SpråkModal";
 
 export default function Sprak() {
-    const cvContext = useContext(CvOgPersonContext).cv;
+    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
 
     const [modalÅpen, setModalÅpen] = useState(false);
     const [språk, setSpråk] = useState([]);
@@ -15,28 +15,27 @@ export default function Sprak() {
 
     useEffect(() => {
         const oppdaterSpråk = (språk) => setSpråk(språk);
-        if (cvContext.status === "success") oppdaterSpråk(cvContext.data.spraak || []);
-    }, [cvContext]);
+        if (cv.status === "success") oppdaterSpråk(cv.data.spraak || []);
+    }, [cv]);
 
     const toggleModal = (åpen, index) => {
         setGjeldendeSpråk(index >= 0 ? index : -1);
         setModalÅpen(åpen);
     };
 
-    const slettSpråk = (index) => {
-        const oppdaterteSpråk = [...språk];
-        oppdaterteSpråk.splice(index, 1);
-        setSpråk(oppdaterteSpråk);
-    };
-
-    const lagreSpråk = (oppdatertSpråk) => {
+    const lagreSpråk = async (oppdatertSpråk) => {
         const oppdaterteSpråk = [...språk];
         if (gjeldendeSpråk >= 0) oppdaterteSpråk.splice(gjeldendeSpråk, 1, oppdatertSpråk);
         else oppdaterteSpråk.push(oppdatertSpråk);
 
-        // TODO: Send oppdatering til backend og oppdater data med responsen / feilmelding
-        setSpråk(oppdaterteSpråk);
+        await oppdaterCvSeksjon(oppdaterteSpråk, CvSeksjonEnum.SPRÅK);
         setModalÅpen(false);
+    };
+
+    const slettSpråk = async (index) => {
+        const oppdaterteSpråk = [...språk];
+        oppdaterteSpråk.splice(index, 1);
+        await oppdaterCvSeksjon(oppdaterteSpråk, CvSeksjonEnum.SPRÅK);
     };
 
     const SpråkIcon = () => (

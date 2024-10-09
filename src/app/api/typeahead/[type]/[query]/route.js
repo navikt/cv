@@ -1,4 +1,5 @@
 import logger from "@/app/_common/utils/logger";
+import { cvConfig } from "@/app/_common/config";
 
 export async function GET(request, context) {
     const type = context.params.type;
@@ -7,7 +8,7 @@ export async function GET(request, context) {
     const callId = requestHeaders.get("nav-callid");
     const searchParams = new URLSearchParams({ q: query });
 
-    const typeaheadBaseUrl = process.env.PAM_ONTOLOGI_BASEURL;
+    const typeaheadBaseUrl = cvConfig.urls.pamOntologi;
     const fullUrl = `${typeaheadBaseUrl}/${type}?${searchParams}`;
 
     logger.info(`Henter typeahead for ${type} med query ${query}. CallId: ${callId}`);

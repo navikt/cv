@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
-export default function KompetanseModal({ modalÅpen, toggleModal, kompetanse, lagreKompetanse }) {
+export default function KompetanserModal({ modalÅpen, toggleModal, kompetanse, lagreKompetanse }) {
     const [valgtKompetanse, setValgtKompetanse] = useState(kompetanse || null);
 
     useEffect(() => {
@@ -11,8 +11,8 @@ export default function KompetanseModal({ modalÅpen, toggleModal, kompetanse, l
         oppdaterKompetanse(kompetanse || []);
     }, [kompetanse]);
 
-    const lagre = () => {
-        lagreKompetanse({
+    const lagre = async () => {
+        await lagreKompetanse({
             title: valgtKompetanse.label || valgtKompetanse.title,
             type: valgtKompetanse.type,
             conceptId: valgtKompetanse.conceptId,
@@ -27,7 +27,7 @@ export default function KompetanseModal({ modalÅpen, toggleModal, kompetanse, l
     return (
         <Modal
             open={modalÅpen}
-            aria-label="Legg til fagbrev"
+            aria-label="Legg til kompetanse"
             onClose={() => toggleModal(false)}
             width="medium"
             className={"overflow-visible"}
@@ -41,8 +41,8 @@ export default function KompetanseModal({ modalÅpen, toggleModal, kompetanse, l
             </Modal.Header>
             <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
                 <Typeahead
-                    label="Fagdokumentasjon"
-                    description="Må fylles ut"
+                    label="Hva er du flink til?"
+                    description="Legg til kompetanser, ferdigheter, verktøy o.l."
                     type={TypeaheadEnum.KOMPETANSE}
                     oppdaterValg={oppdaterValgtKompetanse}
                     valgtVerdi={valgtKompetanse?.title}

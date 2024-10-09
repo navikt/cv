@@ -25,8 +25,8 @@ export default function OffentligeGodkjenningerModal({ modalÅpen, toggleModal, 
         oppdaterGodkjenning(godkjenning || []);
     }, [godkjenning]);
 
-    const lagre = () => {
-        lagreGodkjenning({
+    const lagre = async () => {
+        await lagreGodkjenning({
             title: valgtGodkjenning.title,
             conceptId: valgtGodkjenning.conceptId,
             issuer: utsteder,

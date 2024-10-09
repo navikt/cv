@@ -11,8 +11,8 @@ export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFa
         oppdaterFagbrev(fagbrev || []);
     }, [fagbrev]);
 
-    const lagre = () => {
-        lagreFagbrev({
+    const lagre = async () => {
+        await lagreFagbrev({
             title: valgtFagbrev.label || valgtFagbrev.title,
             type: valgtFagbrev.type,
             conceptId: valgtFagbrev.conceptId,

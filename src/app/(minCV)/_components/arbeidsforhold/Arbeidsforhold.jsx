@@ -2,12 +2,13 @@ import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-
 import styles from "@/app/page.module.css";
 import { useContext, useEffect, useState } from "react";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
+import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
 import { ArbeidsforholdModal } from "@/app/(minCV)/_components/arbeidsforhold/ArbeidsforholdModal";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
+import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
 
 export default function Arbeidsforhold() {
-    const cvContext = useContext(CvOgPersonContext).cv;
+    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
 
     const [modalÅpen, setModalÅpen] = useState(false);
     const [arbeidsforhold, setArbeidsforhold] = useState([]);
@@ -15,29 +16,28 @@ export default function Arbeidsforhold() {
 
     useEffect(() => {
         const oppdaterArbeidsforhold = (arbeidsforhold) => setArbeidsforhold(arbeidsforhold);
-        if (cvContext.status === "success") oppdaterArbeidsforhold(cvContext.data.arbeidserfaring || []);
-    }, [cvContext]);
+        if (cv.status === "success") oppdaterArbeidsforhold(cv.data.arbeidserfaring || []);
+    }, [cv]);
 
     const toggleModal = (åpen, index) => {
         setGjeldendeArbeidsforhold(index >= 0 ? index : -1);
         setModalÅpen(åpen);
     };
 
-    const slettArbeidsforhold = (index) => {
-        const oppdaterteArbeidsforhold = [...arbeidsforhold];
-        oppdaterteArbeidsforhold.splice(index, 1);
-        setArbeidsforhold(oppdaterteArbeidsforhold);
-    };
-
-    const lagreArbeidsforhold = (oppdatertArbeidsforhold) => {
+    const lagreArbeidsforhold = async (oppdatertArbeidsforhold) => {
         const oppdaterteArbeidsforhold = [...arbeidsforhold];
         if (gjeldendeArbeidsforhold >= 0)
             oppdaterteArbeidsforhold.splice(gjeldendeArbeidsforhold, 1, oppdatertArbeidsforhold);
         else oppdaterteArbeidsforhold.push(oppdatertArbeidsforhold);
 
-        // TODO: Send oppdatering til backend og oppdater data med responsen / feilmelding
-        setArbeidsforhold(oppdaterteArbeidsforhold);
+        await oppdaterCvSeksjon(oppdaterteArbeidsforhold, CvSeksjonEnum.ARBEIDSFORHOLD);
         setModalÅpen(false);
+    };
+
+    const slettArbeidsforhold = async (index) => {
+        const oppdaterteArbeidsforhold = [...arbeidsforhold];
+        oppdaterteArbeidsforhold.splice(index, 1);
+        await oppdaterCvSeksjon(oppdaterteArbeidsforhold, CvSeksjonEnum.ARBEIDSFORHOLD);
     };
 
     function ArbeidsforholdIcon() {

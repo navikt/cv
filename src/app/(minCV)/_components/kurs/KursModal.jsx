@@ -25,8 +25,8 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs }) 
         oppdaterKurs(kurs);
     }, [kurs]);
 
-    const lagre = () => {
-        lagreKurs({
+    const lagre = async () => {
+        await lagreKurs({
             title: kursnavn,
             issuer: utsteder,
             date: kursDato,

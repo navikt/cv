@@ -2,8 +2,14 @@ import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
-import { AnsettelsesformEnum, ArbeidstidEnum, OmfangEnum, StarttidspunktEnum } from "@/app/_common/enums/cvEnums";
+import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import {
+    AnsettelsesformEnum,
+    ArbeidstidEnum,
+    CvSeksjonEnum,
+    OmfangEnum,
+    StarttidspunktEnum,
+} from "@/app/_common/enums/cvEnums";
 import { formatterListeAvObjekterTilTekst } from "@/app/_common/utils/stringUtils";
 import { JobbonskerModal } from "@/app/(minCV)/_components/jobbonsker/JobbonskerModal";
 
@@ -29,27 +35,37 @@ function JobbonskerIcon() {
 }
 
 export default function Jobbonsker() {
-    const cvContext = useContext(CvOgPersonContext).cv;
+    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
     const [jobbønsker, setJobbønsker] = useState(null);
     const [modalÅpen, setModalÅpen] = useState(false);
+
+    const jobbønskerErTomt = () => jobbønsker == null || jobbønsker.locations.length === 0;
 
     useEffect(() => {
         const oppdaterJobbønsker = (jobbønsker) => {
             setJobbønsker(jobbønsker);
         };
 
-        if (cvContext.status === "success") oppdaterJobbønsker(cvContext.data.jobboensker || {});
-    }, [cvContext]);
+        if (cv.status === "success") oppdaterJobbønsker(cv.data.jobboensker || null);
+    }, [cv]);
 
-    const lagreJobbønsker = (jobbønsker) => {
-        // TODO: Send til backend og konsumer respons-CV
-        setJobbønsker(jobbønsker);
+    const lagreJobbønsker = async (jobbønsker) => {
+        await oppdaterCvSeksjon(jobbønsker, CvSeksjonEnum.JOBBØNSKER);
         setModalÅpen(false);
     };
 
-    const slettJobbønsker = () => {
-        // TODO: Send til backend og konsumer respons-CV
-        setJobbønsker(null);
+    const slettJobbønsker = async () => {
+        const tommeJobbønsker = {
+            active: true,
+            startOption: null,
+            occupations: [],
+            occupationDrafts: [],
+            locations: [],
+            occupationTypes: [],
+            workLoadTypes: [],
+            workScheduleTypes: [],
+        };
+        await oppdaterCvSeksjon(tommeJobbønsker, CvSeksjonEnum.JOBBØNSKER);
     };
 
     return (
@@ -62,7 +78,7 @@ export default function Jobbonsker() {
                     Jobbønsker
                 </Heading>
 
-                {!jobbønsker ? (
+                {jobbønskerErTomt() ? (
                     <div>
                         <BodyLong weight="semibold" spacing>
                             Du har ikke lagt til noen jobbønsker i CV-en

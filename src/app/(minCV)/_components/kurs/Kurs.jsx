@@ -2,40 +2,40 @@ import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
+import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
 import { formatterFullDato, formatterTidsenhet } from "@/app/_common/utils/stringUtils";
 import KursModal from "@/app/(minCV)/_components/kurs/KursModal";
+import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
 
 export default function Kurs() {
-    const cvContext = useContext(CvOgPersonContext).cv;
+    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
     const [kurs, setKurs] = useState([]);
     const [modalÅpen, setModalÅpen] = useState(false);
     const [gjeldendeKurs, setGjeldendeKurs] = useState(-1);
 
     useEffect(() => {
         const oppdaterKurs = (kurs) => setKurs(kurs);
-        if (cvContext.status === "success") oppdaterKurs(cvContext.data.kurs || []);
-    }, [cvContext]);
+        if (cv.status === "success") oppdaterKurs(cv.data.kurs || []);
+    }, [cv]);
 
     const toggleModal = (åpen, index) => {
         setGjeldendeKurs(index >= 0 ? index : -1);
         setModalÅpen(åpen);
     };
 
-    const lagreKurs = (oppdatertKurs) => {
+    const lagreKurs = async (oppdatertKurs) => {
         const oppdaterteKurs = [...kurs];
         if (gjeldendeKurs >= 0) oppdaterteKurs.splice(gjeldendeKurs, 1, oppdatertKurs);
         else oppdaterteKurs.push(oppdatertKurs);
 
-        // TODO: Send oppdatering til backend og oppdater data med responsen / feilmelding
-        setKurs(oppdaterteKurs);
+        await oppdaterCvSeksjon(oppdaterteKurs, CvSeksjonEnum.KURS);
         setModalÅpen(false);
     };
 
-    const slettKurs = (index) => {
+    const slettKurs = async (index) => {
         const oppdaterteKurs = [...kurs];
         oppdaterteKurs.splice(index, 1);
-        setKurs(oppdaterteKurs);
+        await oppdaterCvSeksjon(oppdaterteKurs, CvSeksjonEnum.KURS);
     };
 
     const KursIcon = () => (

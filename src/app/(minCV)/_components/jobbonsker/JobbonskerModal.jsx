@@ -18,16 +18,16 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
             setYrker(jobbønsker?.occupations || []);
             setLokasjoner(jobbønsker?.locations || []);
             setOmfang(jobbønsker?.workLoadTypes || []);
-            setAnsettelsesform(jobbønsker.occupationTypes || []);
-            setArbeidstid(jobbønsker.workScheduleTypes || []);
-            setStarttidspunkt(jobbønsker.startOption || "");
+            setAnsettelsesform(jobbønsker?.occupationTypes || []);
+            setArbeidstid(jobbønsker?.workScheduleTypes || []);
+            setStarttidspunkt(jobbønsker?.startOption || "");
         };
 
         oppdaterJobbønsker(jobbønsker);
     }, [jobbønsker]);
 
-    const lagre = () => {
-        lagreJobbønsker({
+    const lagre = async () => {
+        await lagreJobbønsker({
             ...jobbønsker,
             occupations: yrker,
             locations: lokasjoner,

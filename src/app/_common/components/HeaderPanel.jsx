@@ -1,10 +1,10 @@
 import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Tag, VStack } from "@navikt/ds-react";
 import { useContext, useEffect, useState } from "react";
-import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
+import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 
 function HeaderPanel() {
-    const personContext = useContext(CvOgPersonContext).person;
+    const personContext = useContext(PersonOgCvContext).person;
 
     const [navn, setNavn] = useState("");
     const [sistEndret, setSistEndret] = useState(null);

@@ -2,39 +2,39 @@ import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { CvOgPersonContext } from "@/app/(minCV)/_components/context/CvContext";
+import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
 import FagbrevModal from "@/app/(minCV)/_components/fagbrev/FagbrevModal";
+import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
 
 export default function Fagbrev() {
-    const cvContext = useContext(CvOgPersonContext).cv;
+    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
     const [fagbrev, setFagbrev] = useState([]);
     const [modalÅpen, setModalÅpen] = useState(false);
     const [gjeldendeFagbrev, setGjeldendeFagbrev] = useState(-1);
 
     useEffect(() => {
         const oppdaterFagbrev = (fagbrev) => setFagbrev(fagbrev);
-        if (cvContext.status === "success") oppdaterFagbrev(cvContext.data.fagbrev || []);
-    }, [cvContext]);
+        if (cv.status === "success") oppdaterFagbrev(cv.data.fagbrev || []);
+    }, [cv]);
 
     const toggleModal = (åpen, index) => {
         setGjeldendeFagbrev(index >= 0 ? index : -1);
         setModalÅpen(åpen);
     };
 
-    const lagreFagbrev = (oppdatertFagbrev) => {
+    const lagreFagbrev = async (oppdatertFagbrev) => {
         const oppdaterteFagbrev = [...fagbrev];
         if (gjeldendeFagbrev >= 0) oppdaterteFagbrev.splice(gjeldendeFagbrev, 1, oppdatertFagbrev);
         else oppdaterteFagbrev.push(oppdatertFagbrev);
 
-        // TODO: Send oppdatering til backend og oppdater data med responsen / feilmelding
-        setFagbrev(oppdaterteFagbrev);
+        await oppdaterCvSeksjon(oppdaterteFagbrev, CvSeksjonEnum.FAGBREV);
         setModalÅpen(false);
     };
 
-    const slettFagbrev = (index) => {
+    const slettFagbrev = async (index) => {
         const oppdaterteFagbrev = [...fagbrev];
         oppdaterteFagbrev.splice(index, 1);
-        setFagbrev(oppdaterteFagbrev);
+        await oppdaterCvSeksjon(oppdaterteFagbrev, CvSeksjonEnum.FAGBREV);
     };
 
     function FagbrevIcon() {

@@ -38,9 +38,9 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, l
         oppdaterArbeidsforhold(arbeidsforhold);
     }, [arbeidsforhold]);
 
-    const lagre = () => {
+    const lagre = async () => {
         const erPågående = pågår.includes(true);
-        lagreArbeidsforhold({
+        await lagreArbeidsforhold({
             ...arbeidsforhold,
             employer: arbeidsgiver,
             jobTitle: stillingstittel,

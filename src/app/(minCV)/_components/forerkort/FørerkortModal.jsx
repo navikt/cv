@@ -23,8 +23,8 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
         setKreverDato(valgtFørerkort?.kreverDato || false);
     };
 
-    const lagre = () => {
-        lagreFørerkort({
+    const lagre = async () => {
+        await lagreFørerkort({
             type: valgtFørerkort.label || valgtFørerkort.type,
             acquiredDate: gyldigFra,
             expiryDate: gyldigTil,
@@ -56,6 +56,7 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
                         value={valgtFørerkort?.type || ""}
                         onChange={(e) => velgFørerkort(e.target.value)}
                     >
+                        <option value={null}>Velg</option>
                         {gyldigeFørerkort.map((e) => (
                             <option key={e.type} value={e.type}>
                                 {e.type}

@@ -25,8 +25,8 @@ export default function AndreGodkjenningerModal({ modalÅpen, toggleModal, godkj
         oppdaterGodkjenning(godkjenning || []);
     }, [godkjenning]);
 
-    const lagre = () => {
-        lagreGodkjenning({
+    const lagre = async () => {
+        await lagreGodkjenning({
             certificateName: valgtGodkjenning.title || valgtGodkjenning.certificateName,
             conceptId: valgtGodkjenning.conceptId,
             issuer: utsteder,
