@@ -31,18 +31,6 @@ export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, l
     }, [personalia]);
 
     const lagre = async () => {
-        const personalia = {
-            fornavn: fornavn,
-            etternavn: etternavn,
-            epost: epost,
-            telefonnummer: telefon,
-            adresse: adresse,
-            postnummer: postnummer,
-            poststed: sted,
-        };
-
-        console.log(personalia);
-
         await lagrePersonalia({
             fornavn: fornavn,
             etternavn: etternavn,

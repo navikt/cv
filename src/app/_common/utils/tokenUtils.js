@@ -120,7 +120,6 @@ export async function exchangeToken(request, audience) {
 
     const replacedToken = idportenToken.replace("Bearer ", "");
     const token = await grant(replacedToken, audience);
-    console.log("Token fra exchange token", token);
 
     if (token === "") {
         return new Response("Det har skjedd en feil ved utveksling av token", {

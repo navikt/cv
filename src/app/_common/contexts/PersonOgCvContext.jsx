@@ -12,15 +12,6 @@ const PersonOgCvProvider = ({ children }) => {
     const [cv, setCv] = useState(initialData);
     const [person, setPerson] = useState(initialData);
 
-    const oppdaterPersonMedPersonalia = (oppdatertPersonalia) => {
-        console.log("Oppdaterer personalia fra backend med", oppdatertPersonalia);
-        setPerson({
-            ...person,
-            status: oppdatertPersonalia.status,
-            personalia: oppdatertPersonalia.data,
-        });
-    };
-
     const oppdaterCvSeksjon = async (data, seksjon) => {
         const cvDto = { [seksjon]: data };
         await apiRequest(setCv, `/personbruker/api/cv/${seksjon}`, "PUT", cvDto);
