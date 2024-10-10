@@ -29,7 +29,7 @@ function PersonaliaIcon() {
 }
 
 export default function Personalia() {
-    const { person, oppdaterPersonaliaData } = useContext(PersonContext);
+    const { person, oppdaterPersonalia } = useContext(PersonContext);
     const [modalÅpen, setModalÅpen] = useState(false);
     const [personalia, setPersonalia] = useState(null);
 
@@ -39,7 +39,7 @@ export default function Personalia() {
     }, [person]);
 
     const lagrePersonalia = async (oppdatertPersonalia) => {
-        await oppdaterPersonaliaData(oppdatertPersonalia);
+        await oppdaterPersonalia(oppdatertPersonalia);
         setModalÅpen(false);
     };
 
@@ -56,7 +56,9 @@ export default function Personalia() {
                 <BodyLong spacing>{personalia ? `${personalia.fornavn} ${personalia.etternavn}` : ""}</BodyLong>
                 <div className={styles.divider}></div>
                 <BodyLong weight="semibold">Telefon</BodyLong>
-                <BodyLong spacing>{personalia ? formatterTelefon(personalia.telefonnummer) : ""}</BodyLong>
+                <BodyLong spacing>
+                    {personalia?.telefonnummer ? formatterTelefon(personalia.telefonnummer) : ""}
+                </BodyLong>
                 <div className={styles.divider}></div>
                 <BodyLong weight="semibold">E-post</BodyLong>
                 <BodyLong spacing>{personalia ? personalia.epost : ""}</BodyLong>
