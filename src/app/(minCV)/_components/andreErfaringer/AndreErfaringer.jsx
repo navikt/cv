@@ -2,13 +2,14 @@ import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { AndreErfaringerModal } from "@/app/(minCV)/_components/andreErfaringer/AndreErfaringerModal";
 import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 export default function AndreErfaringer() {
-    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
+    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
 
     const [modalÅpen, setModalÅpen] = useState(false);
     const [andreErfaringer, setAndreErfaringer] = useState([]);
@@ -16,7 +17,7 @@ export default function AndreErfaringer() {
 
     useEffect(() => {
         const oppdaterAndreErfaringer = (erfaringer) => setAndreErfaringer(erfaringer);
-        if (cv.status === "success") oppdaterAndreErfaringer(cv.data.annenErfaring || []);
+        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterAndreErfaringer(cv.data.annenErfaring || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {

@@ -2,19 +2,20 @@ import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvContext } from "@/app/_common/contexts/CvContext";
 import FagbrevModal from "@/app/(minCV)/_components/fagbrev/FagbrevModal";
 import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 export default function Fagbrev() {
-    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
+    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
     const [fagbrev, setFagbrev] = useState([]);
     const [modalÅpen, setModalÅpen] = useState(false);
     const [gjeldendeFagbrev, setGjeldendeFagbrev] = useState(-1);
 
     useEffect(() => {
         const oppdaterFagbrev = (fagbrev) => setFagbrev(fagbrev);
-        if (cv.status === "success") oppdaterFagbrev(cv.data.fagbrev || []);
+        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterFagbrev(cv.data.fagbrev || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {

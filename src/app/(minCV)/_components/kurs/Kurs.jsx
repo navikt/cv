@@ -2,20 +2,21 @@ import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterFullDato, formatterTidsenhet } from "@/app/_common/utils/stringUtils";
 import KursModal from "@/app/(minCV)/_components/kurs/KursModal";
 import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 export default function Kurs() {
-    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
+    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
     const [kurs, setKurs] = useState([]);
     const [modalÅpen, setModalÅpen] = useState(false);
     const [gjeldendeKurs, setGjeldendeKurs] = useState(-1);
 
     useEffect(() => {
         const oppdaterKurs = (kurs) => setKurs(kurs);
-        if (cv.status === "success") oppdaterKurs(cv.data.kurs || []);
+        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterKurs(cv.data.kurs || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {

@@ -29,14 +29,18 @@ Da kan du nå applikasjonen med innlogging på [http://localhost:3000/personbruk
 > Selve applikasjonen kjører på http://localhost:3001, men siden alle requester må routes gjennom Wonderwall som kjører på port 3000 vil det fortsatt være https://localhost:3000 som gjelder
 
 ### Tilgang til NAVs npm-registry
+
 For å kunne hente @navikt-pakker via npm er du nødt til å gjøre følgende:
+
 #### Opprett personal access token
+
 1. Opprett et personal access token (PAT) i github med rettigheter "read:packages". [Det kan du gjøre her](https://github.com/settings/tokens).
 2. Velg Authorize token under "Configure SSO" for å gi tokenet tilgang til @navikt.
 
 #### Opprett .npmrc
+
 1. Opprett fila `.npmrc` i hjemkatalogen din. F.eks. `~/.npmrc` Mer info: https://docs.npmjs.com/cli/v9/configuring-npm/npmrc
-3. Legg følgende i fila, hvor du erstatter `<PAT>` med tokenet du har laget og autorisert i avsnittet over.
+2. Legg følgende i fila, hvor du erstatter `<PAT>` med tokenet du har laget og autorisert i avsnittet over.
     ```bash
     @navikt:registry=https://npm.pkg.github.com
     //npm.pkg.github.com/:_authToken=<PAT>

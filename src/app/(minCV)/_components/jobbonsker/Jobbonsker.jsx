@@ -2,7 +2,7 @@ import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvContext } from "@/app/_common/contexts/CvContext";
 import {
     AnsettelsesformEnum,
     ArbeidstidEnum,
@@ -12,6 +12,7 @@ import {
 } from "@/app/_common/enums/cvEnums";
 import { formatterListeAvObjekterTilTekst } from "@/app/_common/utils/stringUtils";
 import { JobbonskerModal } from "@/app/(minCV)/_components/jobbonsker/JobbonskerModal";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 function JobbonskerIcon() {
     return (
@@ -35,7 +36,7 @@ function JobbonskerIcon() {
 }
 
 export default function Jobbonsker() {
-    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
+    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
     const [jobbønsker, setJobbønsker] = useState(null);
     const [modalÅpen, setModalÅpen] = useState(false);
 
@@ -46,7 +47,7 @@ export default function Jobbonsker() {
             setJobbønsker(jobbønsker);
         };
 
-        if (cv.status === "success") oppdaterJobbønsker(cv.data.jobboensker || null);
+        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterJobbønsker(cv.data.jobboensker || null);
     }, [cv]);
 
     const lagreJobbønsker = async (jobbønsker) => {

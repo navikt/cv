@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import { BodyLong, Box, Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-react";
-import { PencilIcon, PersonCircleIcon } from "@navikt/aksel-icons";
+import { useEffect, useState } from "react";
+import { Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-react";
+import { PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
-import { formatterAdresse, formatterFullDato, formatterTelefon } from "@/app/_common/utils/stringUtils";
+import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 
 export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, lagrePersonalia }) {
     const [fornavn, setFornavn] = useState("");
