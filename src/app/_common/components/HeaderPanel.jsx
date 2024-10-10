@@ -1,10 +1,12 @@
 import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Tag, VStack } from "@navikt/ds-react";
 import { useContext, useEffect, useState } from "react";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { PersonContext } from "@/app/_common/contexts/PersonContext";
 
 function HeaderPanel() {
-    const personContext = useContext(PersonOgCvContext).person;
+    const { person } = useContext(PersonContext);
 
     const [navn, setNavn] = useState("");
     const [sistEndret, setSistEndret] = useState(null);
@@ -15,8 +17,8 @@ function HeaderPanel() {
             setSistEndret(new Date(personalia.sistEndret));
         };
 
-        if (personContext.status === "success") oppdaterPersonalia(personContext.data.personalia || {});
-    }, [personContext]);
+        if (person.fetchStatus === StatusEnums.SUCCESS) oppdaterPersonalia(person.data.personalia || {});
+    }, [person]);
 
     return (
         <Box as="header" borderWidth="0 0 4 0" borderColor="surface-info">

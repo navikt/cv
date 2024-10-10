@@ -2,20 +2,21 @@ import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import AndreGodkjenningerModal from "@/app/(minCV)/_components/andreGodkjenninger/AndreGodkjenningerModal";
 import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 export default function AndreGodkjenninger() {
-    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
+    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
     const [andreGodkjenninger, setAndreGodkjenninger] = useState([]);
     const [modalÅpen, setModalÅpen] = useState(false);
     const [gjeldendeGodkjenning, setGjeldendeGodkjenning] = useState(-1);
 
     useEffect(() => {
         const oppdaterGodkjenninger = (andreGodkjenninger) => setAndreGodkjenninger(andreGodkjenninger);
-        if (cv.status === "success") oppdaterGodkjenninger(cv.data.andreGodkjenninger || []);
+        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterGodkjenninger(cv.data.andreGodkjenninger || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {

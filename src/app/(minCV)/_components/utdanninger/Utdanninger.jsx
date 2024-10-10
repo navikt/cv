@@ -2,10 +2,11 @@ import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-
 import styles from "@/app/page.module.css";
 import { useContext, useEffect, useState } from "react";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvContext } from "@/app/_common/contexts/CvContext";
 import { CvSeksjonEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { UtdanningModal } from "@/app/(minCV)/_components/utdanninger/UtdanningModal";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 function UtdanningerIcon() {
     return (
@@ -29,7 +30,7 @@ function UtdanningerIcon() {
 }
 
 export default function Utdanninger() {
-    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
+    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
 
     const [modalÅpen, setModalÅpen] = useState(false);
     const [utdanninger, setUtdanninger] = useState([]);
@@ -37,7 +38,7 @@ export default function Utdanninger() {
 
     useEffect(() => {
         const oppdaterUtdanninger = (utdanning) => setUtdanninger(utdanning);
-        if (cv.status === "success") oppdaterUtdanninger(cv.data.utdanning || []);
+        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterUtdanninger(cv.data.utdanning || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {

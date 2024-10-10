@@ -2,20 +2,21 @@ import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import OffentligeGodkjenningerModal from "@/app/(minCV)/_components/offentligeGodkjenninger/OffentligeGodkjenningerModal";
 import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 export default function OffentligeGodkjenninger() {
-    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
+    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
     const [offentligeGodkjenninger, setOffentligeGodkjenninger] = useState([]);
     const [modalÅpen, setModalÅpen] = useState(false);
     const [gjeldendeGodkjenning, setGjeldendeGodkjenning] = useState(-1);
 
     useEffect(() => {
         const oppdaterGodkjenninger = (offentligeGodkjenninger) => setOffentligeGodkjenninger(offentligeGodkjenninger);
-        if (cv.status === "success") oppdaterGodkjenninger(cv.data.offentligeGodkjenninger || []);
+        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterGodkjenninger(cv.data.offentligeGodkjenninger || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {

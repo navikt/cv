@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { BodyLong, Box, Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-react";
-import { PencilIcon, PersonCircleIcon } from "@navikt/aksel-icons";
+import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
+import { PencilIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
 import { formatterAdresse, formatterTelefon } from "@/app/_common/utils/stringUtils";
 import PersonaliaModal from "@/app/(minCV)/_components/personalia/PersonaliaModal";
+import { PersonContext } from "@/app/_common/contexts/PersonContext";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 function PersonaliaIcon() {
     return (
@@ -28,13 +29,13 @@ function PersonaliaIcon() {
 }
 
 export default function Personalia() {
-    const { person, oppdaterPersonaliaData } = useContext(PersonOgCvContext);
+    const { person, oppdaterPersonaliaData } = useContext(PersonContext);
     const [modalÅpen, setModalÅpen] = useState(false);
     const [personalia, setPersonalia] = useState(null);
 
     useEffect(() => {
         const oppdaterPersonalia = (personaliap) => setPersonalia(personaliap);
-        if (person.status === "success") oppdaterPersonalia(person.data.personalia || {});
+        if (person.fetchStatus === StatusEnums.SUCCESS) oppdaterPersonalia(person.data.personalia || {});
     }, [person]);
 
     const lagrePersonalia = async (oppdatertPersonalia) => {
