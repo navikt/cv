@@ -2,12 +2,7 @@ import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { v4 as uuidv4 } from "uuid";
 import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
-export const apiRequest = async (setData, url, method = "GET", body = null, dataTransformator = null) => {
-    setData((prevState) => ({
-        ...prevState,
-        fetchStatus: StatusEnums.PENDING,
-    }));
-
+export const simpleApiRequest = async (url, method, body = null) => {
     const fetchOptions = {
         method: method,
         credentials: "same-origin",
@@ -18,19 +13,46 @@ export const apiRequest = async (setData, url, method = "GET", body = null, data
 
     if (body !== null) fetchOptions["body"] = JSON.stringify(body);
 
-    const response = await fetch(url, fetchOptions);
+    return await fetch(url, fetchOptions);
+};
+
+export const getJsonRequest = async (setData, url, statusfelt = null) => {
+    console.log("STATUSFELT I GETJSONREQUEST", statusfelt);
+    await apiJsonRequest(setData, url, "GET", null, null, statusfelt);
+};
+
+export const putJsonRequest = async (setData, url, body, dataTransformator, statusfelt = null) => {
+    await apiJsonRequest(setData, url, "PUT", body, dataTransformator, statusfelt);
+};
+
+const apiJsonRequest = async (
+    setData,
+    url,
+    method = "GET",
+    body = null,
+    dataTransformator = null,
+    statusfelt = null,
+) => {
+    const requestStatusFelt = statusfelt ? statusfelt : method === "GET" ? "fetchStatus" : "updateStatus";
+
+    setData((prevState) => ({
+        ...prevState,
+        [requestStatusFelt]: StatusEnums.PENDING,
+    }));
+
+    const response = await simpleApiRequest(url, method, body);
 
     if (response.status === 200) {
         const json = await response.json();
         setData((prevState) => ({
             ...prevState,
-            fetchStatus: StatusEnums.SUCCESS,
+            [requestStatusFelt]: StatusEnums.SUCCESS,
             data: dataTransformator ? dataTransformator(prevState, json) : json,
         }));
     } else {
         setData((prevState) => ({
             ...prevState,
-            fetchStatus: StatusEnums.ERROR,
+            [requestStatusFelt]: StatusEnums.ERROR,
         }));
     }
 };
@@ -49,11 +71,14 @@ export const hentTypeahead = async (query, type, visningsfelt = "title") => {
     const url = `/personbruker/api/typeahead/${type}/${queryString}`;
     const response = await fetch(url, {
         method: "GET",
-        headers: {
-            "Nav-CallId": `min-side-cv-${uuidv4()}`,
-        },
+        headers: { "Nav-CallId": `min-side-cv-${uuidv4()}` },
     });
 
     const data = response.ok ? await response.json() : [];
     return mapTypeaheadResponse(data, visningsfelt);
 };
+
+export const isFetching = (data) =>
+    data.fetchStatus === StatusEnums.INITIAL || data.fetchStatus === StatusEnums.PENDING;
+export const isFetched = (data) => data.fetchStatus === StatusEnums.SUCCESS;
+export const fetchHasError = (data) => data.fetchStatus === StatusEnums.ERROR;

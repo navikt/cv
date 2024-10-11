@@ -14,6 +14,7 @@ const configMap = {
         urls: {
             cvApi: "http://localhost:8080/pam-cv-api/rest",
             pamOntologi: "https://pam-ontologi.intern.dev.nav.no/rest/typeahead",
+            nav: "https://www.ansatt.dev.nav.no",
         },
     },
     dev: {
@@ -28,6 +29,7 @@ const configMap = {
         urls: {
             cvApi: "http://pam-cv-api-gcp/pam-cv-api/rest",
             pamOntologi: "http://pam-ontologi/rest/typeahead",
+            nav: "https://www.ansatt.dev.nav.no",
         },
     },
     prod: {
@@ -42,6 +44,7 @@ const configMap = {
         urls: {
             cvApi: "http://pam-cv-api-gcp/pam-cv-api/rest",
             pamOntologi: "http://pam-ontologi/rest/typeahead",
+            nav: "https://www.nav.no",
         },
     },
 };

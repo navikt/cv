@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export const AuthenticationContext = React.createContext({});
 
 export const AuthenticationStatus = {
-    NOT_FETCHED: "NOT_FETCHED",
+    INITIAL: "INITIAL",
     IS_FETCHING: "IS_FETCHING",
     NOT_AUTHENTICATED: "IS_NOT_AUTHENTICATED",
     IS_AUTHENTICATED: "IS_AUTHENTICATED",
@@ -12,7 +12,7 @@ export const AuthenticationStatus = {
 };
 
 function AuthenticationProvider({ children }) {
-    const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
+    const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.INITIAL);
 
     const fetchIsAuthenticated = async () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);

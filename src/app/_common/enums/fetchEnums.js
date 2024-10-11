@@ -1,5 +1,5 @@
 export const StatusEnums = Object.freeze({
-    NOT_FETCHED: "NOT_FETCHED",
+    INITIAL: "INITIAL",
     PENDING: "PENDING",
     SUCCESS: "SUCCESS",
     ERROR: "ERROR",
