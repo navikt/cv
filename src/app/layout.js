@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "./page.module.css";
 import { cvConfig } from "@/app/_common/config";
-import App from "./App";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,7 +36,7 @@ const RootLayout = async (props) => {
             </head>
             <body className={inter.className}>
                 {Decorator.Header()}
-                <App>{children}</App>
+                {children}
                 {Decorator.Footer()}
                 {Decorator.Scripts({ loader: Script })}
             </body>
