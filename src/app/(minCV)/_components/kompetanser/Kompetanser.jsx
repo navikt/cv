@@ -1,13 +1,14 @@
-import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-react";
+import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvContext } from "@/app/_common/contexts/CvContext";
 import KompetanserModal from "@/app/(minCV)/_components/kompetanser/KompetanserModal";
 import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 export default function Kompetanser() {
-    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
+    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
 
     const [modalÅpen, setModalÅpen] = useState(false);
     const [kompetanser, setKompetanser] = useState([]);
@@ -15,7 +16,7 @@ export default function Kompetanser() {
 
     useEffect(() => {
         const oppdaterKompetanser = (kompetanser) => setKompetanser(kompetanser);
-        if (cv.status === "success") oppdaterKompetanser(cv.data.kompetanser || []);
+        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterKompetanser(cv.data.kompetanser || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {

@@ -2,12 +2,13 @@ import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvContext } from "@/app/_common/contexts/CvContext";
 import { CvSeksjonEnum, SpråkEnum } from "@/app/_common/enums/cvEnums";
 import SpråkModal from "@/app/(minCV)/_components/sprak/SpråkModal";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 export default function Sprak() {
-    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
+    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
 
     const [modalÅpen, setModalÅpen] = useState(false);
     const [språk, setSpråk] = useState([]);
@@ -15,7 +16,7 @@ export default function Sprak() {
 
     useEffect(() => {
         const oppdaterSpråk = (språk) => setSpråk(språk);
-        if (cv.status === "success") oppdaterSpråk(cv.data.spraak || []);
+        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterSpråk(cv.data.spraak || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {

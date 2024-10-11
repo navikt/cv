@@ -2,11 +2,12 @@ import { Alert, BodyLong, Box, Button, Heading, HStack, Modal, Textarea, VStack 
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvContext } from "@/app/_common/contexts/CvContext";
 import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 export default function Sammendrag() {
-    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
+    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
     const [sammendrag, setSammendrag] = useState("");
     const [sammendragTekst, setSammendragTekst] = useState("");
     const [modalÅpen, setModalÅpen] = useState(false);
@@ -17,7 +18,7 @@ export default function Sammendrag() {
             setSammendragTekst(sammendrag);
         };
 
-        if (cv.status === "success") oppdaterSammendrag(cv.data.sammendrag || "");
+        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterSammendrag(cv.data.sammendrag || "");
     }, [cv]);
 
     const lagreSammendrag = async () => {

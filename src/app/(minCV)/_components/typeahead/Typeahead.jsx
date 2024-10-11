@@ -1,4 +1,4 @@
-import { BodyLong, Chips, HStack, UNSAFE_Combobox, VStack } from "@navikt/ds-react";
+import { BodyLong, Chips, UNSAFE_Combobox, VStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { hentTypeahead } from "@/app/_common/utils/fetchUtils";
 import styles from "@/app/page.module.css";
@@ -72,8 +72,8 @@ export const Typeahead = ({
                 isMultiSelect={false}
                 selectedOptions={hentAlleredeValgteVerdier()}
                 shouldShowSelectedOptions={!multiselect}
-                onChange={(e) => oppdaterTypeahead(e?.target?.value || "")}
-                onToggleSelected={(e, isSelected) => velgVerdi(e, isSelected)}
+                onChange={(verdi) => oppdaterTypeahead(verdi || "")}
+                onToggleSelected={(verdi, isSelected) => velgVerdi(verdi, isSelected)}
                 placeholder={placeholder || "Søk og velg et alternativ"}
             />
             {multiselect && (

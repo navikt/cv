@@ -1,4 +1,4 @@
-import { Button, Heading, HStack, Modal, Select, TextField } from "@navikt/ds-react";
+import { Button, Heading, HStack, Modal, TextField } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";

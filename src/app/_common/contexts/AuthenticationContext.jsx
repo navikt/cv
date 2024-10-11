@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export const AuthenticationContext = React.createContext({});
 
 export const AuthenticationStatus = {
-    NOT_FETCHED: "NO_FETCHED",
+    NOT_FETCHED: "NOT_FETCHED",
     IS_FETCHING: "IS_FETCHING",
     NOT_AUTHENTICATED: "IS_NOT_AUTHENTICATED",
     IS_AUTHENTICATED: "IS_AUTHENTICATED",

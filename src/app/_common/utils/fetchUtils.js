@@ -1,10 +1,11 @@
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { v4 as uuidv4 } from "uuid";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 export const apiRequest = async (setData, url, method = "GET", body = null, dataTransformator = null) => {
     setData((prevState) => ({
         ...prevState,
-        status: "pending",
+        fetchStatus: StatusEnums.PENDING,
     }));
 
     const fetchOptions = {
@@ -23,13 +24,13 @@ export const apiRequest = async (setData, url, method = "GET", body = null, data
         const json = await response.json();
         setData((prevState) => ({
             ...prevState,
-            status: "success",
+            fetchStatus: StatusEnums.SUCCESS,
             data: dataTransformator ? dataTransformator(prevState, json) : json,
         }));
     } else {
         setData((prevState) => ({
             ...prevState,
-            status: "error",
+            fetchStatus: StatusEnums.ERROR,
         }));
     }
 };

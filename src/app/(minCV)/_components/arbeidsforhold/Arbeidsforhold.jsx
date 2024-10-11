@@ -2,13 +2,14 @@ import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-
 import styles from "@/app/page.module.css";
 import { useContext, useEffect, useState } from "react";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvContext } from "@/app/_common/contexts/CvContext";
 import { ArbeidsforholdModal } from "@/app/(minCV)/_components/arbeidsforhold/ArbeidsforholdModal";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 export default function Arbeidsforhold() {
-    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
+    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
 
     const [modalÅpen, setModalÅpen] = useState(false);
     const [arbeidsforhold, setArbeidsforhold] = useState([]);
@@ -16,7 +17,7 @@ export default function Arbeidsforhold() {
 
     useEffect(() => {
         const oppdaterArbeidsforhold = (arbeidsforhold) => setArbeidsforhold(arbeidsforhold);
-        if (cv.status === "success") oppdaterArbeidsforhold(cv.data.arbeidserfaring || []);
+        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterArbeidsforhold(cv.data.arbeidserfaring || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {

@@ -6,6 +6,13 @@
     min-height: 100vh;
 }
 
+.preview {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .description {
     display: inherit;
     justify-content: inherit;
@@ -258,6 +265,15 @@
     .box {
         margin-top: 5.5rem;
     }
+    .PersonalInfoLabel {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .PersonalInfoValue {
+        width: 100%;
+        margin-bottom: 12px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -267,6 +283,14 @@
     .box {
         width: 600px;
         margin-top: 5.5rem;
+    }
+    .PersonalInfoLabel {
+        width: 25%;
+        margin-bottom: 4px;
+    }
+
+    .PersonalInfoValue {
+        width: 75%;
     }
 }
 
@@ -504,4 +528,25 @@
     margin: 0.5rem 0 0.5rem 0.8rem;
     border-left: 2px solid #0067c5;
     height: 1.4rem;
+}
+
+.PersonalInfoWrapper {
+    padding-bottom: 16px;
+    border-bottom: 2px solid grey;
+    margin-bottom: 24px;
+}
+
+.h2 {
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.PersonalInfo {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 600px;
+}
+
+.PreviewCvContent {
+
 }

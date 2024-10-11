@@ -2,20 +2,21 @@ import { BodyLong, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
-import { PersonOgCvContext } from "@/app/_common/contexts/PersonOgCvContext";
+import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import FørerkortModal from "@/app/(minCV)/_components/forerkort/FørerkortModal";
 import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
+import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 export default function Forerkort() {
-    const { cv, oppdaterCvSeksjon } = useContext(PersonOgCvContext);
+    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
     const [førerkort, setFørerkort] = useState([]);
     const [modalÅpen, setModalÅpen] = useState(false);
     const [gjeldendeFørerkort, setGjeldendeFørerkort] = useState(-1);
 
     useEffect(() => {
         const oppdaterFørerkort = (førerkort) => setFørerkort(førerkort);
-        if (cv.status === "success") oppdaterFørerkort(cv.data.foererkort || []);
+        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterFørerkort(cv.data.foererkort || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {
