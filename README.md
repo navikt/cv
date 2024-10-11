@@ -28,6 +28,10 @@ Da kan du nå applikasjonen med innlogging på [http://localhost:3000/personbruk
 > [!TIP]
 > Selve applikasjonen kjører på http://localhost:3001, men siden alle requester må routes gjennom Wonderwall som kjører på port 3000 vil det fortsatt være https://localhost:3000 som gjelder
 
+### Test hjemmelsside
+
+Dersom man har behov for teste hjemmelsiden som kommer ved første innlogging kan man "trekke samtykke" lokalt ved å kjøre `npm run reset_samtykke`. Ved neste innlasting vil personen ikke lenger ha sett hjemmel.
+
 ### Tilgang til NAVs npm-registry
 
 For å kunne hente @navikt-pakker via npm er du nødt til å gjøre følgende:

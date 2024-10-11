@@ -13,6 +13,7 @@ const RootLayout = async (props) => {
     const Decorator = await fetchDecoratorReact({
         env: cvConfig.dekoratoren.miljø,
         params: {
+            utilsBackground: "white",
             context: "privatperson",
             redirectToApp: true,
             breadcrumbs: [

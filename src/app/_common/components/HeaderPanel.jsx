@@ -1,11 +1,10 @@
 import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Tag, VStack } from "@navikt/ds-react";
 import { useContext, useEffect, useState } from "react";
-import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 import { PersonContext } from "@/app/_common/contexts/PersonContext";
 
-function HeaderPanel() {
+function HeaderPanel({ title = "Din CV", visTag = true }) {
     const { person } = useContext(PersonContext);
 
     const [navn, setNavn] = useState("");
@@ -31,11 +30,13 @@ function HeaderPanel() {
                         <VStack gap={{ xs: "3", md: "3" }}>
                             <HStack gap="6" align="center">
                                 <Heading level="1" size="large">
-                                    Din CV
+                                    {title}
                                 </Heading>
-                                <Tag size="small" variant="info-filled">
-                                    Påbegynt
-                                </Tag>
+                                {visTag && (
+                                    <Tag size="small" variant="info-filled">
+                                        Påbegynt
+                                    </Tag>
+                                )}
                             </HStack>
                             <Hide below="md">
                                 <HStack gap="4" align="center">
@@ -49,13 +50,13 @@ function HeaderPanel() {
                                     >
                                         <circle id="Ellipse 16" cx="2" cy="2" r="2" fill="#B5F1FF" />
                                     </svg>
-                                    <Detail>{`Sist endret ${sistEndret ? formatterFullDato(sistEndret) : ""}`}</Detail>
+                                    {sistEndret && <Detail>{`Sist endret ${formatterFullDato(sistEndret)}`}</Detail>}
                                 </HStack>
                             </Hide>
                             <Show below="md">
                                 <VStack gap="2">
                                     <BodyShort size="small">{navn}</BodyShort>
-                                    <Detail>{`Sist endret ${sistEndret ? formatterFullDato(sistEndret) : ""}`}</Detail>
+                                    {sistEndret && <Detail>{`Sist endret ${formatterFullDato(sistEndret)}`}</Detail>}
                                 </VStack>
                             </Show>
                         </VStack>
