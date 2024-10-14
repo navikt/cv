@@ -7,7 +7,7 @@ import { cvConfig } from "@/app/_common/config";
 export const Feilside = ({ årsak }) => {
     return (
         <>
-            <HeaderPanel />
+            <HeaderPanel visTag={false}/>
             <HStack
                 style={{
                     display: "flex",
@@ -29,11 +29,9 @@ export const Feilside = ({ årsak }) => {
                                     Kontakt oss
                                 </Button>
                             </NextLink>
-                            <NextLink href="javascript:history.back()" passHref legacyBehavior>
-                                <Button variant="secondary" as="a">
-                                    Gå tilbake
-                                </Button>
-                            </NextLink>
+                            <Button variant="secondary" as="a" onClick={() => history.back()}>
+                                Gå tilbake
+                            </Button>
                         </HStack>
                     </VStack>
                 </Box>

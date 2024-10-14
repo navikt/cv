@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Heading, Loader, VStack } from "@navikt/ds-react";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
 
+// TODO (Oscar 14.10.24) Denne er ment som en midlertidig placeholder til den ekte lastesiden blir implementert
 export const MidlertidigLasteside = () => {
     return (
         <div>
