@@ -64,7 +64,7 @@ const PersonProvider = ({ children }) => {
     );
 
     if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
-        return <Feilside årsak={FeilsideTekst.IKKE_LOGGET_INN} />
+        return <Feilside årsak={FeilsideTekst.IKKE_LOGGET_INN} />;
     }
 
     if (isFetching(person)) {
