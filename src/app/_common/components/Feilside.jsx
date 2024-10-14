@@ -7,7 +7,7 @@ import { cvConfig } from "@/app/_common/config";
 export const Feilside = ({ årsak }) => {
     return (
         <>
-            <HeaderPanel visTag={false}/>
+            <HeaderPanel visTag={false} />
             <HStack
                 style={{
                     display: "flex",
