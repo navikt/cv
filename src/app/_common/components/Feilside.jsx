@@ -44,4 +44,5 @@ export const FeilsideTekst = Object.freeze({
     IKKE_UNDER_OPPFØLGING:
         "Du er ikke under arbeidsrettet oppfølging og har derfor ikke tilgang til din CV. Ønsker du å se CV-en din kan du ta kontakt med oss.",
     FETCH_ERROR: "Det har skjedd en feil under lasting av CVen din. Vennligst prøv igjen eller kom tilbake senere.",
+    IKKE_LOGGET_INN: "Du er ikke logget inn. Min CV er en innlogget tjensete. Vennligst logg inn, eller gå tilbake."
 });

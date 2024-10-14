@@ -63,6 +63,10 @@ const PersonProvider = ({ children }) => {
         </PersonContext.Provider>
     );
 
+    if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
+        return <Feilside årsak={FeilsideTekst.IKKE_LOGGET_INN} />
+    }
+
     if (isFetching(person)) {
         return medProvider(<MidlertidigLasteside />);
     }
