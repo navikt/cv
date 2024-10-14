@@ -20,7 +20,7 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
             setOmfang(jobbønsker?.workLoadTypes || []);
             setAnsettelsesform(jobbønsker?.occupationTypes || []);
             setArbeidstid(jobbønsker?.workScheduleTypes || []);
-            setStarttidspunkt(jobbønsker?.startOption || "");
+            setStarttidspunkt(jobbønsker?.startOption || "ETTER_TRE_MND");
         };
 
         oppdaterJobbønsker(jobbønsker);
