@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import React from "react";
-import { apiRequest } from "@/app/_common/utils/fetchUtils";
+import { getJsonRequest, isFetching, putJsonRequest } from "@/app/_common/utils/fetchUtils";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/contexts/AuthenticationContext";
 import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { MidlertidigLasteside } from "@/app/_common/components/MidlertidigLasteside";
 
-const initialData = { status: StatusEnums.NOT_FETCHED, data: null, updateStatus: StatusEnums.NOT_FETCHED };
+const initialData = { fetchStatus: StatusEnums.INITIAL, data: null, updateStatus: StatusEnums.INITIAL };
 export const CvContext = React.createContext({ cv: initialData });
 
 const CvProvider = ({ children }) => {
@@ -13,11 +14,12 @@ const CvProvider = ({ children }) => {
 
     const oppdaterCvSeksjon = async (data, seksjon) => {
         const cvDto = { [seksjon]: data };
-        await apiRequest(setCv, `/personbruker/api/cv/${seksjon}`, "PUT", cvDto);
+        await putJsonRequest(setCv, `/personbruker/api/cv/${seksjon}`, cvDto);
     };
 
     useEffect(() => {
-        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) apiRequest(setCv, "/personbruker/api/cv");
+        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED)
+            getJsonRequest(setCv, "/personbruker/api/cv");
         else if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) setCv(initialData);
     }, [authenticationStatus]);
 

@@ -23,10 +23,14 @@ $ npm run dependencies # Starter docker-containere for wonderwall, redis og mock
 $ npm run dev # Kjører dev
 ```
 
-Da kan du nå applikasjonen med innlogging på [http://localhost:3000/personbruker](http://localhost:3000/personbruker)
+Da kan du nå applikasjonen med innlogging på [http://localhost:3000/personbruker](http://localhost:3000/personbruker). Bruk testbruker `04010100653`.
 
 > [!TIP]
 > Selve applikasjonen kjører på http://localhost:3001, men siden alle requester må routes gjennom Wonderwall som kjører på port 3000 vil det fortsatt være https://localhost:3000 som gjelder
+
+### Test hjemmelsside
+
+Dersom man har behov for teste hjemmelsiden som kommer ved første innlogging kan man "trekke samtykke" lokalt ved å kjøre `npm run reset_samtykke`. Ved neste innlasting vil personen ikke lenger ha sett hjemmel.
 
 ### Tilgang til NAVs npm-registry
 

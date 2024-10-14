@@ -228,6 +228,10 @@
     margin-bottom: var(--a-spacing-16) !important;
 }
 
+.mt3 {
+    margin-top: var(--a-spacing-3) !important;
+}
+
 .mt6 {
     margin-top: var(--a-spacing-6) !important;
 }
