@@ -57,8 +57,6 @@ const PersonProvider = ({ children }) => {
         if (person.data) oppdaterPersonContext(person);
     }, [person]);
 
-    console.log("harSetthjemmel:", harSettHjemmel);
-
     const medProvider = (children) => (
         <PersonContext.Provider value={{ person, oppdaterPersonalia, bekreftSettHjemmel }}>
             {children}

@@ -17,7 +17,6 @@ export const simpleApiRequest = async (url, method, body = null) => {
 };
 
 export const getJsonRequest = async (setData, url, statusfelt = null) => {
-    console.log("STATUSFELT I GETJSONREQUEST", statusfelt);
     await apiJsonRequest(setData, url, "GET", null, null, statusfelt);
 };
 
