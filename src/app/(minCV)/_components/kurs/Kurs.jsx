@@ -5,8 +5,8 @@ import { useContext, useEffect, useState } from "react";
 import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterFullDato, formatterTidsenhet } from "@/app/_common/utils/stringUtils";
 import KursModal from "@/app/(minCV)/_components/kurs/KursModal";
-import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
+import { isFetched } from "@/app/_common/utils/fetchUtils";
 
 export default function Kurs() {
     const { cv, oppdaterCvSeksjon } = useContext(CvContext);
@@ -16,7 +16,7 @@ export default function Kurs() {
 
     useEffect(() => {
         const oppdaterKurs = (kurs) => setKurs(kurs);
-        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterKurs(cv.data.kurs || []);
+        if (isFetched(cv)) oppdaterKurs(cv.data.kurs || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {
@@ -65,7 +65,7 @@ export default function Kurs() {
     );
 
     return (
-        <div data-section id="13">
+        <div data-section id={SeksjonsIdEnum.KURS}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <KursIcon />

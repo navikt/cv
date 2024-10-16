@@ -3,8 +3,8 @@ import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
 import { CvContext } from "@/app/_common/contexts/CvContext";
-import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
+import { isFetched } from "@/app/_common/utils/fetchUtils";
 
 export default function Sammendrag() {
     const { cv, oppdaterCvSeksjon } = useContext(CvContext);
@@ -18,7 +18,7 @@ export default function Sammendrag() {
             setSammendragTekst(sammendrag);
         };
 
-        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterSammendrag(cv.data.sammendrag || "");
+        if (isFetched(cv)) oppdaterSammendrag(cv.data.sammendrag || "");
     }, [cv]);
 
     const lagreSammendrag = async () => {
@@ -50,7 +50,7 @@ export default function Sammendrag() {
     );
 
     return (
-        <div data-section id="14">
+        <div data-section id={SeksjonsIdEnum.SAMMENDRAG}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <SammendragIcon />

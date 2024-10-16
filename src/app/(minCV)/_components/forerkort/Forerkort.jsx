@@ -5,8 +5,8 @@ import { useContext, useEffect, useState } from "react";
 import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import FørerkortModal from "@/app/(minCV)/_components/forerkort/FørerkortModal";
-import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
+import { isFetched } from "@/app/_common/utils/fetchUtils";
 
 export default function Forerkort() {
     const { cv, oppdaterCvSeksjon } = useContext(CvContext);
@@ -16,7 +16,7 @@ export default function Forerkort() {
 
     useEffect(() => {
         const oppdaterFørerkort = (førerkort) => setFørerkort(førerkort);
-        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterFørerkort(cv.data.foererkort || []);
+        if (isFetched(cv)) oppdaterFørerkort(cv.data.foererkort || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {
@@ -59,7 +59,7 @@ export default function Forerkort() {
     );
 
     return (
-        <div data-section id="12">
+        <div data-section id={SeksjonsIdEnum.FØRERKORT}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <FørerkortIcon />
