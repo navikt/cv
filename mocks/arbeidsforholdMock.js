@@ -1,0 +1,28 @@
+export const arbeidsforholdMock = [
+    {
+        employer: "SAUEFABRIKK",
+        jobTitle: "Allmennlærer",
+        alternativeJobTitle: null,
+        conceptId: "20611",
+        location: "OPALV 75",
+        description: null,
+        fromDate: "2004-10-17T02:00:00+02:00",
+        toDate: "2024-08-31T02:00:00+02:00",
+        styrkkode: "2341",
+        ikkeAktueltForFremtiden: false,
+        ongoing: false,
+    },
+    {
+        employer: "SJOKKERENDE ELEKTRIKER",
+        jobTitle: "Frisør",
+        alternativeJobTitle: null,
+        conceptId: "20020",
+        location: "DRIVHUSVEGEN 40",
+        description: null,
+        fromDate: "2004-09-30T02:00:00+02:00",
+        toDate: null,
+        styrkkode: "5141",
+        ikkeAktueltForFremtiden: false,
+        ongoing: true,
+    },
+];
