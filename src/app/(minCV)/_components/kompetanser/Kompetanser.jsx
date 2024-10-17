@@ -4,8 +4,8 @@ import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
 import { CvContext } from "@/app/_common/contexts/CvContext";
 import KompetanserModal from "@/app/(minCV)/_components/kompetanser/KompetanserModal";
-import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
+import { isFetched } from "@/app/_common/utils/fetchUtils";
 
 export default function Kompetanser() {
     const { cv, oppdaterCvSeksjon } = useContext(CvContext);
@@ -16,7 +16,7 @@ export default function Kompetanser() {
 
     useEffect(() => {
         const oppdaterKompetanser = (kompetanser) => setKompetanser(kompetanser);
-        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterKompetanser(cv.data.kompetanser || []);
+        if (isFetched(cv)) oppdaterKompetanser(cv.data.kompetanser || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {
@@ -59,7 +59,7 @@ export default function Kompetanser() {
     );
 
     return (
-        <div data-section id="8">
+        <div data-section id={SeksjonsIdEnum.KOMPETANSER}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <KompetanserIcon />

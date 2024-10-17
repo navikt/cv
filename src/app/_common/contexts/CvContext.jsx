@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import React from "react";
-import { getJsonRequest, isFetching, putJsonRequest } from "@/app/_common/utils/fetchUtils";
+import { getJsonRequest, putJsonRequest } from "@/app/_common/utils/fetchUtils";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/contexts/AuthenticationContext";
 import { StatusEnums } from "@/app/_common/enums/fetchEnums";
-import { MidlertidigLasteside } from "@/app/_common/components/MidlertidigLasteside";
 
 const initialData = { fetchStatus: StatusEnums.INITIAL, data: null, updateStatus: StatusEnums.INITIAL };
 export const CvContext = React.createContext({ cv: initialData });

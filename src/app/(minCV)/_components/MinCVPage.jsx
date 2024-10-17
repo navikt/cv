@@ -46,7 +46,6 @@ export default function MinCVPage() {
                                 <Box className={styles.main}>
                                     <HStack gap="4">
                                         <VStack>
-                                            <DelingAvCV />
                                             <Personalia />
                                             <Jobbonsker />
                                             <Utdanninger />
@@ -60,6 +59,7 @@ export default function MinCVPage() {
                                             <Forerkort />
                                             <Kurs />
                                             <Sammendrag />
+                                            <DelingAvCV />
                                         </VStack>
                                     </HStack>
                                 </Box>
@@ -77,7 +77,6 @@ export default function MinCVPage() {
                         </HStack>
                     </Hide>
                     <Show below="md">
-                        <DelingAvCV />
                         <Personalia />
                         <Jobbonsker />
                         <Utdanninger />
@@ -91,6 +90,7 @@ export default function MinCVPage() {
                         <Forerkort />
                         <Kurs />
                         <Sammendrag />
+                        <DelingAvCV />
                     </Show>
                 </CvProvider>
             </PersonProvider>

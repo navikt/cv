@@ -1,6 +1,7 @@
 import { BodyLong, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useRef, useState } from "react";
+import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 
 function Hovedmeny() {
     const [activeSection, setActiveSection] = useState();
@@ -38,24 +39,13 @@ function Hovedmeny() {
     return (
         <>
             <HStack>
-                <a href="#delingAvCV" className={styles.meny} onClick={() => onSectionChange("1")}>
+                <a
+                    href="#personalia"
+                    className={styles.meny}
+                    onClick={() => onSectionChange(SeksjonsIdEnum.PERSONALIA)}
+                >
                     <HStack align="center">
-                        {activeSection === "1" ? (
-                            <div className={styles["icon-deling-av-cv--active"]} />
-                        ) : (
-                            <div className={styles["icon-deling-av-cv"]} />
-                        )}
-                        <BodyLong style={{ marginLeft: "0.8rem" }} weight="semibold">
-                            Deling av CV
-                        </BodyLong>
-                    </HStack>
-                </a>
-            </HStack>
-            <div className={styles.line} />
-            <HStack>
-                <a href="#personalia" className={styles.meny} onClick={() => onSectionChange("2")}>
-                    <HStack align="center">
-                        {activeSection === "2" ? (
+                        {activeSection === SeksjonsIdEnum.PERSONALIA ? (
                             <div className={styles["icon-personalia--active"]} />
                         ) : (
                             <div className={styles["icon-personalia"]} />
@@ -68,9 +58,13 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#jobbonsker" className={styles.meny} onClick={() => onSectionChange("3")}>
+                <a
+                    href="#jobbonsker"
+                    className={styles.meny}
+                    onClick={() => onSectionChange(SeksjonsIdEnum.JOBBØNSKER)}
+                >
                     <HStack align="center">
-                        {activeSection === "3" ? (
+                        {activeSection === SeksjonsIdEnum.JOBBØNSKER ? (
                             <div className={styles["icon-jobbonsker--active"]} />
                         ) : (
                             <div className={styles["icon-jobbonsker"]} />
@@ -83,9 +77,13 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#utdanninger" className={styles.meny} onClick={() => onSectionChange("4")}>
+                <a
+                    href="#utdanninger"
+                    className={styles.meny}
+                    onClick={() => onSectionChange(SeksjonsIdEnum.UTDANNING)}
+                >
                     <HStack align="center">
-                        {activeSection === "4" ? (
+                        {activeSection === SeksjonsIdEnum.UTDANNING ? (
                             <div className={styles["icon-utdanninger--active"]} />
                         ) : (
                             <div className={styles["icon-utdanninger"]} />
@@ -98,9 +96,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#fagbrev" className={styles.meny} onClick={() => onSectionChange("5")}>
+                <a href="#fagbrev" className={styles.meny} onClick={() => onSectionChange(SeksjonsIdEnum.FAGBREV)}>
                     <HStack align="center">
-                        {activeSection === "5" ? (
+                        {activeSection === SeksjonsIdEnum.FAGBREV ? (
                             <div className={styles["icon-fagbrev--active"]} />
                         ) : (
                             <div className={styles["icon-fagbrev"]} />
@@ -113,9 +111,13 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#arbeidsforhold" className={styles.meny} onClick={() => onSectionChange("6")}>
+                <a
+                    href="#arbeidsforhold"
+                    className={styles.meny}
+                    onClick={() => onSectionChange(SeksjonsIdEnum.ARBEIDSFORHOLD)}
+                >
                     <HStack align="center">
-                        {activeSection === "6" ? (
+                        {activeSection === SeksjonsIdEnum.ARBEIDSFORHOLD ? (
                             <div className={styles["icon-arbeidsforhold--active"]} />
                         ) : (
                             <div className={styles["icon-arbeidsforhold"]} />
@@ -128,9 +130,13 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#andreErfaringer" className={styles.meny} onClick={() => onSectionChange("7")}>
+                <a
+                    href="#andreErfaringer"
+                    className={styles.meny}
+                    onClick={() => onSectionChange(SeksjonsIdEnum.ANDRE_ERFARINGER)}
+                >
                     <HStack align="center">
-                        {activeSection === "7" ? (
+                        {activeSection === SeksjonsIdEnum.ANDRE_ERFARINGER ? (
                             <div className={styles["icon-andre-erfaringer--active"]} />
                         ) : (
                             <div className={styles["icon-andre-erfaringer"]} />
@@ -143,9 +149,13 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#kompetanser" className={styles.meny} onClick={() => onSectionChange("8")}>
+                <a
+                    href="#kompetanser"
+                    className={styles.meny}
+                    onClick={() => onSectionChange(SeksjonsIdEnum.KOMPETANSER)}
+                >
                     <HStack align="center">
-                        {activeSection === "8" ? (
+                        {activeSection === SeksjonsIdEnum.KOMPETANSER ? (
                             <div className={styles["icon-kompetanser--active"]} />
                         ) : (
                             <div className={styles["icon-kompetanser"]} />
@@ -158,9 +168,13 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#offentligeGodkjenninger" className={styles.meny} onClick={() => onSectionChange("9")}>
+                <a
+                    href="#offentligeGodkjenninger"
+                    className={styles.meny}
+                    onClick={() => onSectionChange(SeksjonsIdEnum.OFFENTLIGE_GODKJENNINGER)}
+                >
                     <HStack align="center">
-                        {activeSection === "9" ? (
+                        {activeSection === SeksjonsIdEnum.OFFENTLIGE_GODKJENNINGER ? (
                             <div className={styles["icon-offentlige-godkjenninger--active"]} />
                         ) : (
                             <div className={styles["icon-offentlige-godkjenninger"]} />
@@ -173,9 +187,13 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#andreGodkjenninger" className={styles.meny} onClick={() => onSectionChange("10")}>
+                <a
+                    href="#andreGodkjenninger"
+                    className={styles.meny}
+                    onClick={() => onSectionChange(SeksjonsIdEnum.ANDRE_GODKJENNINGER)}
+                >
                     <HStack align="center">
-                        {activeSection === "10" ? (
+                        {activeSection === SeksjonsIdEnum.ANDRE_GODKJENNINGER ? (
                             <div className={styles["icon-andre-godkjenninger--active"]} />
                         ) : (
                             <div className={styles["icon-andre-godkjenninger"]} />
@@ -188,9 +206,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#sprak" className={styles.meny} onClick={() => onSectionChange("11")}>
+                <a href="#sprak" className={styles.meny} onClick={() => onSectionChange(SeksjonsIdEnum.SPRÅK)}>
                     <HStack align="center">
-                        {activeSection === "11" ? (
+                        {activeSection === SeksjonsIdEnum.SPRÅK ? (
                             <div className={styles["icon-sprak--active"]} />
                         ) : (
                             <div className={styles["icon-sprak"]} />
@@ -203,9 +221,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#forerkort" className={styles.meny} onClick={() => onSectionChange("12")}>
+                <a href="#forerkort" className={styles.meny} onClick={() => onSectionChange(SeksjonsIdEnum.FØRERKORT)}>
                     <HStack align="center">
-                        {activeSection === "12" ? (
+                        {activeSection === SeksjonsIdEnum.FØRERKORT ? (
                             <div className={styles["icon-forerkort--active"]} />
                         ) : (
                             <div className={styles["icon-forerkort"]} />
@@ -218,9 +236,9 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#kurs" className={styles.meny} onClick={() => onSectionChange("13")}>
+                <a href="#kurs" className={styles.meny} onClick={() => onSectionChange(SeksjonsIdEnum.KURS)}>
                     <HStack align="center">
-                        {activeSection === "13" ? (
+                        {activeSection === SeksjonsIdEnum.KURS ? (
                             <div className={styles["icon-kurs--active"]} />
                         ) : (
                             <div className={styles["icon-kurs"]} />
@@ -233,15 +251,38 @@ function Hovedmeny() {
             </HStack>
             <div className={styles.line} />
             <HStack>
-                <a href="#sammendrag" className={styles.meny} onClick={() => onSectionChange("14")}>
+                <a
+                    href="#sammendrag"
+                    className={styles.meny}
+                    onClick={() => onSectionChange(SeksjonsIdEnum.SAMMENDRAG)}
+                >
                     <HStack align="center">
-                        {activeSection === "14" ? (
+                        {activeSection === SeksjonsIdEnum.SAMMENDRAG ? (
                             <div className={styles["icon-sammendrag--active"]} />
                         ) : (
                             <div className={styles["icon-sammendrag"]} />
                         )}
                         <BodyLong style={{ marginLeft: "0.8rem" }} weight="semibold">
                             Sammendrag
+                        </BodyLong>
+                    </HStack>
+                </a>
+            </HStack>
+            <div className={styles.line} />
+            <HStack>
+                <a
+                    href="#delingAvCV"
+                    className={styles.meny}
+                    onClick={() => onSectionChange(SeksjonsIdEnum.DELING_AV_CV)}
+                >
+                    <HStack align="center">
+                        {activeSection === SeksjonsIdEnum.DELING_AV_CV ? (
+                            <div className={styles["icon-deling-av-cv--active"]} />
+                        ) : (
+                            <div className={styles["icon-deling-av-cv"]} />
+                        )}
+                        <BodyLong style={{ marginLeft: "0.8rem" }} weight="semibold">
+                            Deling av CV
                         </BodyLong>
                     </HStack>
                 </a>

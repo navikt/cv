@@ -21,6 +21,7 @@ const PersonProvider = ({ children }) => {
     const [person, setPerson] = useState(initialData);
     const [erUnderOppfølging, setErUnderOppfølging] = useState(false);
     const [harSettHjemmel, setHarSettHjemmel] = useState(true);
+    const [visHjemmelside, setVisHjemmelside] = useState(false);
 
     const hentPerson = async (statusfelt) => {
         return await getJsonRequest(setPerson, "/personbruker/api/person", statusfelt);
@@ -58,7 +59,7 @@ const PersonProvider = ({ children }) => {
     }, [person]);
 
     const medProvider = (children) => (
-        <PersonContext.Provider value={{ person, oppdaterPersonalia, bekreftSettHjemmel }}>
+        <PersonContext.Provider value={{ person, oppdaterPersonalia, bekreftSettHjemmel, setVisHjemmelside }}>
             {children}
         </PersonContext.Provider>
     );
@@ -79,8 +80,8 @@ const PersonProvider = ({ children }) => {
         return medProvider(<Feilside årsak={FeilsideTekst.IKKE_UNDER_OPPFØLGING} />);
     }
 
-    if (!harSettHjemmel) {
-        return medProvider(<Hjemmelside />);
+    if (!harSettHjemmel || visHjemmelside) {
+        return medProvider(<Hjemmelside måBekrefte={!harSettHjemmel} />);
     }
 
     return medProvider(children);

@@ -5,8 +5,8 @@ import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { CvContext } from "@/app/_common/contexts/CvContext";
 import { ArbeidsforholdModal } from "@/app/(minCV)/_components/arbeidsforhold/ArbeidsforholdModal";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
-import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
+import { isFetched } from "@/app/_common/utils/fetchUtils";
 
 export default function Arbeidsforhold() {
     const { cv, oppdaterCvSeksjon } = useContext(CvContext);
@@ -17,7 +17,7 @@ export default function Arbeidsforhold() {
 
     useEffect(() => {
         const oppdaterArbeidsforhold = (arbeidsforhold) => setArbeidsforhold(arbeidsforhold);
-        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterArbeidsforhold(cv.data.arbeidserfaring || []);
+        if (isFetched(cv)) oppdaterArbeidsforhold(cv.data.arbeidserfaring || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {
@@ -63,7 +63,7 @@ export default function Arbeidsforhold() {
     }
 
     return (
-        <div data-section id="6">
+        <div data-section id={SeksjonsIdEnum.ARBEIDSFORHOLD}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <ArbeidsforholdIcon />

@@ -1,0 +1,17 @@
+export const samtykkeEuresMock = {
+    sistEndret: "2024-01-01T12:00:00.0+02:00",
+    personalia: true,
+    utdanning: true,
+    fagbrev: true,
+    arbeidserfaring: true,
+    annenErfaring: false,
+    foererkort: true,
+    lovregulerteYrker: false,
+    offentligeGodkjenninger: true,
+    andreGodkjenninger: true,
+    kurs: true,
+    spraak: true,
+    sammendrag: true,
+    kompetanser: true,
+    land: ["NO"],
+};

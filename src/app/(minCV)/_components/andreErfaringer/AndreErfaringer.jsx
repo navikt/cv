@@ -5,8 +5,8 @@ import { useContext, useEffect, useState } from "react";
 import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { AndreErfaringerModal } from "@/app/(minCV)/_components/andreErfaringer/AndreErfaringerModal";
-import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
+import { isFetched } from "@/app/_common/utils/fetchUtils";
 
 export default function AndreErfaringer() {
     const { cv, oppdaterCvSeksjon } = useContext(CvContext);
@@ -17,7 +17,7 @@ export default function AndreErfaringer() {
 
     useEffect(() => {
         const oppdaterAndreErfaringer = (erfaringer) => setAndreErfaringer(erfaringer);
-        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterAndreErfaringer(cv.data.annenErfaring || []);
+        if (isFetched(cv)) oppdaterAndreErfaringer(cv.data.annenErfaring || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {
@@ -60,7 +60,7 @@ export default function AndreErfaringer() {
     );
 
     return (
-        <div data-section id="7">
+        <div data-section id={SeksjonsIdEnum.ANDRE_ERFARINGER}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <AndreErfaringerIcon />

@@ -1,8 +1,8 @@
 import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Tag, VStack } from "@navikt/ds-react";
 import { useContext, useEffect, useState } from "react";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 import { PersonContext } from "@/app/_common/contexts/PersonContext";
+import { isFetched } from "@/app/_common/utils/fetchUtils";
 
 function HeaderPanel({ title = "Din CV", visTag = true }) {
     const { person } = useContext(PersonContext);
@@ -16,7 +16,7 @@ function HeaderPanel({ title = "Din CV", visTag = true }) {
             setSistEndret(new Date(personalia.sistEndret));
         };
 
-        if (person.fetchStatus === StatusEnums.SUCCESS) oppdaterPersonalia(person.data.personalia || {});
+        if (isFetched(person)) oppdaterPersonalia(person.data.personalia || {});
     }, [person]);
 
     return (

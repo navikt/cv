@@ -8,11 +8,12 @@ import {
     ArbeidstidEnum,
     CvSeksjonEnum,
     OmfangEnum,
+    SeksjonsIdEnum,
     StarttidspunktEnum,
 } from "@/app/_common/enums/cvEnums";
 import { formatterListeAvObjekterTilTekst } from "@/app/_common/utils/stringUtils";
 import { JobbonskerModal } from "@/app/(minCV)/_components/jobbonsker/JobbonskerModal";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { isFetched } from "@/app/_common/utils/fetchUtils";
 
 function JobbonskerIcon() {
     return (
@@ -47,7 +48,7 @@ export default function Jobbonsker() {
             setJobbønsker(jobbønsker);
         };
 
-        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterJobbønsker(cv.data.jobboensker || null);
+        if (isFetched(cv)) oppdaterJobbønsker(cv.data.jobboensker || null);
     }, [cv]);
 
     const lagreJobbønsker = async (jobbønsker) => {
@@ -70,7 +71,7 @@ export default function Jobbonsker() {
     };
 
     return (
-        <div data-section id="3">
+        <div data-section id={SeksjonsIdEnum.JOBBØNSKER}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <JobbonskerIcon />

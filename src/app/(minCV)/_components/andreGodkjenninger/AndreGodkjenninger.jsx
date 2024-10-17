@@ -5,8 +5,8 @@ import { useContext, useEffect, useState } from "react";
 import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import AndreGodkjenningerModal from "@/app/(minCV)/_components/andreGodkjenninger/AndreGodkjenningerModal";
-import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
+import { isFetched } from "@/app/_common/utils/fetchUtils";
 
 export default function AndreGodkjenninger() {
     const { cv, oppdaterCvSeksjon } = useContext(CvContext);
@@ -16,7 +16,7 @@ export default function AndreGodkjenninger() {
 
     useEffect(() => {
         const oppdaterGodkjenninger = (andreGodkjenninger) => setAndreGodkjenninger(andreGodkjenninger);
-        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterGodkjenninger(cv.data.andreGodkjenninger || []);
+        if (isFetched(cv)) oppdaterGodkjenninger(cv.data.andreGodkjenninger || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {
@@ -59,7 +59,7 @@ export default function AndreGodkjenninger() {
     );
 
     return (
-        <div data-section id="10">
+        <div data-section id={SeksjonsIdEnum.ANDRE_GODKJENNINGER}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <AndreGodkjenningerIcon />

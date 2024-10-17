@@ -8,6 +8,10 @@ import { cvConfig } from "@/app/_common/config";
 const inter = Inter({ subsets: ["latin"] });
 
 const RootLayout = async (props) => {
+    if (process.env.NODE_ENV === "development") {
+        import("../../mocks/mirage").then(() => console.warn("Mirage mock`s kjører!"));
+    }
+
     const { children } = props;
 
     const Decorator = await fetchDecoratorReact({

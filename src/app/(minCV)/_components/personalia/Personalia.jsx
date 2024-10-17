@@ -5,7 +5,8 @@ import styles from "@/app/page.module.css";
 import { formatterAdresse, formatterTelefon } from "@/app/_common/utils/stringUtils";
 import PersonaliaModal from "@/app/(minCV)/_components/personalia/PersonaliaModal";
 import { PersonContext } from "@/app/_common/contexts/PersonContext";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
+import { isFetched } from "@/app/_common/utils/fetchUtils";
 
 function PersonaliaIcon() {
     return (
@@ -35,7 +36,7 @@ export default function Personalia() {
 
     useEffect(() => {
         const oppdaterPersonalia = (personaliap) => setPersonalia(personaliap);
-        if (person.fetchStatus === StatusEnums.SUCCESS) oppdaterPersonalia(person.data.personalia || {});
+        if (isFetched(person)) oppdaterPersonalia(person.data.personalia || {});
     }, [person]);
 
     const lagrePersonalia = async (oppdatertPersonalia) => {
@@ -44,7 +45,7 @@ export default function Personalia() {
     };
 
     return (
-        <div data-section id="2">
+        <div data-section id={SeksjonsIdEnum.PERSONALIA}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <PersonaliaIcon />

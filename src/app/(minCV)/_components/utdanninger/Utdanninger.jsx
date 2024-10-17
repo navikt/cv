@@ -3,10 +3,10 @@ import styles from "@/app/page.module.css";
 import { useContext, useEffect, useState } from "react";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { CvContext } from "@/app/_common/contexts/CvContext";
-import { CvSeksjonEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
+import { CvSeksjonEnum, SeksjonsIdEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { UtdanningModal } from "@/app/(minCV)/_components/utdanninger/UtdanningModal";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { isFetched } from "@/app/_common/utils/fetchUtils";
 
 function UtdanningerIcon() {
     return (
@@ -38,7 +38,7 @@ export default function Utdanninger() {
 
     useEffect(() => {
         const oppdaterUtdanninger = (utdanning) => setUtdanninger(utdanning);
-        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterUtdanninger(cv.data.utdanning || []);
+        if (isFetched(cv)) oppdaterUtdanninger(cv.data.utdanning || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {
@@ -63,7 +63,7 @@ export default function Utdanninger() {
     };
 
     return (
-        <div data-section id="4">
+        <div data-section id={SeksjonsIdEnum.UTDANNING}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <UtdanningerIcon />

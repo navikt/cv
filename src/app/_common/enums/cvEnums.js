@@ -87,3 +87,20 @@ export const CvSeksjonEnum = Object.freeze({
     SAMMENDRAG: "sammendrag",
     JOBBØNSKER: "jobboensker",
 });
+
+export const SeksjonsIdEnum = Object.freeze({
+    PERSONALIA: "1",
+    JOBBØNSKER: "2",
+    UTDANNING: "3",
+    FAGBREV: "4",
+    ARBEIDSFORHOLD: "5",
+    ANDRE_ERFARINGER: "6",
+    KOMPETANSER: "7",
+    OFFENTLIGE_GODKJENNINGER: "8",
+    ANDRE_GODKJENNINGER: "9",
+    SPRÅK: "10",
+    FØRERKORT: "11",
+    KURS: "12",
+    SAMMENDRAG: "13",
+    DELING_AV_CV: "14",
+});
