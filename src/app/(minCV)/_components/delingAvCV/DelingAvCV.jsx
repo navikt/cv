@@ -276,6 +276,8 @@ export default function DelingAvCV() {
     const { delerEures, euresIsLoading, euresIsError } = useEuresSamtykke();
     const { bekreftSuccess, bekreftIsLoading, bekreftIsError } = useBekreftTidligereCv(sendBekreftelse);
 
+    console.log("Må bekrefte tidligere cv?", måBekrefteTidligereCv);
+
     useEffect(() => {
         if (isFetched(person)) setMåBekrefteTidligereCv(person.maaBekrefteTidligereCv);
     }, [person]);
