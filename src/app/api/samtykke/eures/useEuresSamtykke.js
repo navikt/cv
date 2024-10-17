@@ -1,10 +1,11 @@
 "use client";
 
 import useSWR from "swr";
-import { simpleGetRequest } from "@/app/_common/utils/fetchUtils";
+import { simpleApiRequest } from "@/app/_common/utils/fetchUtils";
 
 export const useEuresSamtykke = () => {
-    const { data, error, isLoading } = useSWR(`/personbruker/api/samtykke/eures`, simpleGetRequest);
+    const fetcher = async (url) => (await simpleApiRequest(url, "GET")).ok;
+    const { data, error, isLoading } = useSWR(`/personbruker/api/samtykke/eures`, fetcher);
 
     return {
         delerEures: data,
