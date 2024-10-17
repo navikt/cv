@@ -40,9 +40,8 @@ export default function Arbeidsforhold() {
 
     useEffect(() => {
         const lagreHentedeArbeidsforhold = async (arbeidsforhold) => {
-            console.log(arbeidsforhold);
             setAaregTomt(aaregForhold.length === 0);
-            await oppdaterCvSeksjon(arbeidsforhold, CvSeksjonEnum.ARBEIDSFORHOLD);
+            if (!aaregIsError) await oppdaterCvSeksjon(arbeidsforhold, CvSeksjonEnum.ARBEIDSFORHOLD);
             setSkalHente(false);
         };
 
