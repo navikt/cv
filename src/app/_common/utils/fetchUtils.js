@@ -2,9 +2,6 @@ import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { v4 as uuidv4 } from "uuid";
 import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
-export const simpleGetRequest = async (url) => (await simpleApiRequest(url, "GET")).ok;
-export const simplePostRequest = async (url) => (await simpleApiRequest(url, "POST")).ok;
-
 export const simpleApiRequest = async (url, method, body = null) => {
     const fetchOptions = {
         method: method,
