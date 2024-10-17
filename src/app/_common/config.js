@@ -15,7 +15,7 @@ const configMap = {
         urls: {
             cvApi: "http://localhost:8080/pam-cv-api/rest",
             pamOntologi: "https://pam-ontologi.intern.dev.nav.no/rest/typeahead",
-            euresCvEksport: "http://localhost:9030/samtykke",
+            euresCvEksport: "http://localhost:9030/pam-eures-cv-eksport/samtykke",
             nav: "https://www.ansatt.dev.nav.no",
             arbeidsplassen: "https://arbeidsplassen.intern.dev.nav.no",
         },
@@ -33,7 +33,7 @@ const configMap = {
         urls: {
             cvApi: "http://pam-cv-api-gcp/pam-cv-api/rest",
             pamOntologi: "http://pam-ontologi/rest/typeahead",
-            euresCvEksport: "http://pam-eures-cv-eksport/samtykke",
+            euresCvEksport: "http://pam-eures-cv-eksport/pam-eures-cv-eksport/samtykke",
             nav: "https://www.ansatt.dev.nav.no",
             arbeidsplassen: "https://arbeidsplassen.intern.dev.nav.no",
         },
@@ -51,7 +51,7 @@ const configMap = {
         urls: {
             cvApi: "http://pam-cv-api-gcp/pam-cv-api/rest",
             pamOntologi: "http://pam-ontologi/rest/typeahead",
-            euresCvEksport: "http://pam-eures-cv-eksport/samtykke",
+            euresCvEksport: "http://pam-eures-cv-eksport/pam-eures-cv-eksport/samtykke",
             nav: "https://www.nav.no",
             arbeidsplassen: "https://arbeidsplassen.nav.no",
         },

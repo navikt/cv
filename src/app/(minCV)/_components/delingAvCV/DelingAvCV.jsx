@@ -277,7 +277,7 @@ export default function DelingAvCV() {
     const [bekreftTidligereCvError, setBekreftTidligereCvError] = useState(false);
 
     useEffect(() => {
-        if (isFetched(person)) setMåBekrefteTidligereCv(true);
+        if (isFetched(person)) setMåBekrefteTidligereCv(person.maaBekrefteTidligereCv);
     }, [person]);
 
     useEffect(() => {
