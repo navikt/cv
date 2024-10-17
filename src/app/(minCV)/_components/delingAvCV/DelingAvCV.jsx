@@ -6,6 +6,8 @@ import { PersonContext } from "@/app/_common/contexts/PersonContext";
 import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { isFetched, simpleApiRequest } from "@/app/_common/utils/fetchUtils";
 import { CheckmarkIcon, XMarkIcon } from "@navikt/aksel-icons";
+import { useEuresSamtykke } from "@/app/api/samtykke/eures/useEuresSamtykke";
+import { useBekreftTidligereCv } from "@/app/api/samtykke/bekreft_tidligere_cv/useBekreftTidligereCv";
 
 function StarsEUIcon() {
     return (
@@ -267,46 +269,26 @@ const DelingTag = ({ erDelt, deltMed, laster = false, error = false }) => {
 };
 
 export default function DelingAvCV() {
-    const { person, setVisHjemmelside } = useContext(PersonContext);
+    const [måBekrefteTidligereCv, setMåBekrefteTidligereCv] = useState(true);
+    const [sendBekreftelse, setSendBekreftelse] = useState(false);
 
-    const [måBekrefteTidligereCv, setMåBekrefteTidligereCv] = useState(false);
-    const [deltMedEures, setDeltMedEures] = useState(false);
-    const [euresLaster, setEuresLaster] = useState(true);
-    const [euresError, setEuresError] = useState(false);
-    const [bekreftTidligereCvLaster, setBekreftTidligereCvLaster] = useState(false);
-    const [bekreftTidligereCvError, setBekreftTidligereCvError] = useState(false);
+    const { person, setVisHjemmelside } = useContext(PersonContext);
+    const { delerEures, euresIsLoading, euresIsError } = useEuresSamtykke();
+    const { bekreftSuccess, bekreftIsLoading, bekreftIsError } = useBekreftTidligereCv(sendBekreftelse);
 
     useEffect(() => {
         if (isFetched(person)) setMåBekrefteTidligereCv(person.maaBekrefteTidligereCv);
     }, [person]);
 
     useEffect(() => {
-        const hentEuresSamtykke = async () => {
-            setEuresLaster(true);
+        if (bekreftSuccess === true) {
+            setMåBekrefteTidligereCv(false);
+            setSendBekreftelse(false);
+        }
+    }, [bekreftSuccess]);
 
-            const euresSamtykkeResponse = await simpleApiRequest("/personbruker/api/samtykke/eures", "GET");
-
-            if (euresSamtykkeResponse.ok) setDeltMedEures(true);
-            else if (euresSamtykkeResponse.status === 404) setDeltMedEures(false);
-            else setEuresError(true);
-
-            setEuresLaster(false);
-        };
-
-        hentEuresSamtykke();
-    }, []);
-
-    const bekrfreftTidligereCv = async () => {
-        setBekreftTidligereCvLaster(true);
-        const bekreftTidligereCvResponse = await simpleApiRequest(
-            "/personbruker/api/samtykke/bekreft_tidligere_cv",
-            "POST",
-        );
-
-        if (bekreftTidligereCvResponse.ok) setMåBekrefteTidligereCv(true);
-        else setBekreftTidligereCvError(true);
-
-        setBekreftTidligereCvLaster(false);
+    const bekreftTidligereCv = () => {
+        if (måBekrefteTidligereCv) setSendBekreftelse(true);
     };
 
     return (
@@ -334,8 +316,8 @@ export default function DelingAvCV() {
                 <DelingTag
                     deltMed={"NAV"}
                     erDelt={!måBekrefteTidligereCv}
-                    laster={bekreftTidligereCvLaster}
-                    error={bekreftTidligereCvError}
+                    laster={bekreftIsLoading}
+                    error={bekreftIsError}
                 />
                 {måBekrefteTidligereCv && (
                     <div>
@@ -343,7 +325,7 @@ export default function DelingAvCV() {
                             Før du deler CV-en din, kan du slette eller endre innhold du ikke ønsker å dele. Du vil
                             fortsatt ha mulighet til å endre innholdet i CV-en etter deling.
                         </BodyLong>
-                        <Button loading={bekreftTidligereCvLaster} onClick={() => bekrfreftTidligereCv()}>
+                        <Button loading={bekreftIsLoading} onClick={() => bekreftTidligereCv()}>
                             Del CV
                         </Button>
                     </div>
@@ -363,7 +345,7 @@ export default function DelingAvCV() {
                     .
                 </BodyLong>
                 <HStack gap="4" align="center">
-                    <DelingTag deltMed={"EURES"} erDelt={deltMedEures} laster={euresLaster} error={euresError} />
+                    <DelingTag deltMed={"EURES"} erDelt={delerEures} laster={euresIsLoading} error={euresIsError} />
                 </HStack>
             </Box>
         </div>
