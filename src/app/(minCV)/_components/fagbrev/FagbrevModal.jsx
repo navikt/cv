@@ -14,7 +14,7 @@ export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFa
     const lagre = async () => {
         await lagreFagbrev({
             title: valgtFagbrev.label || valgtFagbrev.title,
-            type: valgtFagbrev.type,
+            type: valgtFagbrev.type || valgtFagbrev.undertype === "MB" ? "MESTERBREV" : "SVENNEBREV_FAGBREV",
             conceptId: valgtFagbrev.conceptId,
         });
         setValgtFagbrev(null);
