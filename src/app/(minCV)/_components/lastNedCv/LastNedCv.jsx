@@ -13,9 +13,7 @@ export const LastNedCv = () => {
     const [nedlastingLaster, setNedlastingLaster] = useState(false);
 
     const lastNedCv = () => {
-        console.log("LASTER NED CV???", person, cv);
         if (!isFetched(person) || !isFetched(cv)) return;
-        console.log("LASTER FAKTISK NED CV???");
         setNedlastingLaster(true);
         downloadCv(cv.data, person.data.personalia);
         setNedlastingLaster(false);
