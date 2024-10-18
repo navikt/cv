@@ -23,6 +23,7 @@ import Hovedmeny from "@/app/_common/components/meny/Hovedmeny";
 import CvProvider from "@/app/_common/contexts/CvContext";
 import AuthenticationProvider from "@/app/_common/contexts/AuthenticationContext";
 import PersonProvider from "@/app/_common/contexts/PersonContext";
+import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 
 export default function MinCVPage() {
     return (
@@ -69,9 +70,7 @@ export default function MinCVPage() {
                                     <Button icon={<EyeIcon aria-hidden />} variant="primary">
                                         Forhåndsvis CV
                                     </Button>
-                                    <Button icon={<DownloadIcon aria-hidden />} variant="secondary">
-                                        Last ned CV
-                                    </Button>
+                                    <LastNedCv />
                                 </VStack>
                             </div>
                         </HStack>

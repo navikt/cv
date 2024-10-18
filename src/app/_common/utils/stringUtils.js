@@ -1,4 +1,5 @@
 import { MånedEnum, TidsenhetEnum } from "@/app/_common/enums/cvEnums";
+import sanitizeHtml from "sanitize-html";
 
 export const formatterTelefon = (telefonnummer) => {
     if (telefonnummer.length === 8 || telefonnummer.length === 11) {
@@ -49,4 +50,9 @@ export const formatterTidsenhet = (enhet, antall) => {
 
 export const storForbokstav = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+export const fjernHtmlTags = (str) => {
+    const formattertString = str?.replace(/<br \/>/g, "\n") || "";
+    return sanitizeHtml(formattertString, { allowedTags: [] });
 };
