@@ -4,7 +4,7 @@ import { cvConfig } from "@/app/_common/config";
 import { useContext, useEffect, useState } from "react";
 import { PersonContext } from "@/app/_common/contexts/PersonContext";
 import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import { isFetched, simpleApiRequest } from "@/app/_common/utils/fetchUtils";
+import { isFetched } from "@/app/_common/utils/fetchUtils";
 import { CheckmarkIcon, XMarkIcon } from "@navikt/aksel-icons";
 import { useEuresSamtykke } from "@/app/api/samtykke/eures/useEuresSamtykke";
 import { useBekreftTidligereCv } from "@/app/api/samtykke/bekreft_tidligere_cv/useBekreftTidligereCv";
