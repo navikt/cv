@@ -19,7 +19,7 @@ For lokal kjøring vil dekoratøren kun være til pynt. Vi bruker wonderwall lok
 
 ```bash
 $ npm install # Installerer NPM-avhengigheter
-$ npm run dependencies # Starter docker-containere for wonderwall, redis og mock-oauth2, og starter Lokal versjon av pam-cv-api-gcp
+$ npm run setup_dependencies # Starter docker-containere for wonderwall, redis og mock-oauth2, og starter Lokal versjon av pam-cv-api-gcp
 $ npm run dev # Kjører dev
 ```
 

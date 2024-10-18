@@ -10,7 +10,7 @@
         "lint": "next lint",
         "prettier": "prettier --check \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
         "prettier:fix": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
-        "dependencies": "scripts/run-dependencies.sh",
+        "setup_dependencies": "scripts/run-dependencies.sh",
         "reset_samtykke": "curl -X POST -I http://localhost:8080/pam-cv-api/test/resett_hjemmel"
     },
     "dependencies": {
