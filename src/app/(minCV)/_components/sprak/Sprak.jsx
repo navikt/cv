@@ -3,9 +3,10 @@ import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useContext, useEffect, useState } from "react";
 import { CvContext } from "@/app/_common/contexts/CvContext";
-import { CvSeksjonEnum, SpråkEnum } from "@/app/_common/enums/cvEnums";
+import { CvSeksjonEnum, SeksjonsIdEnum, SpråkEnum } from "@/app/_common/enums/cvEnums";
 import SpråkModal from "@/app/(minCV)/_components/sprak/SpråkModal";
 import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { isFetched } from "@/app/_common/utils/fetchUtils";
 
 export default function Sprak() {
     const { cv, oppdaterCvSeksjon } = useContext(CvContext);
@@ -16,7 +17,7 @@ export default function Sprak() {
 
     useEffect(() => {
         const oppdaterSpråk = (språk) => setSpråk(språk);
-        if (cv.fetchStatus === StatusEnums.SUCCESS) oppdaterSpråk(cv.data.spraak || []);
+        if (isFetched(cv)) oppdaterSpråk(cv.data.spraak || []);
     }, [cv]);
 
     const toggleModal = (åpen, index) => {
@@ -59,7 +60,7 @@ export default function Sprak() {
     );
 
     return (
-        <div data-section id="11">
+        <div data-section id={SeksjonsIdEnum.SPRÅK}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <SpråkIcon />

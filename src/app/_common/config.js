@@ -10,11 +10,14 @@ const configMap = {
         audience: {
             cvApi: "local:teampam:pam-cv-api-gcp",
             pamOntologi: "local:teampam:pam-ontologi",
+            euresCvEksport: "local:teampam:pam-eures-cv-eksport",
         },
         urls: {
             cvApi: "http://localhost:8080/pam-cv-api/rest",
             pamOntologi: "https://pam-ontologi.intern.dev.nav.no/rest/typeahead",
+            euresCvEksport: "http://localhost:9030/pam-eures-cv-eksport/samtykke",
             nav: "https://www.ansatt.dev.nav.no",
+            arbeidsplassen: "https://arbeidsplassen.intern.dev.nav.no",
         },
     },
     dev: {
@@ -25,11 +28,14 @@ const configMap = {
         audience: {
             cvApi: "dev-gcp:teampam:pam-cv-api-gcp",
             pamOntologi: "dev-gcp:teampam:pam-ontologi",
+            euresCvEksport: "dev-gcp:teampam:pam-eures-cv-eksport",
         },
         urls: {
             cvApi: "http://pam-cv-api-gcp/pam-cv-api/rest",
             pamOntologi: "http://pam-ontologi/rest/typeahead",
+            euresCvEksport: "http://pam-eures-cv-eksport/pam-eures-cv-eksport/samtykke",
             nav: "https://www.ansatt.dev.nav.no",
+            arbeidsplassen: "https://arbeidsplassen.intern.dev.nav.no",
         },
     },
     prod: {
@@ -40,11 +46,14 @@ const configMap = {
         audience: {
             cvApi: "prod-gcp:teampam:pam-cv-api-gcp",
             pamOntologi: "prod-gcp:teampam:pam-ontologi",
+            euresCvEksport: "prod-gcp:teampam:pam-eures-cv-eksport",
         },
         urls: {
             cvApi: "http://pam-cv-api-gcp/pam-cv-api/rest",
             pamOntologi: "http://pam-ontologi/rest/typeahead",
+            euresCvEksport: "http://pam-eures-cv-eksport/pam-eures-cv-eksport/samtykke",
             nav: "https://www.nav.no",
+            arbeidsplassen: "https://arbeidsplassen.nav.no",
         },
     },
 };

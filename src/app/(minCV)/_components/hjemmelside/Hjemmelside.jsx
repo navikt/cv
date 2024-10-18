@@ -28,8 +28,8 @@ function HjemmelIcon() {
     );
 }
 
-export default function Hjemmelside() {
-    const { person, bekreftSettHjemmel } = useContext(PersonContext);
+export default function Hjemmelside({ måBekrefte }) {
+    const { person, bekreftSettHjemmel, setVisHjemmelside } = useContext(PersonContext);
 
     return (
         <div>
@@ -171,15 +171,17 @@ export default function Hjemmelside() {
                         <Button
                             variant="primary"
                             loading={person.updateStatus === StatusEnums.PENDING}
-                            onClick={() => bekreftSettHjemmel()}
+                            onClick={() => (måBekrefte ? bekreftSettHjemmel() : setVisHjemmelside(false))}
                         >
-                            Gå til tjenesten
+                            {måBekrefte ? "Gå til tjenesten" : "Gå tilbake til tjenesten"}
                         </Button>
-                        <NextLink href={`${cvConfig.urls.nav}/minside`} passHref legacyBehavior>
-                            <Button variant="secondary" as="a">
-                                Tilbake til Min side
-                            </Button>
-                        </NextLink>
+                        {måBekrefte && (
+                            <NextLink href={`${cvConfig.urls.nav}/minside`} passHref legacyBehavior>
+                                <Button variant="secondary" as="a">
+                                    Tilbake til Min side
+                                </Button>
+                            </NextLink>
+                        )}
                     </HStack>
                 </Box>
             </Box>
