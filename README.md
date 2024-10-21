@@ -32,7 +32,7 @@ Da kan du nå applikasjonen med innlogging på [http://localhost:3000/personbruk
 
 Dersom man har behov for teste hjemmelsiden som kommer ved første innlogging kan man "trekke samtykke" lokalt ved å kjøre `npm run reset_samtykke`. Ved neste innlasting vil personen ikke lenger ha sett hjemmel.
 
-### Tilgang til NAVs npm-registry
+### Tilgang til Navs npm-registry
 
 For å kunne hente @navikt-pakker via npm er du nødt til å gjøre følgende:
 
