@@ -303,18 +303,18 @@ export default function DelingAvCV() {
                 <HStack gap="3" align="center" className={styles.mb3}>
                     <NavLogoIcon />
                     <BodyShort size="small" weight="semibold">
-                        Deling med NAV
+                        Deling med Nav
                     </BodyShort>
                 </HStack>
                 <BodyLong spacing>
-                    Alle opplysninger i din CV og jobbønsker deles med NAV så lenge du er registrert hos NAV.{" "}
+                    Alle opplysninger i din CV og jobbønsker deles med Nav så lenge du er registrert hos Nav.{" "}
                     <Link rel="noopener noreferrer" href="#" onClick={() => setVisHjemmelside(true)} inlineText>
                         Les mer her
                     </Link>
                     .
                 </BodyLong>
                 <DelingTag
-                    deltMed={"NAV"}
+                    deltMed={"Nav"}
                     erDelt={!måBekrefteTidligereCv}
                     laster={bekreftIsLoading}
                     error={bekreftIsError}

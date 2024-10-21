@@ -33,7 +33,7 @@ export default function Hjemmelside({ måBekrefte }) {
 
     return (
         <div>
-            <HeaderPanel title={"Slik bruker NAV CV-opplysningene"} visTag={false} />
+            <HeaderPanel title={"Slik bruker Nav CV-opplysningene"} visTag={false} />
             <Box className={styles.main}>
                 <Box background="surface-default" padding="10" className={styles.box}>
                     <HStack justify="center">
@@ -41,22 +41,22 @@ export default function Hjemmelside({ måBekrefte }) {
                     </HStack>
 
                     <BodyLong spacing>
-                        Du er registrert hos NAV. For at NAV skal gi deg arbeidsrettet oppfølging er det relevant med
+                        Du er registrert hos Nav. For at Nav skal gi deg arbeidsrettet oppfølging er det relevant med
                         opplysninger om din kompetanse, erfaring og jobbønsker. Når du registrerer CV-en din blir
-                        opplysningene synlige for NAV.
+                        opplysningene synlige for Nav.
                     </BodyLong>
                     <BodyLong spacing>
-                        Har du tidligere registrert CV hos NAV kan du oppdatere den. I tillegg kan NAV hjelpe deg med å
+                        Har du tidligere registrert CV hos Nav kan du oppdatere den. I tillegg kan Nav hjelpe deg med å
                         få kontakt med arbeidsgivere.
                     </BodyLong>
 
                     <Heading size="small" spacing>
-                        Hva bruker NAV CV-en din til?
+                        Hva bruker Nav CV-en din til?
                     </Heading>
                     <BodyLong spacing>
-                        NAV bruker CV-en din for å vurdere hvilken hjelp du trenger (
+                        Nav bruker CV-en din for å vurdere hvilken hjelp du trenger (
                         <Link rel="noopener noreferrer" href="https://lovdata.no/lov/2006-06-16-20/§14a">
-                            NAV-loven
+                            Nav-loven
                         </Link>{" "}
                         og{" "}
                         <Link
@@ -73,15 +73,15 @@ export default function Hjemmelside({ måBekrefte }) {
                     </Heading>
                     <List className={styles.mb6}>
                         <List.Item className={styles.mb3}>
-                            NAV-veilederen kan gjøre et søk som automatisk finner CV-er som matcher en ledig stilling
+                            Nav-veilederen kan gjøre et søk som automatisk finner CV-er som matcher en ledig stilling
                             eller en jobbmesse.
                         </List.Item>
                         <List.Item className={styles.mb3}>
-                            Hvis NAV-veilederen vurderer at CV-en din passer til en stilling eller jobbmesse, kontakter
-                            NAV deg.
+                            Hvis Nav-veilederen vurderer at CV-en din passer til en stilling eller jobbmesse, kontakter
+                            Nav deg.
                         </List.Item>
                         <List.Item className={styles.mb3}>
-                            Hvis du bekrefter at du er interessert i stillingen, sender NAV CV-en din til
+                            Hvis du bekrefter at du er interessert i stillingen, sender Nav CV-en din til
                             arbeidsgiveren.
                         </List.Item>
                         <List.Item className={styles.mb3}>
@@ -106,7 +106,7 @@ export default function Hjemmelside({ måBekrefte }) {
                         Hva kan arbeidsgivere se?
                     </Heading>
                     <BodyLong spacing>
-                        Hvis NAV har sendt CV-en din til en arbeidsgiver, kan arbeidsgiveren se CV-opplysningene dine.
+                        Hvis Nav har sendt CV-en din til en arbeidsgiver, kan arbeidsgiveren se CV-opplysningene dine.
                     </BodyLong>
 
                     <Heading size="small" spacing>
@@ -114,14 +114,14 @@ export default function Hjemmelside({ måBekrefte }) {
                     </Heading>
                     <List className={styles.mb6}>
                         <List.Item className={styles.mb3}>
-                            Du kan risikere at NAV ikke har mulighet til å gi deg oppfølgingen du trenger.
+                            Du kan risikere at Nav ikke har mulighet til å gi deg oppfølgingen du trenger.
                         </List.Item>
                         <List.Item className={styles.mb3}>
-                            Du kan gå glipp av jobbmuligheter, fordi NAV ikke kan vurdere kompetansen din mot ledige
+                            Du kan gå glipp av jobbmuligheter, fordi Nav ikke kan vurdere kompetansen din mot ledige
                             stillinger.
                         </List.Item>
                         <List.Item className={styles.mb3}>
-                            Du kan risikere å miste økonomisk støtte fra NAV, for eksempel dagpenger (
+                            Du kan risikere å miste økonomisk støtte fra Nav, for eksempel dagpenger (
                             <Link rel="noopener noreferrer" href="https://lovdata.no/lov/1997-02-28-19/§4-5">
                                 Folketrygdloven
                             </Link>
@@ -139,7 +139,7 @@ export default function Hjemmelside({ måBekrefte }) {
                                 rel="noopener noreferrer"
                                 href="https://lovdata.no/dokument/NL/lov/2006-06-16-20/KAPITTEL_2#%C2%A74"
                             >
-                                NAV-loven
+                                Nav-loven
                             </Link>
                             )
                         </List.Item>
@@ -155,14 +155,14 @@ export default function Hjemmelside({ måBekrefte }) {
                                 Du har allerede en CV på arbeidsplassen.no
                             </Heading>
                             <BodyLong spacing>
-                                Da du tok i bruk tjenestene på arbeidsplassen.no, samtykket du til at NAV kunne behandle
+                                Da du tok i bruk tjenestene på arbeidsplassen.no, samtykket du til at Nav kunne behandle
                                 personopplysningene dine.
                             </BodyLong>
                             <BodyLong spacing>
                                 Nå som du har registrert deg som arbeidssøker, gjelder ikke samtykket lenger. Samtykket
-                                blir erstattet av en lovhjemmel som betyr at NAV har rett til å se opplysningene i
+                                blir erstattet av en lovhjemmel som betyr at Nav har rett til å se opplysningene i
                                 CV-en. Derfor må du gå gjennom CV-en din og se om det er noe du vil slette eller endre
-                                før du deler med NAV.
+                                før du deler med Nav.
                             </BodyLong>
                         </>
                     )}

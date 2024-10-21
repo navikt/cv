@@ -24,6 +24,7 @@ import Hovedmeny from "@/app/_common/components/meny/Hovedmeny";
 import CvProvider from "@/app/_common/contexts/CvContext";
 import AuthenticationProvider from "@/app/_common/contexts/AuthenticationContext";
 import PersonProvider from "@/app/_common/contexts/PersonContext";
+import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 import Forhandsvisning from "@/app/(minCV)/_components/forhandsvisning/Forhandsvisning";
 
 export default function MinCVPage() {
@@ -49,7 +50,7 @@ export default function MinCVPage() {
                                         <Hovedmeny />
                                     </div>
                                     <div>
-                                        <Box>
+                                        <Box className={styles.main}>
                                             <HStack gap="4">
                                                 <VStack>
                                                     <Personalia />
@@ -79,9 +80,7 @@ export default function MinCVPage() {
                                             >
                                                 Forhåndsvis CV
                                             </Button>
-                                            <Button icon={<DownloadIcon aria-hidden />} variant="secondary">
-                                                Last ned CV
-                                            </Button>
+                                            <LastNedCv />
                                         </VStack>
                                     </div>
                                 </HStack>
@@ -101,22 +100,18 @@ export default function MinCVPage() {
                                 <Kurs />
                                 <Sammendrag />
                                 <DelingAvCV />
-                                <div>
-                                    <HStack justify="center" style={{ padding: "4rem 0 4rem 0" }}>
-                                        <VStack gap="4">
-                                            <Button
-                                                icon={<EyeIcon aria-hidden />}
-                                                variant="primary"
-                                                onClick={() => setVisHovedinnhold(false)}
-                                            >
-                                                Forhåndsvis CV
-                                            </Button>
-                                            <Button icon={<DownloadIcon aria-hidden />} variant="secondary">
-                                                Last ned CV
-                                            </Button>
-                                        </VStack>
-                                    </HStack>
-                                </div>
+                                <HStack justify="center" style={{ padding: "4rem 0 4rem 0" }}>
+                                    <VStack gap="4">
+                                        <Button
+                                            icon={<EyeIcon aria-hidden />}
+                                            variant="primary"
+                                            onClick={() => setVisHovedinnhold(false)}
+                                        >
+                                            Forhåndsvis CV
+                                        </Button>
+                                        <LastNedCv />
+                                    </VStack>
+                                </HStack>
                             </Show>
                         </>
                     ) : (

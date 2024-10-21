@@ -6,6 +6,7 @@ import { PersonContext } from "@/app/_common/contexts/PersonContext";
 import { CvContext } from "@/app/_common/contexts/CvContext";
 import { SpråkEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import { formatterDato, formatterFullDato, formatterTidsenhet } from "@/app/_common/utils/stringUtils";
+import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 
 export default function Forhandsvisning({ setVisHovedinnhold }) {
     const { person } = useContext(PersonContext);
@@ -25,9 +26,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     <Button ref={ref} variant="primary" onClick={() => setVisHovedinnhold(true)}>
                         Endre CV
                     </Button>
-                    <Button icon={<DownloadIcon aria-hidden />} variant="secondary">
-                        Last ned CV
-                    </Button>
+                    <LastNedCv />
                 </HStack>
 
                 <BodyLong weight="semibold" className={styles.mb3}>
