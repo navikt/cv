@@ -81,7 +81,7 @@ export default function AndreGodkjenninger() {
                         {andreGodkjenninger.map((godkjenning, index) => (
                             <div key={index}>
                                 <FormSummary style={{ marginBottom: "1rem" }}>
-                                    <FormSummary.Header id="4">
+                                    <FormSummary.Header>
                                         <FormSummary.Heading level="2">
                                             {godkjenning.certificateName}
                                         </FormSummary.Heading>
