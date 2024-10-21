@@ -30,14 +30,14 @@ export const formatterListeAvObjekterTilTekst = (liste, felt) => {
     return strenger.join(", ");
 };
 
-export const formatterDato = (dato) => {
-    if (!dato) return "nå";
+export const formatterDato = (dato, nåTekst = "nå") => {
+    if (!dato) return nåTekst;
     const date = new Date(dato);
     return `${MånedEnum[date.getMonth()]} ${date.getFullYear()}`;
 };
 
-export const formatterFullDato = (dato) => {
-    if (!dato) return "nå";
+export const formatterFullDato = (dato, nåTekst = "nå") => {
+    if (!dato) return nåTekst;
     const date = new Date(dato);
     return `${date.getDate()}. ${MånedEnum[date.getMonth()].toLowerCase()} ${date.getFullYear()}`;
 };

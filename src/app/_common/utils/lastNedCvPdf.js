@@ -563,11 +563,11 @@ export function lastNedCvPdf(cv, personalia) {
     };
 
     const tidsperiode = (fradato, tildato, naavaerende) => {
-        const tildatoAsText = formatterDato(tildato || "");
-        const fradatoAsText = formatterDato(fradato || "");
+        const tildatoAsText = formatterDato(tildato || "", "(Nåværende)");
+        const fradatoAsText = formatterDato(fradato || "", "(Nåværende)");
         if (fradatoAsText) {
             if (tildatoAsText) {
-                return `${storForbokstav(fradatoAsText)} - \n${tildatoAsText}`;
+                return `${storForbokstav(fradatoAsText)} ${naavaerende ? "" : "- "}\n${tildatoAsText}`;
             } else {
                 return `${storForbokstav(fradatoAsText)}
                         ${naavaerende ? "(Nåværende)" : ""}`;
