@@ -6,6 +6,13 @@
     min-height: 100vh;
 }
 
+.preview {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-bottom: 2rem;
+}
+
 .description {
     display: inherit;
     justify-content: inherit;
@@ -220,6 +227,10 @@
     margin-bottom: var(--a-spacing-6) !important;
 }
 
+.mb9 {
+    margin-bottom: var(--a-spacing-9) !important;
+}
+
 .mb12 {
     margin-bottom: var(--a-spacing-12) !important;
 }
@@ -260,11 +271,32 @@
     .hideStepper {
         display: none;
     }
+
     .element {
         width: 100%;
     }
+
     .box {
         margin-top: 5.5rem;
+    }
+
+    .PersonalInfoLabel {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .PersonalInfoValue {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    .previewItem {
+        flex-direction: column;
+    }
+
+    .preview {
+        justify-content: space-around;
+        padding: 0 1rem 2rem 1rem;
     }
 }
 
@@ -272,9 +304,24 @@
     .element {
         width: 48%;
     }
+
     .box {
         width: 600px;
         margin-top: 5.5rem;
+    }
+
+    .PersonalInfoLabel {
+        width: 25%;
+        margin-bottom: 4px;
+    }
+
+    .PersonalInfoValue {
+        width: 75%;
+    }
+
+    .previewItem {
+        display: flex;
+        flex-direction: row;
     }
 }
 
@@ -518,4 +565,25 @@
     border-radius: 1rem !important;
     font-size: 14px !important;
     height: 28px !important;
+}
+
+.previewPersonalInfoWrapper {
+    padding-bottom: 16px;
+    border-bottom: 2px solid lightgray;
+    margin-bottom: 24px;
+}
+
+.previewPersonalInfo {
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+}
+
+.previewItemLeft {
+    width: 320px;
+}
+
+.previewItemRight {
+    border-left: 2px solid lightgray;
+    padding-left: 1rem;
 }
