@@ -9,9 +9,11 @@ import {
     storForbokstav,
     formatterAdresse,
 } from "@/app/_common/utils/stringUtils";
-import { compareDates } from "@/app/_common/utils/dateUtils";
+import { datosorterElementer } from "@/app/_common/utils/dateUtils";
 
-export function downloadCv(cv, personalia) {
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+export function lastNedCvPdf(cv, personalia) {
     const {
         sammendrag,
         arbeidserfaring,
@@ -27,8 +29,6 @@ export function downloadCv(cv, personalia) {
     } = cv;
     const filnavn = `CV-${personalia.fornavn}.${personalia.etternavn}.pdf`;
     const navn = `${personalia.fornavn} ${personalia.etternavn}`;
-
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
     const formattertAdresse = () => {
         return personaliaRad(
@@ -626,10 +626,10 @@ export function downloadCv(cv, personalia) {
             personaliaRad("Fødselsdato:", formatterFullDato(personalia.foedselsdato)),
             verticalLine(),
             sammendragRad(sammendrag),
-            utdanningListe(utdanning.sort((a, b) => compareDates(a, b, "startDate", "endDate"))),
+            utdanningListe(datosorterElementer(utdanning)),
             fagdokumentasjonListe(fagbrev),
-            arbeidserfaringListe(arbeidserfaring.sort((a, b) => compareDates(a, b))),
-            annenerfaringListe(annenErfaring.sort((a, b) => compareDates(a, b))),
+            arbeidserfaringListe(datosorterElementer(arbeidserfaring)),
+            annenerfaringListe(datosorterElementer(annenErfaring)),
             førerkortListe(foererkort),
             kursListe(kurs),
             godkjenningerListe(offentligeGodkjenninger),

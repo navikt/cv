@@ -3,7 +3,7 @@ import { Button } from "@navikt/ds-react";
 import { useContext, useState } from "react";
 import { PersonContext } from "@/app/_common/contexts/PersonContext";
 import { CvContext } from "@/app/_common/contexts/CvContext";
-import { downloadCv } from "@/app/_common/downloader/downloadCv";
+import { lastNedCvPdf } from "@/app/_common/utils/lastNedCvPdf";
 import { isFetched } from "@/app/_common/utils/fetchUtils";
 
 export const LastNedCv = () => {
@@ -15,7 +15,7 @@ export const LastNedCv = () => {
     const lastNedCv = () => {
         if (!isFetched(person) || !isFetched(cv)) return;
         setNedlastingLaster(true);
-        downloadCv(cv.data, person.data.personalia);
+        lastNedCvPdf(cv.data, person.data.personalia);
         setNedlastingLaster(false);
     };
 

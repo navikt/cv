@@ -3,13 +3,7 @@
 // 2. Hvis begge er ongoing, så skal den som har senest startdato først
 // 3. Hvis en av dem som er ongoing, så skal den først
 // 4. Hvis begge har samme sluttdato, så skal den som har senest startdato først
-export const compareDates = (
-    firstDate,
-    secondDate,
-    startDate = "fromDate",
-    endDate = "toDate",
-    ongoing = "ongoing",
-) => {
+const compareDates = (firstDate, secondDate, startDate = "fromDate", endDate = "toDate", ongoing = "ongoing") => {
     if (secondDate[endDate] > firstDate[endDate]) {
         return 1;
     } else if (secondDate[ongoing] && firstDate[ongoing]) {
@@ -31,4 +25,9 @@ export const compareDates = (
     } else {
         return -1;
     }
+};
+
+export const datosorterElementer = (elementer, startDate = "fromDate", endDate = "toDate", ongoing = "ongoing") => {
+    if (!elementer) return elementer;
+    return elementer.sort((a, b) => compareDates(a, b, startDate, endDate));
 };
