@@ -1,11 +1,11 @@
 import { fetchDecoratorReact } from "@navikt/nav-dekoratoren-moduler/ssr";
 import Script from "next/script";
-import { Inter } from "next/font/google";
+import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import "./page.module.css";
 import { cvConfig } from "@/app/_common/config";
 
-const inter = Inter({ subsets: ["latin"] });
+const sourceSansPro = Source_Sans_3({ subsets: ["latin"] });
 
 const RootLayout = async (props) => {
     if (process.env.NODE_ENV === "development") {
@@ -39,7 +39,7 @@ const RootLayout = async (props) => {
                 <title>Din CV - nav.no</title>
                 {Decorator.HeadAssets()}
             </head>
-            <body className={inter.className}>
+            <body className={sourceSansPro.className}>
                 {Decorator.Header()}
                 {children}
                 {Decorator.Footer()}

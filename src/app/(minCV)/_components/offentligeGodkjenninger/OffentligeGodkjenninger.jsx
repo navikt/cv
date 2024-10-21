@@ -81,7 +81,7 @@ export default function OffentligeGodkjenninger() {
                         {offentligeGodkjenninger.map((godkjenning, index) => (
                             <div key={index}>
                                 <FormSummary style={{ marginBottom: "1rem" }}>
-                                    <FormSummary.Header id="4">
+                                    <FormSummary.Header>
                                         <FormSummary.Heading level="2">{godkjenning.title}</FormSummary.Heading>
                                     </FormSummary.Header>
                                     <FormSummary.Answers>

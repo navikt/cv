@@ -87,7 +87,7 @@ export default function Kurs() {
                         {kurs.map((k, index) => (
                             <div key={index}>
                                 <FormSummary style={{ marginBottom: "1rem" }}>
-                                    <FormSummary.Header id="4">
+                                    <FormSummary.Header>
                                         <FormSummary.Heading level="2">{k.title}</FormSummary.Heading>
                                     </FormSummary.Header>
                                     <FormSummary.Answers>

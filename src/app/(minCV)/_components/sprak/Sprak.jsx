@@ -83,7 +83,7 @@ export default function Sprak() {
                             {språk.map((sp, index) => (
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "1rem" }}>
-                                        <FormSummary.Header id="4">
+                                        <FormSummary.Header>
                                             <FormSummary.Heading level="2">{sp.language}</FormSummary.Heading>
                                         </FormSummary.Header>
                                         <FormSummary.Answers>

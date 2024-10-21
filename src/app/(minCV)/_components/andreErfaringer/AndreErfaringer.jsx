@@ -83,7 +83,7 @@ export default function AndreErfaringer() {
                             {andreErfaringer.map((erfaring, index) => (
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "1rem" }}>
-                                        <FormSummary.Header id="4">
+                                        <FormSummary.Header>
                                             <FormSummary.Heading level="2">{erfaring.role}</FormSummary.Heading>
                                         </FormSummary.Header>
 

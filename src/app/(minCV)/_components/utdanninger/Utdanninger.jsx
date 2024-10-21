@@ -85,7 +85,7 @@ export default function Utdanninger() {
                         {utdanninger.map((utdanning, index) => (
                             <div key={index}>
                                 <FormSummary style={{ marginBottom: "2rem" }}>
-                                    <FormSummary.Header id="4">
+                                    <FormSummary.Header>
                                         <FormSummary.Heading level="2">
                                             {UtdanningsnivåEnum[utdanning.nuskode]}
                                         </FormSummary.Heading>
