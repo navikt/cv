@@ -1,12 +1,12 @@
 import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { useContext, useEffect, useState } from "react";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { CvContext } from "@/app/_common/contexts/CvContext";
 import { CvSeksjonEnum, SeksjonsIdEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { UtdanningModal } from "@/app/(minCV)/_components/utdanninger/UtdanningModal";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 function UtdanningerIcon() {
     return (
@@ -30,37 +30,11 @@ function UtdanningerIcon() {
 }
 
 export default function Utdanninger() {
-    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
+    const { cv } = useCv();
+    const utdanninger = cv.utdanning || [];
 
-    const [modalÅpen, setModalÅpen] = useState(false);
-    const [utdanninger, setUtdanninger] = useState([]);
-    const [gjeldendeUtdanning, setGjeldendeUtdanning] = useState(-1);
-
-    useEffect(() => {
-        const oppdaterUtdanninger = (utdanning) => setUtdanninger(utdanning);
-        if (isFetched(cv)) oppdaterUtdanninger(cv.data.utdanning || []);
-    }, [cv]);
-
-    const toggleModal = (åpen, index) => {
-        setGjeldendeUtdanning(index >= 0 ? index : -1);
-        setModalÅpen(åpen);
-    };
-
-    const lagreUtdanning = async (utdanning) => {
-        const oppdaterteUtdanninger = [...utdanninger];
-        if (gjeldendeUtdanning >= 0) oppdaterteUtdanninger.splice(gjeldendeUtdanning, 1, utdanning);
-        else oppdaterteUtdanninger.push(utdanning);
-
-        // TODO: Send oppdatering til backend og oppdater data med responsen / feilmelding
-        await oppdaterCvSeksjon(oppdaterteUtdanninger, CvSeksjonEnum.UTDANNING);
-        setModalÅpen(false);
-    };
-
-    const slettUtdanning = async (index) => {
-        const oppdaterteUtdanninger = [...utdanninger];
-        oppdaterteUtdanninger.splice(index, 1);
-        await oppdaterCvSeksjon(oppdaterteUtdanninger, CvSeksjonEnum.UTDANNING);
-    };
+    const { oppdateringSuksess, oppdateringLaster, oppdateringFeilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.UTDANNING);
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(utdanninger, oppdaterMedData, oppdateringSuksess, oppdateringLaster, oppdateringFeilet);
 
     return (
         <div data-section id={SeksjonsIdEnum.UTDANNING}>
@@ -127,7 +101,7 @@ export default function Utdanninger() {
                                     <Button
                                         icon={<TrashIcon aria-hidden />}
                                         variant="tertiary"
-                                        onClick={() => slettUtdanning(index)}
+                                        onClick={() => slettElement(index)}
                                     >
                                         Fjern
                                     </Button>
@@ -144,8 +118,8 @@ export default function Utdanninger() {
                 <UtdanningModal
                     modalÅpen={modalÅpen}
                     toggleModal={toggleModal}
-                    utdanning={utdanninger[gjeldendeUtdanning]}
-                    lagreUtdanning={lagreUtdanning}
+                    utdanning={gjeldendeElement}
+                    lagreUtdanning={lagreElement}
                 />
             )}
         </div>

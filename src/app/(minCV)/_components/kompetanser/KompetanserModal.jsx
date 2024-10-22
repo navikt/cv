@@ -11,13 +11,12 @@ export default function KompetanserModal({ modalÅpen, toggleModal, kompetanse, 
         oppdaterKompetanse(kompetanse || []);
     }, [kompetanse]);
 
-    const lagre = async () => {
-        await lagreKompetanse({
+    const lagre = () => {
+        lagreKompetanse({
             title: valgtKompetanse.label || valgtKompetanse.title,
             type: valgtKompetanse.type,
             conceptId: valgtKompetanse.conceptId,
         });
-        setValgtKompetanse(null);
     };
 
     const oppdaterValgtKompetanse = (verdi, erValgt) => {

@@ -26,8 +26,8 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
         oppdaterJobbønsker(jobbønsker);
     }, [jobbønsker]);
 
-    const lagre = async () => {
-        await lagreJobbønsker({
+    const lagre = () => {
+        lagreJobbønsker({
             ...jobbønsker,
             occupations: yrker,
             locations: lokasjoner,

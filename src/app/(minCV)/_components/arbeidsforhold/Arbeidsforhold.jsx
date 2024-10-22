@@ -1,25 +1,22 @@
 import { Alert, BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { useContext, useEffect, useState } from "react";
 import { FileImportIcon, PencilIcon, PencilWritingIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { CvContext } from "@/app/_common/contexts/CvContext";
 import { ArbeidsforholdModal } from "@/app/(minCV)/_components/arbeidsforhold/ArbeidsforholdModal";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
-import { useHentArbeidsforhold } from "@/app/api/arbeidsforhold/useHentArbeidsforhold";
+import { useHentArbeidsforhold } from "@/app/_common/hooks/swr/useHentArbeidsforhold";
 import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import {useCv} from "@/app/_common/hooks/swr/useCv";
+import {useOppdaterCvSeksjon} from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import {useCvModal} from "@/app/_common/hooks/useCvModal";
 
 export default function Arbeidsforhold() {
-    const [modalÅpen, setModalÅpen] = useState(false);
-    const [arbeidsforhold, setArbeidsforhold] = useState([]);
-    const [gjeldendeArbeidsforhold, setGjeldendeArbeidsforhold] = useState(-1);
-    const [skalHente, setSkalHente] = useState(false);
-    const [aaregTomt, setAaregTomt] = useState(false);
-    const [manglerFelter, setManglerFelter] = useState(false);
+    const { cv } = useCv();
+    const arbeidsforhold = cv.arbeidserfaring || [];
 
-    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
-    const { aaregForhold, aaregIsLoading, aaregIsError } = useHentArbeidsforhold(skalHente);
+    const { oppdateringSuksess, oppdateringLaster, oppdateringFeilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.ARBEIDSFORHOLD);
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(arbeidsforhold, oppdaterMedData, oppdateringSuksess, oppdateringLaster, oppdateringFeilet);
+    const { aaregManglerData, aaregLaster, setSkalHenteData } = useHentArbeidsforhold(oppdaterMedData);
 
     const arbeidsforholdManglerFelter = (arbeidsforhold) => {
         const verdiMangler = (verdi) => !verdi || verdi === "string";
@@ -30,45 +27,7 @@ export default function Arbeidsforhold() {
         );
     };
 
-    useEffect(() => {
-        const oppdaterArbeidsforhold = (arbeidsforhold) => {
-            setArbeidsforhold(arbeidsforhold);
-            setManglerFelter(arbeidsforhold.some((forhold) => arbeidsforholdManglerFelter(forhold)));
-        };
-        if (isFetched(cv)) oppdaterArbeidsforhold(cv.data.arbeidserfaring || []);
-    }, [cv]);
-
-    useEffect(() => {
-        const lagreHentedeArbeidsforhold = async (arbeidsforhold) => {
-            setAaregTomt(aaregForhold.length === 0);
-            await oppdaterCvSeksjon(arbeidsforhold, CvSeksjonEnum.ARBEIDSFORHOLD);
-            setSkalHente(false);
-        };
-
-        if (skalHente && !!aaregForhold && !aaregIsError) lagreHentedeArbeidsforhold(aaregForhold);
-    }, [aaregForhold]);
-
-    const toggleModal = (åpen, index) => {
-        setGjeldendeArbeidsforhold(index >= 0 ? index : -1);
-        setModalÅpen(åpen);
-    };
-
-    const lagreArbeidsforhold = async (oppdatertArbeidsforhold) => {
-        const oppdaterteArbeidsforhold = [...arbeidsforhold];
-        if (gjeldendeArbeidsforhold >= 0)
-            oppdaterteArbeidsforhold.splice(gjeldendeArbeidsforhold, 1, oppdatertArbeidsforhold);
-        else oppdaterteArbeidsforhold.push(oppdatertArbeidsforhold);
-
-        await oppdaterCvSeksjon(oppdaterteArbeidsforhold, CvSeksjonEnum.ARBEIDSFORHOLD);
-        setModalÅpen(false);
-        setAaregTomt(false);
-    };
-
-    const slettArbeidsforhold = async (index) => {
-        const oppdaterteArbeidsforhold = [...arbeidsforhold];
-        oppdaterteArbeidsforhold.splice(index, 1);
-        await oppdaterCvSeksjon(oppdaterteArbeidsforhold, CvSeksjonEnum.ARBEIDSFORHOLD);
-    };
+    const manglerFelter = arbeidsforhold?.some((forhold) => arbeidsforholdManglerFelter(forhold)) || false
 
     function ArbeidsforholdIcon() {
         return (
@@ -100,9 +59,9 @@ export default function Arbeidsforhold() {
                 <Heading level="2" size="large" align="start" spacing>
                     Arbeidsforhold
                 </Heading>
-                {((aaregTomt && arbeidsforhold.length === 0) || manglerFelter) && (
-                    <Alert variant={aaregTomt ? "info" : "warning"} className={styles.mb6}>
-                        {aaregTomt
+                {((aaregManglerData === true && arbeidsforhold.length === 0) || manglerFelter) && (
+                    <Alert variant={aaregManglerData ? "info" : "warning"} className={styles.mb6}>
+                        {aaregManglerData
                             ? "Vi kunne ikke se at du er registert i Arbeidsgiver- og arbeidstakerregisteret med noen arbeidsforhold. Hvis dette ikke er riktig, bør du kontakte AA-registeret slik at informasjonen rettes."
                             : "Noen av feltene i arbeidsforhold er ikke utfylt. Vi anbefaler å se over og endre feltene som er tomme."}
                     </Alert>
@@ -120,8 +79,8 @@ export default function Arbeidsforhold() {
                             <Button
                                 icon={<FileImportIcon aria-hidden />}
                                 variant="primary"
-                                onClick={() => setSkalHente(true)}
-                                loading={aaregIsLoading || cv.updateStatus === StatusEnums.PENDING}
+                                onClick={() => setSkalHenteData(true)}
+                                loading={aaregLaster || cv.updateStatus === StatusEnums.PENDING}
                             >
                                 Hent arbeidsforhold
                             </Button>
@@ -178,7 +137,7 @@ export default function Arbeidsforhold() {
                                     <Button
                                         icon={<TrashIcon aria-hidden />}
                                         variant="tertiary"
-                                        onClick={() => slettArbeidsforhold(index)}
+                                        onClick={() => slettElement(index)}
                                     >
                                         Fjern
                                     </Button>
@@ -195,8 +154,8 @@ export default function Arbeidsforhold() {
                 <ArbeidsforholdModal
                     modalÅpen={modalÅpen}
                     toggleModal={toggleModal}
-                    arbeidsforhold={arbeidsforhold[gjeldendeArbeidsforhold]}
-                    lagreArbeidsforhold={lagreArbeidsforhold}
+                    arbeidsforhold={gjeldendeElement}
+                    lagreArbeidsforhold={lagreElement}
                 />
             )}
         </div>

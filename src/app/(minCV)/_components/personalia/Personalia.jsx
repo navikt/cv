@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import { PencilIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { formatterAdresse, formatterTelefon } from "@/app/_common/utils/stringUtils";
 import PersonaliaModal from "@/app/(minCV)/_components/personalia/PersonaliaModal";
-import { PersonContext } from "@/app/_common/contexts/PersonContext";
 import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
+import { usePerson } from "@/app/_common/hooks/swr/usePerson";
+import { useOppdaterPersonalia } from "@/app/_common/hooks/swr/useOppdaterPersonalia";
 
 function PersonaliaIcon() {
     return (
@@ -30,19 +30,16 @@ function PersonaliaIcon() {
 }
 
 export default function Personalia() {
-    const { person, oppdaterPersonalia } = useContext(PersonContext);
     const [modalÅpen, setModalÅpen] = useState(false);
-    const [personalia, setPersonalia] = useState(null);
+    const { oppdateringSuksess, oppdateringLaster, oppdateringFeilet, oppdaterMedData } = useOppdaterPersonalia();
+
+    const { person } = usePerson();
+    const personalia = person.personalia;
 
     useEffect(() => {
-        const oppdaterPersonalia = (personaliap) => setPersonalia(personaliap);
-        if (isFetched(person)) oppdaterPersonalia(person.data.personalia || {});
-    }, [person]);
-
-    const lagrePersonalia = async (oppdatertPersonalia) => {
-        await oppdaterPersonalia(oppdatertPersonalia);
-        setModalÅpen(false);
-    };
+        if (oppdateringSuksess || oppdateringFeilet) oppdaterMedData(null);
+        if (oppdateringSuksess && !oppdateringLaster && !oppdateringFeilet) setModalÅpen(false);
+    }, [oppdateringSuksess, oppdateringLaster, oppdateringFeilet]);
 
     return (
         <div data-section id={SeksjonsIdEnum.PERSONALIA}>
@@ -82,7 +79,7 @@ export default function Personalia() {
                     modalÅpen={modalÅpen}
                     toggleModal={setModalÅpen}
                     personalia={personalia}
-                    lagrePersonalia={lagrePersonalia}
+                    lagrePersonalia={oppdaterMedData}
                 />
             )}
         </div>

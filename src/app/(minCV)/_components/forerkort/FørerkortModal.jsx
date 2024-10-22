@@ -24,12 +24,11 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
     };
 
     const lagre = async () => {
-        await lagreFørerkort({
+        lagreFørerkort({
             type: valgtFørerkort.label || valgtFørerkort.type,
             acquiredDate: gyldigFra,
             expiryDate: gyldigTil,
         });
-        setValgtFørerkort(null);
     };
 
     return (

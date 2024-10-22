@@ -1,21 +1,21 @@
 import { DownloadIcon } from "@navikt/aksel-icons";
 import { Button } from "@navikt/ds-react";
-import { useContext, useState } from "react";
-import { PersonContext } from "@/app/_common/contexts/PersonContext";
-import { CvContext } from "@/app/_common/contexts/CvContext";
+import { useState } from "react";
 import { lastNedCvPdf } from "@/app/_common/utils/lastNedCvPdf";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
+import { usePerson } from "@/app/_common/hooks/swr/usePerson";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
 
 export const LastNedCv = () => {
-    const { person } = useContext(PersonContext);
-    const { cv } = useContext(CvContext);
+    const { person } = usePerson();
+    const { personalia } = person || {};
+    const { cv } = useCv();
 
     const [nedlastingLaster, setNedlastingLaster] = useState(false);
 
     const lastNedCv = () => {
-        if (!isFetched(person) || !isFetched(cv)) return;
+        if (!personalia || !cv) return;
         setNedlastingLaster(true);
-        lastNedCvPdf(cv.data, person.data.personalia);
+        lastNedCvPdf(cv, personalia);
         setNedlastingLaster(false);
     };
 

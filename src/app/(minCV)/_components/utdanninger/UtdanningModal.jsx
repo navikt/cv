@@ -38,9 +38,9 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
         oppdaterUtdanning(utdanning);
     }, [utdanning]);
 
-    const lagre = async () => {
+    const lagre = () => {
         const erPågående = pågår.includes(true);
-        await lagreUtdanning({
+        lagreUtdanning({
             ...utdanning,
             nuskode: utdanningsnivå,
             field: gradOgRetning,

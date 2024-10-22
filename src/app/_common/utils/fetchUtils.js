@@ -24,6 +24,30 @@ export const putJsonRequest = async (setData, url, body, dataTransformator, stat
     await apiJsonRequest(setData, url, "PUT", body, dataTransformator, statusfelt);
 };
 
+export const getAPI = async (url) => {
+    const response = await simpleApiRequest(url, "GET");
+
+    if (!response.ok) {
+        const error = new Error(`Det oppstod en feil ved GET mot ${url}.`);
+        error.status = response.status;
+        throw error;
+    }
+
+    return await response.json();
+};
+
+export const putAPI = async (url, body) => {
+    const response = await simpleApiRequest(url, "PUT", body);
+
+    if (!response.ok) {
+        const error = new Error(`Det oppstod en feil ved PUT mot ${url}.`);
+        error.status = response.status;
+        throw error;
+    }
+
+    return await response.json();
+};
+
 const apiJsonRequest = async (
     setData,
     url,
@@ -76,8 +100,4 @@ export const hentTypeahead = async (query, type, visningsfelt = "title") => {
     const data = response.ok ? await response.json() : [];
     return mapTypeaheadResponse(data, visningsfelt);
 };
-
-export const isFetching = (data) =>
-    data.fetchStatus === StatusEnums.INITIAL || data.fetchStatus === StatusEnums.PENDING;
 export const isFetched = (data) => data.fetchStatus === StatusEnums.SUCCESS;
-export const fetchHasError = (data) => data.fetchStatus === StatusEnums.ERROR;

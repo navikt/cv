@@ -1,43 +1,19 @@
 import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { useContext, useEffect, useState } from "react";
-import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterFullDato, formatterTidsenhet } from "@/app/_common/utils/stringUtils";
 import KursModal from "@/app/(minCV)/_components/kurs/KursModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
+import {useCv} from "@/app/_common/hooks/swr/useCv";
+import {useOppdaterCvSeksjon} from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import {useCvModal} from "@/app/_common/hooks/useCvModal";
 
 export default function Kurs() {
-    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
-    const [kurs, setKurs] = useState([]);
-    const [modalÅpen, setModalÅpen] = useState(false);
-    const [gjeldendeKurs, setGjeldendeKurs] = useState(-1);
+    const { cv } = useCv();
+    const kurs = cv.kurs || [];
 
-    useEffect(() => {
-        const oppdaterKurs = (kurs) => setKurs(kurs);
-        if (isFetched(cv)) oppdaterKurs(cv.data.kurs || []);
-    }, [cv]);
-
-    const toggleModal = (åpen, index) => {
-        setGjeldendeKurs(index >= 0 ? index : -1);
-        setModalÅpen(åpen);
-    };
-
-    const lagreKurs = async (oppdatertKurs) => {
-        const oppdaterteKurs = [...kurs];
-        if (gjeldendeKurs >= 0) oppdaterteKurs.splice(gjeldendeKurs, 1, oppdatertKurs);
-        else oppdaterteKurs.push(oppdatertKurs);
-
-        await oppdaterCvSeksjon(oppdaterteKurs, CvSeksjonEnum.KURS);
-        setModalÅpen(false);
-    };
-
-    const slettKurs = async (index) => {
-        const oppdaterteKurs = [...kurs];
-        oppdaterteKurs.splice(index, 1);
-        await oppdaterCvSeksjon(oppdaterteKurs, CvSeksjonEnum.KURS);
-    };
+    const { oppdateringSuksess, oppdateringLaster, oppdateringFeilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.KURS);
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(kurs, oppdaterMedData, oppdateringSuksess, oppdateringLaster, oppdateringFeilet);
 
     const KursIcon = () => (
         <svg
@@ -116,7 +92,7 @@ export default function Kurs() {
                                     <Button
                                         icon={<TrashIcon aria-hidden />}
                                         variant="tertiary"
-                                        onClick={() => slettKurs(index)}
+                                        onClick={() => slettElement(index)}
                                     >
                                         Fjern
                                     </Button>
@@ -133,8 +109,8 @@ export default function Kurs() {
                 <KursModal
                     modalÅpen={modalÅpen}
                     toggleModal={toggleModal}
-                    kurs={kurs[gjeldendeKurs]}
-                    lagreKurs={lagreKurs}
+                    kurs={gjeldendeElement}
+                    lagreKurs={lagreElement}
                 />
             )}
         </div>

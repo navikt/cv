@@ -19,14 +19,13 @@ export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpr�
         oppdaterSpråk(språk || []);
     }, [språk]);
 
-    const lagre = async () => {
-        await lagreSpråk({
+    const lagre = () => {
+        lagreSpråk({
             language: valgtSpråk.language || valgtSpråk.title,
             iso3Code: valgtSpråk.iso3Code || valgtSpråk.kode,
             oralProficiency: muntligEvne,
             writtenProficiency: skriftligEvne,
         });
-        setValgtSpråk(null);
     };
 
     const oppdaterValgtSpråk = (verdi, erValgt) => {

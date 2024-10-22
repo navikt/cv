@@ -1,13 +1,13 @@
-import { Alert, BodyLong, BodyShort, Box, Button, Heading, HStack, Link, Loader, Tag } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Box, Button, Heading, HStack, Link, Loader, Tag } from "@navikt/ds-react";
 import styles from "../../../page.module.css";
 import { cvConfig } from "@/app/_common/config";
 import { useContext, useEffect, useState } from "react";
-import { PersonContext } from "@/app/_common/contexts/PersonContext";
 import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
 import { CheckmarkIcon, XMarkIcon } from "@navikt/aksel-icons";
-import { useEuresSamtykke } from "@/app/api/samtykke/eures/useEuresSamtykke";
-import { useBekreftTidligereCv } from "@/app/api/samtykke/bekreft_tidligere_cv/useBekreftTidligereCv";
+import { useHentEuresSamtykke } from "@/app/_common/hooks/swr/useHentEuresSamtykke";
+import { useBekreftTidligereCv } from "@/app/_common/hooks/swr/useBekreftTidligereCv";
+import { usePerson } from "@/app/_common/hooks/swr/usePerson";
+import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 function StarsEUIcon() {
     return (
@@ -272,12 +272,13 @@ export default function DelingAvCV() {
     const [måBekrefteTidligereCv, setMåBekrefteTidligereCv] = useState(true);
     const [sendBekreftelse, setSendBekreftelse] = useState(false);
 
-    const { person, setVisHjemmelside } = useContext(PersonContext);
-    const { delerEures, euresIsLoading, euresIsError } = useEuresSamtykke();
+    const { person } = usePerson();
+    const { setVisHjemmelside } = useContext(ApplicationContext);
+    const { delerEures, euresIsLoading, euresIsError } = useHentEuresSamtykke();
     const { bekreftSuccess, bekreftIsLoading, bekreftIsError } = useBekreftTidligereCv(sendBekreftelse);
 
     useEffect(() => {
-        if (isFetched(person)) setMåBekrefteTidligereCv(person.data.maaBekrefteTidligereCv);
+        if (person) setMåBekrefteTidligereCv(person.maaBekrefteTidligereCv);
     }, [person]);
 
     useEffect(() => {

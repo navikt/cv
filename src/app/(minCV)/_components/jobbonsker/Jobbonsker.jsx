@@ -1,8 +1,6 @@
 import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { useContext, useEffect, useState } from "react";
-import { CvContext } from "@/app/_common/contexts/CvContext";
 import {
     AnsettelsesformEnum,
     ArbeidstidEnum,
@@ -13,7 +11,9 @@ import {
 } from "@/app/_common/enums/cvEnums";
 import { formatterListeAvObjekterTilTekst } from "@/app/_common/utils/stringUtils";
 import { JobbonskerModal } from "@/app/(minCV)/_components/jobbonsker/JobbonskerModal";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import {useCvModal} from "@/app/_common/hooks/useCvModal";
 
 function JobbonskerIcon() {
     return (
@@ -37,24 +37,11 @@ function JobbonskerIcon() {
 }
 
 export default function Jobbonsker() {
-    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
-    const [jobbønsker, setJobbønsker] = useState(null);
-    const [modalÅpen, setModalÅpen] = useState(false);
+    const { cv } = useCv();
+    const jobbønsker = cv.jobboensker;
 
-    const jobbønskerErTomt = () => jobbønsker == null || jobbønsker.locations.length === 0;
-
-    useEffect(() => {
-        const oppdaterJobbønsker = (jobbønsker) => {
-            setJobbønsker(jobbønsker);
-        };
-
-        if (isFetched(cv)) oppdaterJobbønsker(cv.data.jobboensker || null);
-    }, [cv]);
-
-    const lagreJobbønsker = async (jobbønsker) => {
-        await oppdaterCvSeksjon(jobbønsker, CvSeksjonEnum.JOBBØNSKER);
-        setModalÅpen(false);
-    };
+    const { oppdateringSuksess, oppdateringLaster, oppdateringFeilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.JOBBØNSKER);
+    const { modalÅpen, toggleModal } = useCvModal(jobbønsker, oppdaterMedData, oppdateringSuksess, oppdateringLaster, oppdateringFeilet);
 
     const slettJobbønsker = async () => {
         const tommeJobbønsker = {
@@ -67,8 +54,10 @@ export default function Jobbonsker() {
             workLoadTypes: [],
             workScheduleTypes: [],
         };
-        await oppdaterCvSeksjon(tommeJobbønsker, CvSeksjonEnum.JOBBØNSKER);
+        setDataTilOppdatering(tommeJobbønsker);
     };
+
+    const jobbønskerErTomt = () => jobbønsker == null || jobbønsker.locations.length === 0;
 
     return (
         <div data-section id={SeksjonsIdEnum.JOBBØNSKER}>
@@ -88,7 +77,7 @@ export default function Jobbonsker() {
                         <BodyLong className={styles.mb12}>
                             Når du skal legge til jobbønsker velger du hvilke yrker du er interessert i å jobbe som
                         </BodyLong>
-                        <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => setModalÅpen(true)}>
+                        <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
                             Legg til
                         </Button>
                     </div>
@@ -127,7 +116,7 @@ export default function Jobbonsker() {
                             <Button
                                 icon={<PencilIcon aria-hidden />}
                                 variant="primary"
-                                onClick={() => setModalÅpen(true)}
+                                onClick={() => toggleModal(true)}
                             >
                                 Endre
                             </Button>
@@ -144,10 +133,10 @@ export default function Jobbonsker() {
             </Box>
             {modalÅpen && (
                 <JobbonskerModal
-                    toggleModal={setModalÅpen}
+                    toggleModal={toggleModal}
                     modalÅpen={modalÅpen}
                     jobbønsker={jobbønsker}
-                    lagreJobbønsker={lagreJobbønsker}
+                    lagreJobbønsker={oppdaterMedData}
                 />
             )}
         </div>

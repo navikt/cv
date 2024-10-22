@@ -1,16 +1,17 @@
 import { BodyLong, Box, Button, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { DownloadIcon } from "@navikt/aksel-icons";
-import { useContext, useEffect, useRef } from "react";
-import { PersonContext } from "@/app/_common/contexts/PersonContext";
-import { CvContext } from "@/app/_common/contexts/CvContext";
+import { useEffect, useRef } from "react";
 import { SpråkEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import { formatterDato, formatterFullDato, formatterTidsenhet } from "@/app/_common/utils/stringUtils";
 import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
+import { usePerson } from "@/app/_common/hooks/swr/usePerson";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
 
 export default function Forhandsvisning({ setVisHovedinnhold }) {
-    const { person } = useContext(PersonContext);
-    const { cv } = useContext(CvContext);
+    const { person } = usePerson();
+    const { personalia } = person || {};
+    const { cv } = useCv();
+
     const ref = useRef(null);
 
     useEffect(() => {
@@ -30,32 +31,22 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 </HStack>
 
                 <BodyLong weight="semibold" className={styles.mb3}>
-                    {person.data.personalia
-                        ? `${person.data.personalia.fornavn} ${person.data.personalia.etternavn}`
-                        : ""}
+                    {personalia ? `${personalia.fornavn} ${personalia.etternavn}` : ""}
                 </BodyLong>
                 <div className={styles.previewPersonalInfoWrapper}>
                     <BodyLong size="small" className={styles.previewPersonalInfo}>
                         <div className={styles.PersonalInfoLabel}>Fødselsdato:</div>
-                        <div className={styles.PersonalInfoValue}>
-                            {person.data.personalia ? person.data.personalia.foedselsdato : ""}
-                        </div>
+                        <div className={styles.PersonalInfoValue}>{personalia ? personalia.foedselsdato : ""}</div>
                         <div className={styles.PersonalInfoLabel}>Adresse:</div>
-                        <div className={styles.PersonalInfoValue}>
-                            {person.data.personalia ? person.data.personalia.adresse : ""}
-                        </div>
+                        <div className={styles.PersonalInfoValue}>{personalia ? personalia.adresse : ""}</div>
                         <div className={styles.PersonalInfoLabel}>Tlf:</div>
-                        <div className={styles.PersonalInfoValue}>
-                            {person.data.personalia ? person.data.personalia.telefonnummer : ""}
-                        </div>
+                        <div className={styles.PersonalInfoValue}>{personalia ? personalia.telefonnummer : ""}</div>
                         <div className={styles.PersonalInfoLabel}>E-post:</div>
-                        <div className={styles.PersonalInfoValue}>
-                            {person.data.personalia ? person.data.personalia.epost : ""}
-                        </div>
+                        <div className={styles.PersonalInfoValue}>{personalia ? personalia.epost : ""}</div>
                     </BodyLong>
                 </div>
 
-                {cv.data.sammendrag && (
+                {cv.sammendrag && (
                     <div className={styles.mb6}>
                         <BodyLong weight="semibold" className={styles.mb3}>
                             Sammendrag
@@ -63,19 +54,19 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         <div className={styles.previewItem}>
                             <div className={styles.previewItemLeft} />
                             <div className={styles.previewItemRight}>
-                                <BodyLong>{cv.data.sammendrag}</BodyLong>
+                                <BodyLong>{cv.sammendrag}</BodyLong>
                             </div>
                         </div>
                     </div>
                 )}
 
-                {cv.data.utdanning && cv.data.utdanning.length !== 0 && (
+                {cv.utdanning && cv.utdanning.length !== 0 && (
                     <div className={styles.mb6}>
                         <BodyLong weight="semibold" className={styles.mb3}>
                             Utdanning
                         </BodyLong>
 
-                        {cv.data.utdanning.map((utdanning, index) => (
+                        {cv.utdanning.map((utdanning, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>
@@ -93,10 +84,10 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </div>
                 )}
 
-                {cv.data.fagbrev && cv.data.fagbrev.length !== 0 && (
+                {cv.fagbrev && cv.fagbrev.length !== 0 && (
                     <div className={styles.mb6}>
                         <BodyLong weight="semibold">Fagbrev, svennebrev og mesterbrev</BodyLong>
-                        {cv.data.fagbrev.map((fagbrev, index) => (
+                        {cv.fagbrev.map((fagbrev, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}></div>
@@ -109,12 +100,12 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </div>
                 )}
 
-                {cv.data.arbeidserfaring && cv.data.arbeidserfaring.length !== 0 && (
+                {cv.arbeidserfaring && cv.arbeidserfaring.length !== 0 && (
                     <div className={styles.mb6}>
                         <BodyLong weight="semibold" className={styles.mb3}>
                             Arbeidsforhold
                         </BodyLong>
-                        {cv.data.arbeidserfaring.map((erfaring, index) => (
+                        {cv.arbeidserfaring.map((erfaring, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>
@@ -137,12 +128,12 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </div>
                 )}
 
-                {cv.data.annenErfaring && cv.data.annenErfaring.length !== 0 && (
+                {cv.annenErfaring && cv.annenErfaring.length !== 0 && (
                     <div className={styles.mb6}>
                         <BodyLong weight="semibold" className={styles.mb3}>
                             Annen erfaring
                         </BodyLong>
-                        {cv.data.annenErfaring.map((erfaring, index) => (
+                        {cv.annenErfaring.map((erfaring, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>
@@ -158,10 +149,10 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </div>
                 )}
 
-                {cv.data.foererkort && cv.data.foererkort.length !== 0 && (
+                {cv.foererkort && cv.foererkort.length !== 0 && (
                     <div className={styles.mb6}>
                         <BodyLong weight="semibold">Førerkort</BodyLong>
-                        {cv.data.foererkort.map((foererkort, index) => (
+                        {cv.foererkort.map((foererkort, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft} />
@@ -176,12 +167,12 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </div>
                 )}
 
-                {cv.data.kurs && cv.data.kurs.length !== 0 && (
+                {cv.kurs && cv.kurs.length !== 0 && (
                     <div className={styles.mb6}>
                         <BodyLong weight="semibold" className={styles.mb3}>
                             Kurs
                         </BodyLong>
-                        {cv.data.kurs.map((kurs, index) => (
+                        {cv.kurs.map((kurs, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>{formatterFullDato(kurs.date)}</div>
@@ -198,12 +189,12 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </div>
                 )}
 
-                {cv.data.offentligeGodkjenninger && cv.data.offentligeGodkjenninger.length !== 0 && (
+                {cv.offentligeGodkjenninger && cv.offentligeGodkjenninger.length !== 0 && (
                     <div className={styles.mb6}>
                         <BodyLong weight="semibold" className={styles.mb3}>
                             Offentlige godkjenninger
                         </BodyLong>
-                        {cv.data.offentligeGodkjenninger.map((godkjenning, index) => (
+                        {cv.offentligeGodkjenninger.map((godkjenning, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>
@@ -219,12 +210,12 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </div>
                 )}
 
-                {cv.data.andreGodkjenninger && cv.data.andreGodkjenninger.length !== 0 && (
+                {cv.andreGodkjenninger && cv.andreGodkjenninger.length !== 0 && (
                     <div className={styles.mb6}>
                         <BodyLong weight="semibold" className={styles.mb3}>
                             Andre godkjenninger
                         </BodyLong>
-                        {cv.data.andreGodkjenninger.map((godkjenning, index) => (
+                        {cv.andreGodkjenninger.map((godkjenning, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>
@@ -240,12 +231,12 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </div>
                 )}
 
-                {cv.data.spraak && cv.data.spraak.length !== 0 && (
+                {cv.spraak && cv.spraak.length !== 0 && (
                     <div className={styles.mb6}>
                         <BodyLong weight="semibold" className={styles.mb3}>
                             Språk
                         </BodyLong>
-                        {cv.data.spraak.map((spraak, index) => (
+                        {cv.spraak.map((spraak, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}></div>
@@ -262,12 +253,12 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </div>
                 )}
 
-                {cv.data.kompetanser && cv.data.kompetanser.length !== 0 && (
+                {cv.kompetanser && cv.kompetanser.length !== 0 && (
                     <div className={styles.mb6}>
                         <BodyLong weight="semibold" className={styles.mb3}>
                             Kompetanser
                         </BodyLong>
-                        {cv.data.kompetanser.map((kompetanse, index) => (
+                        {cv.kompetanser.map((kompetanse, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}></div>
