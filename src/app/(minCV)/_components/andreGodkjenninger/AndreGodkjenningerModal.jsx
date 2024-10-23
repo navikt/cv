@@ -25,15 +25,14 @@ export default function AndreGodkjenningerModal({ modalÅpen, toggleModal, godkj
         oppdaterGodkjenning(godkjenning || []);
     }, [godkjenning]);
 
-    const lagre = async () => {
-        await lagreGodkjenning({
+    const lagre = () => {
+        lagreGodkjenning({
             certificateName: valgtGodkjenning.title || valgtGodkjenning.certificateName,
             conceptId: valgtGodkjenning.conceptId,
             issuer: utsteder,
             fromDate: godkjenningFraDato,
             toDate: godkjenningTilDato,
         });
-        setValgtGodkjenning(null);
     };
 
     const oppdaterValgtGodkjenning = (verdi, erValgt) => {
@@ -51,7 +50,7 @@ export default function AndreGodkjenningerModal({ modalÅpen, toggleModal, godkj
             <Modal.Header closeButton={true}>
                 <Heading align="start" level="3" size="medium">
                     <HStack gap="1" align="center">
-                        Legg til språk
+                        Legg til annen godkjenning
                     </HStack>
                 </Heading>
             </Modal.Header>

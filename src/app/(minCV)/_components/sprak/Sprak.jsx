@@ -1,44 +1,24 @@
 import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { useContext, useEffect, useState } from "react";
-import { CvContext } from "@/app/_common/contexts/CvContext";
 import { CvSeksjonEnum, SeksjonsIdEnum, SpråkEnum } from "@/app/_common/enums/cvEnums";
 import SpråkModal from "@/app/(minCV)/_components/sprak/SpråkModal";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 export default function Sprak() {
-    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
+    const { cv } = useCv();
+    const språk = cv.spraak || [];
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.SPRÅK);
 
-    const [modalÅpen, setModalÅpen] = useState(false);
-    const [språk, setSpråk] = useState([]);
-    const [gjeldendeSpråk, setGjeldendeSpråk] = useState(-1);
-
-    useEffect(() => {
-        const oppdaterSpråk = (språk) => setSpråk(språk);
-        if (isFetched(cv)) oppdaterSpråk(cv.data.spraak || []);
-    }, [cv]);
-
-    const toggleModal = (åpen, index) => {
-        setGjeldendeSpråk(index >= 0 ? index : -1);
-        setModalÅpen(åpen);
-    };
-
-    const lagreSpråk = async (oppdatertSpråk) => {
-        const oppdaterteSpråk = [...språk];
-        if (gjeldendeSpråk >= 0) oppdaterteSpråk.splice(gjeldendeSpråk, 1, oppdatertSpråk);
-        else oppdaterteSpråk.push(oppdatertSpråk);
-
-        await oppdaterCvSeksjon(oppdaterteSpråk, CvSeksjonEnum.SPRÅK);
-        setModalÅpen(false);
-    };
-
-    const slettSpråk = async (index) => {
-        const oppdaterteSpråk = [...språk];
-        oppdaterteSpråk.splice(index, 1);
-        await oppdaterCvSeksjon(oppdaterteSpråk, CvSeksjonEnum.SPRÅK);
-    };
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        språk,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+    );
 
     const SpråkIcon = () => (
         <svg
@@ -110,7 +90,7 @@ export default function Sprak() {
                                         <Button
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettSpråk(index)}
+                                            onClick={() => slettElement(index)}
                                         >
                                             Fjern
                                         </Button>
@@ -128,8 +108,8 @@ export default function Sprak() {
                 <SpråkModal
                     modalÅpen={modalÅpen}
                     toggleModal={toggleModal}
-                    språk={språk[gjeldendeSpråk]}
-                    lagreSpråk={lagreSpråk}
+                    språk={gjeldendeElement}
+                    lagreSpråk={lagreElement}
                 />
             )}
         </div>

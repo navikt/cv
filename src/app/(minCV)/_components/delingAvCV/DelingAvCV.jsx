@@ -1,13 +1,13 @@
-import { Alert, BodyLong, BodyShort, Box, Button, Heading, HStack, Link, Loader, Tag } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Box, Button, Heading, HStack, Link, Loader, Tag } from "@navikt/ds-react";
 import styles from "../../../page.module.css";
 import { cvConfig } from "@/app/_common/config";
-import { useContext, useEffect, useState } from "react";
-import { PersonContext } from "@/app/_common/contexts/PersonContext";
+import { useContext, useState } from "react";
 import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
 import { CheckmarkIcon, XMarkIcon } from "@navikt/aksel-icons";
-import { useEuresSamtykke } from "@/app/api/samtykke/eures/useEuresSamtykke";
-import { useBekreftTidligereCv } from "@/app/api/samtykke/bekreft_tidligere_cv/useBekreftTidligereCv";
+import { useHentEuresSamtykke } from "@/app/_common/hooks/swr/useHentEuresSamtykke";
+import { useBekreftTidligereCv } from "@/app/_common/hooks/swr/useBekreftTidligereCv";
+import { usePerson } from "@/app/_common/hooks/swr/usePerson";
+import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 function StarsEUIcon() {
     return (
@@ -269,26 +269,17 @@ const DelingTag = ({ erDelt, deltMed, laster = false, error = false }) => {
 };
 
 export default function DelingAvCV() {
-    const [måBekrefteTidligereCv, setMåBekrefteTidligereCv] = useState(true);
-    const [sendBekreftelse, setSendBekreftelse] = useState(false);
+    const { person } = usePerson();
+    const [måBekrefteTidligereCv, setMåBekrefteTidligereCv] = useState(person ? person.maaBekrefteTidligereCv : false);
 
-    const { person, setVisHjemmelside } = useContext(PersonContext);
-    const { delerEures, euresIsLoading, euresIsError } = useEuresSamtykke();
-    const { bekreftSuccess, bekreftIsLoading, bekreftIsError } = useBekreftTidligereCv(sendBekreftelse);
+    const { setVisHjemmelside } = useContext(ApplicationContext);
+    const { delerEures, euresIsLoading, euresIsError } = useHentEuresSamtykke();
+    const { bekreftSuksess, bekreftLaster, bekreftHarFeil, setBekreft } = useBekreftTidligereCv();
 
-    useEffect(() => {
-        if (isFetched(person)) setMåBekrefteTidligereCv(person.data.maaBekrefteTidligereCv);
-    }, [person]);
-
-    useEffect(() => {
-        if (bekreftSuccess === true) {
-            setMåBekrefteTidligereCv(false);
-            setSendBekreftelse(false);
-        }
-    }, [bekreftSuccess]);
+    if (bekreftSuksess === true) setMåBekrefteTidligereCv(false);
 
     const bekreftTidligereCv = () => {
-        if (måBekrefteTidligereCv) setSendBekreftelse(true);
+        if (måBekrefteTidligereCv) setBekreft(true);
     };
 
     return (
@@ -316,8 +307,8 @@ export default function DelingAvCV() {
                 <DelingTag
                     deltMed={"Nav"}
                     erDelt={!måBekrefteTidligereCv}
-                    laster={bekreftIsLoading}
-                    error={bekreftIsError}
+                    laster={bekreftLaster}
+                    error={bekreftHarFeil}
                 />
                 {måBekrefteTidligereCv && (
                     <div>
@@ -325,7 +316,7 @@ export default function DelingAvCV() {
                             Før du deler CV-en din, kan du slette eller endre innhold du ikke ønsker å dele. Du vil
                             fortsatt ha mulighet til å endre innholdet i CV-en etter deling.
                         </BodyLong>
-                        <Button loading={bekreftIsLoading} onClick={() => bekreftTidligereCv()}>
+                        <Button loading={bekreftLaster} onClick={() => bekreftTidligereCv()}>
                             Del CV
                         </Button>
                     </div>

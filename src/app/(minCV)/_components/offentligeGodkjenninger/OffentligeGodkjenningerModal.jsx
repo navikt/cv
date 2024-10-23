@@ -25,15 +25,14 @@ export default function OffentligeGodkjenningerModal({ modalÅpen, toggleModal, 
         oppdaterGodkjenning(godkjenning || []);
     }, [godkjenning]);
 
-    const lagre = async () => {
-        await lagreGodkjenning({
+    const lagre = () => {
+        lagreGodkjenning({
             title: valgtGodkjenning.title,
             conceptId: valgtGodkjenning.conceptId,
             issuer: utsteder,
             fromDate: godkjenningFraDato,
             toDate: godkjenningTilDato,
         });
-        setValgtGodkjenning(null);
     };
 
     const oppdaterValgtGodkjenning = (verdi, erValgt) => {
@@ -51,7 +50,7 @@ export default function OffentligeGodkjenningerModal({ modalÅpen, toggleModal, 
             <Modal.Header closeButton={true}>
                 <Heading align="start" level="3" size="medium">
                     <HStack gap="1" align="center">
-                        Legg til språk
+                        Legg til offentlig godkjenning
                     </HStack>
                 </Heading>
             </Modal.Header>

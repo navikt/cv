@@ -1,43 +1,25 @@
 import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { useContext, useEffect, useState } from "react";
-import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import AndreGodkjenningerModal from "@/app/(minCV)/_components/andreGodkjenninger/AndreGodkjenningerModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 export default function AndreGodkjenninger() {
-    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
-    const [andreGodkjenninger, setAndreGodkjenninger] = useState([]);
-    const [modalÅpen, setModalÅpen] = useState(false);
-    const [gjeldendeGodkjenning, setGjeldendeGodkjenning] = useState(-1);
+    const { cv } = useCv();
+    const andreGodkjenninger = cv.andreGodkjenninger || [];
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_GODKJENNINGER);
 
-    useEffect(() => {
-        const oppdaterGodkjenninger = (andreGodkjenninger) => setAndreGodkjenninger(andreGodkjenninger);
-        if (isFetched(cv)) oppdaterGodkjenninger(cv.data.andreGodkjenninger || []);
-    }, [cv]);
-
-    const toggleModal = (åpen, index) => {
-        setGjeldendeGodkjenning(index >= 0 ? index : -1);
-        setModalÅpen(åpen);
-    };
-
-    const lagreGodkjenning = async (oppdatertGodkjenning) => {
-        const oppdaterteGodkjenninger = [...andreGodkjenninger];
-        if (gjeldendeGodkjenning >= 0) oppdaterteGodkjenninger.splice(gjeldendeGodkjenning, 1, oppdatertGodkjenning);
-        else oppdaterteGodkjenninger.push(oppdatertGodkjenning);
-
-        await oppdaterCvSeksjon(oppdaterteGodkjenninger, CvSeksjonEnum.ANDRE_GODKJENNINGER);
-        setModalÅpen(false);
-    };
-
-    const slettGodkjenning = async (index) => {
-        const oppdaterteGodkjenninger = [...andreGodkjenninger];
-        oppdaterteGodkjenninger.splice(index, 1);
-        await oppdaterCvSeksjon(oppdaterteGodkjenninger, CvSeksjonEnum.ANDRE_GODKJENNINGER);
-    };
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        andreGodkjenninger,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+    );
 
     const AndreGodkjenningerIcon = () => (
         <svg
@@ -116,7 +98,7 @@ export default function AndreGodkjenninger() {
                                     <Button
                                         icon={<TrashIcon aria-hidden />}
                                         variant="tertiary"
-                                        onClick={() => slettGodkjenning(index)}
+                                        onClick={() => slettElement(index)}
                                     >
                                         Fjern
                                     </Button>
@@ -133,8 +115,8 @@ export default function AndreGodkjenninger() {
                 <AndreGodkjenningerModal
                     modalÅpen={modalÅpen}
                     toggleModal={toggleModal}
-                    godkjenning={andreGodkjenninger[gjeldendeGodkjenning]}
-                    lagreGodkjenning={lagreGodkjenning}
+                    godkjenning={gjeldendeElement}
+                    lagreGodkjenning={lagreElement}
                 />
             )}
         </div>

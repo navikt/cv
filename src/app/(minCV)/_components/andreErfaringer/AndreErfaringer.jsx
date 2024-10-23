@@ -1,44 +1,25 @@
 import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { useContext, useEffect, useState } from "react";
-import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { AndreErfaringerModal } from "@/app/(minCV)/_components/andreErfaringer/AndreErfaringerModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 export default function AndreErfaringer() {
-    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
+    const { cv } = useCv();
+    const andreErfaringer = cv.annenErfaring || [];
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_ERFARINGER);
 
-    const [modalÅpen, setModalÅpen] = useState(false);
-    const [andreErfaringer, setAndreErfaringer] = useState([]);
-    const [gjeldendeErfaring, setGjeldendeErfaring] = useState(-1);
-
-    useEffect(() => {
-        const oppdaterAndreErfaringer = (erfaringer) => setAndreErfaringer(erfaringer);
-        if (isFetched(cv)) oppdaterAndreErfaringer(cv.data.annenErfaring || []);
-    }, [cv]);
-
-    const toggleModal = (åpen, index) => {
-        setGjeldendeErfaring(index >= 0 ? index : -1);
-        setModalÅpen(åpen);
-    };
-
-    const lagreErfaring = async (oppdatertErfaring) => {
-        const oppdaterteErfaringer = [...andreErfaringer];
-        if (gjeldendeErfaring >= 0) oppdaterteErfaringer.splice(gjeldendeErfaring, 1, oppdatertErfaring);
-        else oppdaterteErfaringer.push(oppdatertErfaring);
-
-        await oppdaterCvSeksjon(oppdaterteErfaringer, CvSeksjonEnum.ANDRE_ERFARINGER);
-        setModalÅpen(false);
-    };
-
-    const slettErfaring = async (index) => {
-        const oppdaterteErfaringer = [...andreErfaringer];
-        oppdaterteErfaringer.splice(index, 1);
-        await oppdaterCvSeksjon(oppdaterteErfaringer, CvSeksjonEnum.ANDRE_ERFARINGER);
-    };
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        andreErfaringer,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+    );
 
     const AndreErfaringerIcon = () => (
         <svg
@@ -110,7 +91,7 @@ export default function AndreErfaringer() {
                                         <Button
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettErfaring(index)}
+                                            onClick={() => slettElement(index)}
                                         >
                                             Fjern
                                         </Button>
@@ -128,8 +109,8 @@ export default function AndreErfaringer() {
                 <AndreErfaringerModal
                     modalÅpen={modalÅpen}
                     toggleModal={toggleModal}
-                    erfaring={andreErfaringer[gjeldendeErfaring]}
-                    lagreErfaring={lagreErfaring}
+                    erfaring={gjeldendeElement}
+                    lagreErfaring={lagreElement}
                 />
             )}
         </div>

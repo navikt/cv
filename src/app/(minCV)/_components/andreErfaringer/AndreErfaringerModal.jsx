@@ -22,9 +22,9 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
         oppdaterErfaring(erfaring);
     }, [erfaring]);
 
-    const lagre = async () => {
+    const lagre = () => {
         const erPågående = pågår.includes(true);
-        await lagreErfaring({
+        lagreErfaring({
             ...erfaring,
             role: rolle,
             description: beskrivelse,

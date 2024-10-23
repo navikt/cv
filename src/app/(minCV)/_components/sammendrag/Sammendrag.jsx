@@ -1,34 +1,19 @@
 import { Alert, BodyLong, Box, Button, Heading, HStack, Modal, Textarea, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { useContext, useEffect, useState } from "react";
-import { CvContext } from "@/app/_common/contexts/CvContext";
+import { useState } from "react";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 export default function Sammendrag() {
-    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
-    const [sammendrag, setSammendrag] = useState("");
-    const [sammendragTekst, setSammendragTekst] = useState("");
-    const [modalÅpen, setModalÅpen] = useState(false);
+    const { cv } = useCv();
+    const sammendrag = cv.sammendrag;
+    const [sammendragEndring, setSammendragEndring] = useState(sammendrag || "");
 
-    useEffect(() => {
-        const oppdaterSammendrag = (sammendrag) => {
-            setSammendrag(sammendrag);
-            setSammendragTekst(sammendrag);
-        };
-
-        if (isFetched(cv)) oppdaterSammendrag(cv.data.sammendrag || "");
-    }, [cv]);
-
-    const lagreSammendrag = async () => {
-        await oppdaterCvSeksjon(sammendragTekst, CvSeksjonEnum.SAMMENDRAG);
-        setModalÅpen(false);
-    };
-
-    const slettSammendrag = async () => {
-        await oppdaterCvSeksjon("", CvSeksjonEnum.SAMMENDRAG);
-    };
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.SAMMENDRAG);
+    const { modalÅpen, toggleModal } = useCvModal(sammendrag, oppdaterMedData, oppdateringOk, laster, feilet);
 
     const SammendragIcon = () => (
         <svg
@@ -69,7 +54,7 @@ export default function Sammendrag() {
                                 egenskaper.
                             </BodyLong>
                         </VStack>
-                        <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => setModalÅpen(true)}>
+                        <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
                             Legg til
                         </Button>
                     </div>
@@ -85,11 +70,15 @@ export default function Sammendrag() {
                             <Button
                                 icon={<PencilIcon aria-hidden />}
                                 variant="primary"
-                                onClick={() => setModalÅpen(true)}
+                                onClick={() => toggleModal(true)}
                             >
                                 Endre
                             </Button>
-                            <Button icon={<TrashIcon aria-hidden />} variant="tertiary" onClick={slettSammendrag}>
+                            <Button
+                                icon={<TrashIcon aria-hidden />}
+                                variant="tertiary"
+                                onClick={() => oppdaterMedData("")}
+                            >
                                 Fjern
                             </Button>
                         </HStack>
@@ -97,7 +86,7 @@ export default function Sammendrag() {
                 )}
             </Box>
 
-            <Modal open={modalÅpen} aria-label="Legg til sammendrag" onClose={() => setModalÅpen(false)} width="medium">
+            <Modal open={modalÅpen} aria-label="Legg til sammendrag" onClose={() => toggleModal(false)} width="medium">
                 <Modal.Header closeButton={true}>
                     <Heading align="start" level="3" size="medium">
                         <HStack gap="1" align="center">
@@ -121,17 +110,17 @@ export default function Sammendrag() {
                             description=""
                             placeholder="En kort oppsummering av din kompetanse og dine personlige egenskaper."
                             className={styles.mb6}
-                            value={sammendragTekst}
-                            onChange={(e) => setSammendragTekst(e.target.value)}
+                            value={sammendragEndring}
+                            onChange={(e) => setSammendragEndring(e.target.value)}
                         />
                     </VStack>
                 </Modal.Body>
                 <Modal.Footer>
                     <HStack gap="4">
-                        <Button variant="secondary" onClick={() => setModalÅpen(false)}>
+                        <Button variant="secondary" onClick={() => toggleModal(false)}>
                             Avbryt
                         </Button>
-                        <Button variant="primary" onClick={lagreSammendrag}>
+                        <Button variant="primary" onClick={() => oppdaterMedData(sammendragEndring)}>
                             Lagre
                         </Button>
                     </HStack>

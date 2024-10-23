@@ -1,6 +1,5 @@
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { v4 as uuidv4 } from "uuid";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 export const simpleApiRequest = async (url, method, body = null) => {
     const fetchOptions = {
@@ -16,44 +15,28 @@ export const simpleApiRequest = async (url, method, body = null) => {
     return await fetch(url, fetchOptions);
 };
 
-export const getJsonRequest = async (setData, url, statusfelt = null) => {
-    await apiJsonRequest(setData, url, "GET", null, null, statusfelt);
-};
+export const getAPI = async (url) => {
+    const response = await simpleApiRequest(url, "GET");
 
-export const putJsonRequest = async (setData, url, body, dataTransformator, statusfelt = null) => {
-    await apiJsonRequest(setData, url, "PUT", body, dataTransformator, statusfelt);
-};
-
-const apiJsonRequest = async (
-    setData,
-    url,
-    method = "GET",
-    body = null,
-    dataTransformator = null,
-    statusfelt = null,
-) => {
-    const requestStatusFelt = statusfelt ? statusfelt : method === "GET" ? "fetchStatus" : "updateStatus";
-
-    setData((prevState) => ({
-        ...prevState,
-        [requestStatusFelt]: StatusEnums.PENDING,
-    }));
-
-    const response = await simpleApiRequest(url, method, body);
-
-    if (response.status === 200) {
-        const json = await response.json();
-        setData((prevState) => ({
-            ...prevState,
-            [requestStatusFelt]: StatusEnums.SUCCESS,
-            data: dataTransformator ? dataTransformator(prevState, json) : json,
-        }));
-    } else {
-        setData((prevState) => ({
-            ...prevState,
-            [requestStatusFelt]: StatusEnums.ERROR,
-        }));
+    if (!response.ok) {
+        const error = new Error(`Det oppstod en feil ved GET mot ${url}.`);
+        error.status = response.status;
+        throw error;
     }
+
+    return await response.json();
+};
+
+export const putAPI = async (url, body) => {
+    const response = await simpleApiRequest(url, "PUT", body);
+
+    if (!response.ok) {
+        const error = new Error(`Det oppstod en feil ved PUT mot ${url}.`);
+        error.status = response.status;
+        throw error;
+    }
+
+    return await response.json();
 };
 
 export const mapTypeaheadResponse = (json, visningsfelt = "title") => {
@@ -76,8 +59,3 @@ export const hentTypeahead = async (query, type, visningsfelt = "title") => {
     const data = response.ok ? await response.json() : [];
     return mapTypeaheadResponse(data, visningsfelt);
 };
-
-export const isFetching = (data) =>
-    data.fetchStatus === StatusEnums.INITIAL || data.fetchStatus === StatusEnums.PENDING;
-export const isFetched = (data) => data.fetchStatus === StatusEnums.SUCCESS;
-export const fetchHasError = (data) => data.fetchStatus === StatusEnums.ERROR;

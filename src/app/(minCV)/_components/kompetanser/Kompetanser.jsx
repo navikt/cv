@@ -1,43 +1,24 @@
 import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { useContext, useEffect, useState } from "react";
-import { CvContext } from "@/app/_common/contexts/CvContext";
 import KompetanserModal from "@/app/(minCV)/_components/kompetanser/KompetanserModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 export default function Kompetanser() {
-    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
+    const { cv } = useCv();
+    const kompetanser = cv.kompetanser || [];
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.KOMPETANSER);
 
-    const [modalÅpen, setModalÅpen] = useState(false);
-    const [kompetanser, setKompetanser] = useState([]);
-    const [gjeldendeKompetanse, setGjeldendeKompetanse] = useState(-1);
-
-    useEffect(() => {
-        const oppdaterKompetanser = (kompetanser) => setKompetanser(kompetanser);
-        if (isFetched(cv)) oppdaterKompetanser(cv.data.kompetanser || []);
-    }, [cv]);
-
-    const toggleModal = (åpen, index) => {
-        setGjeldendeKompetanse(index >= 0 ? index : -1);
-        setModalÅpen(åpen);
-    };
-
-    const lagreKompetanse = async (oppdatertKompetanse) => {
-        const oppdaterteKompetanser = [...kompetanser];
-        if (gjeldendeKompetanse >= 0) oppdaterteKompetanser.splice(gjeldendeKompetanse, 1, oppdatertKompetanse);
-        else oppdaterteKompetanser.push(oppdatertKompetanse);
-
-        await oppdaterCvSeksjon(oppdaterteKompetanser, CvSeksjonEnum.KOMPETANSER);
-        setModalÅpen(false);
-    };
-
-    const slettKompetanse = async (index) => {
-        const oppdaterteKompetanser = [...kompetanser];
-        oppdaterteKompetanser.splice(index, 1);
-        await oppdaterCvSeksjon(oppdaterteKompetanser, CvSeksjonEnum.KOMPETANSER);
-    };
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        kompetanser,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+    );
 
     const KompetanserIcon = () => (
         <svg
@@ -94,7 +75,7 @@ export default function Kompetanser() {
                                         <Button
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettKompetanse(index)}
+                                            onClick={() => slettElement(index)}
                                         >
                                             Fjern
                                         </Button>
@@ -113,8 +94,8 @@ export default function Kompetanser() {
                 <KompetanserModal
                     modalÅpen={modalÅpen}
                     toggleModal={toggleModal}
-                    kompetanse={kompetanser[gjeldendeKompetanse]}
-                    lagreKompetanse={lagreKompetanse}
+                    kompetanse={gjeldendeElement}
+                    lagreKompetanse={lagreElement}
                 />
             )}
         </div>

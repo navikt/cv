@@ -3,9 +3,10 @@ import styles from "@/app/page.module.css";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import NextLink from "next/link";
 import { cvConfig } from "@/app/_common/config";
-import { useContext } from "react";
-import { PersonContext } from "@/app/_common/contexts/PersonContext";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
+import { useContext, useEffect, useState } from "react";
+import { useOppdaterSettHjemmel } from "@/app/_common/hooks/swr/useOppdaterSettHjemmel";
+import { usePerson } from "@/app/_common/hooks/swr/usePerson";
+import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 function HjemmelIcon() {
     return (
@@ -29,7 +30,15 @@ function HjemmelIcon() {
 }
 
 export default function Hjemmelside({ måBekrefte }) {
-    const { person, bekreftSettHjemmel, setVisHjemmelside } = useContext(PersonContext);
+    const { person } = usePerson();
+    const { setVisHjemmelside } = useContext(ApplicationContext);
+
+    const [sendBekreftelse, setSendBekreftelse] = useState(false);
+    const { settHjemmelSuksess, settHjemmelLaster } = useOppdaterSettHjemmel(sendBekreftelse);
+
+    useEffect(() => {
+        if (settHjemmelSuksess === true) setSendBekreftelse(false);
+    }, [settHjemmelSuksess]);
 
     return (
         <div>
@@ -170,8 +179,8 @@ export default function Hjemmelside({ måBekrefte }) {
                     <HStack gap={"4"} className={[styles.mb3]}>
                         <Button
                             variant="primary"
-                            loading={person.updateStatus === StatusEnums.PENDING}
-                            onClick={() => (måBekrefte ? bekreftSettHjemmel() : setVisHjemmelside(false))}
+                            loading={måBekrefte ? settHjemmelLaster : false}
+                            onClick={() => (måBekrefte ? setSendBekreftelse(true) : setVisHjemmelside(false))}
                         >
                             {måBekrefte ? "Gå til tjenesten" : "Gå tilbake til tjenesten"}
                         </Button>

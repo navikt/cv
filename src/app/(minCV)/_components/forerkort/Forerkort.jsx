@@ -1,43 +1,25 @@
 import { BodyLong, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { useContext, useEffect, useState } from "react";
-import { CvContext } from "@/app/_common/contexts/CvContext";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import FørerkortModal from "@/app/(minCV)/_components/forerkort/FørerkortModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 export default function Forerkort() {
-    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
-    const [førerkort, setFørerkort] = useState([]);
-    const [modalÅpen, setModalÅpen] = useState(false);
-    const [gjeldendeFørerkort, setGjeldendeFørerkort] = useState(-1);
+    const { cv } = useCv();
+    const førerkort = cv.foererkort || [];
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.FØRERKORT);
 
-    useEffect(() => {
-        const oppdaterFørerkort = (førerkort) => setFørerkort(førerkort);
-        if (isFetched(cv)) oppdaterFørerkort(cv.data.foererkort || []);
-    }, [cv]);
-
-    const toggleModal = (åpen, index) => {
-        setGjeldendeFørerkort(index >= 0 ? index : -1);
-        setModalÅpen(åpen);
-    };
-
-    const lagreFørerkort = async (oppdatertFørerkort) => {
-        const oppdaterteFørerkort = [...førerkort];
-        if (gjeldendeFørerkort >= 0) oppdaterteFørerkort.splice(gjeldendeFørerkort, 1, oppdatertFørerkort);
-        else oppdaterteFørerkort.push(oppdatertFørerkort);
-
-        await oppdaterCvSeksjon(oppdaterteFørerkort, CvSeksjonEnum.FØRERKORT);
-        setModalÅpen(false);
-    };
-
-    const slettFørerkort = async (index) => {
-        const oppdaterteFørerkort = [...førerkort];
-        oppdaterteFørerkort.splice(index, 1);
-        await oppdaterCvSeksjon(oppdaterteFørerkort, CvSeksjonEnum.FØRERKORT);
-    };
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        førerkort,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+    );
 
     const FørerkortIcon = () => (
         <svg
@@ -99,7 +81,7 @@ export default function Forerkort() {
                                     <Button
                                         icon={<TrashIcon aria-hidden />}
                                         variant="tertiary"
-                                        onClick={() => slettFørerkort(index)}
+                                        onClick={() => slettElement(index)}
                                     >
                                         Fjern
                                     </Button>
@@ -117,8 +99,8 @@ export default function Forerkort() {
                 <FørerkortModal
                     modalÅpen={modalÅpen}
                     toggleModal={toggleModal}
-                    førerkort={førerkort[gjeldendeFørerkort]}
-                    lagreFørerkort={lagreFørerkort}
+                    førerkort={gjeldendeElement}
+                    lagreFørerkort={lagreElement}
                 />
             )}
         </div>

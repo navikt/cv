@@ -29,8 +29,8 @@ export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, l
         oppdaterPersonalia(personalia);
     }, [personalia]);
 
-    const lagre = async () => {
-        await lagrePersonalia({
+    const lagre = () => {
+        lagrePersonalia({
             fornavn: fornavn,
             etternavn: etternavn,
             epost: epost,

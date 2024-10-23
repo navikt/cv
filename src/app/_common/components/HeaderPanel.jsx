@@ -1,23 +1,13 @@
 import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Tag, VStack } from "@navikt/ds-react";
-import { useContext, useEffect, useState } from "react";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
-import { PersonContext } from "@/app/_common/contexts/PersonContext";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
+import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 
 function HeaderPanel({ title = "Din CV", visTag = true }) {
-    const { person } = useContext(PersonContext);
+    const { person } = usePerson();
+    const { personalia } = person || {};
 
-    const [navn, setNavn] = useState("");
-    const [sistEndret, setSistEndret] = useState(null);
-
-    useEffect(() => {
-        const oppdaterPersonalia = (personalia) => {
-            setNavn(`${personalia.fornavn} ${personalia.etternavn}`.toUpperCase());
-            setSistEndret(new Date(personalia.sistEndret));
-        };
-
-        if (isFetched(person)) oppdaterPersonalia(person.data.personalia || {});
-    }, [person]);
+    const navn = personalia ? `${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase() : "";
+    const sistEndret = personalia ? new Date(personalia.sistEndret) : null;
 
     return (
         <Box as="header" borderWidth="0 0 4 0" borderColor="surface-info">

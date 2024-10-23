@@ -1,42 +1,24 @@
 import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { useContext, useEffect, useState } from "react";
-import { CvContext } from "@/app/_common/contexts/CvContext";
 import FagbrevModal from "@/app/(minCV)/_components/fagbrev/FagbrevModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import { isFetched } from "@/app/_common/utils/fetchUtils";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 export default function Fagbrev() {
-    const { cv, oppdaterCvSeksjon } = useContext(CvContext);
-    const [fagbrev, setFagbrev] = useState([]);
-    const [modalÅpen, setModalÅpen] = useState(false);
-    const [gjeldendeFagbrev, setGjeldendeFagbrev] = useState(-1);
+    const { cv } = useCv();
+    const fagbrev = cv.fagbrev || [];
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.FAGBREV);
 
-    useEffect(() => {
-        const oppdaterFagbrev = (fagbrev) => setFagbrev(fagbrev);
-        if (isFetched(cv)) oppdaterFagbrev(cv.data.fagbrev || []);
-    }, [cv]);
-
-    const toggleModal = (åpen, index) => {
-        setGjeldendeFagbrev(index >= 0 ? index : -1);
-        setModalÅpen(åpen);
-    };
-
-    const lagreFagbrev = async (oppdatertFagbrev) => {
-        const oppdaterteFagbrev = [...fagbrev];
-        if (gjeldendeFagbrev >= 0) oppdaterteFagbrev.splice(gjeldendeFagbrev, 1, oppdatertFagbrev);
-        else oppdaterteFagbrev.push(oppdatertFagbrev);
-
-        await oppdaterCvSeksjon(oppdaterteFagbrev, CvSeksjonEnum.FAGBREV);
-        setModalÅpen(false);
-    };
-
-    const slettFagbrev = async (index) => {
-        const oppdaterteFagbrev = [...fagbrev];
-        oppdaterteFagbrev.splice(index, 1);
-        await oppdaterCvSeksjon(oppdaterteFagbrev, CvSeksjonEnum.FAGBREV);
-    };
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        fagbrev,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+    );
 
     function FagbrevIcon() {
         return (
@@ -94,7 +76,7 @@ export default function Fagbrev() {
                                         <Button
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettFagbrev(index)}
+                                            onClick={() => slettElement(index)}
                                         >
                                             Fjern
                                         </Button>
@@ -113,8 +95,8 @@ export default function Fagbrev() {
                 <FagbrevModal
                     modalÅpen={modalÅpen}
                     toggleModal={toggleModal}
-                    fagbrev={fagbrev[gjeldendeFagbrev]}
-                    lagreFagbrev={lagreFagbrev}
+                    fagbrev={gjeldendeElement}
+                    lagreFagbrev={lagreElement}
                 />
             )}
         </div>
