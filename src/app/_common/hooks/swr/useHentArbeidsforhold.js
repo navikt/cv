@@ -2,7 +2,7 @@
 
 import useSWR from "swr";
 import { simpleApiRequest } from "@/app/_common/utils/fetchUtils";
-import {useState} from "react";
+import { useState } from "react";
 
 export const useHentArbeidsforhold = (oppdaterArbeidsforhold) => {
     const [skalHenteData, setSkalHenteData] = useState(false);
@@ -16,18 +16,19 @@ export const useHentArbeidsforhold = (oppdaterArbeidsforhold) => {
             throw error;
         }
 
-        const data = await response.json()
-        oppdaterArbeidsforhold(data)
-        return data
+        const data = await response.json();
+        oppdaterArbeidsforhold(data);
+        setSkalHenteData(false);
+        return data;
     };
 
     const { data, error, isLoading } = useSWR(skalHenteData ? `/personbruker/api/arbeidsforhold` : null, fetcher);
 
     return {
-        aaregSuksess:!!data && !error,
+        aaregSuksess: !!data && !error,
         aaregManglerData: data?.length === 0,
         aaregLaster: isLoading,
         aaregHarFeil: error,
-        setSkalHenteData
+        setSkalHenteData,
     };
 };

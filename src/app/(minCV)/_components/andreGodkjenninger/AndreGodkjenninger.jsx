@@ -4,16 +4,22 @@ import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import AndreGodkjenningerModal from "@/app/(minCV)/_components/andreGodkjenninger/AndreGodkjenningerModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import {useCv} from "@/app/_common/hooks/swr/useCv";
-import {useOppdaterCvSeksjon} from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
-import {useCvModal} from "@/app/_common/hooks/useCvModal";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 export default function AndreGodkjenninger() {
     const { cv } = useCv();
     const andreGodkjenninger = cv.andreGodkjenninger || [];
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_GODKJENNINGER);
 
-    const { oppdateringSuksess, oppdateringLaster, oppdateringFeilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_GODKJENNINGER);
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(andreGodkjenninger, oppdaterMedData, oppdateringSuksess, oppdateringLaster, oppdateringFeilet);
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        andreGodkjenninger,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+    );
 
     const AndreGodkjenningerIcon = () => (
         <svg

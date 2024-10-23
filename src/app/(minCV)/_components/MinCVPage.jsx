@@ -21,7 +21,6 @@ import Kurs from "@/app/(minCV)/_components/kurs/Kurs";
 import Sammendrag from "@/app/(minCV)/_components/sammendrag/Sammendrag";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import Hovedmeny from "@/app/_common/components/meny/Hovedmeny";
-import CvProvider from "@/app/_common/contexts/CvContext";
 import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 import Forhandsvisning from "@/app/(minCV)/_components/forhandsvisning/Forhandsvisning";
 import ApplicationProvider from "@/app/_common/contexts/ApplicationContext";
@@ -31,74 +30,44 @@ export default function MinCVPage() {
 
     return (
         <ApplicationProvider>
-            <CvProvider>
-                {visHovedinnhold ? (
-                    <>
-                        <HeaderPanel />
-                        <Hide below="md">
-                            <HStack
-                                style={{
-                                    display: "flex",
-                                    alignItems: "flex-start",
-                                    justifyContent: "center",
-                                    paddingBottom: "4rem",
-                                }}
-                            >
-                                <div className={styles.sidepanel}>
-                                    <Hovedmeny />
-                                </div>
-                                <div>
-                                    <Box className={styles.main}>
-                                        <HStack gap="4">
-                                            <VStack>
-                                                <Personalia />
-                                                <Jobbonsker />
-                                                <Utdanninger />
-                                                <Fagbrev />
-                                                <Arbeidsforhold />
-                                                <AndreErfaringer />
-                                                <Kompetanser />
-                                                <OffentligeGodkjenninger />
-                                                <AndreGodkjenninger />
-                                                <Sprak />
-                                                <Forerkort />
-                                                <Kurs />
-                                                <Sammendrag />
-                                                <DelingAvCV />
-                                            </VStack>
-                                        </HStack>
-                                    </Box>
-                                </div>
-                                <div className={styles.sidepanel2}>
-                                    <VStack gap="4">
-                                        <Button
-                                            icon={<EyeIcon aria-hidden />}
-                                            variant="primary"
-                                            onClick={() => setVisHovedinnhold(false)}
-                                        >
-                                            Forhåndsvis CV
-                                        </Button>
-                                        <LastNedCv />
-                                    </VStack>
-                                </div>
-                            </HStack>
-                        </Hide>
-                        <Show below="md">
-                            <Personalia />
-                            <Jobbonsker />
-                            <Utdanninger />
-                            <Fagbrev />
-                            <Arbeidsforhold />
-                            <AndreErfaringer />
-                            <Kompetanser />
-                            <OffentligeGodkjenninger />
-                            <AndreGodkjenninger />
-                            <Sprak />
-                            <Forerkort />
-                            <Kurs />
-                            <Sammendrag />
-                            <DelingAvCV />
-                            <HStack justify="center" style={{ padding: "4rem 0 4rem 0" }}>
+            {visHovedinnhold ? (
+                <>
+                    <HeaderPanel />
+                    <Hide below="md">
+                        <HStack
+                            style={{
+                                display: "flex",
+                                alignItems: "flex-start",
+                                justifyContent: "center",
+                                paddingBottom: "4rem",
+                            }}
+                        >
+                            <div className={styles.sidepanel}>
+                                <Hovedmeny />
+                            </div>
+                            <div>
+                                <Box className={styles.main}>
+                                    <HStack gap="4">
+                                        <VStack>
+                                            <Personalia />
+                                            <Jobbonsker />
+                                            <Utdanninger />
+                                            <Fagbrev />
+                                            <Arbeidsforhold />
+                                            <AndreErfaringer />
+                                            <Kompetanser />
+                                            <OffentligeGodkjenninger />
+                                            <AndreGodkjenninger />
+                                            <Sprak />
+                                            <Forerkort />
+                                            <Kurs />
+                                            <Sammendrag />
+                                            <DelingAvCV />
+                                        </VStack>
+                                    </HStack>
+                                </Box>
+                            </div>
+                            <div className={styles.sidepanel2}>
                                 <VStack gap="4">
                                     <Button
                                         icon={<EyeIcon aria-hidden />}
@@ -109,16 +78,44 @@ export default function MinCVPage() {
                                     </Button>
                                     <LastNedCv />
                                 </VStack>
-                            </HStack>
-                        </Show>
-                    </>
-                ) : (
-                    <>
-                        <HeaderPanel title={"Forhåndsvis CV"} visTag={true} />
-                        <Forhandsvisning setVisHovedinnhold={setVisHovedinnhold} />
-                    </>
-                )}
-            </CvProvider>
+                            </div>
+                        </HStack>
+                    </Hide>
+                    <Show below="md">
+                        <Personalia />
+                        <Jobbonsker />
+                        <Utdanninger />
+                        <Fagbrev />
+                        <Arbeidsforhold />
+                        <AndreErfaringer />
+                        <Kompetanser />
+                        <OffentligeGodkjenninger />
+                        <AndreGodkjenninger />
+                        <Sprak />
+                        <Forerkort />
+                        <Kurs />
+                        <Sammendrag />
+                        <DelingAvCV />
+                        <HStack justify="center" style={{ padding: "4rem 0 4rem 0" }}>
+                            <VStack gap="4">
+                                <Button
+                                    icon={<EyeIcon aria-hidden />}
+                                    variant="primary"
+                                    onClick={() => setVisHovedinnhold(false)}
+                                >
+                                    Forhåndsvis CV
+                                </Button>
+                                <LastNedCv />
+                            </VStack>
+                        </HStack>
+                    </Show>
+                </>
+            ) : (
+                <>
+                    <HeaderPanel title={"Forhåndsvis CV"} visTag={true} />
+                    <Forhandsvisning setVisHovedinnhold={setVisHovedinnhold} />
+                </>
+            )}
         </ApplicationProvider>
     );
 }

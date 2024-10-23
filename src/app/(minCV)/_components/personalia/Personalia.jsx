@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import { PencilIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
@@ -7,6 +6,7 @@ import PersonaliaModal from "@/app/(minCV)/_components/personalia/PersonaliaModa
 import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useOppdaterPersonalia } from "@/app/_common/hooks/swr/useOppdaterPersonalia";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 function PersonaliaIcon() {
     return (
@@ -30,16 +30,11 @@ function PersonaliaIcon() {
 }
 
 export default function Personalia() {
-    const [modalÅpen, setModalÅpen] = useState(false);
-    const { oppdateringSuksess, oppdateringLaster, oppdateringFeilet, oppdaterMedData } = useOppdaterPersonalia();
-
     const { person } = usePerson();
     const personalia = person.personalia;
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterPersonalia();
 
-    useEffect(() => {
-        if (oppdateringSuksess || oppdateringFeilet) oppdaterMedData(null);
-        if (oppdateringSuksess && !oppdateringLaster && !oppdateringFeilet) setModalÅpen(false);
-    }, [oppdateringSuksess, oppdateringLaster, oppdateringFeilet]);
+    const { modalÅpen, toggleModal } = useCvModal(personalia, oppdaterMedData, oppdateringOk, laster, feilet);
 
     return (
         <div data-section id={SeksjonsIdEnum.PERSONALIA}>
@@ -69,7 +64,7 @@ export default function Personalia() {
                     className={styles.mb6}
                     icon={<PencilIcon aria-hidden />}
                     variant="primary"
-                    onClick={() => setModalÅpen(true)}
+                    onClick={() => toggleModal(true)}
                 >
                     Endre
                 </Button>
@@ -77,7 +72,7 @@ export default function Personalia() {
             {modalÅpen && (
                 <PersonaliaModal
                     modalÅpen={modalÅpen}
-                    toggleModal={setModalÅpen}
+                    toggleModal={toggleModal}
                     personalia={personalia}
                     lagrePersonalia={oppdaterMedData}
                 />

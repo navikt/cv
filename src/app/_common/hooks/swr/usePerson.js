@@ -1,6 +1,6 @@
 "use client";
 
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 import { getAPI } from "@/app/_common/utils/fetchUtils";
 import { useErInnlogget } from "@/app/_common/hooks/swr/useErInnlogget";
 

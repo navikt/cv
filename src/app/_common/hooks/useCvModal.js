@@ -12,7 +12,7 @@ export const useCvModal = (
     const [gjeldendeElement, setGjeldendeElement] = useState(null);
 
     useEffect(() => {
-        setGjeldendeElement(gjeldendeIndex >= 0 ? eksisterendeElementer[gjeldendeIndex] : null)
+        setGjeldendeElement(gjeldendeIndex >= 0 ? eksisterendeElementer[gjeldendeIndex] : null);
     }, [gjeldendeIndex]);
 
     useEffect(() => {

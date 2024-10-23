@@ -4,16 +4,25 @@ import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import OffentligeGodkjenningerModal from "@/app/(minCV)/_components/offentligeGodkjenninger/OffentligeGodkjenningerModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import {useCv} from "@/app/_common/hooks/swr/useCv";
-import {useOppdaterCvSeksjon} from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
-import {useCvModal} from "@/app/_common/hooks/useCvModal";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 export default function OffentligeGodkjenninger() {
     const { cv } = useCv();
     const offentligeGodkjenninger = cv.offentligeGodkjenninger || [];
 
-    const { oppdateringSuksess, oppdateringLaster, oppdateringFeilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER);
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(offentligeGodkjenninger, oppdaterMedData, oppdateringSuksess, oppdateringLaster, oppdateringFeilet);
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER,
+    );
+
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        offentligeGodkjenninger,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+    );
 
     const OffentligeGodkjenningerIcon = () => (
         <svg

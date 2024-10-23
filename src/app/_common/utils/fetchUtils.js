@@ -1,6 +1,5 @@
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { v4 as uuidv4 } from "uuid";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
 
 export const simpleApiRequest = async (url, method, body = null) => {
     const fetchOptions = {
@@ -14,14 +13,6 @@ export const simpleApiRequest = async (url, method, body = null) => {
     if (body !== null) fetchOptions["body"] = JSON.stringify(body);
 
     return await fetch(url, fetchOptions);
-};
-
-export const getJsonRequest = async (setData, url, statusfelt = null) => {
-    await apiJsonRequest(setData, url, "GET", null, null, statusfelt);
-};
-
-export const putJsonRequest = async (setData, url, body, dataTransformator, statusfelt = null) => {
-    await apiJsonRequest(setData, url, "PUT", body, dataTransformator, statusfelt);
 };
 
 export const getAPI = async (url) => {
@@ -48,38 +39,6 @@ export const putAPI = async (url, body) => {
     return await response.json();
 };
 
-const apiJsonRequest = async (
-    setData,
-    url,
-    method = "GET",
-    body = null,
-    dataTransformator = null,
-    statusfelt = null,
-) => {
-    const requestStatusFelt = statusfelt ? statusfelt : method === "GET" ? "fetchStatus" : "updateStatus";
-
-    setData((prevState) => ({
-        ...prevState,
-        [requestStatusFelt]: StatusEnums.PENDING,
-    }));
-
-    const response = await simpleApiRequest(url, method, body);
-
-    if (response.status === 200) {
-        const json = await response.json();
-        setData((prevState) => ({
-            ...prevState,
-            [requestStatusFelt]: StatusEnums.SUCCESS,
-            data: dataTransformator ? dataTransformator(prevState, json) : json,
-        }));
-    } else {
-        setData((prevState) => ({
-            ...prevState,
-            [requestStatusFelt]: StatusEnums.ERROR,
-        }));
-    }
-};
-
 export const mapTypeaheadResponse = (json, visningsfelt = "title") => {
     return json.map((e) => ({
         ...e,
@@ -100,4 +59,3 @@ export const hentTypeahead = async (query, type, visningsfelt = "title") => {
     const data = response.ok ? await response.json() : [];
     return mapTypeaheadResponse(data, visningsfelt);
 };
-export const isFetched = (data) => data.fetchStatus === StatusEnums.SUCCESS;

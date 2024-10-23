@@ -5,18 +5,23 @@ import { ArbeidsforholdModal } from "@/app/(minCV)/_components/arbeidsforhold/Ar
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useHentArbeidsforhold } from "@/app/_common/hooks/swr/useHentArbeidsforhold";
-import { StatusEnums } from "@/app/_common/enums/fetchEnums";
-import {useCv} from "@/app/_common/hooks/swr/useCv";
-import {useOppdaterCvSeksjon} from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
-import {useCvModal} from "@/app/_common/hooks/useCvModal";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 export default function Arbeidsforhold() {
     const { cv } = useCv();
     const arbeidsforhold = cv.arbeidserfaring || [];
-
-    const { oppdateringSuksess, oppdateringLaster, oppdateringFeilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.ARBEIDSFORHOLD);
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(arbeidsforhold, oppdaterMedData, oppdateringSuksess, oppdateringLaster, oppdateringFeilet);
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.ARBEIDSFORHOLD);
     const { aaregManglerData, aaregLaster, setSkalHenteData } = useHentArbeidsforhold(oppdaterMedData);
+
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        arbeidsforhold,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+    );
 
     const arbeidsforholdManglerFelter = (arbeidsforhold) => {
         const verdiMangler = (verdi) => !verdi || verdi === "string";
@@ -27,7 +32,7 @@ export default function Arbeidsforhold() {
         );
     };
 
-    const manglerFelter = arbeidsforhold?.some((forhold) => arbeidsforholdManglerFelter(forhold)) || false
+    const manglerFelter = arbeidsforhold?.some((forhold) => arbeidsforholdManglerFelter(forhold)) || false;
 
     function ArbeidsforholdIcon() {
         return (
@@ -80,7 +85,7 @@ export default function Arbeidsforhold() {
                                 icon={<FileImportIcon aria-hidden />}
                                 variant="primary"
                                 onClick={() => setSkalHenteData(true)}
-                                loading={aaregLaster || cv.updateStatus === StatusEnums.PENDING}
+                                loading={aaregLaster}
                             >
                                 Hent arbeidsforhold
                             </Button>

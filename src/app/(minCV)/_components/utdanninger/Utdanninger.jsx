@@ -32,9 +32,15 @@ function UtdanningerIcon() {
 export default function Utdanninger() {
     const { cv } = useCv();
     const utdanninger = cv.utdanning || [];
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.UTDANNING);
 
-    const { oppdateringSuksess, oppdateringLaster, oppdateringFeilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.UTDANNING);
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(utdanninger, oppdaterMedData, oppdateringSuksess, oppdateringLaster, oppdateringFeilet);
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        utdanninger,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+    );
 
     return (
         <div data-section id={SeksjonsIdEnum.UTDANNING}>

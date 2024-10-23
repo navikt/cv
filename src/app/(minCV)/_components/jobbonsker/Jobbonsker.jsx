@@ -13,7 +13,7 @@ import { formatterListeAvObjekterTilTekst } from "@/app/_common/utils/stringUtil
 import { JobbonskerModal } from "@/app/(minCV)/_components/jobbonsker/JobbonskerModal";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
-import {useCvModal} from "@/app/_common/hooks/useCvModal";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 function JobbonskerIcon() {
     return (
@@ -39,9 +39,8 @@ function JobbonskerIcon() {
 export default function Jobbonsker() {
     const { cv } = useCv();
     const jobbønsker = cv.jobboensker;
-
-    const { oppdateringSuksess, oppdateringLaster, oppdateringFeilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.JOBBØNSKER);
-    const { modalÅpen, toggleModal } = useCvModal(jobbønsker, oppdaterMedData, oppdateringSuksess, oppdateringLaster, oppdateringFeilet);
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.JOBBØNSKER);
+    const { modalÅpen, toggleModal } = useCvModal(jobbønsker, oppdaterMedData, oppdateringOk, laster, feilet);
 
     const slettJobbønsker = async () => {
         const tommeJobbønsker = {

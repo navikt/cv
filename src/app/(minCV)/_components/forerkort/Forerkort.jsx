@@ -4,16 +4,22 @@ import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import FørerkortModal from "@/app/(minCV)/_components/forerkort/FørerkortModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import {useCv} from "@/app/_common/hooks/swr/useCv";
-import {useOppdaterCvSeksjon} from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
-import {useCvModal} from "@/app/_common/hooks/useCvModal";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 export default function Forerkort() {
     const { cv } = useCv();
     const førerkort = cv.foererkort || [];
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.FØRERKORT);
 
-    const { oppdateringSuksess, oppdateringLaster, oppdateringFeilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.FØRERKORT);
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(førerkort, oppdaterMedData, oppdateringSuksess, oppdateringLaster, oppdateringFeilet);
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        førerkort,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+    );
 
     const FørerkortIcon = () => (
         <svg

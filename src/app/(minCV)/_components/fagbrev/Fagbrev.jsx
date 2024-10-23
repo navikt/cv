@@ -3,16 +3,22 @@ import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import FagbrevModal from "@/app/(minCV)/_components/fagbrev/FagbrevModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import {useCv} from "@/app/_common/hooks/swr/useCv";
-import {useOppdaterCvSeksjon} from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
-import {useCvModal} from "@/app/_common/hooks/useCvModal";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 export default function Fagbrev() {
     const { cv } = useCv();
     const fagbrev = cv.fagbrev || [];
+    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.FAGBREV);
 
-    const { oppdateringSuksess, oppdateringLaster, oppdateringFeilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.FAGBREV);
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(fagbrev, oppdaterMedData, oppdateringSuksess, oppdateringLaster, oppdateringFeilet);
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        fagbrev,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+    );
 
     function FagbrevIcon() {
         return (

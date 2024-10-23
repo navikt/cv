@@ -3,10 +3,10 @@
 import useSWR, { mutate } from "swr";
 import { putAPI } from "@/app/_common/utils/fetchUtils";
 import { PERSON_KEY, usePerson } from "@/app/_common/hooks/swr/usePerson";
-import {useState} from "react";
+import { useState } from "react";
 
 export const useOppdaterPersonalia = () => {
-    const [dataForOppdatering, oppdaterMedData] = useState(null)
+    const [dataForOppdatering, oppdaterMedData] = useState(null);
 
     const { person } = usePerson();
 
@@ -23,10 +23,5 @@ export const useOppdaterPersonalia = () => {
 
     const { data, error, isLoading } = useSWR(skalOppdatere ? { url, body: dataForOppdatering } : null, fetcher);
 
-    return {
-        oppdateringSuksess: data,
-        oppdateringLaster: isLoading,
-        oppdateringFeilet: error,
-        oppdaterMedData
-    };
+    return { oppdateringOk: data, laster: isLoading, feilet: error, oppdaterMedData };
 };
