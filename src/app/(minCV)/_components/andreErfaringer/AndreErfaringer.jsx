@@ -120,7 +120,7 @@ export default function AndreErfaringer() {
                         </div>
                     )}
                     <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                        Legg til flere
+                        {andreErfaringer.length === 0 ? "Legg til" : "Legg til flere"}
                     </Button>
                 </>
             </Box>

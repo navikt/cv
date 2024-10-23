@@ -124,7 +124,7 @@ export default function OffentligeGodkjenninger() {
                     </div>
                 )}
                 <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                    Legg til flere
+                    {offentligeGodkjenninger.length === 0 ? "Legg til" : "Legg til flere"}
                 </Button>
             </Box>
             {modalÅpen && (
