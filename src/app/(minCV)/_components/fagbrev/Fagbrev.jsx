@@ -87,7 +87,7 @@ export default function Fagbrev() {
                         </div>
                     )}
                     <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                        Legg til
+                        {fagbrev.length === 0 ? "Legg til" : "Legg til flere"}
                     </Button>
                 </>
             </Box>

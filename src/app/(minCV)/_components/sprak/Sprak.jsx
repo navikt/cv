@@ -101,7 +101,7 @@ export default function Sprak() {
                     )}
                 </>
                 <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                    Legg til flere
+                    {språk.length === 0 ? "Legg til" : "Legg til flere"}
                 </Button>
             </Box>
             {modalÅpen && (

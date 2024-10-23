@@ -117,7 +117,7 @@ export default function Utdanninger() {
                     </div>
                 )}
                 <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                    Legg til flere
+                    {utdanninger.length === 0 ? "Legg til" : "Legg til flere"}
                 </Button>
             </Box>
             {modalÅpen && (

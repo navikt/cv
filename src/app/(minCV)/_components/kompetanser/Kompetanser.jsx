@@ -87,7 +87,7 @@ export default function Kompetanser() {
                     )}
                 </>
                 <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                    Legg til flere
+                    {kompetanser.length === 0 ? "Legg til" : "Legg til flere"}
                 </Button>
             </Box>
             {modalÅpen && (

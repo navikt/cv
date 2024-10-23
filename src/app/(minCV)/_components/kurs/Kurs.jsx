@@ -108,7 +108,7 @@ export default function Kurs() {
                     </div>
                 )}
                 <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                    Legg til flere
+                    {kurs.length === 0 ? "Legg til" : "Legg til flere"}
                 </Button>
             </Box>
             {modalÅpen && (
