@@ -1,4 +1,4 @@
-import { Button, Heading, HStack, Modal, Select, TextField } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, HStack, Modal, Select, TextField, VStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
@@ -12,6 +12,9 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs }) 
     const [kursDato, setKursDato] = useState(kurs?.date ? new Date(kurs?.date) : null);
     const [tidsenhet, setTidsenhet] = useState(kurs?.durationUnit || "");
     const [lengde, setLengde] = useState(kurs?.duration || "");
+    const [kursnavnError, setKursnavnError] = useState(false);
+    const [kursDatoError, setKursDatoError] = useState(false);
+    const [lengdeError, setLengdeError] = useState(false);
 
     useEffect(() => {
         const oppdaterKurs = (kurs) => {
@@ -26,13 +29,18 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs }) 
     }, [kurs]);
 
     const lagre = async () => {
-        await lagreKurs({
-            title: kursnavn,
-            issuer: utsteder,
-            date: kursDato,
-            durationUnit: tidsenhet || null,
-            duration: lengde || null,
-        });
+        if (!kursnavn) setKursnavnError(true);
+        if (tidsenhet && !lengde) setLengdeError(true);
+
+        if (kursnavn && !kursDatoError && (tidsenhet ? lengde : true)) {
+            await lagreKurs({
+                title: kursnavn,
+                issuer: utsteder,
+                date: kursDato,
+                durationUnit: tidsenhet || null,
+                duration: lengde || null,
+            });
+        }
         setValgtKurs(null);
     };
 
@@ -52,12 +60,19 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs }) 
                 </Heading>
             </Modal.Header>
             <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
+                <BodyLong>
+                    <b>Kursnavn</b> *obligatorisk
+                </BodyLong>
                 <TextField
                     className={styles.mb6}
-                    label="Kursnavn"
+                    label=""
                     description=""
                     value={kursnavn}
-                    onChange={(e) => setKursnavn(e.target.value)}
+                    onChange={(e) => {
+                        setKursnavn(e.target.value);
+                        setKursnavnError(false);
+                    }}
+                    error={kursnavnError && "Du må skrive inn kursnavn"}
                 />
                 <TextField
                     className={styles.mb6}
@@ -66,31 +81,46 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs }) 
                     value={utsteder}
                     onChange={(e) => setUtsteder(e.target.value)}
                 />
-                <Datovelger valgtDato={kursDato} oppdaterDato={setKursDato} label="Fullført" className={styles.mb6} />
+                <Datovelger
+                    valgtDato={kursDato}
+                    oppdaterDato={setKursDato}
+                    label="Fullført"
+                    className={styles.mb6}
+                    error={kursDatoError}
+                    setError={setKursDatoError}
+                />
                 <HStack gap="8">
-                    <Select
-                        label="Kurslengde"
-                        className={styles.mb6}
-                        value={tidsenhet}
-                        onChange={(e) => setTidsenhet(e.target.value)}
-                    >
-                        <option value="">Velg</option>
-                        {Object.keys(TidsenhetEnum).map((enhet) => (
-                            <option key={enhet} value={enhet}>
-                                {storForbokstav(formatterTidsenhet(enhet, 2))}
-                            </option>
-                        ))}
-                    </Select>
-                    {tidsenhet && (
-                        <TextField
+                    <VStack>
+                        <Select
+                            label="Kurslengde"
                             className={styles.mb6}
-                            label={`Antall ${formatterTidsenhet(tidsenhet, 2)}`}
-                            inputMode="numeric"
-                            type={"number"}
-                            description=""
-                            value={lengde}
-                            onChange={(e) => setLengde(e.target.value)}
-                        />
+                            value={tidsenhet}
+                            onChange={(e) => setTidsenhet(e.target.value)}
+                        >
+                            <option value="">Velg</option>
+                            {Object.keys(TidsenhetEnum).map((enhet) => (
+                                <option key={enhet} value={enhet}>
+                                    {storForbokstav(formatterTidsenhet(enhet, 2))}
+                                </option>
+                            ))}
+                        </Select>
+                    </VStack>
+                    {tidsenhet && (
+                        <VStack>
+                            <TextField
+                                className={styles.mb6}
+                                label={`Antall ${formatterTidsenhet(tidsenhet, 2)}`}
+                                inputMode="numeric"
+                                type={"number"}
+                                description=""
+                                value={lengde}
+                                onChange={(e) => {
+                                    setLengde(e.target.value);
+                                    setLengdeError(false);
+                                }}
+                                error={lengdeError && "Du må fylle ut varighet"}
+                            />
+                        </VStack>
                     )}
                 </HStack>
             </Modal.Body>

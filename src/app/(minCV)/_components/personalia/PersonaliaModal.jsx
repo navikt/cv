@@ -3,6 +3,7 @@ import { Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-re
 import { PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
+import ValidateEmail from "@/app/_common/components/ValidateEmail";
 
 export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, lagrePersonalia }) {
     const [fornavn, setFornavn] = useState("");
@@ -13,6 +14,11 @@ export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, l
     const [postnummer, setPostnummer] = useState("");
     const [sted, setSted] = useState("");
     const [fødselsdato, setFødselsdato] = useState("");
+    const [fornavnError, setFornavnError] = useState(false);
+    const [etternavnError, setEtternavnError] = useState(false);
+    const [epostError, setEpostError] = useState(false);
+    const [epostValidationError, setEpostValidationError] = useState(false);
+    const [telefonError, setTelefonError] = useState(false);
 
     useEffect(() => {
         const oppdaterPersonalia = (personalia) => {
@@ -30,15 +36,29 @@ export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, l
     }, [personalia]);
 
     const lagre = () => {
-        lagrePersonalia({
-            fornavn: fornavn,
-            etternavn: etternavn,
-            epost: epost,
-            telefonnummer: telefon,
-            adresse: adresse,
-            postnummer: postnummer,
-            poststed: sted,
-        });
+        let isEpostValid = false;
+
+        if (!fornavn) setFornavnError(true);
+        if (!etternavn) setEtternavnError(true);
+        if (!telefon) setTelefonError(true);
+        if (!epost) {
+            setEpostError(true);
+        } else {
+            isEpostValid = ValidateEmail(epost);
+            setEpostValidationError(!isEpostValid);
+        }
+
+        if (fornavn && etternavn && isEpostValid && telefon) {
+            lagrePersonalia({
+                fornavn: fornavn,
+                etternavn: etternavn,
+                epost: epost,
+                telefonnummer: telefon,
+                adresse: adresse,
+                postnummer: postnummer,
+                poststed: sted,
+            });
+        }
     };
 
     return (
@@ -59,7 +79,11 @@ export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, l
                             label="Fornavn"
                             description="Må fylles ut"
                             value={fornavn}
-                            onChange={(e) => setFornavn(e.target.value)}
+                            onChange={(e) => {
+                                setFornavn(e.target.value);
+                                setFornavnError(false);
+                            }}
+                            error={fornavnError && "Fornavn må fylles ut"}
                         />
                     </VStack>
                     <VStack className={styles.element}>
@@ -68,7 +92,11 @@ export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, l
                             label="Etternavn"
                             description="Må fylles ut"
                             value={etternavn}
-                            onChange={(e) => setEtternavn(e.target.value)}
+                            onChange={(e) => {
+                                setEtternavn(e.target.value);
+                                setEtternavnError(false);
+                            }}
+                            error={etternavnError && "Etternavn må fylles ut"}
                         />
                     </VStack>
                 </HStack>
@@ -80,7 +108,15 @@ export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, l
                             label="E-post"
                             description="Må fylles ut"
                             value={epost}
-                            onChange={(e) => setEpost(e.target.value)}
+                            onChange={(e) => {
+                                setEpost(e.target.value);
+                                setEpostError(false);
+                                setEpostValidationError(false);
+                            }}
+                            error={
+                                (epostError && "E-post må fylles ut") ||
+                                (epostValidationError && "Du har lagt inn en ugyldig E-post")
+                            }
                         />
                     </VStack>
                     <VStack className={styles.element}>
@@ -90,7 +126,11 @@ export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, l
                             label="Telefon"
                             description="Må fylles ut"
                             value={telefon}
-                            onChange={(e) => setTelefon(e.target.value)}
+                            onChange={(e) => {
+                                setTelefon(e.target.value);
+                                setTelefonError(false);
+                            }}
+                            error={telefonError && "Telefon må fylles ut"}
                         />
                     </VStack>
                 </HStack>

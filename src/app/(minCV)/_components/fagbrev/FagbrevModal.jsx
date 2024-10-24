@@ -5,6 +5,7 @@ import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
 export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFagbrev }) {
     const [valgtFagbrev, setValgtFagbrev] = useState(fagbrev || null);
+    const [valgtFagbrevError, setValgtFagbrevError] = useState(false);
 
     useEffect(() => {
         const oppdaterFagbrev = (fagbrev) => setValgtFagbrev(fagbrev);
@@ -12,15 +13,20 @@ export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFa
     }, [fagbrev]);
 
     const lagre = () => {
-        lagreFagbrev({
-            title: valgtFagbrev.label || valgtFagbrev.title,
-            type: valgtFagbrev.type || valgtFagbrev.undertype === "MB" ? "MESTERBREV" : "SVENNEBREV_FAGBREV",
-            conceptId: valgtFagbrev.conceptId,
-        });
+        if (!valgtFagbrev || valgtFagbrev.length === 0) setValgtFagbrevError(true);
+
+        if (valgtFagbrev && valgtFagbrev.length !== 0) {
+            lagreFagbrev({
+                title: valgtFagbrev.label || valgtFagbrev.title,
+                type: valgtFagbrev.type || valgtFagbrev.undertype === "MB" ? "MESTERBREV" : "SVENNEBREV_FAGBREV",
+                conceptId: valgtFagbrev.conceptId,
+            });
+        }
     };
 
     const oppdaterValgtFagbrev = (verdi, erValgt) => {
         setValgtFagbrev(erValgt ? verdi : null);
+        setValgtFagbrevError(false);
     };
 
     return (
@@ -45,6 +51,7 @@ export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFa
                     type={TypeaheadEnum.FAGBREV}
                     oppdaterValg={oppdaterValgtFagbrev}
                     valgtVerdi={valgtFagbrev?.title}
+                    error={valgtFagbrevError && "Du må velge et fagbrev"}
                 />
             </Modal.Body>
             <Modal.Footer>

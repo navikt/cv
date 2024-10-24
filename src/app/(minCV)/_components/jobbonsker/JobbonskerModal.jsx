@@ -12,6 +12,8 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
     const [ansettelsesform, setAnsettelsesform] = useState([]);
     const [arbeidstid, setArbeidstid] = useState([]);
     const [starttidspunkt, setStarttidspunkt] = useState("");
+    const [yrkerError, setYrkerError] = useState(false);
+    const [lokasjonerError, setLokasjonerError] = useState(false);
 
     useEffect(() => {
         const oppdaterJobbønsker = (jobbønsker) => {
@@ -27,15 +29,20 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
     }, [jobbønsker]);
 
     const lagre = () => {
-        lagreJobbønsker({
-            ...jobbønsker,
-            occupations: yrker,
-            locations: lokasjoner,
-            workLoadTypes: omfang,
-            occupationTypes: ansettelsesform,
-            workScheduleTypes: arbeidstid,
-            startOption: starttidspunkt,
-        });
+        if (yrker.length === 0) setYrkerError(true);
+        if (lokasjoner.length === 0) setLokasjonerError(true);
+
+        if (yrker.length !== 0 && lokasjoner.length !== 0) {
+            lagreJobbønsker({
+                ...jobbønsker,
+                occupations: yrker,
+                locations: lokasjoner,
+                workLoadTypes: omfang,
+                occupationTypes: ansettelsesform,
+                workScheduleTypes: arbeidstid,
+                startOption: starttidspunkt,
+            });
+        }
     };
 
     const oppdaterYrker = (yrke, erValgt) => {
@@ -47,6 +54,7 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
             oppdaterteYrker.splice(eksisterendeIndex, 1);
         }
         setYrker(oppdaterteYrker);
+        setYrkerError(false);
     };
 
     const oppdaterLokasjoner = (lokasjon, erValgt) => {
@@ -59,6 +67,7 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
         }
 
         setLokasjoner(oppdaterteLokasjoner);
+        setLokasjonerError(false);
     };
 
     return (
@@ -82,6 +91,7 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
                         multiselect={true}
                         placeholder={"Søk og legg til yrker"}
                         multiselectText={"Yrker"}
+                        error={yrkerError && "Du må legge til jobbønsker"}
                     />
                     <Typeahead
                         className={styles.mb6}
@@ -94,6 +104,7 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
                         multiselect={true}
                         placeholder={"Søk og legg til steder"}
                         multiselectText={"Steder"}
+                        error={lokasjonerError && "Du må legge til steder"}
                     />
                 </VStack>
                 <CheckboxGroup

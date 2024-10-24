@@ -9,6 +9,9 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
     const [pågår, setPågår] = useState([]);
     const [startdato, setStartdato] = useState(null);
     const [sluttdato, setSluttdato] = useState(null);
+    const [rolleError, setRolleError] = useState(false);
+    const [startdatoError, setStartdatoError] = useState(false);
+    const [sluttdatoError, setSluttdatoError] = useState(false);
 
     useEffect(() => {
         const oppdaterErfaring = (erfaring) => {
@@ -24,18 +27,25 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
 
     const lagre = () => {
         const erPågående = pågår.includes(true);
-        lagreErfaring({
-            ...erfaring,
-            role: rolle,
-            description: beskrivelse,
-            fromDate: startdato,
-            toDate: erPågående ? null : sluttdato,
-            ongoing: erPågående,
-        });
+
+        if (!rolle) setRolleError(true);
+        if (!startdato) setStartdatoError(true);
+        if (!erPågående && !sluttdato) setSluttdatoError(true);
+
+        if (rolle && startdato && (sluttdato || erPågående)) {
+            lagreErfaring({
+                ...erfaring,
+                role: rolle,
+                description: beskrivelse,
+                fromDate: startdato,
+                toDate: erPågående ? null : sluttdato,
+                ongoing: erPågående,
+            });
+        }
     };
 
     return (
-        <Modal open={modalÅpen} aria-label="Legg til utdanning" onClose={() => toggleModal(false)} width="medium">
+        <Modal open={modalÅpen} aria-label="Legg til annen erfaring" onClose={() => toggleModal(false)} width="medium">
             <Modal.Header closeButton={true}>
                 <Heading align="start" level="3" size="medium">
                     Legg til annen erfaring
@@ -50,7 +60,11 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
                     description="Eksempel: militærtjeneste, styreverv eller fotballtrener"
                     className={styles.mb6}
                     value={rolle}
-                    onChange={(e) => setRolle(e.target.value)}
+                    onChange={(e) => {
+                        setRolle(e.target.value);
+                        setRolleError(false);
+                    }}
+                    error={rolleError && "Du må skrive inn rolle"}
                 />
                 <TextField
                     label="Beskrivelse"
@@ -64,10 +78,24 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
                 </CheckboxGroup>
 
                 <HStack gap="8">
-                    <Datovelger valgtDato={startdato} oppdaterDato={setStartdato} label="Fra" obligatorisk />
+                    <Datovelger
+                        valgtDato={startdato}
+                        oppdaterDato={setStartdato}
+                        label="Fra"
+                        obligatorisk
+                        error={startdatoError}
+                        setError={setStartdatoError}
+                    />
 
                     {!pågår.includes(true) && (
-                        <Datovelger valgtDato={sluttdato} oppdaterDato={setSluttdato} label="Til" obligatorisk />
+                        <Datovelger
+                            valgtDato={sluttdato}
+                            oppdaterDato={setSluttdato}
+                            label="Til"
+                            obligatorisk
+                            error={sluttdatoError}
+                            setError={setSluttdatoError}
+                        />
                     )}
                 </HStack>
             </Modal.Body>

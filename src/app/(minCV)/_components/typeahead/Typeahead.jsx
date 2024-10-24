@@ -15,6 +15,7 @@ export const Typeahead = ({
     className,
     placeholder,
     multiselectText,
+    error,
 }) => {
     const alleredeValgte = multiselect ? valgtVerdi.map((e) => e[visningsfelt]) : valgtVerdi ? [valgtVerdi] : [];
 
@@ -41,6 +42,7 @@ export const Typeahead = ({
                 onToggleSelected={(verdi, isSelected) => velgVerdi(verdi, isSelected)}
                 placeholder={placeholder || "Søk og velg et alternativ"}
                 isLoading={typeaheadLaster}
+                error={error}
             />
             {multiselect && (
                 <VStack className={[styles.mt6]}>

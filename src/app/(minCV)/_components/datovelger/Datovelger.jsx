@@ -1,9 +1,16 @@
 import { BodyLong, DatePicker, HStack, useDatepicker, VStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 
-export const Datovelger = ({ valgtDato, oppdaterDato, label, fremtid = false, obligatorisk = false, className }) => {
-    const [error, setError] = useState(false);
-
+export const Datovelger = ({
+    valgtDato,
+    oppdaterDato,
+    label,
+    fremtid = false,
+    obligatorisk = false,
+    className,
+    error,
+    setError,
+}) => {
     useEffect(() => {
         const oppdaterDatepickerDato = (dato) => setSelected(dato);
         if (valgtDato && valgtDato !== selectedDay) oppdaterDatepickerDato(valgtDato);
@@ -18,8 +25,13 @@ export const Datovelger = ({ valgtDato, oppdaterDato, label, fremtid = false, ob
     const { datepickerProps, inputProps, selectedDay, setSelected } = useDatepicker({
         fromDate: hentDatoMedÅrsforskjell(-50),
         toDate: hentDatoMedÅrsforskjell(fremtid ? 25 : 0),
-        onDateChange: (val) => oppdaterDato(val),
-        onValidate: (val) => setError(!val.isValidDate),
+        onDateChange: (val) => {
+            oppdaterDato(val);
+            setError(false);
+        },
+        onValidate: (val) => {
+            !val.isEmpty && setError(!val.isValidDate);
+        },
     });
 
     return (

@@ -1,4 +1,4 @@
-import { Button, Heading, HStack, Modal, Select } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, HStack, Modal, Select } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { SpråkEnum } from "@/app/_common/enums/cvEnums";
@@ -9,6 +9,7 @@ export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpr�
     const [valgtSpråk, setValgtSpråk] = useState(språk || null);
     const [muntligEvne, setMuntligEvne] = useState("IKKE_OPPGITT");
     const [skriftligEvne, setSkriftligEvne] = useState("IKKE_OPPGITT");
+    const [valgtSprakError, setValgtSprakError] = useState(false);
 
     useEffect(() => {
         const oppdaterSpråk = (språk) => {
@@ -20,16 +21,21 @@ export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpr�
     }, [språk]);
 
     const lagre = () => {
-        lagreSpråk({
-            language: valgtSpråk.language || valgtSpråk.title,
-            iso3Code: valgtSpråk.iso3Code || valgtSpråk.kode,
-            oralProficiency: muntligEvne,
-            writtenProficiency: skriftligEvne,
-        });
+        if (!valgtSpråk || valgtSpråk.length === 0) setValgtSprakError(true);
+
+        if (valgtSpråk && valgtSpråk.length !== 0) {
+            lagreSpråk({
+                language: valgtSpråk.language || valgtSpråk.title,
+                iso3Code: valgtSpråk.iso3Code || valgtSpråk.kode,
+                oralProficiency: muntligEvne,
+                writtenProficiency: skriftligEvne,
+            });
+        }
     };
 
     const oppdaterValgtSpråk = (verdi, erValgt) => {
         setValgtSpråk(erValgt ? verdi : null);
+        setValgtSprakError(false);
     };
 
     return (
@@ -48,13 +54,17 @@ export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpr�
                 </Heading>
             </Modal.Header>
             <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
+                <BodyLong>
+                    <b>Språk</b> *obligatorisk
+                </BodyLong>
                 <Typeahead
                     className={styles.mb6}
-                    label={"Språk"}
+                    label=""
                     valgtVerdi={valgtSpråk?.language || valgtSpråk?.title}
                     oppdaterValg={oppdaterValgtSpråk}
                     type={TypeaheadEnum.SPRÅK}
                     forhåndshentet={true}
+                    error={valgtSprakError && "Du må velge et språk"}
                 />
                 <Select
                     id="Muntlig"
