@@ -1,15 +1,12 @@
-import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { v4 as uuidv4 } from "uuid";
 
-export const simpleApiRequest = async (url, method, body = null) => {
+export const simpleApiRequest = async (url, method, body = null, includeCredentials = true) => {
     const fetchOptions = {
         method: method,
-        credentials: "same-origin",
-        headers: {
-            "Nav-CallId": `min-side-cv-${uuidv4()}`,
-        },
+        headers: { "Nav-CallId": `min-side-cv-${uuidv4()}` },
     };
 
+    if (includeCredentials) fetchOptions["credentials"] = "same-origin";
     if (body !== null) fetchOptions["body"] = JSON.stringify(body);
 
     return await fetch(url, fetchOptions);
@@ -37,25 +34,4 @@ export const putAPI = async (url, body) => {
     }
 
     return await response.json();
-};
-
-export const mapTypeaheadResponse = (json, visningsfelt = "title") => {
-    return json.map((e) => ({
-        ...e,
-        [visningsfelt]: e.label || e.term || e.location,
-        conceptId: e.konseptId,
-    }));
-};
-
-export const hentTypeahead = async (query, type, visningsfelt = "title") => {
-    const queryString = type !== TypeaheadEnum.SPRÅK ? encodeURIComponent(query) : "";
-
-    const url = `/personbruker/api/typeahead/${type}/${queryString}`;
-    const response = await fetch(url, {
-        method: "GET",
-        headers: { "Nav-CallId": `min-side-cv-${uuidv4()}` },
-    });
-
-    const data = response.ok ? await response.json() : [];
-    return mapTypeaheadResponse(data, visningsfelt);
 };
