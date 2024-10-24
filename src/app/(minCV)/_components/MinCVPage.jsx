@@ -4,7 +4,7 @@ import styles from "../../page.module.css";
 import "@navikt/ds-css";
 import { useState } from "react";
 import { Box, HStack, VStack, Hide, Show, Button } from "@navikt/ds-react";
-import { DownloadIcon, EyeIcon } from "@navikt/aksel-icons";
+import { EyeIcon } from "@navikt/aksel-icons";
 import DelingAvCV from "@/app/(minCV)/_components/delingAvCV/DelingAvCV";
 import Personalia from "@/app/(minCV)/_components/personalia/Personalia";
 import Jobbonsker from "@/app/(minCV)/_components/jobbonsker/Jobbonsker";
