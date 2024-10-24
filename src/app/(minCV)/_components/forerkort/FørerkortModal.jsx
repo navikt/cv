@@ -1,4 +1,4 @@
-import { Button, Heading, HStack, Modal, Select, VStack } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, HStack, Modal, Select, VStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import styles from "@/app/page.module.css";
 import førerkortData from "@/app/_common/data/førerkort.json";
@@ -9,6 +9,9 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
     const [gyldigFra, setGyldigFra] = useState(førerkort?.acquiredDate ? new Date(førerkort.acquiredDate) : null);
     const [gyldigTil, setGyldigTil] = useState(førerkort?.expiryDate ? new Date(førerkort.expiryDate) : null);
     const [kreverDato, setKreverDato] = useState(!!førerkort?.acquiredDate);
+    const [valgtForerkortError, setValgtForerkortError] = useState(false);
+    const [gyldigFraError, setGyldigFraError] = useState(false);
+    const [gyldigTilError, setGyldigTilError] = useState(false);
 
     const gyldigeFørerkort = førerkortData.gyldigeFørerkort;
 
@@ -21,14 +24,21 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
         const valgtFørerkort = gyldigeFørerkort.find((e) => e.type === verdi);
         setValgtFørerkort(valgtFørerkort);
         setKreverDato(valgtFørerkort?.kreverDato || false);
+        setValgtForerkortError(false);
     };
 
     const lagre = async () => {
-        lagreFørerkort({
-            type: valgtFørerkort.label || valgtFørerkort.type,
-            acquiredDate: gyldigFra,
-            expiryDate: gyldigTil,
-        });
+        if (!valgtFørerkort || valgtFørerkort.length === 0) setValgtForerkortError(true);
+        if (kreverDato && !gyldigFra) setGyldigFraError(true);
+        if (kreverDato && !gyldigTil) setGyldigTilError(true);
+
+        if (valgtFørerkort && valgtFørerkort.length !== 0 && (kreverDato ? gyldigFra && gyldigTil : true)) {
+            lagreFørerkort({
+                type: valgtFørerkort.label || valgtFørerkort.type,
+                acquiredDate: gyldigFra,
+                expiryDate: gyldigTil,
+            });
+        }
     };
 
     return (
@@ -48,12 +58,16 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
             </Modal.Header>
             <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
                 <VStack>
+                    <BodyLong>
+                        <b>Førerkort</b> *obligatorisk
+                    </BodyLong>
                     <Select
                         id="Førerkort"
-                        label="Førerkort"
+                        label=""
                         className={styles.mb6}
                         value={valgtFørerkort?.type || ""}
                         onChange={(e) => velgFørerkort(e.target.value)}
+                        error={valgtForerkortError && "Du må velge førerkort"}
                     >
                         <option value={null}>Velg</option>
                         {gyldigeFørerkort.map((e) => (
@@ -69,6 +83,8 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
                                 oppdaterDato={setGyldigFra}
                                 label="Gyldig fra"
                                 obligatorisk
+                                error={gyldigFraError}
+                                setError={setGyldigFraError}
                             />
                             <Datovelger
                                 valgtDato={gyldigTil}
@@ -76,6 +92,8 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
                                 label="Gyldig til"
                                 obligatorisk
                                 fremtid
+                                error={gyldigTilError}
+                                setError={setGyldigTilError}
                             />
                         </HStack>
                     )}

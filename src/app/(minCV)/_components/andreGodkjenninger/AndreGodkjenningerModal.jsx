@@ -1,4 +1,4 @@
-import { Button, Heading, HStack, Modal, TextField } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, HStack, Modal, TextField } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";
@@ -14,6 +14,9 @@ export default function AndreGodkjenningerModal({ modalÅpen, toggleModal, godkj
     const [godkjenningTilDato, setGodkjenningTilDato] = useState(
         godkjenning?.toDate ? new Date(godkjenning.toDate) : null,
     );
+    const [valgtGodkjenningError, setValgtGodkjenningError] = useState(false);
+    const [godkjenningFraDatoError, setGodkjenningFraDatoError] = useState(false);
+    const [godkjenningTilDatoError, setGodkjenningTilDatoError] = useState(false);
 
     useEffect(() => {
         const oppdaterGodkjenning = (godkjenning) => {
@@ -26,17 +29,23 @@ export default function AndreGodkjenningerModal({ modalÅpen, toggleModal, godkj
     }, [godkjenning]);
 
     const lagre = () => {
-        lagreGodkjenning({
-            certificateName: valgtGodkjenning.title || valgtGodkjenning.certificateName,
-            conceptId: valgtGodkjenning.conceptId,
-            issuer: utsteder,
-            fromDate: godkjenningFraDato,
-            toDate: godkjenningTilDato,
-        });
+        if (!valgtGodkjenning || valgtGodkjenning.length === 0) setValgtGodkjenningError(true);
+        if (!godkjenningFraDato) setGodkjenningFraDatoError(true);
+
+        if (valgtGodkjenning && valgtGodkjenning.length !== 0 && godkjenningFraDato && !godkjenningTilDatoError) {
+            lagreGodkjenning({
+                certificateName: valgtGodkjenning.title || valgtGodkjenning.certificateName,
+                conceptId: valgtGodkjenning.conceptId,
+                issuer: utsteder,
+                fromDate: godkjenningFraDato,
+                toDate: godkjenningTilDato,
+            });
+        }
     };
 
     const oppdaterValgtGodkjenning = (verdi, erValgt) => {
         setValgtGodkjenning(erValgt ? verdi : null);
+        setValgtGodkjenningError(false);
     };
 
     return (
@@ -55,13 +64,17 @@ export default function AndreGodkjenningerModal({ modalÅpen, toggleModal, godkj
                 </Heading>
             </Modal.Header>
             <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
+                <BodyLong>
+                    <b>Annen godkjenning</b> *obligatorisk
+                </BodyLong>
                 <Typeahead
                     className={styles.mb6}
-                    label="Annen godkjenning"
+                    label=""
                     description="Yrkessertifikater, attester, bevis o.l."
                     type={TypeaheadEnum.ANDRE_GODKJENNINGER}
                     oppdaterValg={oppdaterValgtGodkjenning}
                     valgtVerdi={valgtGodkjenning?.certificateName || valgtGodkjenning?.title}
+                    error={valgtGodkjenningError && "Du må velge en godkjenning"}
                 />
                 <TextField
                     className={styles.mb6}
@@ -71,12 +84,21 @@ export default function AndreGodkjenningerModal({ modalÅpen, toggleModal, godkj
                     onChange={(e) => setUtsteder(e.target.value)}
                 />
                 <HStack gap="8">
-                    <Datovelger valgtDato={godkjenningFraDato} oppdaterDato={setGodkjenningFraDato} label="Fullført" />
+                    <Datovelger
+                        valgtDato={godkjenningFraDato}
+                        oppdaterDato={setGodkjenningFraDato}
+                        label="Fullført"
+                        obligatorisk
+                        error={godkjenningFraDatoError}
+                        setError={setGodkjenningFraDatoError}
+                    />
                     <Datovelger
                         valgtDato={godkjenningTilDato}
                         oppdaterDato={setGodkjenningTilDato}
                         label="Utløper"
                         fremtid
+                        error={godkjenningTilDatoError}
+                        setError={setGodkjenningTilDatoError}
                     />
                 </HStack>
             </Modal.Body>

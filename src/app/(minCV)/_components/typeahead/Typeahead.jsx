@@ -15,6 +15,7 @@ export const Typeahead = ({
     className,
     placeholder,
     multiselectText,
+    error,
 }) => {
     const [typeaheadData, setTypeaheadData] = useState([]);
     const [typeaheadForslag, setTypeaheadForslag] = useState([]);
@@ -75,6 +76,7 @@ export const Typeahead = ({
                 onChange={(verdi) => oppdaterTypeahead(verdi || "")}
                 onToggleSelected={(verdi, isSelected) => velgVerdi(verdi, isSelected)}
                 placeholder={placeholder || "Søk og velg et alternativ"}
+                error={error}
             />
             {multiselect && (
                 <VStack className={[styles.mt6]}>

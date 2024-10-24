@@ -1,10 +1,11 @@
-import { Button, Heading, HStack, Modal } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, HStack, Modal } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
 export default function KompetanserModal({ modalÅpen, toggleModal, kompetanse, lagreKompetanse }) {
     const [valgtKompetanse, setValgtKompetanse] = useState(kompetanse || null);
+    const [valgtKompetanseError, setValgtKompetanseError] = useState(false);
 
     useEffect(() => {
         const oppdaterKompetanse = (kompetanse) => setValgtKompetanse(kompetanse);
@@ -12,15 +13,20 @@ export default function KompetanserModal({ modalÅpen, toggleModal, kompetanse, 
     }, [kompetanse]);
 
     const lagre = () => {
-        lagreKompetanse({
-            title: valgtKompetanse.label || valgtKompetanse.title,
-            type: valgtKompetanse.type,
-            conceptId: valgtKompetanse.conceptId,
-        });
+        if (!valgtKompetanse || valgtKompetanse.length === 0) setValgtKompetanseError(true);
+
+        if (valgtKompetanse && valgtKompetanse.length !== 0) {
+            lagreKompetanse({
+                title: valgtKompetanse.label || valgtKompetanse.title,
+                type: valgtKompetanse.type,
+                conceptId: valgtKompetanse.conceptId,
+            });
+        }
     };
 
     const oppdaterValgtKompetanse = (verdi, erValgt) => {
         setValgtKompetanse(erValgt ? verdi : null);
+        setValgtKompetanseError(false);
     };
 
     return (
@@ -39,12 +45,16 @@ export default function KompetanserModal({ modalÅpen, toggleModal, kompetanse, 
                 </Heading>
             </Modal.Header>
             <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
+                <BodyLong>
+                    <b>Hva er du flink til?</b> *obligatorisk
+                </BodyLong>
                 <Typeahead
-                    label="Hva er du flink til?"
+                    label=""
                     description="Legg til kompetanser, ferdigheter, verktøy o.l."
                     type={TypeaheadEnum.KOMPETANSE}
                     oppdaterValg={oppdaterValgtKompetanse}
                     valgtVerdi={valgtKompetanse?.title}
+                    error={valgtKompetanseError && "Du må velge en eller flere kompetanser"}
                 />
             </Modal.Body>
             <Modal.Footer>

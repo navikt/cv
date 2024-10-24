@@ -23,6 +23,9 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
     const [startdato, setStartdato] = useState(null);
     const [sluttdato, setSluttdato] = useState(null);
     const [pågår, setPågår] = useState([]);
+    const [utdanningsnivaError, setUtdanningsnivaError] = useState(false);
+    const [startdatoError, setStartdatoError] = useState(false);
+    const [sluttdatoError, setSluttdatoError] = useState(false);
 
     useEffect(() => {
         const oppdaterUtdanning = (utdanning) => {
@@ -40,16 +43,23 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
 
     const lagre = () => {
         const erPågående = pågår.includes(true);
-        lagreUtdanning({
-            ...utdanning,
-            nuskode: utdanningsnivå,
-            field: gradOgRetning,
-            institution: institusjon,
-            description: beskrivelse,
-            startDate: startdato,
-            endDate: erPågående ? null : sluttdato,
-            ongoing: erPågående,
-        });
+
+        if (!utdanningsnivå) setUtdanningsnivaError(true);
+        if (!startdato) setStartdatoError(true);
+        if (!erPågående && !sluttdato) setSluttdatoError(true);
+
+        if (utdanningsnivå && startdato && (sluttdato || erPågående)) {
+            lagreUtdanning({
+                ...utdanning,
+                nuskode: utdanningsnivå,
+                field: gradOgRetning,
+                institution: institusjon,
+                description: beskrivelse,
+                startDate: startdato,
+                endDate: erPågående ? null : sluttdato,
+                ongoing: erPågående,
+            });
+        }
     };
 
     return (
@@ -68,7 +78,11 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
                     label="Hvilken type utdanning har du gått?"
                     className={styles.mb6}
                     value={utdanningsnivå}
-                    onChange={(e) => setUtdanningsnivå(e.target.value)}
+                    onChange={(e) => {
+                        setUtdanningsnivå(e.target.value);
+                        setUtdanningsnivaError(false);
+                    }}
+                    error={utdanningsnivaError && "Utdanningsnivå mangler"}
                 >
                     <option value={""}>Velg</option>
                     {Object.keys(UtdanningsnivåEnum).map((nuskode) => (
@@ -103,10 +117,24 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
                 </CheckboxGroup>
 
                 <HStack gap="8">
-                    <Datovelger valgtDato={startdato} oppdaterDato={setStartdato} label="Fra" obligatorisk />
+                    <Datovelger
+                        valgtDato={startdato}
+                        oppdaterDato={setStartdato}
+                        label="Fra"
+                        obligatorisk
+                        error={startdatoError}
+                        setError={setStartdatoError}
+                    />
 
                     {!pågår.includes(true) && (
-                        <Datovelger valgtDato={sluttdato} oppdaterDato={setSluttdato} label="Til" obligatorisk />
+                        <Datovelger
+                            valgtDato={sluttdato}
+                            oppdaterDato={setSluttdato}
+                            label="Til"
+                            obligatorisk
+                            error={sluttdatoError}
+                            setError={setSluttdatoError}
+                        />
                     )}
                 </HStack>
             </Modal.Body>

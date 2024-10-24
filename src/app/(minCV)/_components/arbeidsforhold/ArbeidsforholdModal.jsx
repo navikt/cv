@@ -19,6 +19,10 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, l
     const [konseptId, setKonseptId] = useState("");
     const [styrk, setStyrk] = useState("");
 
+    const [stillingstittelError, setStillingstittelError] = useState(false);
+    const [startdatoError, setStartdatoError] = useState(false);
+    const [sluttdatoError, setSluttdatoError] = useState(false);
+
     useEffect(() => {
         const oppdaterArbeidsforhold = (arbeidsforhold) => {
             setArbeidsgiver(arbeidsforhold?.employer || "");
@@ -40,25 +44,33 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, l
 
     const lagre = async () => {
         const erPågående = pågår.includes(true);
-        await lagreArbeidsforhold({
-            ...arbeidsforhold,
-            employer: arbeidsgiver,
-            jobTitle: stillingstittel,
-            conceptId: konseptId,
-            styrkkode: styrk,
-            alternativeJobTitle: alternativTittel,
-            location: arbeidssted,
-            description: arbeidsoppgaver,
-            fromDate: startdato,
-            toDate: erPågående ? null : sluttdato,
-            ongoing: erPågående,
-        });
+
+        if (!stillingstittel) setStillingstittelError(true);
+        if (!startdato) setStartdatoError(true);
+        if (!erPågående && !sluttdato) setSluttdatoError(true);
+
+        if (stillingstittel && startdato && (sluttdato || erPågående)) {
+            await lagreArbeidsforhold({
+                ...arbeidsforhold,
+                employer: arbeidsgiver,
+                jobTitle: stillingstittel,
+                conceptId: konseptId,
+                styrkkode: styrk,
+                alternativeJobTitle: alternativTittel,
+                location: arbeidssted,
+                description: arbeidsoppgaver,
+                fromDate: startdato,
+                toDate: erPågående ? null : sluttdato,
+                ongoing: erPågående,
+            });
+        }
     };
 
     const setStillingTypeahead = (stilling, erValgt) => {
         setStillingstittel(erValgt ? stilling.label : "");
         setKonseptId(erValgt ? stilling.konseptId : "");
         setStyrk(erValgt ? stilling.styrk08 : "");
+        setStillingstittelError(false);
     };
 
     return (
@@ -80,6 +92,7 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, l
                             type={TypeaheadEnum.STILLING}
                             oppdaterValg={setStillingTypeahead}
                             valgtVerdi={stillingstittel}
+                            error={stillingstittelError && "Du må velge stilling/yrke"}
                         />
                     </VStack>
                     <VStack className={styles.element}>
@@ -122,10 +135,24 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, l
                 </CheckboxGroup>
 
                 <HStack gap="8">
-                    <Datovelger valgtDato={startdato} oppdaterDato={setStartdato} label="Fra" obligatorisk />
+                    <Datovelger
+                        valgtDato={startdato}
+                        oppdaterDato={setStartdato}
+                        label="Fra"
+                        obligatorisk
+                        error={startdatoError}
+                        setError={setStartdatoError}
+                    />
 
                     {!pågår.includes(true) && (
-                        <Datovelger valgtDato={sluttdato} oppdaterDato={setSluttdato} label="Til" obligatorisk />
+                        <Datovelger
+                            valgtDato={sluttdato}
+                            oppdaterDato={setSluttdato}
+                            label="Til"
+                            obligatorisk
+                            error={sluttdatoError}
+                            setError={setSluttdatoError}
+                        />
                     )}
                 </HStack>
             </Modal.Body>
