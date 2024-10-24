@@ -12,7 +12,7 @@ export const useOppdaterSettHjemmel = (skalOppdatere) => {
         const response = await simpleApiRequest(url, "POST");
 
         if (!response.ok) {
-            errorNotifikasjon("Det skjedde en feil ved bekreftelse av sett hjemmel");
+            errorNotifikasjon("Det oppstod en feil ved bekreftelse av sett hjemmel");
             const error = Error(`Det skjedde en feil under kall til ${url}`);
             error.status = response.status;
             throw error;

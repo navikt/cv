@@ -19,7 +19,7 @@ export const useOppdaterCvSeksjon = (seksjon) => {
             suksessNotifikasjon("CV-en din ble oppdatert");
             return true;
         } catch (error) {
-            errorNotifikasjon("Det oppstod en feil ved oppdatering");
+            errorNotifikasjon("Det oppstod en feil ved lagring");
             throw error;
         }
     };

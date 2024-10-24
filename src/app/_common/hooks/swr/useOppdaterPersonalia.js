@@ -21,7 +21,7 @@ export const useOppdaterPersonalia = () => {
             suksessNotifikasjon("Personalia er oppdatert");
             return true;
         } catch (error) {
-            errorNotifikasjon("Det oppstod en feil ved oppdatering av personalia");
+            errorNotifikasjon("Det oppstod en feil ved lagring");
             throw error;
         }
     };

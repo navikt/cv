@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+const MAX_ANTALL_NOTIFIKASJONER = 6
+
 export const useNotifikasjoner = () => {
     const [notifikasjoner, setNotifikasjoner] = useState([]);
     const notifikasjonerRef = useRef(notifikasjoner);
@@ -18,7 +20,8 @@ export const useNotifikasjoner = () => {
 
     const leggTilNotifikasjon = (type, tekst) => {
         const notifikasjonsId = uuidv4();
-        setNotifikasjoner([...notifikasjoner, { id: notifikasjonsId, type: type, tekst: tekst }]);
+        const oppdaterteNotifikasjoner = [...notifikasjoner, { id: notifikasjonsId, type: type, tekst: tekst }]
+        setNotifikasjoner(oppdaterteNotifikasjoner.slice(0, MAX_ANTALL_NOTIFIKASJONER));
         setTimeout(() => slettNotifikasjon(notifikasjonsId, notifikasjonerRef.current), 5000);
     };
 
