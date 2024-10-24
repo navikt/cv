@@ -30,8 +30,8 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs }) 
             title: kursnavn,
             issuer: utsteder,
             date: kursDato,
-            durationUnit: tidsenhet,
-            duration: lengde,
+            durationUnit: tidsenhet || null,
+            duration: lengde || null,
         });
         setValgtKurs(null);
     };
