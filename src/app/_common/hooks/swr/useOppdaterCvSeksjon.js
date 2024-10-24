@@ -3,17 +3,25 @@
 import useSWR, { mutate } from "swr";
 import { putAPI } from "@/app/_common/utils/fetchUtils";
 import { CV_KEY } from "@/app/_common/hooks/swr/useCv";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 export const useOppdaterCvSeksjon = (seksjon) => {
+    const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
     const [dataForOppdatering, oppdaterMedData] = useState(null);
 
     const fetcher = async ({ url, seksjon, body }) => {
         if (!url || !body || !seksjon) return;
 
-        const response = await putAPI(url, body);
-        await mutate(CV_KEY, response, { revalidate: false });
-        return true;
+        try {
+            const response = await putAPI(url, body, suksessNotifikasjon, errorNotifikasjon);
+            await mutate(CV_KEY, response, { revalidate: false });
+            suksessNotifikasjon("CV-en din ble oppdatert");
+            return true;
+        } catch (error) {
+            errorNotifikasjon("Det oppstod en feil ved oppdatering");
+            throw error;
+        }
     };
 
     const skalOppdatere = !!dataForOppdatering && !!seksjon;

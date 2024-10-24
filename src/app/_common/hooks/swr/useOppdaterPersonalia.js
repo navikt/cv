@@ -3,9 +3,11 @@
 import useSWR, { mutate } from "swr";
 import { putAPI } from "@/app/_common/utils/fetchUtils";
 import { PERSON_KEY, usePerson } from "@/app/_common/hooks/swr/usePerson";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 export const useOppdaterPersonalia = () => {
+    const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
     const [dataForOppdatering, oppdaterMedData] = useState(null);
 
     const { person } = usePerson();
@@ -13,9 +15,15 @@ export const useOppdaterPersonalia = () => {
     const fetcher = async ({ url, body }) => {
         if (!url || !body) return;
 
-        const response = await putAPI(url, body);
-        await mutate(PERSON_KEY, { ...person, personalia: response }, { revalidate: false });
-        return true;
+        try {
+            const response = await putAPI(url, body);
+            await mutate(PERSON_KEY, { ...person, personalia: response }, { revalidate: false });
+            suksessNotifikasjon("Personalia er oppdatert");
+            return true;
+        } catch (error) {
+            errorNotifikasjon("Det oppstod en feil ved oppdatering av personalia");
+            throw error;
+        }
     };
 
     const skalOppdatere = !!dataForOppdatering;
