@@ -14,6 +14,7 @@ import { JobbonskerModal } from "@/app/(minCV)/_components/jobbonsker/Jobbonsker
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 function JobbonskerIcon() {
     return (
@@ -37,8 +38,7 @@ function JobbonskerIcon() {
 }
 
 export default function Jobbonsker() {
-    const { cv } = useCv();
-    const jobbønsker = cv.jobboensker;
+    const { jobbønsker, cvLaster } = useCv();
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
         CvSeksjonEnum.JOBBØNSKER,
     );
@@ -65,7 +65,9 @@ export default function Jobbonsker() {
         setDataTilOppdatering(tommeJobbønsker);
     };
 
-    const jobbønskerErTomt = () => jobbønsker == null || jobbønsker.locations.length === 0;
+    if (cvLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.JOBBØNSKER} icon={<JobbonskerIcon />} />;
+
+    const jobbønskerErTomt = () => jobbønsker || jobbønsker.locations.length === 0;
 
     return (
         <div data-section id={SeksjonsIdEnum.JOBBØNSKER}>

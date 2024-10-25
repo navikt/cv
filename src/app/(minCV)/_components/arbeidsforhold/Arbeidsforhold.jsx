@@ -8,11 +8,11 @@ import { useHentArbeidsforhold } from "@/app/_common/hooks/swr/useHentArbeidsfor
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import parse from "html-react-parser";
 
 export default function Arbeidsforhold() {
-    const { cv } = useCv();
-    const arbeidsforhold = cv.arbeidserfaring || [];
+    const { arbeidsforhold, cvLaster } = useCv();
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
         CvSeksjonEnum.ARBEIDSFORHOLD,
     );
@@ -58,6 +58,8 @@ export default function Arbeidsforhold() {
             </svg>
         );
     }
+
+    if (cvLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.ARBEIDSFORHOLD} icon={<ArbeidsforholdIcon />} />;
 
     return (
         <div data-section id={SeksjonsIdEnum.ARBEIDSFORHOLD}>
