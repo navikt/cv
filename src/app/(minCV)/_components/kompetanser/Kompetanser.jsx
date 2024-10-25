@@ -42,59 +42,61 @@ export default function Kompetanser() {
         </svg>
     );
 
-    if (cvLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.KOMPETANSER} icon={<KompetanserIcon />} />;
-
     return (
         <div data-section id={SeksjonsIdEnum.KOMPETANSER}>
-            <Box background="surface-default" padding="10" className={styles.box}>
-                <HStack justify="center">
-                    <KompetanserIcon />
-                </HStack>
-                <Heading level="2" size="large" align="start" spacing>
-                    Kompetanser
-                </Heading>
-                <>
-                    {kompetanser.length === 0 ? (
-                        <div>
-                            <BodyLong weight="semibold" spacing>
-                                Du har ikke lagt til noen kompetanser i CV-en
-                            </BodyLong>
-                            <BodyLong className={styles.mb12}>
-                                Her kan du sette inn de ulike kompetanser som spesifikke egenskaper f.eks undervisning
-                                eller butikkarbeid.
-                            </BodyLong>
-                        </div>
-                    ) : (
-                        <div className={styles.mb6}>
-                            {kompetanser.map((kompetanse, index) => (
-                                <div key={index}>
-                                    <BodyLong weight="semibold">• {kompetanse.title}</BodyLong>
-                                    <HStack justify="space-between" className={styles.mb3}>
-                                        <Button
-                                            icon={<PencilIcon aria-hidden />}
-                                            variant="tertiary"
-                                            onClick={() => toggleModal(true, index)}
-                                        >
-                                            Endre
-                                        </Button>
-                                        <Button
-                                            icon={<TrashIcon aria-hidden />}
-                                            variant="tertiary"
-                                            onClick={() => slettElement(index)}
-                                        >
-                                            Fjern
-                                        </Button>
-                                    </HStack>
-                                    {index < kompetanser.length - 1 && <div className={styles.divider}></div>}
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </>
-                <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                    {kompetanser.length === 0 ? "Legg til" : "Legg til flere"}
-                </Button>
-            </Box>
+            {cvLaster ? (
+                <SeksjonSkeleton icon={<KompetanserIcon />} />
+            ) : (
+                <Box background="surface-default" padding="10" className={styles.box}>
+                    <HStack justify="center">
+                        <KompetanserIcon />
+                    </HStack>
+                    <Heading level="2" size="large" align="start" spacing>
+                        Kompetanser
+                    </Heading>
+                    <>
+                        {kompetanser.length === 0 ? (
+                            <div>
+                                <BodyLong weight="semibold" spacing>
+                                    Du har ikke lagt til noen kompetanser i CV-en
+                                </BodyLong>
+                                <BodyLong className={styles.mb12}>
+                                    Her kan du sette inn de ulike kompetanser som spesifikke egenskaper f.eks
+                                    undervisning eller butikkarbeid.
+                                </BodyLong>
+                            </div>
+                        ) : (
+                            <div className={styles.mb6}>
+                                {kompetanser.map((kompetanse, index) => (
+                                    <div key={index}>
+                                        <BodyLong weight="semibold">• {kompetanse.title}</BodyLong>
+                                        <HStack justify="space-between" className={styles.mb3}>
+                                            <Button
+                                                icon={<PencilIcon aria-hidden />}
+                                                variant="tertiary"
+                                                onClick={() => toggleModal(true, index)}
+                                            >
+                                                Endre
+                                            </Button>
+                                            <Button
+                                                icon={<TrashIcon aria-hidden />}
+                                                variant="tertiary"
+                                                onClick={() => slettElement(index)}
+                                            >
+                                                Fjern
+                                            </Button>
+                                        </HStack>
+                                        {index < kompetanser.length - 1 && <div className={styles.divider}></div>}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </>
+                    <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                        {kompetanser.length === 0 ? "Legg til" : "Legg til flere"}
+                    </Button>
+                </Box>
+            )}
             {modalÅpen && (
                 <KompetanserModal
                     modalÅpen={modalÅpen}

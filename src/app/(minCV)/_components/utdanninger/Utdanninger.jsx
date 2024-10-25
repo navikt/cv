@@ -46,88 +46,91 @@ export default function Utdanninger() {
         setVisFeilmelding,
     );
 
-    if (cvLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.UTDANNING} icon={<UtdanningerIcon />} />;
-
     return (
         <div data-section id={SeksjonsIdEnum.UTDANNING}>
-            <Box background="surface-default" padding="10" className={styles.box}>
-                <HStack justify="center">
-                    <UtdanningerIcon />
-                </HStack>
-                <Heading level="2" size="large" align="start" spacing>
-                    Utdanninger
-                </Heading>
-                {utdanninger.length === 0 ? (
-                    <div>
-                        <BodyLong weight="semibold" spacing>
-                            Du har ikke lagt til noen utdanninger i CV-en
-                        </BodyLong>
-                        <BodyLong className={styles.mb12}>
-                            Her kan du beskrive dine utdanninger. Du bør legge inn første utdanningen du gjorde først.
-                        </BodyLong>
-                    </div>
-                ) : (
-                    <div>
-                        {utdanninger.map((utdanning, index) => (
-                            <div key={index}>
-                                <FormSummary style={{ marginBottom: "2rem" }}>
-                                    <FormSummary.Header>
-                                        <FormSummary.Heading level="2">
-                                            {UtdanningsnivåEnum[utdanning.nuskode]}
-                                        </FormSummary.Heading>
-                                    </FormSummary.Header>
+            {cvLaster ? (
+                <SeksjonSkeleton icon={<UtdanningerIcon />} />
+            ) : (
+                <Box background="surface-default" padding="10" className={styles.box}>
+                    <HStack justify="center">
+                        <UtdanningerIcon />
+                    </HStack>
+                    <Heading level="2" size="large" align="start" spacing>
+                        Utdanninger
+                    </Heading>
+                    {utdanninger.length === 0 ? (
+                        <div>
+                            <BodyLong weight="semibold" spacing>
+                                Du har ikke lagt til noen utdanninger i CV-en
+                            </BodyLong>
+                            <BodyLong className={styles.mb12}>
+                                Her kan du beskrive dine utdanninger. Du bør legge inn første utdanningen du gjorde
+                                først.
+                            </BodyLong>
+                        </div>
+                    ) : (
+                        <div>
+                            {utdanninger.map((utdanning, index) => (
+                                <div key={index}>
+                                    <FormSummary style={{ marginBottom: "2rem" }}>
+                                        <FormSummary.Header>
+                                            <FormSummary.Heading level="2">
+                                                {UtdanningsnivåEnum[utdanning.nuskode]}
+                                            </FormSummary.Heading>
+                                        </FormSummary.Header>
 
-                                    <FormSummary.Answers>
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Grad og utdanningsretning</FormSummary.Label>
-                                            <FormSummary.Value>{utdanning.field}</FormSummary.Value>
-                                        </FormSummary.Answer>
+                                        <FormSummary.Answers>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Grad og utdanningsretning</FormSummary.Label>
+                                                <FormSummary.Value>{utdanning.field}</FormSummary.Value>
+                                            </FormSummary.Answer>
 
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Skole/studiested</FormSummary.Label>
-                                            <FormSummary.Value>{utdanning.institution}</FormSummary.Value>
-                                        </FormSummary.Answer>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Skole/studiested</FormSummary.Label>
+                                                <FormSummary.Value>{utdanning.institution}</FormSummary.Value>
+                                            </FormSummary.Answer>
 
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Start- og sluttdato</FormSummary.Label>
-                                            <FormSummary.Value>
-                                                {formatterDato(utdanning.startDate)} -{" "}
-                                                {formatterDato(utdanning.endDate)}
-                                            </FormSummary.Value>
-                                        </FormSummary.Answer>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Start- og sluttdato</FormSummary.Label>
+                                                <FormSummary.Value>
+                                                    {formatterDato(utdanning.startDate)} -{" "}
+                                                    {formatterDato(utdanning.endDate)}
+                                                </FormSummary.Value>
+                                            </FormSummary.Answer>
 
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Beskrivelse</FormSummary.Label>
-                                            <FormSummary.Value>
-                                                {parse(utdanning.description.replace(/\n/g, "<br>"))}
-                                            </FormSummary.Value>
-                                        </FormSummary.Answer>
-                                    </FormSummary.Answers>
-                                </FormSummary>
-                                <HStack justify="space-between" className={styles.mb12}>
-                                    <Button
-                                        icon={<PencilIcon aria-hidden />}
-                                        variant="tertiary"
-                                        onClick={() => toggleModal(true, index)}
-                                    >
-                                        Endre
-                                    </Button>
-                                    <Button
-                                        icon={<TrashIcon aria-hidden />}
-                                        variant="tertiary"
-                                        onClick={() => slettElement(index)}
-                                    >
-                                        Fjern
-                                    </Button>
-                                </HStack>
-                            </div>
-                        ))}
-                    </div>
-                )}
-                <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                    {utdanninger.length === 0 ? "Legg til" : "Legg til flere"}
-                </Button>
-            </Box>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Beskrivelse</FormSummary.Label>
+                                                <FormSummary.Value>
+                                                    {parse(utdanning.description.replace(/\n/g, "<br>"))}
+                                                </FormSummary.Value>
+                                            </FormSummary.Answer>
+                                        </FormSummary.Answers>
+                                    </FormSummary>
+                                    <HStack justify="space-between" className={styles.mb12}>
+                                        <Button
+                                            icon={<PencilIcon aria-hidden />}
+                                            variant="tertiary"
+                                            onClick={() => toggleModal(true, index)}
+                                        >
+                                            Endre
+                                        </Button>
+                                        <Button
+                                            icon={<TrashIcon aria-hidden />}
+                                            variant="tertiary"
+                                            onClick={() => slettElement(index)}
+                                        >
+                                            Fjern
+                                        </Button>
+                                    </HStack>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                        {utdanninger.length === 0 ? "Legg til" : "Legg til flere"}
+                    </Button>
+                </Box>
+            )}
             {modalÅpen && (
                 <UtdanningModal
                     modalÅpen={modalÅpen}

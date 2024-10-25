@@ -43,41 +43,45 @@ export default function Personalia() {
         setVisFeilmelding,
     );
 
-    if (personLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.PERSONALIA} icon={<PersonaliaIcon />} />;
-
     return (
         <div data-section id={SeksjonsIdEnum.PERSONALIA}>
-            <Box background="surface-default" padding="10" className={styles.box}>
-                <HStack justify="center">
-                    <PersonaliaIcon />
-                </HStack>
-                <Heading level="2" size="large" align="start" spacing>
-                    Personalia
-                </Heading>
-                <BodyLong weight="semibold">Navn</BodyLong>
-                <BodyLong spacing>{personalia ? `${personalia.fornavn} ${personalia.etternavn}` : ""}</BodyLong>
-                <div className={styles.divider}></div>
-                <BodyLong weight="semibold">Telefon</BodyLong>
-                <BodyLong spacing>
-                    {personalia?.telefonnummer ? formatterTelefon(personalia.telefonnummer) : ""}
-                </BodyLong>
-                <div className={styles.divider}></div>
-                <BodyLong weight="semibold">E-post</BodyLong>
-                <BodyLong spacing>{personalia ? personalia.epost : ""}</BodyLong>
-                <div className={styles.divider}></div>
-                <BodyLong weight="semibold">Adresse</BodyLong>
-                <BodyLong className={styles.mb16}>
-                    {personalia ? formatterAdresse(personalia.adresse, personalia.postnummer, personalia.poststed) : ""}
-                </BodyLong>
-                <Button
-                    className={styles.mb6}
-                    icon={<PencilIcon aria-hidden />}
-                    variant="primary"
-                    onClick={() => toggleModal(true)}
-                >
-                    Endre
-                </Button>
-            </Box>
+            {personLaster ? (
+                <SeksjonSkeleton icon={<PersonaliaIcon />} />
+            ) : (
+                <Box background="surface-default" padding="10" className={styles.box}>
+                    <HStack justify="center">
+                        <PersonaliaIcon />
+                    </HStack>
+                    <Heading level="2" size="large" align="start" spacing>
+                        Personalia
+                    </Heading>
+                    <BodyLong weight="semibold">Navn</BodyLong>
+                    <BodyLong spacing>{personalia ? `${personalia.fornavn} ${personalia.etternavn}` : ""}</BodyLong>
+                    <div className={styles.divider}></div>
+                    <BodyLong weight="semibold">Telefon</BodyLong>
+                    <BodyLong spacing>
+                        {personalia?.telefonnummer ? formatterTelefon(personalia.telefonnummer) : ""}
+                    </BodyLong>
+                    <div className={styles.divider}></div>
+                    <BodyLong weight="semibold">E-post</BodyLong>
+                    <BodyLong spacing>{personalia ? personalia.epost : ""}</BodyLong>
+                    <div className={styles.divider}></div>
+                    <BodyLong weight="semibold">Adresse</BodyLong>
+                    <BodyLong className={styles.mb16}>
+                        {personalia
+                            ? formatterAdresse(personalia.adresse, personalia.postnummer, personalia.poststed)
+                            : ""}
+                    </BodyLong>
+                    <Button
+                        className={styles.mb6}
+                        icon={<PencilIcon aria-hidden />}
+                        variant="primary"
+                        onClick={() => toggleModal(true)}
+                    >
+                        Endre
+                    </Button>
+                </Box>
+            )}
             {modalÅpen && (
                 <PersonaliaModal
                     modalÅpen={modalÅpen}

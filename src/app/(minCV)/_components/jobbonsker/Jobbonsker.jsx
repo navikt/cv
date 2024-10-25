@@ -62,85 +62,89 @@ export default function Jobbonsker() {
             workLoadTypes: [],
             workScheduleTypes: [],
         };
-        setDataTilOppdatering(tommeJobbønsker);
+        oppdaterMedData(tommeJobbønsker);
     };
 
-    if (cvLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.JOBBØNSKER} icon={<JobbonskerIcon />} />;
-
-    const jobbønskerErTomt = () => jobbønsker === null || jobbønsker.locations.length === 0;
+    const jobbønskerErTomt = () => jobbønsker === null || jobbønsker?.locations?.length === 0;
 
     return (
         <div data-section id={SeksjonsIdEnum.JOBBØNSKER}>
-            <Box background="surface-default" padding="10" className={styles.box}>
-                <HStack justify="center">
-                    <JobbonskerIcon />
-                </HStack>
-                <Heading level="2" size="large" align="start" spacing>
-                    Jobbønsker
-                </Heading>
+            {cvLaster ? (
+                <SeksjonSkeleton icon={<JobbonskerIcon />} />
+            ) : (
+                <Box background="surface-default" padding="10" className={styles.box}>
+                    <HStack justify="center">
+                        <JobbonskerIcon />
+                    </HStack>
+                    <Heading level="2" size="large" align="start" spacing>
+                        Jobbønsker
+                    </Heading>
 
-                {jobbønskerErTomt() ? (
-                    <div>
-                        <BodyLong weight="semibold" spacing>
-                            Du har ikke lagt til noen jobbønsker i CV-en
-                        </BodyLong>
-                        <BodyLong className={styles.mb12}>
-                            Når du skal legge til jobbønsker velger du hvilke yrker du er interessert i å jobbe som
-                        </BodyLong>
-                        <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                            Legg til
-                        </Button>
-                    </div>
-                ) : (
-                    <>
-                        <BodyLong weight="semibold">Jobber og yrker</BodyLong>
-                        <BodyLong spacing>{formatterListeAvObjekterTilTekst(jobbønsker.occupations, "title")}</BodyLong>
-                        <div className={styles.divider}></div>
-
-                        <BodyLong weight="semibold">Områder</BodyLong>
-                        <BodyLong spacing>
-                            {formatterListeAvObjekterTilTekst(jobbønsker.locations, "location")}
-                        </BodyLong>
-                        <div className={styles.divider}></div>
-
-                        <BodyLong weight="semibold">Heltid eller deltid</BodyLong>
-                        <BodyLong spacing>{jobbønsker.workLoadTypes.map((e) => OmfangEnum[e]).join(", ")}</BodyLong>
-                        <div className={styles.divider}></div>
-
-                        <BodyLong weight="semibold">Arbeidstider</BodyLong>
-                        <BodyLong spacing>
-                            {jobbønsker.workScheduleTypes.map((e) => ArbeidstidEnum[e]).join(", ")}
-                        </BodyLong>
-                        <div className={styles.divider}></div>
-
-                        <BodyLong weight="semibold">Ansettelsesform</BodyLong>
-                        <BodyLong spacing>
-                            {jobbønsker.occupationTypes.map((e) => AnsettelsesformEnum[e]).join(", ")}
-                        </BodyLong>
-                        <div className={styles.divider}></div>
-
-                        <BodyLong weight="semibold">Oppstart</BodyLong>
-                        <BodyLong className={styles.mb16}>{StarttidspunktEnum[jobbønsker.startOption]}</BodyLong>
-
-                        <HStack justify="space-between">
-                            <Button
-                                icon={<PencilIcon aria-hidden />}
-                                variant="primary"
-                                onClick={() => toggleModal(true)}
-                            >
-                                Endre
+                    {jobbønskerErTomt() ? (
+                        <div>
+                            <BodyLong weight="semibold" spacing>
+                                Du har ikke lagt til noen jobbønsker i CV-en
+                            </BodyLong>
+                            <BodyLong className={styles.mb12}>
+                                Når du skal legge til jobbønsker velger du hvilke yrker du er interessert i å jobbe som
+                            </BodyLong>
+                            <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                                Legg til
                             </Button>
-                            <Button
-                                icon={<TrashIcon aria-hidden />}
-                                variant="secondary"
-                                onClick={() => slettJobbønsker()}
-                            >
-                                Fjern
-                            </Button>
-                        </HStack>
-                    </>
-                )}
-            </Box>
+                        </div>
+                    ) : (
+                        <>
+                            <BodyLong weight="semibold">Jobber og yrker</BodyLong>
+                            <BodyLong spacing>
+                                {formatterListeAvObjekterTilTekst(jobbønsker.occupations, "title")}
+                            </BodyLong>
+                            <div className={styles.divider}></div>
+
+                            <BodyLong weight="semibold">Områder</BodyLong>
+                            <BodyLong spacing>
+                                {formatterListeAvObjekterTilTekst(jobbønsker.locations, "location")}
+                            </BodyLong>
+                            <div className={styles.divider}></div>
+
+                            <BodyLong weight="semibold">Heltid eller deltid</BodyLong>
+                            <BodyLong spacing>{jobbønsker.workLoadTypes.map((e) => OmfangEnum[e]).join(", ")}</BodyLong>
+                            <div className={styles.divider}></div>
+
+                            <BodyLong weight="semibold">Arbeidstider</BodyLong>
+                            <BodyLong spacing>
+                                {jobbønsker.workScheduleTypes.map((e) => ArbeidstidEnum[e]).join(", ")}
+                            </BodyLong>
+                            <div className={styles.divider}></div>
+
+                            <BodyLong weight="semibold">Ansettelsesform</BodyLong>
+                            <BodyLong spacing>
+                                {jobbønsker.occupationTypes.map((e) => AnsettelsesformEnum[e]).join(", ")}
+                            </BodyLong>
+                            <div className={styles.divider}></div>
+
+                            <BodyLong weight="semibold">Oppstart</BodyLong>
+                            <BodyLong className={styles.mb16}>{StarttidspunktEnum[jobbønsker.startOption]}</BodyLong>
+
+                            <HStack justify="space-between">
+                                <Button
+                                    icon={<PencilIcon aria-hidden />}
+                                    variant="primary"
+                                    onClick={() => toggleModal(true)}
+                                >
+                                    Endre
+                                </Button>
+                                <Button
+                                    icon={<TrashIcon aria-hidden />}
+                                    variant="secondary"
+                                    onClick={() => slettJobbønsker()}
+                                >
+                                    Fjern
+                                </Button>
+                            </HStack>
+                        </>
+                    )}
+                </Box>
+            )}
             {modalÅpen && (
                 <JobbonskerModal
                     toggleModal={toggleModal}
