@@ -6,6 +6,8 @@ import { MidlertidigLasteside } from "@/app/_common/components/MidlertidigLastes
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import Hjemmelside from "@/app/(minCV)/_components/hjemmelside/Hjemmelside";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { useNotifikasjoner } from "@/app/_common/hooks/useNotifikasjoner";
+import { Notifikasjoner } from "@/app/_common/components/Notifikasjoner";
 
 export const ApplicationContext = React.createContext({});
 
@@ -13,34 +15,44 @@ const ApplicationProvider = ({ children }) => {
     const { erInnlogget, innloggingLaster, innloggingHarFeil } = useErInnlogget();
     const { person, personLaster, personHarFeil } = usePerson();
     const { cv, cvLaster, cvHarFeil } = useCv();
+    const { notifikasjoner, suksessNotifikasjon, errorNotifikasjon } = useNotifikasjoner();
 
     const [visHjemmelside, setVisHjemmelside] = useState(false);
 
-    if (innloggingHarFeil || personHarFeil || cvHarFeil) {
-        return <Feilside årsak={FeilsideTekst.FETCH_ERROR} />;
-    }
+    const hentSideinnhold = () => {
+        if (innloggingHarFeil || personHarFeil || cvHarFeil) {
+            return <Feilside årsak={FeilsideTekst.FETCH_ERROR} />;
+        }
 
-    if ((innloggingLaster && !erInnlogget) || (personLaster && !person)) {
-        return <MidlertidigLasteside />;
-    }
+        if ((innloggingLaster && !erInnlogget) || (personLaster && !person)) {
+            return <MidlertidigLasteside />;
+        }
 
-    if (!erInnlogget) {
-        return <Feilside årsak={FeilsideTekst.IKKE_LOGGET_INN} />;
-    }
+        if (!erInnlogget) {
+            return <Feilside årsak={FeilsideTekst.IKKE_LOGGET_INN} />;
+        }
 
-    if (person.erUnderOppfoelging === false) {
-        return <Feilside årsak={FeilsideTekst.IKKE_UNDER_OPPFØLGING} />;
-    }
+        if (person.erUnderOppfoelging === false) {
+            return <Feilside årsak={FeilsideTekst.IKKE_UNDER_OPPFØLGING} />;
+        }
 
-    if (person.harSettHjemmelEllerSamtykket === false || visHjemmelside) {
-        return <Hjemmelside måBekrefte={!person.harSettHjemmelEllerSamtykket} />;
-    }
+        if (person.harSettHjemmelEllerSamtykket === false || visHjemmelside) {
+            return <Hjemmelside måBekrefte={!person.harSettHjemmelEllerSamtykket} />;
+        }
 
-    if (cvLaster && !cv) {
-        return <MidlertidigLasteside />;
-    }
+        if (cvLaster && !cv) {
+            return <MidlertidigLasteside />;
+        }
 
-    return <ApplicationContext.Provider value={{ setVisHjemmelside }}>{children}</ApplicationContext.Provider>;
+        return children;
+    };
+
+    return (
+        <ApplicationContext.Provider value={{ setVisHjemmelside, suksessNotifikasjon, errorNotifikasjon }}>
+            {hentSideinnhold()}
+            <Notifikasjoner notifikasjoner={notifikasjoner} />
+        </ApplicationContext.Provider>
+    );
 };
 
 ApplicationProvider.propTypes = {

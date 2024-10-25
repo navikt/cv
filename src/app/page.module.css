@@ -116,6 +116,7 @@
 .logo {
     position: relative;
 }
+
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
     .card:hover {
@@ -586,4 +587,47 @@
 .previewItemRight {
     border-left: 2px solid lightgray;
     padding-left: 1rem;
+}
+
+.notifikasjonContainer {
+    width: 400px;
+    position: fixed;
+    bottom: var(--a-spacing-12);
+    right: var(--a-spacing-12);
+}
+
+.notifikasjon {
+    position: relative;
+    animation:
+        fadeOut 5s linear 1 forwards,
+        bounce-in-right 0.5s ease forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes bounce-in-right {
+    0% {
+        opacity: 0;
+        transform: translateX(500px);
+    }
+    60% {
+        transform: translateX(-10px);
+    }
+    80% {
+        opacity: 1;
+        transform: translateX(5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
