@@ -577,16 +577,17 @@
 .previewPersonalInfo {
     display: flex;
     flex-wrap: wrap;
-    width: 600px;
+    width: 700px;
 }
 
 .previewItemLeft {
-    width: 320px;
+    width: 280px;
 }
 
 .previewItemRight {
     border-left: 2px solid lightgray;
     padding-left: 1rem;
+    width: 470px;
 }
 
 .notifikasjonContainer {

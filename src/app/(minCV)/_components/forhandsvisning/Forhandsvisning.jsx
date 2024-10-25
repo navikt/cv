@@ -6,6 +6,7 @@ import { formatterDato, formatterFullDato, formatterTidsenhet } from "@/app/_com
 import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
+import parse from "html-react-parser";
 
 export default function Forhandsvisning({ setVisHovedinnhold }) {
     const { person } = usePerson();
@@ -54,7 +55,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         <div className={styles.previewItem}>
                             <div className={styles.previewItemLeft} />
                             <div className={styles.previewItemRight}>
-                                <BodyLong>{cv.sammendrag}</BodyLong>
+                                <BodyLong>{parse(cv.sammendrag.replace(/\n/g, "<br>"))}</BodyLong>
                             </div>
                         </div>
                     </div>
@@ -76,7 +77,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                         <BodyLong weight="semibold">{UtdanningsnivåEnum[utdanning.nuskode]}</BodyLong>
                                         <BodyLong>{utdanning.institution}</BodyLong>
                                         <BodyLong>{utdanning.field}</BodyLong>
-                                        <BodyLong className={styles.mb3}>{utdanning.description}</BodyLong>
+                                        <BodyLong className={styles.mb3}>{parse(utdanning.description.replace(/\n/g, "<br>"))}</BodyLong>
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +121,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                             {erfaring.employer !== "" && erfaring.location !== "" ? ", " : ""}
                                             {erfaring.location}
                                         </BodyLong>
-                                        <BodyLong className={styles.mb3}>{erfaring.description}</BodyLong>
+                                        <BodyLong className={styles.mb3}>{erfaring.description && parse(erfaring.description.replace(/\n/g, "<br>"))}</BodyLong>
                                     </div>
                                 </div>
                             </div>
