@@ -6,6 +6,7 @@ import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import parse from "html-react-parser";
 
 export default function Sammendrag() {
     const { cv } = useCv();
@@ -73,7 +74,7 @@ export default function Sammendrag() {
                             <BodyLong weight="semibold" className={styles.mb3}>
                                 Om meg
                             </BodyLong>
-                            <BodyLong className={styles.mb6}>{sammendrag}</BodyLong>
+                            <BodyLong className={styles.mb6}>{parse(sammendrag.replace(/\n/g, "<br>"))}</BodyLong>
                         </VStack>
                         <HStack justify="space-between">
                             <Button
