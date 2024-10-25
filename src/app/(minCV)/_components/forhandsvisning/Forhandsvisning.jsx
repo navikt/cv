@@ -77,7 +77,9 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                         <BodyLong weight="semibold">{UtdanningsnivåEnum[utdanning.nuskode]}</BodyLong>
                                         <BodyLong>{utdanning.institution}</BodyLong>
                                         <BodyLong>{utdanning.field}</BodyLong>
-                                        <BodyLong className={styles.mb3}>{parse(utdanning.description.replace(/\n/g, "<br>"))}</BodyLong>
+                                        <BodyLong className={styles.mb3}>
+                                            {parse(utdanning.description.replace(/\n/g, "<br>"))}
+                                        </BodyLong>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +123,9 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                             {erfaring.employer !== "" && erfaring.location !== "" ? ", " : ""}
                                             {erfaring.location}
                                         </BodyLong>
-                                        <BodyLong className={styles.mb3}>{erfaring.description && parse(erfaring.description.replace(/\n/g, "<br>"))}</BodyLong>
+                                        <BodyLong className={styles.mb3}>
+                                            {erfaring.description && parse(erfaring.description.replace(/\n/g, "<br>"))}
+                                        </BodyLong>
                                     </div>
                                 </div>
                             </div>
