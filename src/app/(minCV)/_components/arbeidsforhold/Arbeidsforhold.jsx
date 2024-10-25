@@ -130,7 +130,9 @@ export default function Arbeidsforhold() {
                                         <FormSummary.Answer>
                                             <FormSummary.Label>Arbeidsoppgaver</FormSummary.Label>
                                             <FormSummary.Value>
-                                                {erfaring.description && parse(erfaring.description.replace(/\n/g, "<br>")) || "Ikke utfylt"}
+                                                {(erfaring.description &&
+                                                    parse(erfaring.description.replace(/\n/g, "<br>"))) ||
+                                                    "Ikke utfylt"}
                                             </FormSummary.Value>
                                         </FormSummary.Answer>
                                     </FormSummary.Answers>

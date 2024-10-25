@@ -96,7 +96,9 @@ export default function Utdanninger() {
 
                                         <FormSummary.Answer>
                                             <FormSummary.Label>Beskrivelse</FormSummary.Label>
-                                            <FormSummary.Value>{parse(utdanning.description.replace(/\n/g, "<br>"))}</FormSummary.Value>
+                                            <FormSummary.Value>
+                                                {parse(utdanning.description.replace(/\n/g, "<br>"))}
+                                            </FormSummary.Value>
                                         </FormSummary.Answer>
                                     </FormSummary.Answers>
                                 </FormSummary>
