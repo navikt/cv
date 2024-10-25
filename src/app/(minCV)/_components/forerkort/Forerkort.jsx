@@ -7,10 +7,10 @@ import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 export default function Forerkort() {
-    const { cv } = useCv();
-    const førerkort = cv.foererkort || [];
+    const { førerkort, cvLaster } = useCv();
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
         CvSeksjonEnum.FØRERKORT,
     );
@@ -42,6 +42,8 @@ export default function Forerkort() {
             />
         </svg>
     );
+
+    if (cvLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.FØRERKORT} icon={<FørerkortIcon />} />;
 
     return (
         <div data-section id={SeksjonsIdEnum.FØRERKORT}>

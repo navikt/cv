@@ -7,11 +7,10 @@ import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 export default function OffentligeGodkjenninger() {
-    const { cv } = useCv();
-    const offentligeGodkjenninger = cv.offentligeGodkjenninger || [];
-
+    const { offentligeGodkjenninger, cvLaster } = useCv();
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
         CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER,
     );
@@ -43,6 +42,11 @@ export default function OffentligeGodkjenninger() {
             />
         </svg>
     );
+
+    if (cvLaster)
+        return (
+            <SeksjonSkeleton seksjon={SeksjonsIdEnum.OFFENTLIGE_GODKJENNINGER} icon={<OffentligeGodkjenningerIcon />} />
+        );
 
     return (
         <div data-section id={SeksjonsIdEnum.OFFENTLIGE_GODKJENNINGER}>
