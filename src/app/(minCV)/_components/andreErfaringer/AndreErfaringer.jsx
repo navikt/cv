@@ -7,10 +7,10 @@ import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 export default function AndreErfaringer() {
-    const { cv } = useCv();
-    const andreErfaringer = cv.annenErfaring || [];
+    const { andreErfaringer, cvLaster } = useCv();
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
         CvSeksjonEnum.ANDRE_ERFARINGER,
     );
@@ -42,6 +42,8 @@ export default function AndreErfaringer() {
             />
         </svg>
     );
+
+    if (cvLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.ANDRE_ERFARINGER} icon={<AndreErfaringerIcon />} />;
 
     return (
         <div data-section id={SeksjonsIdEnum.ANDRE_ERFARINGER}>
