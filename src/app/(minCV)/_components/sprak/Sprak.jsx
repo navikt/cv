@@ -42,73 +42,77 @@ export default function Sprak() {
         </svg>
     );
 
-    if (cvLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.SPRÅK} icon={<SpråkIcon />} />;
-
     return (
         <div data-section id={SeksjonsIdEnum.SPRÅK}>
-            <Box background="surface-default" padding="10" className={styles.box}>
-                <HStack justify="center">
-                    <SpråkIcon />
-                </HStack>
-                <Heading level="2" size="large" align="start" spacing>
-                    Språk
-                </Heading>
-                <>
-                    {språk.length === 0 ? (
-                        <div>
-                            <BodyLong weight="semibold" spacing>
-                                Du har ikke lagt til noen språk i CV-en
-                            </BodyLong>
-                            <BodyLong className={styles.mb12}>
-                                Her kan du si hvilke språk du kan, og hvor god du er i dem.
-                            </BodyLong>
-                        </div>
-                    ) : (
-                        <div className={styles.mb6}>
-                            {språk.map((sp, index) => (
-                                <div key={index}>
-                                    <FormSummary style={{ marginBottom: "1rem" }}>
-                                        <FormSummary.Header>
-                                            <FormSummary.Heading level="2">{sp.language}</FormSummary.Heading>
-                                        </FormSummary.Header>
-                                        <FormSummary.Answers>
-                                            <FormSummary.Answer>
-                                                <FormSummary.Label>Muntlig</FormSummary.Label>
-                                                <FormSummary.Value>{SpråkEnum[sp.oralProficiency]}</FormSummary.Value>
-                                            </FormSummary.Answer>
-                                            <FormSummary.Answer>
-                                                <FormSummary.Label>Skriftlig</FormSummary.Label>
-                                                <FormSummary.Value>
-                                                    {SpråkEnum[sp.writtenProficiency]}
-                                                </FormSummary.Value>
-                                            </FormSummary.Answer>
-                                        </FormSummary.Answers>
-                                    </FormSummary>
-                                    <HStack justify="space-between" className={styles.mb6}>
-                                        <Button
-                                            icon={<PencilIcon aria-hidden />}
-                                            variant="tertiary"
-                                            onClick={() => toggleModal(true, index)}
-                                        >
-                                            Endre
-                                        </Button>
-                                        <Button
-                                            icon={<TrashIcon aria-hidden />}
-                                            variant="tertiary"
-                                            onClick={() => slettElement(index)}
-                                        >
-                                            Fjern
-                                        </Button>
-                                    </HStack>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </>
-                <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                    {språk.length === 0 ? "Legg til" : "Legg til flere"}
-                </Button>
-            </Box>
+            {cvLaster ? (
+                <SeksjonSkeleton icon={<SpråkIcon />} />
+            ) : (
+                <Box background="surface-default" padding="10" className={styles.box}>
+                    <HStack justify="center">
+                        <SpråkIcon />
+                    </HStack>
+                    <Heading level="2" size="large" align="start" spacing>
+                        Språk
+                    </Heading>
+                    <>
+                        {språk.length === 0 ? (
+                            <div>
+                                <BodyLong weight="semibold" spacing>
+                                    Du har ikke lagt til noen språk i CV-en
+                                </BodyLong>
+                                <BodyLong className={styles.mb12}>
+                                    Her kan du si hvilke språk du kan, og hvor god du er i dem.
+                                </BodyLong>
+                            </div>
+                        ) : (
+                            <div className={styles.mb6}>
+                                {språk.map((sp, index) => (
+                                    <div key={index}>
+                                        <FormSummary style={{ marginBottom: "1rem" }}>
+                                            <FormSummary.Header>
+                                                <FormSummary.Heading level="2">{sp.language}</FormSummary.Heading>
+                                            </FormSummary.Header>
+                                            <FormSummary.Answers>
+                                                <FormSummary.Answer>
+                                                    <FormSummary.Label>Muntlig</FormSummary.Label>
+                                                    <FormSummary.Value>
+                                                        {SpråkEnum[sp.oralProficiency]}
+                                                    </FormSummary.Value>
+                                                </FormSummary.Answer>
+                                                <FormSummary.Answer>
+                                                    <FormSummary.Label>Skriftlig</FormSummary.Label>
+                                                    <FormSummary.Value>
+                                                        {SpråkEnum[sp.writtenProficiency]}
+                                                    </FormSummary.Value>
+                                                </FormSummary.Answer>
+                                            </FormSummary.Answers>
+                                        </FormSummary>
+                                        <HStack justify="space-between" className={styles.mb6}>
+                                            <Button
+                                                icon={<PencilIcon aria-hidden />}
+                                                variant="tertiary"
+                                                onClick={() => toggleModal(true, index)}
+                                            >
+                                                Endre
+                                            </Button>
+                                            <Button
+                                                icon={<TrashIcon aria-hidden />}
+                                                variant="tertiary"
+                                                onClick={() => slettElement(index)}
+                                            >
+                                                Fjern
+                                            </Button>
+                                        </HStack>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </>
+                    <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                        {språk.length === 0 ? "Legg til" : "Legg til flere"}
+                    </Button>
+                </Box>
+            )}
             {modalÅpen && (
                 <SpråkModal
                     modalÅpen={modalÅpen}

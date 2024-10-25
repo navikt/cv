@@ -59,110 +59,112 @@ export default function Arbeidsforhold() {
         );
     }
 
-    if (cvLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.ARBEIDSFORHOLD} icon={<ArbeidsforholdIcon />} />;
-
     return (
         <div data-section id={SeksjonsIdEnum.ARBEIDSFORHOLD}>
-            <Box background="surface-default" padding="10" className={styles.box}>
-                <HStack justify="center">
-                    <ArbeidsforholdIcon />
-                </HStack>
-                <Heading level="2" size="large" align="start" spacing>
-                    Arbeidsforhold
-                </Heading>
-                {((aaregManglerData === true && arbeidsforhold.length === 0) || manglerFelter) && (
-                    <Alert variant={aaregManglerData ? "info" : "warning"} className={styles.mb6}>
-                        {aaregManglerData
-                            ? "Vi kunne ikke se at du er registert i Arbeidsgiver- og arbeidstakerregisteret med noen arbeidsforhold. Hvis dette ikke er riktig, bør du kontakte AA-registeret slik at informasjonen rettes."
-                            : "Noen av feltene i arbeidsforhold er ikke utfylt. Vi anbefaler å se over og endre feltene som er tomme."}
-                    </Alert>
-                )}
-                {arbeidsforhold.length === 0 ? (
-                    <>
-                        <BodyLong weight="semibold" spacing>
-                            Vil du hente inn dine tidligere arbeidsforhold?
-                        </BodyLong>
-                        <BodyLong className={styles.mb12}>
-                            Ved å bruke Arbeidsgiver- og arbeidstakerregisteret kan vi hente inn dine tidligere
-                            arbeidsforhold til CV-en din.
-                        </BodyLong>
-                        <HStack justify="space-between">
-                            <Button
-                                icon={<FileImportIcon aria-hidden />}
-                                variant="primary"
-                                onClick={() => setSkalHenteData(true)}
-                                loading={aaregLaster}
-                            >
-                                Hent arbeidsforhold
+            {cvLaster ? (
+                <SeksjonSkeleton icon={<ArbeidsforholdIcon />} />
+            ) : (
+                <Box background="surface-default" padding="10" className={styles.box}>
+                    <HStack justify="center">
+                        <ArbeidsforholdIcon />
+                    </HStack>
+                    <Heading level="2" size="large" align="start" spacing>
+                        Arbeidsforhold
+                    </Heading>
+                    {((aaregManglerData === true && arbeidsforhold.length === 0) || manglerFelter) && (
+                        <Alert variant={aaregManglerData ? "info" : "warning"} className={styles.mb6}>
+                            {aaregManglerData
+                                ? "Vi kunne ikke se at du er registert i Arbeidsgiver- og arbeidstakerregisteret med noen arbeidsforhold. Hvis dette ikke er riktig, bør du kontakte AA-registeret slik at informasjonen rettes."
+                                : "Noen av feltene i arbeidsforhold er ikke utfylt. Vi anbefaler å se over og endre feltene som er tomme."}
+                        </Alert>
+                    )}
+                    {arbeidsforhold.length === 0 ? (
+                        <>
+                            <BodyLong weight="semibold" spacing>
+                                Vil du hente inn dine tidligere arbeidsforhold?
+                            </BodyLong>
+                            <BodyLong className={styles.mb12}>
+                                Ved å bruke Arbeidsgiver- og arbeidstakerregisteret kan vi hente inn dine tidligere
+                                arbeidsforhold til CV-en din.
+                            </BodyLong>
+                            <HStack justify="space-between">
+                                <Button
+                                    icon={<FileImportIcon aria-hidden />}
+                                    variant="primary"
+                                    onClick={() => setSkalHenteData(true)}
+                                    loading={aaregLaster}
+                                >
+                                    Hent arbeidsforhold
+                                </Button>
+                                <Button
+                                    icon={<PencilWritingIcon aria-hidden />}
+                                    variant="secondary"
+                                    onClick={() => toggleModal(true)}
+                                >
+                                    Jeg vil legge til selv
+                                </Button>
+                            </HStack>
+                        </>
+                    ) : (
+                        <>
+                            {arbeidsforhold.map((erfaring, index) => (
+                                <div key={index}>
+                                    <FormSummary className={styles.mb3}>
+                                        <FormSummary.Header>
+                                            <FormSummary.Heading level="2">
+                                                {erfaring.jobTitle || erfaring.alternativeJobTitle}
+                                            </FormSummary.Heading>
+                                        </FormSummary.Header>
+                                        <FormSummary.Answers>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Bedrift</FormSummary.Label>
+                                                <FormSummary.Value>{erfaring.employer}</FormSummary.Value>
+                                            </FormSummary.Answer>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Sted</FormSummary.Label>
+                                                <FormSummary.Value>{erfaring.location}</FormSummary.Value>
+                                            </FormSummary.Answer>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Start- og sluttdato</FormSummary.Label>
+                                                <FormSummary.Value>
+                                                    {`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}
+                                                </FormSummary.Value>
+                                            </FormSummary.Answer>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Arbeidsoppgaver</FormSummary.Label>
+                                                <FormSummary.Value>
+                                                    {(erfaring.description &&
+                                                        parse(erfaring.description.replace(/\n/g, "<br>"))) ||
+                                                        "Ikke utfylt"}
+                                                </FormSummary.Value>
+                                            </FormSummary.Answer>
+                                        </FormSummary.Answers>
+                                    </FormSummary>
+                                    <HStack justify="space-between" className={styles.mb12}>
+                                        <Button
+                                            icon={<PencilIcon aria-hidden />}
+                                            variant="tertiary"
+                                            onClick={() => toggleModal(true, index)}
+                                        >
+                                            Endre
+                                        </Button>
+                                        <Button
+                                            icon={<TrashIcon aria-hidden />}
+                                            variant="tertiary"
+                                            onClick={() => slettElement(index)}
+                                        >
+                                            Fjern
+                                        </Button>
+                                    </HStack>
+                                </div>
+                            ))}
+                            <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                                Legg til flere
                             </Button>
-                            <Button
-                                icon={<PencilWritingIcon aria-hidden />}
-                                variant="secondary"
-                                onClick={() => toggleModal(true)}
-                            >
-                                Jeg vil legge til selv
-                            </Button>
-                        </HStack>
-                    </>
-                ) : (
-                    <>
-                        {arbeidsforhold.map((erfaring, index) => (
-                            <div key={index}>
-                                <FormSummary className={styles.mb3}>
-                                    <FormSummary.Header>
-                                        <FormSummary.Heading level="2">
-                                            {erfaring.jobTitle || erfaring.alternativeJobTitle}
-                                        </FormSummary.Heading>
-                                    </FormSummary.Header>
-                                    <FormSummary.Answers>
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Bedrift</FormSummary.Label>
-                                            <FormSummary.Value>{erfaring.employer}</FormSummary.Value>
-                                        </FormSummary.Answer>
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Sted</FormSummary.Label>
-                                            <FormSummary.Value>{erfaring.location}</FormSummary.Value>
-                                        </FormSummary.Answer>
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Start- og sluttdato</FormSummary.Label>
-                                            <FormSummary.Value>
-                                                {`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}
-                                            </FormSummary.Value>
-                                        </FormSummary.Answer>
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Arbeidsoppgaver</FormSummary.Label>
-                                            <FormSummary.Value>
-                                                {(erfaring.description &&
-                                                    parse(erfaring.description.replace(/\n/g, "<br>"))) ||
-                                                    "Ikke utfylt"}
-                                            </FormSummary.Value>
-                                        </FormSummary.Answer>
-                                    </FormSummary.Answers>
-                                </FormSummary>
-                                <HStack justify="space-between" className={styles.mb12}>
-                                    <Button
-                                        icon={<PencilIcon aria-hidden />}
-                                        variant="tertiary"
-                                        onClick={() => toggleModal(true, index)}
-                                    >
-                                        Endre
-                                    </Button>
-                                    <Button
-                                        icon={<TrashIcon aria-hidden />}
-                                        variant="tertiary"
-                                        onClick={() => slettElement(index)}
-                                    >
-                                        Fjern
-                                    </Button>
-                                </HStack>
-                            </div>
-                        ))}
-                        <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                            Legg til flere
-                        </Button>
-                    </>
-                )}
-            </Box>
+                        </>
+                    )}
+                </Box>
+            )}
             {modalÅpen && (
                 <ArbeidsforholdModal
                     modalÅpen={modalÅpen}

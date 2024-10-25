@@ -43,73 +43,75 @@ export default function AndreErfaringer() {
         </svg>
     );
 
-    if (cvLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.ANDRE_ERFARINGER} icon={<AndreErfaringerIcon />} />;
-
     return (
         <div data-section id={SeksjonsIdEnum.ANDRE_ERFARINGER}>
-            <Box background="surface-default" padding="10" className={styles.box}>
-                <HStack justify="center">
-                    <AndreErfaringerIcon />
-                </HStack>
-                <Heading level="2" size="large" align="start" spacing>
-                    Andre erfaringer
-                </Heading>
-                <>
-                    {andreErfaringer.length === 0 ? (
-                        <div>
-                            <BodyLong weight="semibold" spacing>
-                                Du har ikke lagt til noen andre erfaringer i CV-en
-                            </BodyLong>
-                            <BodyLong className={styles.mb12}>
-                                En “annen erfaring” er f.eks frivillig arbeid som du gjør som en fotballtrener.
-                            </BodyLong>
-                        </div>
-                    ) : (
-                        <div className={styles.mb6}>
-                            {andreErfaringer.map((erfaring, index) => (
-                                <div key={index}>
-                                    <FormSummary style={{ marginBottom: "1rem" }}>
-                                        <FormSummary.Header>
-                                            <FormSummary.Heading level="2">{erfaring.role}</FormSummary.Heading>
-                                        </FormSummary.Header>
+            {cvLaster ? (
+                <SeksjonSkeleton icon={<AndreErfaringerIcon />} />
+            ) : (
+                <Box background="surface-default" padding="10" className={styles.box}>
+                    <HStack justify="center">
+                        <AndreErfaringerIcon />
+                    </HStack>
+                    <Heading level="2" size="large" align="start" spacing>
+                        Andre erfaringer
+                    </Heading>
+                    <>
+                        {andreErfaringer.length === 0 ? (
+                            <div>
+                                <BodyLong weight="semibold" spacing>
+                                    Du har ikke lagt til noen andre erfaringer i CV-en
+                                </BodyLong>
+                                <BodyLong className={styles.mb12}>
+                                    En “annen erfaring” er f.eks frivillig arbeid som du gjør som en fotballtrener.
+                                </BodyLong>
+                            </div>
+                        ) : (
+                            <div className={styles.mb6}>
+                                {andreErfaringer.map((erfaring, index) => (
+                                    <div key={index}>
+                                        <FormSummary style={{ marginBottom: "1rem" }}>
+                                            <FormSummary.Header>
+                                                <FormSummary.Heading level="2">{erfaring.role}</FormSummary.Heading>
+                                            </FormSummary.Header>
 
-                                        <FormSummary.Answers>
-                                            <FormSummary.Answer>
-                                                <FormSummary.Label>Dato</FormSummary.Label>
-                                                <FormSummary.Value>{`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}</FormSummary.Value>
-                                            </FormSummary.Answer>
+                                            <FormSummary.Answers>
+                                                <FormSummary.Answer>
+                                                    <FormSummary.Label>Dato</FormSummary.Label>
+                                                    <FormSummary.Value>{`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}</FormSummary.Value>
+                                                </FormSummary.Answer>
 
-                                            <FormSummary.Answer>
-                                                <FormSummary.Label>Beskrivelse</FormSummary.Label>
-                                                <FormSummary.Value>{erfaring.description}</FormSummary.Value>
-                                            </FormSummary.Answer>
-                                        </FormSummary.Answers>
-                                    </FormSummary>
-                                    <HStack justify="space-between" className={styles.mb6}>
-                                        <Button
-                                            icon={<PencilIcon aria-hidden />}
-                                            variant="tertiary"
-                                            onClick={() => toggleModal(true, index)}
-                                        >
-                                            Endre
-                                        </Button>
-                                        <Button
-                                            icon={<TrashIcon aria-hidden />}
-                                            variant="tertiary"
-                                            onClick={() => slettElement(index)}
-                                        >
-                                            Fjern
-                                        </Button>
-                                    </HStack>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                    <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                        {andreErfaringer.length === 0 ? "Legg til" : "Legg til flere"}
-                    </Button>
-                </>
-            </Box>
+                                                <FormSummary.Answer>
+                                                    <FormSummary.Label>Beskrivelse</FormSummary.Label>
+                                                    <FormSummary.Value>{erfaring.description}</FormSummary.Value>
+                                                </FormSummary.Answer>
+                                            </FormSummary.Answers>
+                                        </FormSummary>
+                                        <HStack justify="space-between" className={styles.mb6}>
+                                            <Button
+                                                icon={<PencilIcon aria-hidden />}
+                                                variant="tertiary"
+                                                onClick={() => toggleModal(true, index)}
+                                            >
+                                                Endre
+                                            </Button>
+                                            <Button
+                                                icon={<TrashIcon aria-hidden />}
+                                                variant="tertiary"
+                                                onClick={() => slettElement(index)}
+                                            >
+                                                Fjern
+                                            </Button>
+                                        </HStack>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                        <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                            {andreErfaringer.length === 0 ? "Legg til" : "Legg til flere"}
+                        </Button>
+                    </>
+                </Box>
+            )}
             {modalÅpen && (
                 <AndreErfaringerModal
                     modalÅpen={modalÅpen}

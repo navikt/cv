@@ -44,59 +44,61 @@ export default function Sammendrag() {
         </svg>
     );
 
-    if (cvLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.SAMMENDRAG} icon={<SammendragIcon />} />;
-
     return (
         <div data-section id={SeksjonsIdEnum.SAMMENDRAG}>
-            <Box background="surface-default" padding="10" className={styles.box}>
-                <HStack justify="center">
-                    <SammendragIcon />
-                </HStack>
-                <Heading level="2" size="large" align="start" spacing>
-                    Sammendrag
-                </Heading>
-                {!sammendrag ? (
-                    <div>
-                        <VStack style={{ padding: "1rem" }}>
-                            <BodyLong weight="semibold" className={styles.mb3}>
-                                Om meg
-                            </BodyLong>
-                            <BodyLong className={styles.mb6}>
-                                Her kan du beskrive deg selv, hvordan du er som arbeidstaker og ulike personlige
-                                egenskaper.
-                            </BodyLong>
-                        </VStack>
-                        <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                            Legg til
-                        </Button>
-                    </div>
-                ) : (
-                    <div className={styles.mb6}>
-                        <VStack style={{ padding: "1rem" }}>
-                            <BodyLong weight="semibold" className={styles.mb3}>
-                                Om meg
-                            </BodyLong>
-                            <BodyLong className={styles.mb6}>{parse(sammendrag.replace(/\n/g, "<br>"))}</BodyLong>
-                        </VStack>
-                        <HStack justify="space-between">
-                            <Button
-                                icon={<PencilIcon aria-hidden />}
-                                variant="primary"
-                                onClick={() => toggleModal(true)}
-                            >
-                                Endre
+            {cvLaster ? (
+                <SeksjonSkeleton icon={<SammendragIcon />} />
+            ) : (
+                <Box background="surface-default" padding="10" className={styles.box}>
+                    <HStack justify="center">
+                        <SammendragIcon />
+                    </HStack>
+                    <Heading level="2" size="large" align="start" spacing>
+                        Sammendrag
+                    </Heading>
+                    {!sammendrag ? (
+                        <div>
+                            <VStack style={{ padding: "1rem" }}>
+                                <BodyLong weight="semibold" className={styles.mb3}>
+                                    Om meg
+                                </BodyLong>
+                                <BodyLong className={styles.mb6}>
+                                    Her kan du beskrive deg selv, hvordan du er som arbeidstaker og ulike personlige
+                                    egenskaper.
+                                </BodyLong>
+                            </VStack>
+                            <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                                Legg til
                             </Button>
-                            <Button
-                                icon={<TrashIcon aria-hidden />}
-                                variant="tertiary"
-                                onClick={() => oppdaterMedData("")}
-                            >
-                                Fjern
-                            </Button>
-                        </HStack>
-                    </div>
-                )}
-            </Box>
+                        </div>
+                    ) : (
+                        <div className={styles.mb6}>
+                            <VStack style={{ padding: "1rem" }}>
+                                <BodyLong weight="semibold" className={styles.mb3}>
+                                    Om meg
+                                </BodyLong>
+                                <BodyLong className={styles.mb6}>{parse(sammendrag.replace(/\n/g, "<br>"))}</BodyLong>
+                            </VStack>
+                            <HStack justify="space-between">
+                                <Button
+                                    icon={<PencilIcon aria-hidden />}
+                                    variant="primary"
+                                    onClick={() => toggleModal(true)}
+                                >
+                                    Endre
+                                </Button>
+                                <Button
+                                    icon={<TrashIcon aria-hidden />}
+                                    variant="tertiary"
+                                    onClick={() => oppdaterMedData("")}
+                                >
+                                    Fjern
+                                </Button>
+                            </HStack>
+                        </div>
+                    )}
+                </Box>
+            )}
 
             <Modal open={modalÅpen} aria-label="Legg til sammendrag" onClose={() => toggleModal(false)} width="medium">
                 <Modal.Header closeButton={true}>
