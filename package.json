@@ -19,6 +19,7 @@
         "@navikt/ds-react": "^6.7.1",
         "@navikt/nav-dekoratoren-moduler": "^3.1.0",
         "@navikt/next-logger": "^1.23.0",
+        "html-react-parser": "^5.1.18",
         "jose": "^5.9.3",
         "next": "^14.2.12",
         "openid-client": "^5.7.0",

@@ -8,6 +8,7 @@ import { useHentArbeidsforhold } from "@/app/_common/hooks/swr/useHentArbeidsfor
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import parse from "html-react-parser";
 
 export default function Arbeidsforhold() {
     const { cv } = useCv();
@@ -129,7 +130,9 @@ export default function Arbeidsforhold() {
                                         <FormSummary.Answer>
                                             <FormSummary.Label>Arbeidsoppgaver</FormSummary.Label>
                                             <FormSummary.Value>
-                                                {erfaring.description || "Ikke utfylt"}
+                                                {(erfaring.description &&
+                                                    parse(erfaring.description.replace(/\n/g, "<br>"))) ||
+                                                    "Ikke utfylt"}
                                             </FormSummary.Value>
                                         </FormSummary.Answer>
                                     </FormSummary.Answers>

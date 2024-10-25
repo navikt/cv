@@ -7,6 +7,7 @@ import { UtdanningModal } from "@/app/(minCV)/_components/utdanninger/UtdanningM
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import parse from "html-react-parser";
 
 function UtdanningerIcon() {
     return (
@@ -95,7 +96,9 @@ export default function Utdanninger() {
 
                                         <FormSummary.Answer>
                                             <FormSummary.Label>Beskrivelse</FormSummary.Label>
-                                            <FormSummary.Value>{utdanning.description}</FormSummary.Value>
+                                            <FormSummary.Value>
+                                                {parse(utdanning.description.replace(/\n/g, "<br>"))}
+                                            </FormSummary.Value>
                                         </FormSummary.Answer>
                                     </FormSummary.Answers>
                                 </FormSummary>
