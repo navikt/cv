@@ -9,9 +9,12 @@ import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 export const useOppdaterCvSeksjon = (seksjon) => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
     const [dataForOppdatering, oppdaterMedData] = useState(null);
+    const [visFeilmelding, setVisFeilmelding] = useState(false);
 
     const fetcher = async ({ url, seksjon, body }) => {
         if (!url || !body || !seksjon) return;
+
+        setVisFeilmelding(false);
 
         try {
             const response = await putAPI(url, body, suksessNotifikasjon, errorNotifikasjon);
@@ -20,6 +23,7 @@ export const useOppdaterCvSeksjon = (seksjon) => {
             return true;
         } catch (error) {
             errorNotifikasjon("Det oppstod en feil ved lagring");
+            setVisFeilmelding(true);
             throw error;
         }
     };
@@ -29,5 +33,11 @@ export const useOppdaterCvSeksjon = (seksjon) => {
     const body = { [seksjon]: dataForOppdatering };
 
     const { data, error, isLoading } = useSWR(skalOppdatere ? { url, seksjon, body } : null, fetcher);
-    return { oppdateringOk: data, laster: isLoading, feilet: error, oppdaterMedData };
+    return {
+        oppdateringOk: data,
+        laster: isLoading,
+        feilet: visFeilmelding || error,
+        oppdaterMedData,
+        setVisFeilmelding,
+    };
 };

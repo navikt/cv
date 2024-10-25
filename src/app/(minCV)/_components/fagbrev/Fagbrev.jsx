@@ -10,7 +10,9 @@ import { useCvModal } from "@/app/_common/hooks/useCvModal";
 export default function Fagbrev() {
     const { cv } = useCv();
     const fagbrev = cv.fagbrev || [];
-    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.FAGBREV);
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.FAGBREV,
+    );
 
     const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
         fagbrev,
@@ -18,6 +20,7 @@ export default function Fagbrev() {
         oppdateringOk,
         laster,
         feilet,
+        setVisFeilmelding,
     );
 
     function FagbrevIcon() {
@@ -97,6 +100,8 @@ export default function Fagbrev() {
                     toggleModal={toggleModal}
                     fagbrev={gjeldendeElement}
                     lagreFagbrev={lagreElement}
+                    laster={laster}
+                    feilet={feilet}
                 />
             )}
         </div>

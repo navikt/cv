@@ -9,11 +9,14 @@ import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 export const useOppdaterPersonalia = () => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
     const [dataForOppdatering, oppdaterMedData] = useState(null);
+    const [visFeilmelding, setVisFeilmelding] = useState(false);
 
     const { person } = usePerson();
 
     const fetcher = async ({ url, body }) => {
         if (!url || !body) return;
+
+        setVisFeilmelding(false);
 
         try {
             const response = await putAPI(url, body);
@@ -22,6 +25,7 @@ export const useOppdaterPersonalia = () => {
             return true;
         } catch (error) {
             errorNotifikasjon("Det oppstod en feil ved lagring");
+            setVisFeilmelding(true);
             throw error;
         }
     };
@@ -31,5 +35,11 @@ export const useOppdaterPersonalia = () => {
 
     const { data, error, isLoading } = useSWR(skalOppdatere ? { url, body: dataForOppdatering } : null, fetcher);
 
-    return { oppdateringOk: data, laster: isLoading, feilet: error, oppdaterMedData };
+    return {
+        oppdateringOk: data,
+        laster: isLoading,
+        feilet: visFeilmelding || error,
+        oppdaterMedData,
+        setVisFeilmelding,
+    };
 };

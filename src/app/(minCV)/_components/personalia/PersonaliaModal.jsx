@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-react";
 import { PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import ValidateEmail from "@/app/_common/components/ValidateEmail";
 
-export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, lagrePersonalia }) {
+export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, lagrePersonalia, laster, feilet }) {
     const [fornavn, setFornavn] = useState("");
     const [etternavn, setEtternavn] = useState("");
     const [epost, setEpost] = useState("");
@@ -167,6 +167,11 @@ export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, l
             </Modal.Body>
             <Modal.Footer>
                 <HStack gap="4">
+                    {feilet && (
+                        <BodyLong size={"large"} className={styles.errorText}>
+                            Noe gikk galt, prøv å trykk lagre igjen
+                        </BodyLong>
+                    )}
                     <Button variant="secondary" onClick={() => toggleModal(false)}>
                         Avbryt
                     </Button>

@@ -1,11 +1,22 @@
-import { Button, Checkbox, CheckboxGroup, Heading, HStack, Modal, Radio, RadioGroup, VStack } from "@navikt/ds-react";
+import {
+    BodyLong,
+    Button,
+    Checkbox,
+    CheckboxGroup,
+    Heading,
+    HStack,
+    Modal,
+    Radio,
+    RadioGroup,
+    VStack,
+} from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { AnsettelsesformEnum, ArbeidstidEnum, OmfangEnum, StarttidspunktEnum } from "@/app/_common/enums/cvEnums";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
-export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJobbønsker }) => {
+export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJobbønsker, laster, feilet }) => {
     const [yrker, setYrker] = useState([]);
     const [lokasjoner, setLokasjoner] = useState([]);
     const [omfang, setOmfang] = useState([]);
@@ -161,6 +172,11 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
             </Modal.Body>
             <Modal.Footer>
                 <HStack gap="4">
+                    {feilet && (
+                        <BodyLong size={"large"} className={styles.errorText}>
+                            Noe gikk galt, prøv å trykk lagre igjen
+                        </BodyLong>
+                    )}
                     <Button variant="secondary" onClick={() => toggleModal(false)}>
                         Avbryt
                     </Button>

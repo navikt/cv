@@ -12,7 +12,9 @@ import { useCvModal } from "@/app/_common/hooks/useCvModal";
 export default function Arbeidsforhold() {
     const { cv } = useCv();
     const arbeidsforhold = cv.arbeidserfaring || [];
-    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.ARBEIDSFORHOLD);
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.ARBEIDSFORHOLD,
+    );
     const { aaregManglerData, aaregLaster, setSkalHenteData } = useHentArbeidsforhold(oppdaterMedData);
 
     const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
@@ -21,6 +23,7 @@ export default function Arbeidsforhold() {
         oppdateringOk,
         laster,
         feilet,
+        setVisFeilmelding,
     );
 
     const arbeidsforholdManglerFelter = (arbeidsforhold) => {
@@ -161,6 +164,8 @@ export default function Arbeidsforhold() {
                     toggleModal={toggleModal}
                     arbeidsforhold={gjeldendeElement}
                     lagreArbeidsforhold={lagreElement}
+                    laster={laster}
+                    feilet={feilet}
                 />
             )}
         </div>

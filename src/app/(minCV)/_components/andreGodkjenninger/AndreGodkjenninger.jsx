@@ -11,7 +11,9 @@ import { useCvModal } from "@/app/_common/hooks/useCvModal";
 export default function AndreGodkjenninger() {
     const { cv } = useCv();
     const andreGodkjenninger = cv.andreGodkjenninger || [];
-    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_GODKJENNINGER);
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.ANDRE_GODKJENNINGER,
+    );
 
     const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
         andreGodkjenninger,
@@ -19,6 +21,7 @@ export default function AndreGodkjenninger() {
         oppdateringOk,
         laster,
         feilet,
+        setVisFeilmelding,
     );
 
     const AndreGodkjenningerIcon = () => (
@@ -117,6 +120,8 @@ export default function AndreGodkjenninger() {
                     toggleModal={toggleModal}
                     godkjenning={gjeldendeElement}
                     lagreGodkjenning={lagreElement}
+                    laster={laster}
+                    feilet={feilet}
                 />
             )}
         </div>

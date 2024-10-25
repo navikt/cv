@@ -5,7 +5,7 @@ import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TidsenhetEnum } from "@/app/_common/enums/cvEnums";
 import { formatterTidsenhet, storForbokstav } from "@/app/_common/utils/stringUtils";
 
-export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs }) {
+export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs, laster, feilet }) {
     const [valgtKurs, setValgtKurs] = useState(kurs || null);
     const [kursnavn, setKursnavn] = useState(kurs?.title || "");
     const [utsteder, setUtsteder] = useState(kurs?.issuer || "");
@@ -126,6 +126,11 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs }) 
             </Modal.Body>
             <Modal.Footer>
                 <HStack gap="4">
+                    {feilet && (
+                        <BodyLong size={"large"} className={styles.errorText}>
+                            Noe gikk galt, prøv å trykk lagre igjen
+                        </BodyLong>
+                    )}
                     <Button variant="secondary" onClick={() => toggleModal(false)}>
                         Avbryt
                     </Button>

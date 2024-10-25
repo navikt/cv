@@ -39,8 +39,17 @@ function JobbonskerIcon() {
 export default function Jobbonsker() {
     const { cv } = useCv();
     const jobbønsker = cv.jobboensker;
-    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.JOBBØNSKER);
-    const { modalÅpen, toggleModal } = useCvModal(jobbønsker, oppdaterMedData, oppdateringOk, laster, feilet);
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.JOBBØNSKER,
+    );
+    const { modalÅpen, toggleModal } = useCvModal(
+        jobbønsker,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+        setVisFeilmelding,
+    );
 
     const slettJobbønsker = async () => {
         const tommeJobbønsker = {
@@ -136,6 +145,8 @@ export default function Jobbonsker() {
                     modalÅpen={modalÅpen}
                     jobbønsker={jobbønsker}
                     lagreJobbønsker={oppdaterMedData}
+                    laster={laster}
+                    feilet={feilet}
                 />
             )}
         </div>

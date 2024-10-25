@@ -2,8 +2,9 @@ import { BodyLong, Button, Heading, HStack, Modal } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
+import styles from "@/app/page.module.css";
 
-export default function KompetanserModal({ modalÅpen, toggleModal, kompetanse, lagreKompetanse }) {
+export default function KompetanserModal({ modalÅpen, toggleModal, kompetanse, lagreKompetanse, laster, feilet }) {
     const [valgtKompetanse, setValgtKompetanse] = useState(kompetanse || null);
     const [valgtKompetanseError, setValgtKompetanseError] = useState(false);
 
@@ -59,6 +60,11 @@ export default function KompetanserModal({ modalÅpen, toggleModal, kompetanse, 
             </Modal.Body>
             <Modal.Footer>
                 <HStack gap="4">
+                    {feilet && (
+                        <BodyLong size={"large"} className={styles.errorText}>
+                            Noe gikk galt, prøv å trykk lagre igjen
+                        </BodyLong>
+                    )}
                     <Button variant="secondary" onClick={() => toggleModal(false)}>
                         Avbryt
                     </Button>

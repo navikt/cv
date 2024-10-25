@@ -11,7 +11,9 @@ import { useCvModal } from "@/app/_common/hooks/useCvModal";
 export default function Forerkort() {
     const { cv } = useCv();
     const førerkort = cv.foererkort || [];
-    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.FØRERKORT);
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.FØRERKORT,
+    );
 
     const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
         førerkort,
@@ -19,6 +21,7 @@ export default function Forerkort() {
         oppdateringOk,
         laster,
         feilet,
+        setVisFeilmelding,
     );
 
     const FørerkortIcon = () => (
@@ -101,6 +104,8 @@ export default function Forerkort() {
                     toggleModal={toggleModal}
                     førerkort={gjeldendeElement}
                     lagreFørerkort={lagreElement}
+                    laster={laster}
+                    feilet={feilet}
                 />
             )}
         </div>

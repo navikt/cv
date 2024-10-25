@@ -1,9 +1,10 @@
-import { Button, Heading, HStack, Modal } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, HStack, Modal } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
+import styles from "@/app/page.module.css";
 
-export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFagbrev }) {
+export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFagbrev, laster, feilet }) {
     const [valgtFagbrev, setValgtFagbrev] = useState(fagbrev || null);
     const [valgtFagbrevError, setValgtFagbrevError] = useState(false);
 
@@ -56,6 +57,11 @@ export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFa
             </Modal.Body>
             <Modal.Footer>
                 <HStack gap="4">
+                    {feilet && (
+                        <BodyLong size={"large"} className={styles.errorText}>
+                            Noe gikk galt, prøv å trykk lagre igjen
+                        </BodyLong>
+                    )}
                     <Button variant="secondary" onClick={() => toggleModal(false)}>
                         Avbryt
                     </Button>

@@ -631,3 +631,8 @@
         transform: translateX(0);
     }
 }
+
+.errorText {
+    color: var(--Text-Danger);
+    align-self: center;
+}
