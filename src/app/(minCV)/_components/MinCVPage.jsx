@@ -24,8 +24,10 @@ import Hovedmeny from "@/app/_common/components/meny/Hovedmeny";
 import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 import Forhandsvisning from "@/app/(minCV)/_components/forhandsvisning/Forhandsvisning";
 import ApplicationProvider from "@/app/_common/contexts/ApplicationContext";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
 
 export default function MinCVPage() {
+    const { cvLaster } = useCv();
     const [visHovedinnhold, setVisHovedinnhold] = useState(true);
 
     return (
@@ -73,6 +75,7 @@ export default function MinCVPage() {
                                         icon={<EyeIcon aria-hidden />}
                                         variant="primary"
                                         onClick={() => setVisHovedinnhold(false)}
+                                        disabled={cvLaster}
                                     >
                                         Forhåndsvis CV
                                     </Button>
@@ -102,6 +105,7 @@ export default function MinCVPage() {
                                     icon={<EyeIcon aria-hidden />}
                                     variant="primary"
                                     onClick={() => setVisHovedinnhold(false)}
+                                    disabled={cvLaster}
                                 >
                                     Forhåndsvis CV
                                 </Button>

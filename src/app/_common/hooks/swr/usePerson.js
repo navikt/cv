@@ -9,5 +9,10 @@ export const PERSON_KEY = "/personbruker/api/person";
 export const usePerson = () => {
     const { erInnlogget } = useErInnlogget();
     const { data, error, isLoading } = useSWR(erInnlogget ? PERSON_KEY : null, getAPI);
-    return { person: data, personLaster: isLoading, personHarFeil: error };
+    return {
+        person: data,
+        personLaster: isLoading || (!data && !error),
+        personHarFeil: error,
+        personalia: data?.personalia || null,
+    };
 };

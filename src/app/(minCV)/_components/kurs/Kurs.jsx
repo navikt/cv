@@ -7,10 +7,10 @@ import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 export default function Kurs() {
-    const { cv } = useCv();
-    const kurs = cv.kurs || [];
+    const { kurs, cvLaster } = useCv();
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
         CvSeksjonEnum.KURS,
     );
@@ -51,69 +51,73 @@ export default function Kurs() {
 
     return (
         <div data-section id={SeksjonsIdEnum.KURS}>
-            <Box background="surface-default" padding="10" className={styles.box}>
-                <HStack justify="center">
-                    <KursIcon />
-                </HStack>
-                <Heading level="2" size="large" align="start" spacing>
-                    Kurs
-                </Heading>
-                {kurs.length === 0 ? (
-                    <div>
-                        <BodyLong weight="semibold" spacing>
-                            Du har ikke lagt til noen kurs i CV-en
-                        </BodyLong>
-                        <BodyLong className={styles.mb12}>
-                            Her kan du sette inn kurs som du har tatt, f.eks skredkurs.
-                        </BodyLong>
-                    </div>
-                ) : (
-                    <div className={styles.mb6}>
-                        {kurs.map((k, index) => (
-                            <div key={index}>
-                                <FormSummary style={{ marginBottom: "1rem" }}>
-                                    <FormSummary.Header>
-                                        <FormSummary.Heading level="2">{k.title}</FormSummary.Heading>
-                                    </FormSummary.Header>
-                                    <FormSummary.Answers>
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Utsteder</FormSummary.Label>
-                                            <FormSummary.Value>{k.issuer}</FormSummary.Value>
-                                        </FormSummary.Answer>
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Fullført</FormSummary.Label>
-                                            <FormSummary.Value>{formatterFullDato(k.date)}</FormSummary.Value>
-                                        </FormSummary.Answer>
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Kursvarighet</FormSummary.Label>
-                                            <FormSummary.Value>{`${k.duration} ${formatterTidsenhet(k.durationUnit, k.duration)}`}</FormSummary.Value>
-                                        </FormSummary.Answer>
-                                    </FormSummary.Answers>
-                                </FormSummary>
-                                <HStack justify="space-between" className={styles.mb6}>
-                                    <Button
-                                        icon={<PencilIcon aria-hidden />}
-                                        variant="tertiary"
-                                        onClick={() => toggleModal(true, index)}
-                                    >
-                                        Endre
-                                    </Button>
-                                    <Button
-                                        icon={<TrashIcon aria-hidden />}
-                                        variant="tertiary"
-                                        onClick={() => slettElement(index)}
-                                    >
-                                        Fjern
-                                    </Button>
-                                </HStack>
-                            </div>
-                        ))}
-                    </div>
-                )}
-                <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                    {kurs.length === 0 ? "Legg til" : "Legg til flere"}
-                </Button>
-            </Box>
+            {cvLaster ? (
+                <SeksjonSkeleton icon={<KursIcon />} />
+            ) : (
+                <Box background="surface-default" padding="10" className={styles.box}>
+                    <HStack justify="center">
+                        <KursIcon />
+                    </HStack>
+                    <Heading level="2" size="large" align="start" spacing>
+                        Kurs
+                    </Heading>
+                    {kurs.length === 0 ? (
+                        <div>
+                            <BodyLong weight="semibold" spacing>
+                                Du har ikke lagt til noen kurs i CV-en
+                            </BodyLong>
+                            <BodyLong className={styles.mb12}>
+                                Her kan du sette inn kurs som du har tatt, f.eks skredkurs.
+                            </BodyLong>
+                        </div>
+                    ) : (
+                        <div className={styles.mb6}>
+                            {kurs.map((k, index) => (
+                                <div key={index}>
+                                    <FormSummary style={{ marginBottom: "1rem" }}>
+                                        <FormSummary.Header>
+                                            <FormSummary.Heading level="2">{k.title}</FormSummary.Heading>
+                                        </FormSummary.Header>
+                                        <FormSummary.Answers>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Utsteder</FormSummary.Label>
+                                                <FormSummary.Value>{k.issuer}</FormSummary.Value>
+                                            </FormSummary.Answer>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Fullført</FormSummary.Label>
+                                                <FormSummary.Value>{formatterFullDato(k.date)}</FormSummary.Value>
+                                            </FormSummary.Answer>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Kursvarighet</FormSummary.Label>
+                                                <FormSummary.Value>{`${k.duration} ${formatterTidsenhet(k.durationUnit, k.duration)}`}</FormSummary.Value>
+                                            </FormSummary.Answer>
+                                        </FormSummary.Answers>
+                                    </FormSummary>
+                                    <HStack justify="space-between" className={styles.mb6}>
+                                        <Button
+                                            icon={<PencilIcon aria-hidden />}
+                                            variant="tertiary"
+                                            onClick={() => toggleModal(true, index)}
+                                        >
+                                            Endre
+                                        </Button>
+                                        <Button
+                                            icon={<TrashIcon aria-hidden />}
+                                            variant="tertiary"
+                                            onClick={() => slettElement(index)}
+                                        >
+                                            Fjern
+                                        </Button>
+                                    </HStack>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                        {kurs.length === 0 ? "Legg til" : "Legg til flere"}
+                    </Button>
+                </Box>
+            )}
             {modalÅpen && (
                 <KursModal
                     modalÅpen={modalÅpen}

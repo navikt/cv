@@ -1,13 +1,26 @@
-import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Tag, VStack } from "@navikt/ds-react";
+import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Skeleton, Tag, VStack } from "@navikt/ds-react";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 
 function HeaderPanel({ title = "Din CV", visTag = true }) {
-    const { person } = usePerson();
-    const { personalia } = person || {};
+    const { personalia } = usePerson();
 
-    const navn = personalia ? `${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase() : "";
+    const navn = personalia ? `${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase() : null;
     const sistEndret = personalia ? new Date(personalia.sistEndret) : null;
+
+    const navnKomponent = !navn ? (
+        <BodyShort as={Skeleton} size="small">
+            OLA NORDMANN
+        </BodyShort>
+    ) : (
+        <BodyShort size="small">{navn}</BodyShort>
+    );
+
+    const sistEndretKomponent = !sistEndret ? (
+        <Detail as={Skeleton}>{"Sist endret 1. januar 1970"}</Detail>
+    ) : (
+        <Detail>{`Sist endret ${formatterFullDato(sistEndret)}`}</Detail>
+    );
 
     return (
         <Box as="header" borderWidth="0 0 4 0" borderColor="surface-info">
@@ -24,13 +37,13 @@ function HeaderPanel({ title = "Din CV", visTag = true }) {
                                 </Heading>
                                 {visTag && (
                                     <Tag size="small" variant="info-filled">
-                                        Påbegynt
+                                        {personalia ? "Påbegynt" : "Laster..."}
                                     </Tag>
                                 )}
                             </HStack>
                             <Hide below="md">
                                 <HStack gap="4" align="center">
-                                    <BodyShort size="small">{navn}</BodyShort>
+                                    {navnKomponent}
                                     <svg
                                         width="4"
                                         height="4"
@@ -40,13 +53,13 @@ function HeaderPanel({ title = "Din CV", visTag = true }) {
                                     >
                                         <circle id="Ellipse 16" cx="2" cy="2" r="2" fill="#B5F1FF" />
                                     </svg>
-                                    {sistEndret && <Detail>{`Sist endret ${formatterFullDato(sistEndret)}`}</Detail>}
+                                    {sistEndretKomponent}
                                 </HStack>
                             </Hide>
                             <Show below="md">
                                 <VStack gap="2">
-                                    <BodyShort size="small">{navn}</BodyShort>
-                                    {sistEndret && <Detail>{`Sist endret ${formatterFullDato(sistEndret)}`}</Detail>}
+                                    {navnKomponent}
+                                    {sistEndretKomponent}
                                 </VStack>
                             </Show>
                         </VStack>

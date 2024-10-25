@@ -7,10 +7,10 @@ import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 export default function AndreGodkjenninger() {
-    const { cv } = useCv();
-    const andreGodkjenninger = cv.andreGodkjenninger || [];
+    const { andreGodkjenninger, cvLaster } = useCv();
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
         CvSeksjonEnum.ANDRE_GODKJENNINGER,
     );
@@ -45,75 +45,79 @@ export default function AndreGodkjenninger() {
 
     return (
         <div data-section id={SeksjonsIdEnum.ANDRE_GODKJENNINGER}>
-            <Box background="surface-default" padding="10" className={styles.box}>
-                <HStack justify="center">
-                    <AndreGodkjenningerIcon />
-                </HStack>
-                <Heading level="2" size="large" align="start" spacing>
-                    Andre godkjenninger
-                </Heading>
-                {andreGodkjenninger.length === 0 ? (
-                    <div>
-                        <BodyLong weight="semibold" spacing>
-                            Du har ikke lagt til noen andre godkjenninger i CV-en
-                        </BodyLong>
-                        <BodyLong className={styles.mb12}>
-                            En annen godkjenning er f.eks it-sertifiseringer, som ikke krever statlig godkjenning.
-                        </BodyLong>
-                    </div>
-                ) : (
-                    <div className={styles.mb6}>
-                        {andreGodkjenninger.map((godkjenning, index) => (
-                            <div key={index}>
-                                <FormSummary style={{ marginBottom: "1rem" }}>
-                                    <FormSummary.Header>
-                                        <FormSummary.Heading level="2">
-                                            {godkjenning.certificateName}
-                                        </FormSummary.Heading>
-                                    </FormSummary.Header>
-                                    <FormSummary.Answers>
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Utsteder</FormSummary.Label>
-                                            <FormSummary.Value>{godkjenning.issuer}</FormSummary.Value>
-                                        </FormSummary.Answer>
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Fullført</FormSummary.Label>
-                                            <FormSummary.Value>
-                                                {formatterFullDato(godkjenning.fromDate)}
-                                            </FormSummary.Value>
-                                        </FormSummary.Answer>
-                                        <FormSummary.Answer>
-                                            <FormSummary.Label>Utløper</FormSummary.Label>
-                                            <FormSummary.Value>
-                                                {formatterFullDato(godkjenning.toDate)}
-                                            </FormSummary.Value>
-                                        </FormSummary.Answer>
-                                    </FormSummary.Answers>
-                                </FormSummary>
-                                <HStack justify="space-between" className={styles.mb6}>
-                                    <Button
-                                        icon={<PencilIcon aria-hidden />}
-                                        variant="tertiary"
-                                        onClick={() => toggleModal(true, index)}
-                                    >
-                                        Endre
-                                    </Button>
-                                    <Button
-                                        icon={<TrashIcon aria-hidden />}
-                                        variant="tertiary"
-                                        onClick={() => slettElement(index)}
-                                    >
-                                        Fjern
-                                    </Button>
-                                </HStack>
-                            </div>
-                        ))}
-                    </div>
-                )}
-                <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                    {andreGodkjenninger.length === 0 ? "Legg til" : "Legg til flere"}
-                </Button>
-            </Box>
+            {cvLaster ? (
+                <SeksjonSkeleton icon={<AndreGodkjenningerIcon />} />
+            ) : (
+                <Box background="surface-default" padding="10" className={styles.box}>
+                    <HStack justify="center">
+                        <AndreGodkjenningerIcon />
+                    </HStack>
+                    <Heading level="2" size="large" align="start" spacing>
+                        Andre godkjenninger
+                    </Heading>
+                    {andreGodkjenninger.length === 0 ? (
+                        <div>
+                            <BodyLong weight="semibold" spacing>
+                                Du har ikke lagt til noen andre godkjenninger i CV-en
+                            </BodyLong>
+                            <BodyLong className={styles.mb12}>
+                                En annen godkjenning er f.eks it-sertifiseringer, som ikke krever statlig godkjenning.
+                            </BodyLong>
+                        </div>
+                    ) : (
+                        <div className={styles.mb6}>
+                            {andreGodkjenninger.map((godkjenning, index) => (
+                                <div key={index}>
+                                    <FormSummary style={{ marginBottom: "1rem" }}>
+                                        <FormSummary.Header>
+                                            <FormSummary.Heading level="2">
+                                                {godkjenning.certificateName}
+                                            </FormSummary.Heading>
+                                        </FormSummary.Header>
+                                        <FormSummary.Answers>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Utsteder</FormSummary.Label>
+                                                <FormSummary.Value>{godkjenning.issuer}</FormSummary.Value>
+                                            </FormSummary.Answer>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Fullført</FormSummary.Label>
+                                                <FormSummary.Value>
+                                                    {formatterFullDato(godkjenning.fromDate)}
+                                                </FormSummary.Value>
+                                            </FormSummary.Answer>
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Utløper</FormSummary.Label>
+                                                <FormSummary.Value>
+                                                    {formatterFullDato(godkjenning.toDate)}
+                                                </FormSummary.Value>
+                                            </FormSummary.Answer>
+                                        </FormSummary.Answers>
+                                    </FormSummary>
+                                    <HStack justify="space-between" className={styles.mb6}>
+                                        <Button
+                                            icon={<PencilIcon aria-hidden />}
+                                            variant="tertiary"
+                                            onClick={() => toggleModal(true, index)}
+                                        >
+                                            Endre
+                                        </Button>
+                                        <Button
+                                            icon={<TrashIcon aria-hidden />}
+                                            variant="tertiary"
+                                            onClick={() => slettElement(index)}
+                                        >
+                                            Fjern
+                                        </Button>
+                                    </HStack>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                        {andreGodkjenninger.length === 0 ? "Legg til" : "Legg til flere"}
+                    </Button>
+                </Box>
+            )}
             {modalÅpen && (
                 <AndreGodkjenningerModal
                     modalÅpen={modalÅpen}

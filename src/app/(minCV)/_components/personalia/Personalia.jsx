@@ -7,6 +7,7 @@ import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useOppdaterPersonalia } from "@/app/_common/hooks/swr/useOppdaterPersonalia";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 function PersonaliaIcon() {
     return (
@@ -30,8 +31,7 @@ function PersonaliaIcon() {
 }
 
 export default function Personalia() {
-    const { person } = usePerson();
-    const personalia = person.personalia;
+    const { personalia, personLaster } = usePerson();
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterPersonalia();
 
     const { modalÅpen, toggleModal } = useCvModal(
@@ -45,37 +45,43 @@ export default function Personalia() {
 
     return (
         <div data-section id={SeksjonsIdEnum.PERSONALIA}>
-            <Box background="surface-default" padding="10" className={styles.box}>
-                <HStack justify="center">
-                    <PersonaliaIcon />
-                </HStack>
-                <Heading level="2" size="large" align="start" spacing>
-                    Personalia
-                </Heading>
-                <BodyLong weight="semibold">Navn</BodyLong>
-                <BodyLong spacing>{personalia ? `${personalia.fornavn} ${personalia.etternavn}` : ""}</BodyLong>
-                <div className={styles.divider}></div>
-                <BodyLong weight="semibold">Telefon</BodyLong>
-                <BodyLong spacing>
-                    {personalia?.telefonnummer ? formatterTelefon(personalia.telefonnummer) : ""}
-                </BodyLong>
-                <div className={styles.divider}></div>
-                <BodyLong weight="semibold">E-post</BodyLong>
-                <BodyLong spacing>{personalia ? personalia.epost : ""}</BodyLong>
-                <div className={styles.divider}></div>
-                <BodyLong weight="semibold">Adresse</BodyLong>
-                <BodyLong className={styles.mb16}>
-                    {personalia ? formatterAdresse(personalia.adresse, personalia.postnummer, personalia.poststed) : ""}
-                </BodyLong>
-                <Button
-                    className={styles.mb6}
-                    icon={<PencilIcon aria-hidden />}
-                    variant="primary"
-                    onClick={() => toggleModal(true)}
-                >
-                    Endre
-                </Button>
-            </Box>
+            {personLaster ? (
+                <SeksjonSkeleton icon={<PersonaliaIcon />} />
+            ) : (
+                <Box background="surface-default" padding="10" className={styles.box}>
+                    <HStack justify="center">
+                        <PersonaliaIcon />
+                    </HStack>
+                    <Heading level="2" size="large" align="start" spacing>
+                        Personalia
+                    </Heading>
+                    <BodyLong weight="semibold">Navn</BodyLong>
+                    <BodyLong spacing>{personalia ? `${personalia.fornavn} ${personalia.etternavn}` : ""}</BodyLong>
+                    <div className={styles.divider}></div>
+                    <BodyLong weight="semibold">Telefon</BodyLong>
+                    <BodyLong spacing>
+                        {personalia?.telefonnummer ? formatterTelefon(personalia.telefonnummer) : ""}
+                    </BodyLong>
+                    <div className={styles.divider}></div>
+                    <BodyLong weight="semibold">E-post</BodyLong>
+                    <BodyLong spacing>{personalia ? personalia.epost : ""}</BodyLong>
+                    <div className={styles.divider}></div>
+                    <BodyLong weight="semibold">Adresse</BodyLong>
+                    <BodyLong className={styles.mb16}>
+                        {personalia
+                            ? formatterAdresse(personalia.adresse, personalia.postnummer, personalia.poststed)
+                            : ""}
+                    </BodyLong>
+                    <Button
+                        className={styles.mb6}
+                        icon={<PencilIcon aria-hidden />}
+                        variant="primary"
+                        onClick={() => toggleModal(true)}
+                    >
+                        Endre
+                    </Button>
+                </Box>
+            )}
             {modalÅpen && (
                 <PersonaliaModal
                     modalÅpen={modalÅpen}

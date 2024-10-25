@@ -8,7 +8,7 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 export const LastNedCv = () => {
     const { person } = usePerson();
     const { personalia } = person || {};
-    const { cv } = useCv();
+    const { cv, cvLaster } = useCv();
 
     const [nedlastingLaster, setNedlastingLaster] = useState(false);
 
@@ -25,6 +25,7 @@ export const LastNedCv = () => {
             onClick={() => lastNedCv()}
             loading={nedlastingLaster}
             variant="secondary"
+            disabled={cvLaster}
         >
             Last ned CV
         </Button>

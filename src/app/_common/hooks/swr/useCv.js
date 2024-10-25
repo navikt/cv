@@ -12,5 +12,21 @@ export const useCv = () => {
     const { person } = usePerson();
     const skalHente = erInnlogget && person;
     const { data, error, isLoading } = useSWR(skalHente ? CV_KEY : null, getAPI);
-    return { cv: data, cvLaster: isLoading, cvHarFeil: error };
+    return {
+        cv: data,
+        cvLaster: isLoading || (!data && !error),
+        cvHarFeil: error,
+        jobbønsker: data?.jobboensker || {},
+        utdanninger: data?.utdanning || [],
+        fagbrev: data?.fagbrev || [],
+        arbeidsforhold: data?.arbeidserfaring || [],
+        andreErfaringer: data?.annenErfaring || [],
+        andreGodkjenninger: data?.andreGodkjenninger || [],
+        førerkort: data?.foererkort || [],
+        kompetanser: data?.kompetanser || [],
+        kurs: data?.kurs || [],
+        offentligeGodkjenninger: data?.offentligeGodkjenninger || [],
+        språk: data?.spraak || [],
+        sammendrag: data?.sammendrag || "",
+    };
 };

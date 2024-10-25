@@ -6,10 +6,10 @@ import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 export default function Fagbrev() {
-    const { cv } = useCv();
-    const fagbrev = cv.fagbrev || [];
+    const { fagbrev, cvLaster } = useCv();
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
         CvSeksjonEnum.FAGBREV,
     );
@@ -46,54 +46,58 @@ export default function Fagbrev() {
 
     return (
         <div data-section id={SeksjonsIdEnum.FAGBREV}>
-            <Box background="surface-default" padding="10" className={styles.box}>
-                <HStack justify="center">
-                    <FagbrevIcon />
-                </HStack>
-                <Heading className={styles.mb6} level="2" size="large" align="start" spacing>
-                    Fagbrev
-                </Heading>
-                <>
-                    {fagbrev.length === 0 ? (
-                        <div>
-                            <BodyLong weight="semibold" spacing>
-                                Du har ikke lagt til noen fagbrev i CV-en
-                            </BodyLong>
-                            <BodyLong className={styles.mb12}>
-                                Her kan du sette inn ulike fagbrev som du har tatt, f.eks i bilpleie.
-                            </BodyLong>
-                        </div>
-                    ) : (
-                        <div className={styles.mb6}>
-                            {fagbrev.map((fb, index) => (
-                                <div key={index}>
-                                    <BodyLong weight="semibold">• {fb.title}</BodyLong>
-                                    <HStack justify="space-between" className={styles.mb3}>
-                                        <Button
-                                            icon={<PencilIcon aria-hidden />}
-                                            variant="tertiary"
-                                            onClick={() => toggleModal(true, index)}
-                                        >
-                                            Endre
-                                        </Button>
-                                        <Button
-                                            icon={<TrashIcon aria-hidden />}
-                                            variant="tertiary"
-                                            onClick={() => slettElement(index)}
-                                        >
-                                            Fjern
-                                        </Button>
-                                    </HStack>
-                                    {index < fagbrev.length - 1 && <div className={styles.divider}></div>}
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                    <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
-                        {fagbrev.length === 0 ? "Legg til" : "Legg til flere"}
-                    </Button>
-                </>
-            </Box>
+            {cvLaster ? (
+                <SeksjonSkeleton icon={<FagbrevIcon />} />
+            ) : (
+                <Box background="surface-default" padding="10" className={styles.box}>
+                    <HStack justify="center">
+                        <FagbrevIcon />
+                    </HStack>
+                    <Heading className={styles.mb6} level="2" size="large" align="start" spacing>
+                        Fagbrev
+                    </Heading>
+                    <>
+                        {fagbrev.length === 0 ? (
+                            <div>
+                                <BodyLong weight="semibold" spacing>
+                                    Du har ikke lagt til noen fagbrev i CV-en
+                                </BodyLong>
+                                <BodyLong className={styles.mb12}>
+                                    Her kan du sette inn ulike fagbrev som du har tatt, f.eks i bilpleie.
+                                </BodyLong>
+                            </div>
+                        ) : (
+                            <div className={styles.mb6}>
+                                {fagbrev.map((fb, index) => (
+                                    <div key={index}>
+                                        <BodyLong weight="semibold">• {fb.title}</BodyLong>
+                                        <HStack justify="space-between" className={styles.mb3}>
+                                            <Button
+                                                icon={<PencilIcon aria-hidden />}
+                                                variant="tertiary"
+                                                onClick={() => toggleModal(true, index)}
+                                            >
+                                                Endre
+                                            </Button>
+                                            <Button
+                                                icon={<TrashIcon aria-hidden />}
+                                                variant="tertiary"
+                                                onClick={() => slettElement(index)}
+                                            >
+                                                Fjern
+                                            </Button>
+                                        </HStack>
+                                        {index < fagbrev.length - 1 && <div className={styles.divider}></div>}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                        <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                            {fagbrev.length === 0 ? "Legg til" : "Legg til flere"}
+                        </Button>
+                    </>
+                </Box>
+            )}
             {modalÅpen && (
                 <FagbrevModal
                     modalÅpen={modalÅpen}
