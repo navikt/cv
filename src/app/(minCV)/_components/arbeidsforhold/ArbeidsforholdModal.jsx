@@ -1,11 +1,29 @@
-import { Button, Checkbox, CheckboxGroup, Heading, HStack, Modal, Textarea, TextField, VStack } from "@navikt/ds-react";
+import {
+    BodyLong,
+    Button,
+    Checkbox,
+    CheckboxGroup,
+    Heading,
+    HStack,
+    Modal,
+    Textarea,
+    TextField,
+    VStack,
+} from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
-export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, lagreArbeidsforhold }) => {
+export const ArbeidsforholdModal = ({
+    modalÅpen,
+    toggleModal,
+    arbeidsforhold,
+    lagreArbeidsforhold,
+    laster,
+    feilet,
+}) => {
     const [arbeidsgiver, setArbeidsgiver] = useState("");
     const [alternativTittel, setAlternativTittel] = useState("");
     const [arbeidssted, setArbeidssted] = useState("");
@@ -158,6 +176,11 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, arbeidsforhold, l
             </Modal.Body>
             <Modal.Footer>
                 <HStack gap="4">
+                    {feilet && (
+                        <BodyLong size={"large"} className={styles.errorText}>
+                            Noe gikk galt, prøv å trykk lagre igjen
+                        </BodyLong>
+                    )}
                     <Button variant="secondary" onClick={() => toggleModal(false)}>
                         Avbryt
                     </Button>

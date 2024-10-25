@@ -3,7 +3,7 @@ import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 
-export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreErfaring }) => {
+export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreErfaring, laster, feilet }) => {
     const [beskrivelse, setBeskrivelse] = useState("");
     const [rolle, setRolle] = useState("");
     const [pågår, setPågår] = useState([]);
@@ -101,6 +101,11 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
             </Modal.Body>
             <Modal.Footer>
                 <HStack gap="4">
+                    {feilet && (
+                        <BodyLong size={"large"} className={styles.errorText}>
+                            Noe gikk galt, prøv å trykk lagre igjen
+                        </BodyLong>
+                    )}
                     <Button variant="secondary" onClick={() => toggleModal(false)}>
                         Avbryt
                     </Button>

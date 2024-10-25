@@ -12,7 +12,7 @@ export default function OffentligeGodkjenninger() {
     const { cv } = useCv();
     const offentligeGodkjenninger = cv.offentligeGodkjenninger || [];
 
-    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
         CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER,
     );
 
@@ -22,6 +22,7 @@ export default function OffentligeGodkjenninger() {
         oppdateringOk,
         laster,
         feilet,
+        setVisFeilmelding,
     );
 
     const OffentligeGodkjenningerIcon = () => (
@@ -119,6 +120,8 @@ export default function OffentligeGodkjenninger() {
                     toggleModal={toggleModal}
                     godkjenning={gjeldendeElement}
                     lagreGodkjenning={lagreElement}
+                    laster={laster}
+                    feilet={feilet}
                 />
             )}
         </div>

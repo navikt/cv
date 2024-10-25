@@ -5,7 +5,7 @@ import { SpråkEnum } from "@/app/_common/enums/cvEnums";
 import styles from "@/app/page.module.css";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
-export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpråk }) {
+export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpråk, laster, feilet }) {
     const [valgtSpråk, setValgtSpråk] = useState(språk || null);
     const [muntligEvne, setMuntligEvne] = useState("IKKE_OPPGITT");
     const [skriftligEvne, setSkriftligEvne] = useState("IKKE_OPPGITT");
@@ -95,6 +95,11 @@ export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpr�
             </Modal.Body>
             <Modal.Footer>
                 <HStack gap="4">
+                    {feilet && (
+                        <BodyLong size={"large"} className={styles.errorText}>
+                            Noe gikk galt, prøv å trykk lagre igjen
+                        </BodyLong>
+                    )}
                     <Button variant="secondary" onClick={() => toggleModal(false)}>
                         Avbryt
                     </Button>

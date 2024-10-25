@@ -5,7 +5,14 @@ import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 
-export default function OffentligeGodkjenningerModal({ modalÅpen, toggleModal, godkjenning, lagreGodkjenning }) {
+export default function OffentligeGodkjenningerModal({
+    modalÅpen,
+    toggleModal,
+    godkjenning,
+    lagreGodkjenning,
+    laster,
+    feilet,
+}) {
     const [valgtGodkjenning, setValgtGodkjenning] = useState(godkjenning || null);
     const [utsteder, setUtsteder] = useState(godkjenning?.issuer || "");
     const [godkjenningFraDato, setGodkjenningFraDato] = useState(
@@ -104,6 +111,11 @@ export default function OffentligeGodkjenningerModal({ modalÅpen, toggleModal, 
             </Modal.Body>
             <Modal.Footer>
                 <HStack gap="4">
+                    {feilet && (
+                        <BodyLong size={"large"} className={styles.errorText}>
+                            Noe gikk galt, prøv å trykk lagre igjen
+                        </BodyLong>
+                    )}
                     <Button variant="secondary" onClick={() => toggleModal(false)}>
                         Avbryt
                     </Button>

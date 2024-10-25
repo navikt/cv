@@ -10,7 +10,9 @@ import { useCvModal } from "@/app/_common/hooks/useCvModal";
 export default function Kompetanser() {
     const { cv } = useCv();
     const kompetanser = cv.kompetanser || [];
-    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.KOMPETANSER);
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.KOMPETANSER,
+    );
 
     const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
         kompetanser,
@@ -18,6 +20,7 @@ export default function Kompetanser() {
         oppdateringOk,
         laster,
         feilet,
+        setVisFeilmelding,
     );
 
     const KompetanserIcon = () => (
@@ -96,6 +99,8 @@ export default function Kompetanser() {
                     toggleModal={toggleModal}
                     kompetanse={gjeldendeElement}
                     lagreKompetanse={lagreElement}
+                    laster={laster}
+                    feilet={feilet}
                 />
             )}
         </div>

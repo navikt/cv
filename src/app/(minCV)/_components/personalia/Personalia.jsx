@@ -32,9 +32,16 @@ function PersonaliaIcon() {
 export default function Personalia() {
     const { person } = usePerson();
     const personalia = person.personalia;
-    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterPersonalia();
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterPersonalia();
 
-    const { modalÅpen, toggleModal } = useCvModal(personalia, oppdaterMedData, oppdateringOk, laster, feilet);
+    const { modalÅpen, toggleModal } = useCvModal(
+        personalia,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+        setVisFeilmelding,
+    );
 
     return (
         <div data-section id={SeksjonsIdEnum.PERSONALIA}>
@@ -75,6 +82,8 @@ export default function Personalia() {
                     toggleModal={toggleModal}
                     personalia={personalia}
                     lagrePersonalia={oppdaterMedData}
+                    laster={laster}
+                    feilet={feilet}
                 />
             )}
         </div>

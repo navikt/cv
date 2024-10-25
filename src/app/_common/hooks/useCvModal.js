@@ -6,6 +6,7 @@ export const useCvModal = (
     oppdateringSuksess,
     oppdateringLaster,
     oppdateringHarFeil,
+    setVisFeilmelding,
 ) => {
     const [modalÅpen, setModalÅpen] = useState(false);
     const [gjeldendeIndex, setGjeldendeIndex] = useState(-1);
@@ -22,6 +23,7 @@ export const useCvModal = (
 
     const toggleModal = (åpen, index) => {
         setGjeldendeIndex(index >= 0 ? index : -1);
+        setVisFeilmelding(false);
         setModalÅpen(åpen);
     };
 

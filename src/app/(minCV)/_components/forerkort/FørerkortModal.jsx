@@ -4,7 +4,7 @@ import styles from "@/app/page.module.css";
 import førerkortData from "@/app/_common/data/førerkort.json";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 
-export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, lagreFørerkort }) {
+export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, lagreFørerkort, laster, feilet }) {
     const [valgtFørerkort, setValgtFørerkort] = useState(førerkort || null);
     const [gyldigFra, setGyldigFra] = useState(førerkort?.acquiredDate ? new Date(førerkort.acquiredDate) : null);
     const [gyldigTil, setGyldigTil] = useState(førerkort?.expiryDate ? new Date(førerkort.expiryDate) : null);
@@ -101,6 +101,11 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
             </Modal.Body>
             <Modal.Footer>
                 <HStack gap="4">
+                    {feilet && (
+                        <BodyLong size={"large"} className={styles.errorText}>
+                            Noe gikk galt, prøv å trykk lagre igjen
+                        </BodyLong>
+                    )}
                     <Button variant="secondary" onClick={() => toggleModal(false)}>
                         Avbryt
                     </Button>

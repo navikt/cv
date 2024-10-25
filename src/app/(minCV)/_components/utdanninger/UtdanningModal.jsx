@@ -15,7 +15,7 @@ import { UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 
-export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdanning }) => {
+export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdanning, laster, feilet }) => {
     const [utdanningsnivå, setUtdanningsnivå] = useState("");
     const [gradOgRetning, setGradOgRetning] = useState("");
     const [institusjon, setInstitusjon] = useState("");
@@ -140,6 +140,11 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
             </Modal.Body>
             <Modal.Footer>
                 <HStack gap="4">
+                    {feilet && (
+                        <BodyLong size={"large"} className={styles.errorText}>
+                            Noe gikk galt, prøv å trykk lagre igjen
+                        </BodyLong>
+                    )}
                     <Button variant="secondary" onClick={() => toggleModal(false)}>
                         Avbryt
                     </Button>

@@ -12,8 +12,17 @@ export default function Sammendrag() {
     const sammendrag = cv.sammendrag;
     const [sammendragEndring, setSammendragEndring] = useState(sammendrag || "");
 
-    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.SAMMENDRAG);
-    const { modalÅpen, toggleModal } = useCvModal(sammendrag, oppdaterMedData, oppdateringOk, laster, feilet);
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.SAMMENDRAG,
+    );
+    const { modalÅpen, toggleModal } = useCvModal(
+        sammendrag,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+        setVisFeilmelding,
+    );
 
     const SammendragIcon = () => (
         <svg
@@ -117,6 +126,11 @@ export default function Sammendrag() {
                 </Modal.Body>
                 <Modal.Footer>
                     <HStack gap="4">
+                        {feilet && (
+                            <BodyLong size={"large"} className={styles.errorText}>
+                                Noe gikk galt, prøv å trykk lagre igjen
+                            </BodyLong>
+                        )}
                         <Button variant="secondary" onClick={() => toggleModal(false)}>
                             Avbryt
                         </Button>

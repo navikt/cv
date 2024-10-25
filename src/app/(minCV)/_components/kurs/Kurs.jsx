@@ -11,7 +11,9 @@ import { useCvModal } from "@/app/_common/hooks/useCvModal";
 export default function Kurs() {
     const { cv } = useCv();
     const kurs = cv.kurs || [];
-    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.KURS);
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.KURS,
+    );
 
     const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
         kurs,
@@ -19,6 +21,7 @@ export default function Kurs() {
         oppdateringOk,
         laster,
         feilet,
+        setVisFeilmelding,
     );
 
     const KursIcon = () => (
@@ -117,6 +120,8 @@ export default function Kurs() {
                     toggleModal={toggleModal}
                     kurs={gjeldendeElement}
                     lagreKurs={lagreElement}
+                    laster={laster}
+                    feilet={feilet}
                 />
             )}
         </div>

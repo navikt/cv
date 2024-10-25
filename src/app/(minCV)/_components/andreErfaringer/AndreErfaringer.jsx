@@ -11,7 +11,9 @@ import { useCvModal } from "@/app/_common/hooks/useCvModal";
 export default function AndreErfaringer() {
     const { cv } = useCv();
     const andreErfaringer = cv.annenErfaring || [];
-    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_ERFARINGER);
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.ANDRE_ERFARINGER,
+    );
 
     const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
         andreErfaringer,
@@ -19,6 +21,7 @@ export default function AndreErfaringer() {
         oppdateringOk,
         laster,
         feilet,
+        setVisFeilmelding,
     );
 
     const AndreErfaringerIcon = () => (
@@ -111,6 +114,8 @@ export default function AndreErfaringer() {
                     toggleModal={toggleModal}
                     erfaring={gjeldendeElement}
                     lagreErfaring={lagreElement}
+                    laster={laster}
+                    feilet={feilet}
                 />
             )}
         </div>

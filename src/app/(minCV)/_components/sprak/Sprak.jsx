@@ -10,7 +10,9 @@ import { useCvModal } from "@/app/_common/hooks/useCvModal";
 export default function Sprak() {
     const { cv } = useCv();
     const språk = cv.spraak || [];
-    const { oppdateringOk, laster, feilet, oppdaterMedData } = useOppdaterCvSeksjon(CvSeksjonEnum.SPRÅK);
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.SPRÅK,
+    );
 
     const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
         språk,
@@ -18,6 +20,7 @@ export default function Sprak() {
         oppdateringOk,
         laster,
         feilet,
+        setVisFeilmelding,
     );
 
     const SpråkIcon = () => (
@@ -110,6 +113,8 @@ export default function Sprak() {
                     toggleModal={toggleModal}
                     språk={gjeldendeElement}
                     lagreSpråk={lagreElement}
+                    laster={laster}
+                    feilet={feilet}
                 />
             )}
         </div>
