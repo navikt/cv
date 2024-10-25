@@ -7,6 +7,7 @@ import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useOppdaterPersonalia } from "@/app/_common/hooks/swr/useOppdaterPersonalia";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 function PersonaliaIcon() {
     return (
@@ -30,8 +31,7 @@ function PersonaliaIcon() {
 }
 
 export default function Personalia() {
-    const { person } = usePerson();
-    const personalia = person.personalia;
+    const { personalia, personLaster } = usePerson();
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterPersonalia();
 
     const { modalÅpen, toggleModal } = useCvModal(
@@ -42,6 +42,8 @@ export default function Personalia() {
         feilet,
         setVisFeilmelding,
     );
+
+    if (personLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.PERSONALIA} icon={<PersonaliaIcon />} />;
 
     return (
         <div data-section id={SeksjonsIdEnum.PERSONALIA}>

@@ -6,11 +6,11 @@ import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import parse from "html-react-parser";
 
 export default function Sammendrag() {
-    const { cv } = useCv();
-    const sammendrag = cv.sammendrag;
+    const { sammendrag, cvLaster } = useCv();
     const [sammendragEndring, setSammendragEndring] = useState(sammendrag || "");
 
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
@@ -43,6 +43,8 @@ export default function Sammendrag() {
             />
         </svg>
     );
+
+    if (cvLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.SAMMENDRAG} icon={<SammendragIcon />} />;
 
     return (
         <div data-section id={SeksjonsIdEnum.SAMMENDRAG}>

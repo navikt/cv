@@ -7,10 +7,10 @@ import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 export default function AndreGodkjenninger() {
-    const { cv } = useCv();
-    const andreGodkjenninger = cv.andreGodkjenninger || [];
+    const { andreGodkjenninger, cvLaster } = useCv();
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
         CvSeksjonEnum.ANDRE_GODKJENNINGER,
     );
@@ -42,6 +42,9 @@ export default function AndreGodkjenninger() {
             />
         </svg>
     );
+
+    if (cvLaster)
+        return <SeksjonSkeleton seksjon={SeksjonsIdEnum.ANDRE_GODKJENNINGER} icon={<AndreGodkjenningerIcon />} />;
 
     return (
         <div data-section id={SeksjonsIdEnum.ANDRE_GODKJENNINGER}>

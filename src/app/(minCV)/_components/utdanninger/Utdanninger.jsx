@@ -7,6 +7,7 @@ import { UtdanningModal } from "@/app/(minCV)/_components/utdanninger/UtdanningM
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import parse from "html-react-parser";
 
 function UtdanningerIcon() {
@@ -31,8 +32,7 @@ function UtdanningerIcon() {
 }
 
 export default function Utdanninger() {
-    const { cv } = useCv();
-    const utdanninger = cv.utdanning || [];
+    const { utdanninger, cvLaster } = useCv();
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
         CvSeksjonEnum.UTDANNING,
     );
@@ -45,6 +45,8 @@ export default function Utdanninger() {
         feilet,
         setVisFeilmelding,
     );
+
+    if (cvLaster) return <SeksjonSkeleton seksjon={SeksjonsIdEnum.UTDANNING} icon={<UtdanningerIcon />} />;
 
     return (
         <div data-section id={SeksjonsIdEnum.UTDANNING}>
