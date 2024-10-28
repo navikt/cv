@@ -10,13 +10,19 @@ import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksj
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import parse from "html-react-parser";
+import { HentArbeidsforholdSkeleton } from "@/app/(minCV)/_components/arbeidsforhold/HentArbeidsforholdSkeleton";
 
 export default function Arbeidsforhold() {
     const { arbeidsforhold, cvLaster } = useCv();
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
         CvSeksjonEnum.ARBEIDSFORHOLD,
     );
-    const { aaregManglerData, aaregLaster, setSkalHenteData } = useHentArbeidsforhold(oppdaterMedData);
+    const { aaregManglerData, aaregLaster, setSkalHenteData } = useHentArbeidsforhold(
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+    );
 
     const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
         arbeidsforhold,
@@ -63,6 +69,8 @@ export default function Arbeidsforhold() {
         <div data-section id={SeksjonsIdEnum.ARBEIDSFORHOLD}>
             {cvLaster ? (
                 <SeksjonSkeleton icon={<ArbeidsforholdIcon />} />
+            ) : aaregLaster ? (
+                <HentArbeidsforholdSkeleton icon={<ArbeidsforholdIcon />} />
             ) : (
                 <Box background="surface-default" padding="10" className={styles.box}>
                     <HStack justify="center">

@@ -2,12 +2,21 @@
 
 import useSWR from "swr";
 import { simpleApiRequest } from "@/app/_common/utils/fetchUtils";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
-export const useHentArbeidsforhold = (oppdaterArbeidsforhold) => {
+export const useHentArbeidsforhold = (
+    oppdaterArbeidsforhold,
+    oppdateringSuksess,
+    oppdateringLaster,
+    oppdateringHarFeil,
+) => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
     const [skalHenteData, setSkalHenteData] = useState(false);
+
+    useEffect(() => {
+        if (oppdateringSuksess || oppdateringHarFeil) oppdaterArbeidsforhold(null);
+    }, [oppdateringSuksess, oppdateringHarFeil]);
 
     const fetcher = async (url) => {
         const response = await simpleApiRequest(url, "GET");
@@ -31,7 +40,7 @@ export const useHentArbeidsforhold = (oppdaterArbeidsforhold) => {
     return {
         aaregSuksess: !!data && !error,
         aaregManglerData: data?.length === 0,
-        aaregLaster: isLoading,
+        aaregLaster: isLoading || (data && oppdateringLaster),
         aaregHarFeil: error,
         setSkalHenteData,
     };
