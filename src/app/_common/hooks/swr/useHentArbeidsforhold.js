@@ -13,6 +13,7 @@ export const useHentArbeidsforhold = (
 ) => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
     const [skalHenteData, setSkalHenteData] = useState(false);
+    const [aaregManglerData, setAaregManglerData] = useState(false)
 
     useEffect(() => {
         if (oppdateringSuksess || oppdateringHarFeil) oppdaterArbeidsforhold(null);
@@ -29,7 +30,13 @@ export const useHentArbeidsforhold = (
         }
 
         const data = await response.json();
-        oppdaterArbeidsforhold(data);
+
+        if (data?.length === 0) {
+            setAaregManglerData(true)
+        } else {
+            oppdaterArbeidsforhold(data);
+        }
+
         setSkalHenteData(false);
         suksessNotifikasjon("Tidligere arbeidsforhold ble hentet");
         return data;
@@ -39,7 +46,7 @@ export const useHentArbeidsforhold = (
 
     return {
         aaregSuksess: !!data && !error,
-        aaregManglerData: data?.length === 0,
+        aaregManglerData: aaregManglerData,
         aaregLaster: isLoading || (data && oppdateringLaster),
         aaregHarFeil: error,
         setSkalHenteData,
