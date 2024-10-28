@@ -125,8 +125,11 @@ export default function Sammendrag() {
                                 helse, religion eller politiske oppfatning.
                             </BodyLong>
                         </Alert>
+                        <BodyLong>
+                            <b>Gi en kort oppsummering av deg selv</b> *obligatorisk
+                        </BodyLong>
                         <Textarea
-                            label="Gi en kort oppsummering av deg selv"
+                            label=""
                             description=""
                             placeholder="En kort oppsummering av din kompetanse og dine personlige egenskaper."
                             className={styles.mb6}
