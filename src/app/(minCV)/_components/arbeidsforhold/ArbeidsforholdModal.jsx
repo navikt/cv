@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
+import { CvModal } from "@/app/_common/components/CvModal";
 
 export const ArbeidsforholdModal = ({
     modalÅpen,
@@ -92,103 +93,86 @@ export const ArbeidsforholdModal = ({
     };
 
     return (
-        <Modal open={modalÅpen} aria-label="Legg til arbeidsforhold" onClose={() => toggleModal(false)} width="medium">
-            <Modal.Header closeButton={true}>
-                <Heading align="start" level="3" size="medium">
-                    <HStack gap="1" align="center">
-                        Legg til Arbeidsforhold
-                    </HStack>
-                </Heading>
-            </Modal.Header>
-            <Modal.Body>
-                <HStack justify="space-between">
-                    <VStack className={styles.element}>
-                        <Typeahead
-                            className={styles.mb6}
-                            label="Stilling/yrke"
-                            description="Må fylles ut"
-                            type={TypeaheadEnum.STILLING}
-                            oppdaterValg={setStillingTypeahead}
-                            valgtVerdi={stillingstittel}
-                            error={stillingstittelError && "Du må velge stilling/yrke"}
-                        />
-                    </VStack>
-                    <VStack className={styles.element}>
-                        <TextField
-                            className={styles.mb6}
-                            label="Alternativ tittel"
-                            description="Dersom ditt yrke ikke står i listen"
-                            value={alternativTittel}
-                            onChange={(e) => setAlternativTittel(e.target.value)}
-                        />
-                    </VStack>
-                </HStack>
-                <HStack justify="space-between">
-                    <VStack className={styles.element}>
-                        <TextField
-                            className={styles.mb6}
-                            label="Bedrift"
-                            value={arbeidsgiver}
-                            onChange={(e) => setArbeidsgiver(e.target.value)}
-                        />
-                    </VStack>
-                    <VStack className={styles.element}>
-                        <TextField
-                            className={styles.mb6}
-                            label="Sted"
-                            value={arbeidssted}
-                            onChange={(e) => setArbeidssted(e.target.value)}
-                        />
-                    </VStack>
-                </HStack>
-                <Textarea
-                    label="Arbeidsoppgaver"
-                    description="Skriv litt om rollen din og de viktigste oppgavene dine"
-                    className={styles.mb6}
-                    value={arbeidsoppgaver}
-                    onChange={(e) => setArbeidsoppgaver(e.target.value)}
-                />
-                <CheckboxGroup legend="Jobb jeg har nå" className={styles.mb6} value={pågår} onChange={setPågår}>
-                    <Checkbox value={true}>Jobb jeg har nå</Checkbox>
-                </CheckboxGroup>
-
-                <HStack gap="8">
-                    <Datovelger
-                        valgtDato={startdato}
-                        oppdaterDato={setStartdato}
-                        label="Fra"
-                        obligatorisk
-                        error={startdatoError}
-                        setError={setStartdatoError}
+        <CvModal
+            modalÅpen={modalÅpen}
+            tittel={"Legg til arbeidsforhold"}
+            feilet={feilet}
+            laster={laster}
+            lagre={lagre}
+            toggleModal={toggleModal}
+        >
+            <HStack justify="space-between">
+                <VStack className={styles.element}>
+                    <Typeahead
+                        className={styles.mb6}
+                        label="Stilling/yrke"
+                        description="Må fylles ut"
+                        type={TypeaheadEnum.STILLING}
+                        oppdaterValg={setStillingTypeahead}
+                        valgtVerdi={stillingstittel}
+                        error={stillingstittelError && "Du må velge stilling/yrke"}
                     />
+                </VStack>
+                <VStack className={styles.element}>
+                    <TextField
+                        className={styles.mb6}
+                        label="Alternativ tittel"
+                        description="Dersom ditt yrke ikke står i listen"
+                        value={alternativTittel}
+                        onChange={(e) => setAlternativTittel(e.target.value)}
+                    />
+                </VStack>
+            </HStack>
+            <HStack justify="space-between">
+                <VStack className={styles.element}>
+                    <TextField
+                        className={styles.mb6}
+                        label="Bedrift"
+                        value={arbeidsgiver}
+                        onChange={(e) => setArbeidsgiver(e.target.value)}
+                    />
+                </VStack>
+                <VStack className={styles.element}>
+                    <TextField
+                        className={styles.mb6}
+                        label="Sted"
+                        value={arbeidssted}
+                        onChange={(e) => setArbeidssted(e.target.value)}
+                    />
+                </VStack>
+            </HStack>
+            <Textarea
+                label="Arbeidsoppgaver"
+                description="Skriv litt om rollen din og de viktigste oppgavene dine"
+                className={styles.mb6}
+                value={arbeidsoppgaver}
+                onChange={(e) => setArbeidsoppgaver(e.target.value)}
+            />
+            <CheckboxGroup legend="Jobb jeg har nå" className={styles.mb6} value={pågår} onChange={setPågår}>
+                <Checkbox value={true}>Jobb jeg har nå</Checkbox>
+            </CheckboxGroup>
 
-                    {!pågår.includes(true) && (
-                        <Datovelger
-                            valgtDato={sluttdato}
-                            oppdaterDato={setSluttdato}
-                            label="Til"
-                            obligatorisk
-                            error={sluttdatoError}
-                            setError={setSluttdatoError}
-                        />
-                    )}
-                </HStack>
-            </Modal.Body>
-            <Modal.Footer>
-                <HStack gap="4">
-                    {feilet && (
-                        <BodyLong size={"large"} className={styles.errorText}>
-                            Noe gikk galt, prøv å trykk lagre igjen
-                        </BodyLong>
-                    )}
-                    <Button variant="secondary" onClick={() => toggleModal(false)}>
-                        Avbryt
-                    </Button>
-                    <Button variant="primary" onClick={lagre}>
-                        Lagre
-                    </Button>
-                </HStack>
-            </Modal.Footer>
-        </Modal>
+            <HStack gap="8">
+                <Datovelger
+                    valgtDato={startdato}
+                    oppdaterDato={setStartdato}
+                    label="Fra"
+                    obligatorisk
+                    error={startdatoError}
+                    setError={setStartdatoError}
+                />
+
+                {!pågår.includes(true) && (
+                    <Datovelger
+                        valgtDato={sluttdato}
+                        oppdaterDato={setSluttdato}
+                        label="Til"
+                        obligatorisk
+                        error={sluttdatoError}
+                        setError={setSluttdatoError}
+                    />
+                )}
+            </HStack>
+        </CvModal>
     );
 };

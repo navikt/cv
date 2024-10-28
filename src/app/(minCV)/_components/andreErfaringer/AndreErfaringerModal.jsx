@@ -2,6 +2,8 @@ import { BodyLong, Button, Checkbox, CheckboxGroup, Heading, HStack, Modal, Text
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
+import { PersonCircleIcon } from "@navikt/aksel-icons";
+import { CvModal } from "@/app/_common/components/CvModal";
 
 export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreErfaring, laster, feilet }) => {
     const [beskrivelse, setBeskrivelse] = useState("");
@@ -45,75 +47,60 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
     };
 
     return (
-        <Modal open={modalÅpen} aria-label="Legg til annen erfaring" onClose={() => toggleModal(false)} width="medium">
-            <Modal.Header closeButton={true}>
-                <Heading align="start" level="3" size="medium">
-                    Legg til annen erfaring
-                </Heading>
-            </Modal.Header>
-            <Modal.Body>
-                <BodyLong>
-                    <b>Rolle</b> *obligatorisk
-                </BodyLong>
-                <TextField
-                    label=""
-                    description="Eksempel: militærtjeneste, styreverv eller fotballtrener"
-                    className={styles.mb6}
-                    value={rolle}
-                    onChange={(e) => {
-                        setRolle(e.target.value);
-                        setRolleError(false);
-                    }}
-                    error={rolleError && "Du må skrive inn rolle"}
-                />
-                <TextField
-                    label="Beskrivelse"
-                    description="Eksempel: 5 års erfaring som fotballtrener for guttelag i Oslo"
-                    className={styles.mb6}
-                    value={beskrivelse}
-                    onChange={(e) => setBeskrivelse(e.target.value)}
-                />
-                <CheckboxGroup legend="" className={styles.mb6} value={pågår} onChange={setPågår}>
-                    <Checkbox value={true}>Pågår</Checkbox>
-                </CheckboxGroup>
+        <CvModal
+            modalÅpen={modalÅpen}
+            tittel={"Legg til annen erfaring"}
+            feilet={feilet}
+            laster={laster}
+            lagre={lagre}
+            toggleModal={toggleModal}
+        >
+            <BodyLong>
+                <b>Rolle</b> *obligatorisk
+            </BodyLong>
+            <TextField
+                label=""
+                description="Eksempel: militærtjeneste, styreverv eller fotballtrener"
+                className={styles.mb6}
+                value={rolle}
+                onChange={(e) => {
+                    setRolle(e.target.value);
+                    setRolleError(false);
+                }}
+                error={rolleError && "Du må skrive inn rolle"}
+            />
+            <TextField
+                label="Beskrivelse"
+                description="Eksempel: 5 års erfaring som fotballtrener for guttelag i Oslo"
+                className={styles.mb6}
+                value={beskrivelse}
+                onChange={(e) => setBeskrivelse(e.target.value)}
+            />
+            <CheckboxGroup legend="" className={styles.mb6} value={pågår} onChange={setPågår}>
+                <Checkbox value={true}>Pågår</Checkbox>
+            </CheckboxGroup>
 
-                <HStack gap="8">
+            <HStack gap="8">
+                <Datovelger
+                    valgtDato={startdato}
+                    oppdaterDato={setStartdato}
+                    label="Fra"
+                    obligatorisk
+                    error={startdatoError}
+                    setError={setStartdatoError}
+                />
+
+                {!pågår.includes(true) && (
                     <Datovelger
-                        valgtDato={startdato}
-                        oppdaterDato={setStartdato}
-                        label="Fra"
+                        valgtDato={sluttdato}
+                        oppdaterDato={setSluttdato}
+                        label="Til"
                         obligatorisk
-                        error={startdatoError}
-                        setError={setStartdatoError}
+                        error={sluttdatoError}
+                        setError={setSluttdatoError}
                     />
-
-                    {!pågår.includes(true) && (
-                        <Datovelger
-                            valgtDato={sluttdato}
-                            oppdaterDato={setSluttdato}
-                            label="Til"
-                            obligatorisk
-                            error={sluttdatoError}
-                            setError={setSluttdatoError}
-                        />
-                    )}
-                </HStack>
-            </Modal.Body>
-            <Modal.Footer>
-                <HStack gap="4">
-                    {feilet && (
-                        <BodyLong size={"large"} className={styles.errorText}>
-                            Noe gikk galt, prøv å trykk lagre igjen
-                        </BodyLong>
-                    )}
-                    <Button variant="secondary" onClick={() => toggleModal(false)}>
-                        Avbryt
-                    </Button>
-                    <Button variant="primary" onClick={lagre}>
-                        Lagre
-                    </Button>
-                </HStack>
-            </Modal.Footer>
-        </Modal>
+                )}
+            </HStack>
+        </CvModal>
     );
 };

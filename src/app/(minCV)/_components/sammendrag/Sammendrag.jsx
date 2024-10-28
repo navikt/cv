@@ -8,6 +8,7 @@ import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksj
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import parse from "html-react-parser";
+import { CvModal } from "@/app/_common/components/CvModal";
 
 export default function Sammendrag() {
     const { sammendrag, cvLaster } = useCv();
@@ -106,15 +107,15 @@ export default function Sammendrag() {
                 </Box>
             )}
 
-            <Modal open={modalÅpen} aria-label="Legg til sammendrag" onClose={() => toggleModal(false)} width="medium">
-                <Modal.Header closeButton={true}>
-                    <Heading align="start" level="3" size="medium">
-                        <HStack gap="1" align="center">
-                            Legg til Sammendrag
-                        </HStack>
-                    </Heading>
-                </Modal.Header>
-                <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }}>
+            {modalÅpen && (
+                <CvModal
+                    modalÅpen={modalÅpen}
+                    tittel={"Legg til sammendrag"}
+                    feilet={feilet}
+                    laster={laster}
+                    lagre={lagre}
+                    toggleModal={toggleModal}
+                >
                     <VStack>
                         <Alert variant="warning" className={styles.mb12}>
                             <Heading spacing size="xsmall" level="3">
@@ -141,23 +142,8 @@ export default function Sammendrag() {
                             error={sammendragError && "Du må skrive inn sammendrag"}
                         />
                     </VStack>
-                </Modal.Body>
-                <Modal.Footer>
-                    <HStack gap="4">
-                        {feilet && (
-                            <BodyLong size={"large"} className={styles.errorText}>
-                                Noe gikk galt, prøv å trykk lagre igjen
-                            </BodyLong>
-                        )}
-                        <Button variant="secondary" onClick={() => toggleModal(false)}>
-                            Avbryt
-                        </Button>
-                        <Button variant="primary" onClick={() => lagre()}>
-                            Lagre
-                        </Button>
-                    </HStack>
-                </Modal.Footer>
-            </Modal>
+                </CvModal>
+            )}
         </div>
     );
 }

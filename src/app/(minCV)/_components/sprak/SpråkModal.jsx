@@ -4,6 +4,7 @@ import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { SpråkEnum } from "@/app/_common/enums/cvEnums";
 import styles from "@/app/page.module.css";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
+import { CvModal } from "@/app/_common/components/CvModal";
 
 export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpråk, laster, feilet }) {
     const [valgtSpråk, setValgtSpråk] = useState(språk || null);
@@ -39,75 +40,53 @@ export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpr�
     };
 
     return (
-        <Modal
-            open={modalÅpen}
-            aria-label="Legg til fagbrev"
-            onClose={() => toggleModal(false)}
-            width="medium"
-            className={"overflow-visible"}
+        <CvModal
+            modalÅpen={modalÅpen}
+            tittel={"Legg til språk"}
+            feilet={feilet}
+            laster={laster}
+            lagre={lagre}
+            toggleModal={toggleModal}
+            overflowVisible={true}
         >
-            <Modal.Header closeButton={true}>
-                <Heading align="start" level="3" size="medium">
-                    <HStack gap="1" align="center">
-                        Legg til språk
-                    </HStack>
-                </Heading>
-            </Modal.Header>
-            <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
-                <BodyLong>
-                    <b>Språk</b> *obligatorisk
-                </BodyLong>
-                <Typeahead
-                    className={styles.mb6}
-                    label=""
-                    valgtVerdi={valgtSpråk?.language || valgtSpråk?.title}
-                    oppdaterValg={oppdaterValgtSpråk}
-                    type={TypeaheadEnum.SPRÅK}
-                    forhåndshentet={true}
-                    error={valgtSprakError && "Du må velge et språk"}
-                />
-                <Select
-                    id="Muntlig"
-                    label="Muntlig"
-                    className={styles.mb6}
-                    value={muntligEvne}
-                    onChange={(e) => setMuntligEvne(e.target.value)}
-                >
-                    {Object.keys(SpråkEnum).map((e) => (
-                        <option key={e} value={e}>
-                            {SpråkEnum[e]}
-                        </option>
-                    ))}
-                </Select>
-                <Select
-                    id="Skriftlig"
-                    label="Skriftlig"
-                    className={styles.mb6}
-                    value={skriftligEvne}
-                    onChange={(e) => setSkriftligEvne(e.target.value)}
-                >
-                    {Object.keys(SpråkEnum).map((e) => (
-                        <option key={e} value={e}>
-                            {SpråkEnum[e]}
-                        </option>
-                    ))}
-                </Select>
-            </Modal.Body>
-            <Modal.Footer>
-                <HStack gap="4">
-                    {feilet && (
-                        <BodyLong size={"large"} className={styles.errorText}>
-                            Noe gikk galt, prøv å trykk lagre igjen
-                        </BodyLong>
-                    )}
-                    <Button variant="secondary" onClick={() => toggleModal(false)}>
-                        Avbryt
-                    </Button>
-                    <Button variant="primary" onClick={() => lagre(valgtSpråk)}>
-                        Lagre
-                    </Button>
-                </HStack>
-            </Modal.Footer>
-        </Modal>
+            <BodyLong>
+                <b>Språk</b> *obligatorisk
+            </BodyLong>
+            <Typeahead
+                className={styles.mb6}
+                label=""
+                valgtVerdi={valgtSpråk?.language || valgtSpråk?.title}
+                oppdaterValg={oppdaterValgtSpråk}
+                type={TypeaheadEnum.SPRÅK}
+                forhåndshentet={true}
+                error={valgtSprakError && "Du må velge et språk"}
+            />
+            <Select
+                id="Muntlig"
+                label="Muntlig"
+                className={styles.mb6}
+                value={muntligEvne}
+                onChange={(e) => setMuntligEvne(e.target.value)}
+            >
+                {Object.keys(SpråkEnum).map((e) => (
+                    <option key={e} value={e}>
+                        {SpråkEnum[e]}
+                    </option>
+                ))}
+            </Select>
+            <Select
+                id="Skriftlig"
+                label="Skriftlig"
+                className={styles.mb6}
+                value={skriftligEvne}
+                onChange={(e) => setSkriftligEvne(e.target.value)}
+            >
+                {Object.keys(SpråkEnum).map((e) => (
+                    <option key={e} value={e}>
+                        {SpråkEnum[e]}
+                    </option>
+                ))}
+            </Select>
+        </CvModal>
     );
 }
