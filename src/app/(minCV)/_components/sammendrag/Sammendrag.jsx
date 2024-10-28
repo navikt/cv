@@ -12,6 +12,7 @@ import parse from "html-react-parser";
 export default function Sammendrag() {
     const { sammendrag, cvLaster } = useCv();
     const [sammendragEndring, setSammendragEndring] = useState(sammendrag || "");
+    const [sammendragError, setSammendragError] = useState(false);
 
     const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
         CvSeksjonEnum.SAMMENDRAG,
@@ -43,6 +44,11 @@ export default function Sammendrag() {
             />
         </svg>
     );
+
+    const lagre = () => {
+        if (!sammendragEndring) setSammendragError(true);
+        if (sammendragEndring) oppdaterMedData(sammendragEndring);
+    };
 
     return (
         <div data-section id={SeksjonsIdEnum.SAMMENDRAG}>
@@ -125,7 +131,11 @@ export default function Sammendrag() {
                             placeholder="En kort oppsummering av din kompetanse og dine personlige egenskaper."
                             className={styles.mb6}
                             value={sammendragEndring}
-                            onChange={(e) => setSammendragEndring(e.target.value)}
+                            onChange={(e) => {
+                                setSammendragEndring(e.target.value);
+                                setSammendragError(false);
+                            }}
+                            error={sammendragError && "Du må skrive inn sammendrag"}
                         />
                     </VStack>
                 </Modal.Body>
@@ -139,7 +149,7 @@ export default function Sammendrag() {
                         <Button variant="secondary" onClick={() => toggleModal(false)}>
                             Avbryt
                         </Button>
-                        <Button variant="primary" onClick={() => oppdaterMedData(sammendragEndring)}>
+                        <Button variant="primary" onClick={() => lagre()}>
                             Lagre
                         </Button>
                     </HStack>
