@@ -13,7 +13,7 @@ export const useHentArbeidsforhold = (
 ) => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
     const [skalHenteData, setSkalHenteData] = useState(false);
-    const [aaregManglerData, setAaregManglerData] = useState(false)
+    const [aaregManglerData, setAaregManglerData] = useState(false);
 
     useEffect(() => {
         if (oppdateringSuksess || oppdateringHarFeil) oppdaterArbeidsforhold(null);
@@ -32,7 +32,7 @@ export const useHentArbeidsforhold = (
         const data = await response.json();
 
         if (data?.length === 0) {
-            setAaregManglerData(true)
+            setAaregManglerData(true);
         } else {
             oppdaterArbeidsforhold(data);
         }
