@@ -65,7 +65,8 @@ export default function Jobbonsker() {
         oppdaterMedData(tommeJobbønsker);
     };
 
-    const jobbønskerErTomt = () => jobbønsker === null || jobbønsker?.locations?.length === 0;
+    const jobbønskerErTomt = () =>
+        !jobbønsker || Object.keys(jobbønsker).length === 0 || jobbønsker?.locations?.length === 0;
 
     return (
         <div data-section id={SeksjonsIdEnum.JOBBØNSKER}>
