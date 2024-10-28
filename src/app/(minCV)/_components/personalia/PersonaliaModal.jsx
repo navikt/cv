@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { BodyLong, Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-react";
+import { HStack, TextField, VStack } from "@navikt/ds-react";
 import { PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import ValidateEmail from "@/app/_common/components/ValidateEmail";
+import { CvModal } from "@/app/_common/components/CvModal";
 
 export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, lagrePersonalia, laster, feilet }) {
     const [fornavn, setFornavn] = useState("");
@@ -62,124 +63,114 @@ export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, l
     };
 
     return (
-        <Modal open={modalÅpen} aria-label="Legg til personalia" onClose={() => toggleModal(false)} width="medium">
-            <Modal.Header closeButton={true}>
-                <Heading align="start" level="3" size="medium">
-                    <HStack gap="1" align="center">
-                        <PersonCircleIcon fontSize="1.5rem" />
-                        Legg til Personalia
-                    </HStack>
-                </Heading>
-            </Modal.Header>
-            <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }}>
-                <HStack justify="space-between">
-                    <VStack className={styles.element}>
-                        <TextField
-                            className={styles.mb6}
-                            label="Fornavn"
-                            description="Må fylles ut"
-                            value={fornavn}
-                            onChange={(e) => {
-                                setFornavn(e.target.value);
-                                setFornavnError(false);
-                            }}
-                            error={fornavnError && "Fornavn må fylles ut"}
-                        />
-                    </VStack>
-                    <VStack className={styles.element}>
-                        <TextField
-                            className={styles.mb6}
-                            label="Etternavn"
-                            description="Må fylles ut"
-                            value={etternavn}
-                            onChange={(e) => {
-                                setEtternavn(e.target.value);
-                                setEtternavnError(false);
-                            }}
-                            error={etternavnError && "Etternavn må fylles ut"}
-                        />
-                    </VStack>
-                </HStack>
-                <HStack justify="space-between">
-                    <VStack className={styles.element}>
-                        <TextField
-                            className={styles.mb6}
-                            type="email"
-                            label="E-post"
-                            description="Må fylles ut"
-                            value={epost}
-                            onChange={(e) => {
-                                setEpost(e.target.value);
-                                setEpostError(false);
-                                setEpostValidationError(false);
-                            }}
-                            error={
-                                (epostError && "E-post må fylles ut") ||
-                                (epostValidationError && "Du har lagt inn en ugyldig E-post")
-                            }
-                        />
-                    </VStack>
-                    <VStack className={styles.element}>
-                        <TextField
-                            className={styles.mb6}
-                            type="tel"
-                            label="Telefon"
-                            description="Må fylles ut"
-                            value={telefon}
-                            onChange={(e) => {
-                                setTelefon(e.target.value);
-                                setTelefonError(false);
-                            }}
-                            error={telefonError && "Telefon må fylles ut"}
-                        />
-                    </VStack>
-                </HStack>
-                <TextField
-                    className={styles.mb6}
-                    label="Gateadresse"
-                    value={adresse}
-                    onChange={(e) => setAdresse(e.target.value)}
-                />
-                <HStack justify="space-between">
-                    <VStack className={styles.element}>
-                        <TextField
-                            className={styles.mb6}
-                            label="Postnummer"
-                            value={postnummer}
-                            onChange={(e) => setPostnummer(e.target.value)}
-                        />
-                    </VStack>
-                    <VStack className={styles.element}>
-                        <TextField
-                            className={styles.mb6}
-                            label="Sted"
-                            value={sted}
-                            onChange={(e) => setSted(e.target.value)}
-                        />
-                    </VStack>
-                </HStack>
-                <TextField
-                    label="Fødselsdato"
-                    description="Kan ikke endres"
-                    value={!!fødselsdato ? formatterFullDato(fødselsdato) : ""}
-                    readOnly
-                />
-            </Modal.Body>
-            <Modal.Footer>
-                <HStack gap="4">
-                    {feilet && (
-                        <BodyLong size={"large"} className={styles.errorText}>
-                            Noe gikk galt, prøv å trykk lagre igjen
-                        </BodyLong>
-                    )}
-                    <Button variant="secondary" onClick={() => toggleModal(false)}>
-                        Avbryt
-                    </Button>
-                    <Button variant="primary" onClick={() => lagre()}>
-                        Lagre
-                    </Button>
-                </HStack>
-            </Modal.Footer>
-        </Modal>
+        <CvModal
+            modalÅpen={modalÅpen}
+            tittel={"Legg til personalia"}
+            icon={<PersonCircleIcon fontSize="1.5rem" />}
+            feilet={feilet}
+            laster={laster}
+            lagre={lagre}
+            toggleModal={toggleModal}
+        >
+            <HStack justify="space-between">
+                <VStack className={styles.element}>
+                    <TextField
+                        className={styles.mb6}
+                        label="Fornavn"
+                        description="Må fylles ut"
+                        value={fornavn}
+                        onChange={(e) => {
+                            setFornavn(e.target.value);
+                            setFornavnError(false);
+                        }}
+                        error={fornavnError && "Fornavn må fylles ut"}
+                        disabled={laster}
+                    />
+                </VStack>
+                <VStack className={styles.element}>
+                    <TextField
+                        className={styles.mb6}
+                        label="Etternavn"
+                        description="Må fylles ut"
+                        value={etternavn}
+                        onChange={(e) => {
+                            setEtternavn(e.target.value);
+                            setEtternavnError(false);
+                        }}
+                        error={etternavnError && "Etternavn må fylles ut"}
+                        disabled={laster}
+                    />
+                </VStack>
+            </HStack>
+            <HStack justify="space-between">
+                <VStack className={styles.element}>
+                    <TextField
+                        className={styles.mb6}
+                        type="email"
+                        label="E-post"
+                        description="Må fylles ut"
+                        value={epost}
+                        onChange={(e) => {
+                            setEpost(e.target.value);
+                            setEpostError(false);
+                            setEpostValidationError(false);
+                        }}
+                        error={
+                            (epostError && "E-post må fylles ut") ||
+                            (epostValidationError && "Du har lagt inn en ugyldig E-post")
+                        }
+                        disabled={laster}
+                    />
+                </VStack>
+                <VStack className={styles.element}>
+                    <TextField
+                        className={styles.mb6}
+                        type="tel"
+                        label="Telefon"
+                        description="Må fylles ut"
+                        value={telefon}
+                        onChange={(e) => {
+                            setTelefon(e.target.value);
+                            setTelefonError(false);
+                        }}
+                        error={telefonError && "Telefon må fylles ut"}
+                        disabled={laster}
+                    />
+                </VStack>
+            </HStack>
+            <TextField
+                className={styles.mb6}
+                label="Gateadresse"
+                value={adresse}
+                onChange={(e) => setAdresse(e.target.value)}
+                disabled={laster}
+            />
+            <HStack justify="space-between">
+                <VStack className={styles.element}>
+                    <TextField
+                        className={styles.mb6}
+                        label="Postnummer"
+                        value={postnummer}
+                        onChange={(e) => setPostnummer(e.target.value)}
+                        disabled={laster}
+                    />
+                </VStack>
+                <VStack className={styles.element}>
+                    <TextField
+                        className={styles.mb6}
+                        label="Sted"
+                        value={sted}
+                        onChange={(e) => setSted(e.target.value)}
+                        disabled={laster}
+                    />
+                </VStack>
+            </HStack>
+            <TextField
+                label="Fødselsdato"
+                description="Kan ikke endres"
+                value={!!fødselsdato ? formatterFullDato(fødselsdato) : ""}
+                readOnly
+            />
+        </CvModal>
     );
 }

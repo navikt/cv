@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import styles from "@/app/page.module.css";
+import { CvModal } from "@/app/_common/components/CvModal";
 
 export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFagbrev, laster, feilet }) {
     const [valgtFagbrev, setValgtFagbrev] = useState(fagbrev || null);
@@ -31,45 +32,23 @@ export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFa
     };
 
     return (
-        <Modal
-            open={modalÅpen}
-            aria-label="Legg til fagbrev"
-            onClose={() => toggleModal(false)}
-            width="medium"
-            className={"overflow-visible"}
+        <CvModal
+            modalÅpen={modalÅpen}
+            tittel={"Legg til fagbrev"}
+            feilet={feilet}
+            laster={laster}
+            lagre={lagre}
+            toggleModal={toggleModal}
+            overflowVisible={true}
         >
-            <Modal.Header closeButton={true}>
-                <Heading align="start" level="3" size="medium">
-                    <HStack gap="1" align="center">
-                        Legg til Fagbrev
-                    </HStack>
-                </Heading>
-            </Modal.Header>
-            <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
-                <Typeahead
-                    label="Fagdokumentasjon"
-                    description="Må fylles ut"
-                    type={TypeaheadEnum.FAGBREV}
-                    oppdaterValg={oppdaterValgtFagbrev}
-                    valgtVerdi={valgtFagbrev?.title}
-                    error={valgtFagbrevError && "Du må velge et fagbrev"}
-                />
-            </Modal.Body>
-            <Modal.Footer>
-                <HStack gap="4">
-                    {feilet && (
-                        <BodyLong size={"large"} className={styles.errorText}>
-                            Noe gikk galt, prøv å trykk lagre igjen
-                        </BodyLong>
-                    )}
-                    <Button variant="secondary" onClick={() => toggleModal(false)}>
-                        Avbryt
-                    </Button>
-                    <Button variant="primary" onClick={() => lagre(valgtFagbrev)}>
-                        Lagre
-                    </Button>
-                </HStack>
-            </Modal.Footer>
-        </Modal>
+            <Typeahead
+                label="Fagdokumentasjon"
+                description="Må fylles ut"
+                type={TypeaheadEnum.FAGBREV}
+                oppdaterValg={oppdaterValgtFagbrev}
+                valgtVerdi={valgtFagbrev?.title}
+                error={valgtFagbrevError && "Du må velge et fagbrev"}
+            />
+        </CvModal>
     );
 }

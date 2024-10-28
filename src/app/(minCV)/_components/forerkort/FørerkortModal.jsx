@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "@/app/page.module.css";
 import førerkortData from "@/app/_common/data/førerkort.json";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
+import { CvModal } from "@/app/_common/components/CvModal";
 
 export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, lagreFørerkort, laster, feilet }) {
     const [valgtFørerkort, setValgtFørerkort] = useState(førerkort || null);
@@ -42,78 +43,56 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
     };
 
     return (
-        <Modal
-            open={modalÅpen}
-            aria-label="Legg til fagbrev"
-            onClose={() => toggleModal(false)}
-            width="medium"
-            className={"overflow-visible"}
+        <CvModal
+            modalÅpen={modalÅpen}
+            tittel={"Legg til førerkort"}
+            feilet={feilet}
+            laster={laster}
+            lagre={lagre}
+            toggleModal={toggleModal}
+            overflowVisible={true}
         >
-            <Modal.Header closeButton={true}>
-                <Heading align="start" level="3" size="medium">
-                    <HStack gap="1" align="center">
-                        Legg til Førerkort
+            <VStack>
+                <BodyLong>
+                    <b>Førerkort</b> *obligatorisk
+                </BodyLong>
+                <Select
+                    id="Førerkort"
+                    label=""
+                    className={styles.mb6}
+                    value={valgtFørerkort?.type || ""}
+                    onChange={(e) => velgFørerkort(e.target.value)}
+                    error={valgtForerkortError && "Du må velge førerkort"}
+                >
+                    <option value={null}>Velg</option>
+                    {gyldigeFørerkort.map((e) => (
+                        <option key={e.type} value={e.type}>
+                            {e.type}
+                        </option>
+                    ))}
+                </Select>
+                {kreverDato && (
+                    <HStack gap="8">
+                        <Datovelger
+                            valgtDato={gyldigFra}
+                            oppdaterDato={setGyldigFra}
+                            label="Gyldig fra"
+                            obligatorisk
+                            error={gyldigFraError}
+                            setError={setGyldigFraError}
+                        />
+                        <Datovelger
+                            valgtDato={gyldigTil}
+                            oppdaterDato={setGyldigTil}
+                            label="Gyldig til"
+                            obligatorisk
+                            fremtid
+                            error={gyldigTilError}
+                            setError={setGyldigTilError}
+                        />
                     </HStack>
-                </Heading>
-            </Modal.Header>
-            <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
-                <VStack>
-                    <BodyLong>
-                        <b>Førerkort</b> *obligatorisk
-                    </BodyLong>
-                    <Select
-                        id="Førerkort"
-                        label=""
-                        className={styles.mb6}
-                        value={valgtFørerkort?.type || ""}
-                        onChange={(e) => velgFørerkort(e.target.value)}
-                        error={valgtForerkortError && "Du må velge førerkort"}
-                    >
-                        <option value={null}>Velg</option>
-                        {gyldigeFørerkort.map((e) => (
-                            <option key={e.type} value={e.type}>
-                                {e.type}
-                            </option>
-                        ))}
-                    </Select>
-                    {kreverDato && (
-                        <HStack gap="8">
-                            <Datovelger
-                                valgtDato={gyldigFra}
-                                oppdaterDato={setGyldigFra}
-                                label="Gyldig fra"
-                                obligatorisk
-                                error={gyldigFraError}
-                                setError={setGyldigFraError}
-                            />
-                            <Datovelger
-                                valgtDato={gyldigTil}
-                                oppdaterDato={setGyldigTil}
-                                label="Gyldig til"
-                                obligatorisk
-                                fremtid
-                                error={gyldigTilError}
-                                setError={setGyldigTilError}
-                            />
-                        </HStack>
-                    )}
-                </VStack>
-            </Modal.Body>
-            <Modal.Footer>
-                <HStack gap="4">
-                    {feilet && (
-                        <BodyLong size={"large"} className={styles.errorText}>
-                            Noe gikk galt, prøv å trykk lagre igjen
-                        </BodyLong>
-                    )}
-                    <Button variant="secondary" onClick={() => toggleModal(false)}>
-                        Avbryt
-                    </Button>
-                    <Button variant="primary" onClick={() => lagre(valgtFørerkort)}>
-                        Lagre
-                    </Button>
-                </HStack>
-            </Modal.Footer>
-        </Modal>
+                )}
+            </VStack>
+        </CvModal>
     );
 }

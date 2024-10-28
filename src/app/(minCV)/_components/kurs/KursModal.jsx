@@ -4,6 +4,7 @@ import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TidsenhetEnum } from "@/app/_common/enums/cvEnums";
 import { formatterTidsenhet, storForbokstav } from "@/app/_common/utils/stringUtils";
+import { CvModal } from "@/app/_common/components/CvModal";
 
 export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs, laster, feilet }) {
     const [valgtKurs, setValgtKurs] = useState(kurs || null);
@@ -45,100 +46,78 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs, la
     };
 
     return (
-        <Modal
-            open={modalÅpen}
-            aria-label="Legg til annen godkjenning"
-            onClose={() => toggleModal(false)}
-            width="medium"
-            className={"overflow-visible"}
+        <CvModal
+            modalÅpen={modalÅpen}
+            tittel={"Legg til kurs"}
+            feilet={feilet}
+            laster={laster}
+            lagre={lagre}
+            toggleModal={toggleModal}
+            overflowVisible={true}
         >
-            <Modal.Header closeButton={true}>
-                <Heading align="start" level="3" size="medium">
-                    <HStack gap="1" align="center">
-                        Legg til kurs
-                    </HStack>
-                </Heading>
-            </Modal.Header>
-            <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
-                <BodyLong>
-                    <b>Kursnavn</b> *obligatorisk
-                </BodyLong>
-                <TextField
-                    className={styles.mb6}
-                    label=""
-                    description=""
-                    value={kursnavn}
-                    onChange={(e) => {
-                        setKursnavn(e.target.value);
-                        setKursnavnError(false);
-                    }}
-                    error={kursnavnError && "Du må skrive inn kursnavn"}
-                />
-                <TextField
-                    className={styles.mb6}
-                    label="Kursholder"
-                    description=""
-                    value={utsteder}
-                    onChange={(e) => setUtsteder(e.target.value)}
-                />
-                <Datovelger
-                    valgtDato={kursDato}
-                    oppdaterDato={setKursDato}
-                    label="Fullført"
-                    className={styles.mb6}
-                    error={kursDatoError}
-                    setError={setKursDatoError}
-                />
-                <HStack gap="8">
+            <BodyLong>
+                <b>Kursnavn</b> *obligatorisk
+            </BodyLong>
+            <TextField
+                className={styles.mb6}
+                label=""
+                description=""
+                value={kursnavn}
+                onChange={(e) => {
+                    setKursnavn(e.target.value);
+                    setKursnavnError(false);
+                }}
+                error={kursnavnError && "Du må skrive inn kursnavn"}
+            />
+            <TextField
+                className={styles.mb6}
+                label="Kursholder"
+                description=""
+                value={utsteder}
+                onChange={(e) => setUtsteder(e.target.value)}
+            />
+            <Datovelger
+                valgtDato={kursDato}
+                oppdaterDato={setKursDato}
+                label="Fullført"
+                className={styles.mb6}
+                error={kursDatoError}
+                setError={setKursDatoError}
+            />
+            <HStack gap="8">
+                <VStack>
+                    <Select
+                        label="Kurslengde"
+                        className={styles.mb6}
+                        value={tidsenhet}
+                        onChange={(e) => setTidsenhet(e.target.value)}
+                    >
+                        <option value="">Velg</option>
+                        {Object.keys(TidsenhetEnum).map((enhet) => (
+                            <option key={enhet} value={enhet}>
+                                {storForbokstav(formatterTidsenhet(enhet, 2))}
+                            </option>
+                        ))}
+                    </Select>
+                </VStack>
+                {tidsenhet && (
                     <VStack>
-                        <Select
-                            label="Kurslengde"
+                        <TextField
                             className={styles.mb6}
-                            value={tidsenhet}
-                            onChange={(e) => setTidsenhet(e.target.value)}
-                        >
-                            <option value="">Velg</option>
-                            {Object.keys(TidsenhetEnum).map((enhet) => (
-                                <option key={enhet} value={enhet}>
-                                    {storForbokstav(formatterTidsenhet(enhet, 2))}
-                                </option>
-                            ))}
-                        </Select>
+                            label={`Antall ${formatterTidsenhet(tidsenhet, 2)}`}
+                            inputMode="numeric"
+                            type={"number"}
+                            description=""
+                            value={lengde}
+                            onChange={(e) => {
+                                setLengde(e.target.value);
+                                setLengdeError(false);
+                            }}
+                            error={lengdeError && "Du må fylle ut varighet"}
+                        />
                     </VStack>
-                    {tidsenhet && (
-                        <VStack>
-                            <TextField
-                                className={styles.mb6}
-                                label={`Antall ${formatterTidsenhet(tidsenhet, 2)}`}
-                                inputMode="numeric"
-                                type={"number"}
-                                description=""
-                                value={lengde}
-                                onChange={(e) => {
-                                    setLengde(e.target.value);
-                                    setLengdeError(false);
-                                }}
-                                error={lengdeError && "Du må fylle ut varighet"}
-                            />
-                        </VStack>
-                    )}
-                </HStack>
-            </Modal.Body>
-            <Modal.Footer>
-                <HStack gap="4">
-                    {feilet && (
-                        <BodyLong size={"large"} className={styles.errorText}>
-                            Noe gikk galt, prøv å trykk lagre igjen
-                        </BodyLong>
-                    )}
-                    <Button variant="secondary" onClick={() => toggleModal(false)}>
-                        Avbryt
-                    </Button>
-                    <Button variant="primary" onClick={() => lagre(valgtKurs)}>
-                        Lagre
-                    </Button>
-                </HStack>
-            </Modal.Footer>
-        </Modal>
+                )}
+            </HStack>
+        </CvModal>
     );
 }

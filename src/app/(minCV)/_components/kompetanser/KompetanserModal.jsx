@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import styles from "@/app/page.module.css";
+import { CvModal } from "@/app/_common/components/CvModal";
 
 export default function KompetanserModal({ modalÅpen, toggleModal, kompetanse, lagreKompetanse, laster, feilet }) {
     const [valgtKompetanse, setValgtKompetanse] = useState(kompetanse || null);
@@ -31,48 +32,26 @@ export default function KompetanserModal({ modalÅpen, toggleModal, kompetanse, 
     };
 
     return (
-        <Modal
-            open={modalÅpen}
-            aria-label="Legg til kompetanse"
-            onClose={() => toggleModal(false)}
-            width="medium"
-            className={"overflow-visible"}
+        <CvModal
+            modalÅpen={modalÅpen}
+            tittel={"Legg til kompetanse"}
+            feilet={feilet}
+            laster={laster}
+            lagre={lagre}
+            toggleModal={toggleModal}
+            overflowVisible={true}
         >
-            <Modal.Header closeButton={true}>
-                <Heading align="start" level="3" size="medium">
-                    <HStack gap="1" align="center">
-                        Legg til Kompetanse
-                    </HStack>
-                </Heading>
-            </Modal.Header>
-            <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
-                <BodyLong>
-                    <b>Hva er du flink til?</b> *obligatorisk
-                </BodyLong>
-                <Typeahead
-                    label=""
-                    description="Legg til kompetanser, ferdigheter, verktøy o.l."
-                    type={TypeaheadEnum.KOMPETANSE}
-                    oppdaterValg={oppdaterValgtKompetanse}
-                    valgtVerdi={valgtKompetanse?.title}
-                    error={valgtKompetanseError && "Du må velge en eller flere kompetanser"}
-                />
-            </Modal.Body>
-            <Modal.Footer>
-                <HStack gap="4">
-                    {feilet && (
-                        <BodyLong size={"large"} className={styles.errorText}>
-                            Noe gikk galt, prøv å trykk lagre igjen
-                        </BodyLong>
-                    )}
-                    <Button variant="secondary" onClick={() => toggleModal(false)}>
-                        Avbryt
-                    </Button>
-                    <Button variant="primary" onClick={() => lagre(valgtKompetanse)}>
-                        Lagre
-                    </Button>
-                </HStack>
-            </Modal.Footer>
-        </Modal>
+            <BodyLong>
+                <b>Hva er du flink til?</b> *obligatorisk
+            </BodyLong>
+            <Typeahead
+                label=""
+                description="Legg til kompetanser, ferdigheter, verktøy o.l."
+                type={TypeaheadEnum.KOMPETANSE}
+                oppdaterValg={oppdaterValgtKompetanse}
+                valgtVerdi={valgtKompetanse?.title}
+                error={valgtKompetanseError && "Du må velge en eller flere kompetanser"}
+            />
+        </CvModal>
     );
 }

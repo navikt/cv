@@ -4,6 +4,7 @@ import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
+import { CvModal } from "@/app/_common/components/CvModal";
 
 export default function OffentligeGodkjenningerModal({
     modalÅpen,
@@ -56,74 +57,52 @@ export default function OffentligeGodkjenningerModal({
     };
 
     return (
-        <Modal
-            open={modalÅpen}
-            aria-label="Legg til offentlig godkjenning"
-            onClose={() => toggleModal(false)}
-            width="medium"
-            className={"overflow-visible"}
+        <CvModal
+            modalÅpen={modalÅpen}
+            tittel={"Legg til offentlig godkjenning"}
+            feilet={feilet}
+            laster={laster}
+            lagre={lagre}
+            toggleModal={toggleModal}
+            overflowVisible={true}
         >
-            <Modal.Header closeButton={true}>
-                <Heading align="start" level="3" size="medium">
-                    <HStack gap="1" align="center">
-                        Legg til offentlig godkjenning
-                    </HStack>
-                </Heading>
-            </Modal.Header>
-            <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }} className={"overflow-visible"}>
-                <BodyLong>
-                    <b>Offentlig godkjenning</b> *obligatorisk
-                </BodyLong>
-                <Typeahead
-                    className={styles.mb6}
-                    label=""
-                    description="Autorisasjoner, førerbevis, tjenestebevis m.m"
-                    type={TypeaheadEnum.OFFENTLIGE_GODKJENNINGER}
-                    oppdaterValg={oppdaterValgtGodkjenning}
-                    valgtVerdi={valgtGodkjenning?.title}
-                    error={valgtGodkjenningError && "Du må velge en godkjenning"}
+            <BodyLong>
+                <b>Offentlig godkjenning</b> *obligatorisk
+            </BodyLong>
+            <Typeahead
+                className={styles.mb6}
+                label=""
+                description="Autorisasjoner, førerbevis, tjenestebevis m.m"
+                type={TypeaheadEnum.OFFENTLIGE_GODKJENNINGER}
+                oppdaterValg={oppdaterValgtGodkjenning}
+                valgtVerdi={valgtGodkjenning?.title}
+                error={valgtGodkjenningError && "Du må velge en godkjenning"}
+            />
+            <TextField
+                className={styles.mb6}
+                label="Utsteder"
+                description="Organisasjonen som har utstedt godkjenningen"
+                value={utsteder}
+                onChange={(e) => setUtsteder(e.target.value)}
+            />
+            <HStack gap="8">
+                <Datovelger
+                    valgtDato={godkjenningFraDato}
+                    oppdaterDato={setGodkjenningFraDato}
+                    label="Fullført"
+                    obligatorisk
+                    error={godkjenningFraDatoError}
+                    setError={setGodkjenningFraDatoError}
                 />
-                <TextField
-                    className={styles.mb6}
-                    label="Utsteder"
-                    description="Organisasjonen som har utstedt godkjenningen"
-                    value={utsteder}
-                    onChange={(e) => setUtsteder(e.target.value)}
+                <Datovelger
+                    valgtDato={godkjenningTilDato}
+                    oppdaterDato={setGodkjenningTilDato}
+                    label="Utløper"
+                    fremtid
+                    error={godkjenningTilDatoError}
+                    setError={setGodkjenningTilDatoError}
                 />
-                <HStack gap="8">
-                    <Datovelger
-                        valgtDato={godkjenningFraDato}
-                        oppdaterDato={setGodkjenningFraDato}
-                        label="Fullført"
-                        obligatorisk
-                        error={godkjenningFraDatoError}
-                        setError={setGodkjenningFraDatoError}
-                    />
-                    <Datovelger
-                        valgtDato={godkjenningTilDato}
-                        oppdaterDato={setGodkjenningTilDato}
-                        label="Utløper"
-                        fremtid
-                        error={godkjenningTilDatoError}
-                        setError={setGodkjenningTilDatoError}
-                    />
-                </HStack>
-            </Modal.Body>
-            <Modal.Footer>
-                <HStack gap="4">
-                    {feilet && (
-                        <BodyLong size={"large"} className={styles.errorText}>
-                            Noe gikk galt, prøv å trykk lagre igjen
-                        </BodyLong>
-                    )}
-                    <Button variant="secondary" onClick={() => toggleModal(false)}>
-                        Avbryt
-                    </Button>
-                    <Button variant="primary" onClick={() => lagre(valgtGodkjenning)}>
-                        Lagre
-                    </Button>
-                </HStack>
-            </Modal.Footer>
-        </Modal>
+            </HStack>
+        </CvModal>
     );
 }
