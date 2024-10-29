@@ -70,15 +70,9 @@ export default function OffentligeGodkjenninger() {
                                                 <FormSummary.Value>{godkjenning.issuer}</FormSummary.Value>
                                             </FormSummary.Answer>
                                             <FormSummary.Answer>
-                                                <FormSummary.Label>Fullført</FormSummary.Label>
+                                                <FormSummary.Label>Gyldig</FormSummary.Label>
                                                 <FormSummary.Value>
-                                                    {formatterFullDato(godkjenning.fromDate)}
-                                                </FormSummary.Value>
-                                            </FormSummary.Answer>
-                                            <FormSummary.Answer>
-                                                <FormSummary.Label>Utløper</FormSummary.Label>
-                                                <FormSummary.Value>
-                                                    {formatterFullDato(godkjenning.toDate)}
+                                                    {`${formatterFullDato(godkjenning.fromDate)}${godkjenning.toDate ? " - " + formatterFullDato(godkjenning.toDate) : ""}`}
                                                 </FormSummary.Value>
                                             </FormSummary.Answer>
                                         </FormSummary.Answers>
