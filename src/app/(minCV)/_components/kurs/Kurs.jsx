@@ -9,13 +9,8 @@ import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
-export default function Kurs() {
-    const { kurs, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.KURS);
-    const modalProps = useCvModal(kurs, oppdateringprops);
-    const { modalÅpen, toggleModal, laster, slettElement } = modalProps;
-
-    const KursIcon = () => (
+function KursIcon() {
+    return (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
@@ -39,6 +34,13 @@ export default function Kurs() {
             />
         </svg>
     );
+}
+
+export default function Kurs() {
+    const { kurs, cvLaster } = useCv();
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.KURS);
+    const modalProps = useCvModal(kurs, oppdateringprops);
+    const { modalÅpen, toggleModal, laster, slettElement } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.KURS}>

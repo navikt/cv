@@ -9,13 +9,8 @@ import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
-export default function Forerkort() {
-    const { førerkort, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.FØRERKORT);
-    const modalProps = useCvModal(førerkort, oppdateringprops);
-    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
-
-    const FørerkortIcon = () => (
+function FørerkortIcon() {
+    return (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
@@ -33,6 +28,13 @@ export default function Forerkort() {
             />
         </svg>
     );
+}
+
+export default function Forerkort() {
+    const { førerkort, cvLaster } = useCv();
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.FØRERKORT);
+    const modalProps = useCvModal(førerkort, oppdateringprops);
+    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.FØRERKORT}>
@@ -84,7 +86,7 @@ export default function Forerkort() {
                                             Fjern
                                         </Button>
                                     </HStack>
-                                    {index < førerkort.length - 1 && <div className={styles.divider}></div>}
+                                    {index < førerkort.length - 1 && <div className={styles.divider} />}
                                 </div>
                             ))}
                         </div>

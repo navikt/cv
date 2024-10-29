@@ -48,12 +48,12 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til kurs"}
+            tittel="Legg til kurs"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible={true}
+            overflowVisible
         >
             <BodyLong>
                 <b>Kursnavn</b> *obligatorisk
@@ -106,7 +106,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                             className={styles.mb6}
                             label={`Antall ${formatterTidsenhet(tidsenhet, 2)}`}
                             inputMode="numeric"
-                            type={"number"}
+                            type="number"
                             description=""
                             value={lengde}
                             onChange={(e) => {

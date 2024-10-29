@@ -6,7 +6,7 @@ import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) => {
+export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [arbeidsgiver, setArbeidsgiver] = useState("");
     const [alternativTittel, setAlternativTittel] = useState("");
     const [arbeidssted, setArbeidssted] = useState("");
@@ -77,7 +77,7 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, gjeldendeElement,
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til arbeidsforhold"}
+            tittel="Legg til arbeidsforhold"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
@@ -131,7 +131,7 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, gjeldendeElement,
                 onChange={(e) => setArbeidsoppgaver(e.target.value)}
             />
             <CheckboxGroup legend="Jobb jeg har nå" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value={true}>Jobb jeg har nå</Checkbox>
+                <Checkbox value>Jobb jeg har nå</Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">
@@ -157,4 +157,4 @@ export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, gjeldendeElement,
             </HStack>
         </CvModal>
     );
-};
+}

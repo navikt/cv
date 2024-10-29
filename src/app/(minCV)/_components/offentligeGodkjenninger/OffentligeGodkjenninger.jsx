@@ -9,13 +9,8 @@ import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
-export default function OffentligeGodkjenninger() {
-    const { offentligeGodkjenninger, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER);
-    const modalProps = useCvModal(offentligeGodkjenninger, oppdateringprops);
-    const { modalÅpen, toggleModal, laster, slettElement } = modalProps;
-
-    const OffentligeGodkjenningerIcon = () => (
+function OffentligeGodkjenningerIcon() {
+    return (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
@@ -33,6 +28,13 @@ export default function OffentligeGodkjenninger() {
             />
         </svg>
     );
+}
+
+export default function OffentligeGodkjenninger() {
+    const { offentligeGodkjenninger, cvLaster } = useCv();
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER);
+    const modalProps = useCvModal(offentligeGodkjenninger, oppdateringprops);
+    const { modalÅpen, toggleModal, laster, slettElement } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.OFFENTLIGE_GODKJENNINGER}>

@@ -8,13 +8,8 @@ import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
-export default function Kompetanser() {
-    const { kompetanser, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.KOMPETANSER);
-    const modalProps = useCvModal(kompetanser, oppdateringprops);
-    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
-
-    const KompetanserIcon = () => (
+function KompetanserIcon() {
+    return (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
@@ -32,6 +27,13 @@ export default function Kompetanser() {
             />
         </svg>
     );
+}
+
+export default function Kompetanser() {
+    const { kompetanser, cvLaster } = useCv();
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.KOMPETANSER);
+    const modalProps = useCvModal(kompetanser, oppdateringprops);
+    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.KOMPETANSER}>
@@ -45,45 +47,45 @@ export default function Kompetanser() {
                     <Heading level="2" size="large" align="start" spacing>
                         Kompetanser
                     </Heading>
-                    <>
-                        {kompetanser.length === 0 ? (
-                            <div>
-                                <BodyLong weight="semibold" spacing>
-                                    Du har ikke lagt til noen kompetanser i CV-en
-                                </BodyLong>
-                                <BodyLong className={styles.mb12}>
-                                    Her kan du sette inn de ulike kompetanser som spesifikke egenskaper f.eks
-                                    undervisning eller butikkarbeid.
-                                </BodyLong>
-                            </div>
-                        ) : (
-                            <div className={styles.mb6}>
-                                {kompetanser.map((kompetanse, index) => (
-                                    <div key={index}>
-                                        <BodyLong weight="semibold">• {kompetanse.title}</BodyLong>
-                                        <HStack justify="space-between" className={styles.mb3}>
-                                            <Button
-                                                icon={<PencilIcon aria-hidden />}
-                                                variant="tertiary"
-                                                onClick={() => toggleModal(true, index)}
-                                            >
-                                                Endre
-                                            </Button>
-                                            <Button
-                                                icon={<TrashIcon aria-hidden />}
-                                                variant="tertiary"
-                                                onClick={() => slettElement(index)}
-                                                loading={laster}
-                                            >
-                                                Fjern
-                                            </Button>
-                                        </HStack>
-                                        {index < kompetanser.length - 1 && <div className={styles.divider}></div>}
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </>
+
+                    {kompetanser.length === 0 ? (
+                        <div>
+                            <BodyLong weight="semibold" spacing>
+                                Du har ikke lagt til noen kompetanser i CV-en
+                            </BodyLong>
+                            <BodyLong className={styles.mb12}>
+                                Her kan du sette inn de ulike kompetanser som spesifikke egenskaper f.eks undervisning
+                                eller butikkarbeid.
+                            </BodyLong>
+                        </div>
+                    ) : (
+                        <div className={styles.mb6}>
+                            {kompetanser.map((kompetanse, index) => (
+                                <div key={index}>
+                                    <BodyLong weight="semibold">• {kompetanse.title}</BodyLong>
+                                    <HStack justify="space-between" className={styles.mb3}>
+                                        <Button
+                                            icon={<PencilIcon aria-hidden />}
+                                            variant="tertiary"
+                                            onClick={() => toggleModal(true, index)}
+                                        >
+                                            Endre
+                                        </Button>
+                                        <Button
+                                            icon={<TrashIcon aria-hidden />}
+                                            variant="tertiary"
+                                            onClick={() => slettElement(index)}
+                                            loading={laster}
+                                        >
+                                            Fjern
+                                        </Button>
+                                    </HStack>
+                                    {index < kompetanser.length - 1 && <div className={styles.divider} />}
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
                     <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
                         {kompetanser.length === 0 ? "Legg til" : "Legg til flere"}
                     </Button>

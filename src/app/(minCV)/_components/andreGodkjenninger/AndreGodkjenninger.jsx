@@ -9,13 +9,8 @@ import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
-export default function AndreGodkjenninger() {
-    const { andreGodkjenninger, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_GODKJENNINGER);
-    const modalProps = useCvModal(andreGodkjenninger, oppdateringprops);
-    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
-
-    const AndreGodkjenningerIcon = () => (
+function AndreGodkjenningerIcon() {
+    return (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
@@ -33,6 +28,13 @@ export default function AndreGodkjenninger() {
             />
         </svg>
     );
+}
+
+export default function AndreGodkjenninger() {
+    const { andreGodkjenninger, cvLaster } = useCv();
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_GODKJENNINGER);
+    const modalProps = useCvModal(andreGodkjenninger, oppdateringprops);
+    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.ANDRE_GODKJENNINGER}>
