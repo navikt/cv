@@ -8,7 +8,7 @@ import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 export const useOppdaterPersonalia = () => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
-    const [dataForOppdatering, oppdaterMedData] = useState(null);
+    const [dataForOppdatering, oppdaterSeksjon] = useState(null);
     const [visFeilmelding, setVisFeilmelding] = useState(false);
 
     const { person } = usePerson();
@@ -36,10 +36,10 @@ export const useOppdaterPersonalia = () => {
     const { data, error, isLoading } = useSWR(skalOppdatere ? { url, body: dataForOppdatering } : null, fetcher);
 
     return {
-        oppdateringOk: data,
-        laster: isLoading,
-        feilet: visFeilmelding || error,
-        oppdaterMedData,
+        oppdateringSuksess: data,
+        oppdateringLaster: isLoading,
+        oppdateringHarFeil: visFeilmelding || error,
+        oppdaterSeksjon,
         setVisFeilmelding,
     };
 };

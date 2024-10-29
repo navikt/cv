@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export function AndreErfaringerModal({ modalÅpen, toggleModal, erfaring, lagreErfaring, laster, feilet }) {
+export const AndreErfaringerModal = ({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) => {
     const [beskrivelse, setBeskrivelse] = useState("");
     const [rolle, setRolle] = useState("");
     const [pågår, setPågår] = useState([]);
@@ -15,7 +15,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, erfaring, lagreE
     const [sluttdatoError, setSluttdatoError] = useState(false);
 
     useEffect(() => {
-        const oppdaterErfaring = () => {
+        const oppdaterErfaring = (erfaring) => {
             setRolle(erfaring?.role || "");
             setBeskrivelse(erfaring?.description || "");
             setStartdato(erfaring ? new Date(erfaring.fromDate) : null);
@@ -23,8 +23,8 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, erfaring, lagreE
             setPågår(erfaring && erfaring.ongoing ? [true] : []);
         };
 
-        oppdaterErfaring();
-    }, [erfaring]);
+        oppdaterErfaring(gjeldendeElement);
+    }, [gjeldendeElement]);
 
     const lagre = () => {
         const erPågående = pågår.includes(true);
@@ -34,8 +34,8 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, erfaring, lagreE
         if (!erPågående && !sluttdato) setSluttdatoError(true);
 
         if (rolle && startdato && (sluttdato || erPågående)) {
-            lagreErfaring({
-                ...erfaring,
+            lagreElement({
+                ...gjeldendeElement,
                 role: rolle,
                 description: beskrivelse,
                 fromDate: startdato,
@@ -48,7 +48,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, erfaring, lagreE
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel="Legg til annen erfaring"
+            tittel={"Legg til annen erfaring"}
             feilet={feilet}
             laster={laster}
             lagre={lagre}
@@ -76,7 +76,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, erfaring, lagreE
                 onChange={(e) => setBeskrivelse(e.target.value)}
             />
             <CheckboxGroup legend="" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value>Pågår</Checkbox>
+                <Checkbox value={true}>Pågår</Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">
@@ -102,4 +102,4 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, erfaring, lagreE
             </HStack>
         </CvModal>
     );
-}
+};

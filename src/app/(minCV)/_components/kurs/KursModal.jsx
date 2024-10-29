@@ -6,14 +6,13 @@ import { TidsenhetEnum } from "@/app/_common/enums/cvEnums";
 import { formatterTidsenhet, storForbokstav } from "@/app/_common/utils/stringUtils";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs, laster, feilet }) {
-    // eslint-disable-next-line
-    const [valgtKurs, setValgtKurs] = useState(kurs || null);
-    const [kursnavn, setKursnavn] = useState(kurs?.title || "");
-    const [utsteder, setUtsteder] = useState(kurs?.issuer || "");
-    const [kursDato, setKursDato] = useState(kurs?.date ? new Date(kurs?.date) : null);
-    const [tidsenhet, setTidsenhet] = useState(kurs?.durationUnit || "");
-    const [lengde, setLengde] = useState(kurs?.duration || "");
+export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const [valgtKurs, setValgtKurs] = useState(gjeldendeElement || null);
+    const [kursnavn, setKursnavn] = useState(gjeldendeElement?.title || "");
+    const [utsteder, setUtsteder] = useState(gjeldendeElement?.issuer || "");
+    const [kursDato, setKursDato] = useState(gjeldendeElement?.date ? new Date(gjeldendeElement?.date) : null);
+    const [tidsenhet, setTidsenhet] = useState(gjeldendeElement?.durationUnit || "");
+    const [lengde, setLengde] = useState(gjeldendeElement?.duration || "");
     const [kursnavnError, setKursnavnError] = useState(false);
     const [kursDatoError, setKursDatoError] = useState(false);
     const [lengdeError, setLengdeError] = useState(false);
@@ -27,15 +26,15 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs, la
             setLengde(kurs?.duration || "");
             setKursDato(kurs?.date ? new Date(kurs.date) : null);
         };
-        oppdaterKurs(kurs);
-    }, [kurs]);
+        oppdaterKurs(gjeldendeElement);
+    }, [gjeldendeElement]);
 
     const lagre = async () => {
         if (!kursnavn) setKursnavnError(true);
         if (tidsenhet && !lengde) setLengdeError(true);
 
         if (kursnavn && !kursDatoError && (tidsenhet ? lengde : true)) {
-            await lagreKurs({
+            await lagreElement({
                 title: kursnavn,
                 issuer: utsteder,
                 date: kursDato,
@@ -49,12 +48,12 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs, la
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel="Legg til kurs"
+            tittel={"Legg til kurs"}
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible
+            overflowVisible={true}
         >
             <BodyLong>
                 <b>Kursnavn</b> *obligatorisk
@@ -107,7 +106,7 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs, la
                             className={styles.mb6}
                             label={`Antall ${formatterTidsenhet(tidsenhet, 2)}`}
                             inputMode="numeric"
-                            type="number"
+                            type={"number"}
                             description=""
                             value={lengde}
                             onChange={(e) => {

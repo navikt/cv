@@ -6,8 +6,8 @@ import styles from "@/app/page.module.css";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpråk, laster, feilet }) {
-    const [valgtSpråk, setValgtSpråk] = useState(språk || null);
+export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const [valgtSpråk, setValgtSpråk] = useState(gjeldendeElement || null);
     const [muntligEvne, setMuntligEvne] = useState("IKKE_OPPGITT");
     const [skriftligEvne, setSkriftligEvne] = useState("IKKE_OPPGITT");
     const [valgtSprakError, setValgtSprakError] = useState(false);
@@ -18,14 +18,14 @@ export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpr�
             setMuntligEvne(språk?.oralProficiency || "IKKE_OPPGITT");
             setSkriftligEvne(språk?.writtenProficiency || "IKKE_OPPGITT");
         };
-        oppdaterSpråk(språk || []);
-    }, [språk]);
+        oppdaterSpråk(gjeldendeElement || []);
+    }, [gjeldendeElement]);
 
     const lagre = () => {
         if (!valgtSpråk || valgtSpråk.length === 0) setValgtSprakError(true);
 
         if (valgtSpråk && valgtSpråk.length !== 0) {
-            lagreSpråk({
+            lagreElement({
                 language: valgtSpråk.language || valgtSpråk.title,
                 iso3Code: valgtSpråk.iso3Code || valgtSpråk.kode,
                 oralProficiency: muntligEvne,

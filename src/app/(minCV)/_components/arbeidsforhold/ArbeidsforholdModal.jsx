@@ -6,7 +6,7 @@ import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export function ArbeidsforholdModal({ modalÅpen, toggleModal, arbeidsforhold, lagreArbeidsforhold, laster, feilet }) {
+export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) => {
     const [arbeidsgiver, setArbeidsgiver] = useState("");
     const [alternativTittel, setAlternativTittel] = useState("");
     const [arbeidssted, setArbeidssted] = useState("");
@@ -16,7 +16,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, arbeidsforhold, l
     const [sluttdato, setSluttdato] = useState(null);
     const [pågår, setPågår] = useState([]);
 
-    const [stillingstittel, setStillingstittel] = useState(arbeidsforhold?.jobTitle || "");
+    const [stillingstittel, setStillingstittel] = useState(gjeldendeElement?.jobTitle || "");
     const [konseptId, setKonseptId] = useState("");
     const [styrk, setStyrk] = useState("");
 
@@ -40,8 +40,8 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, arbeidsforhold, l
             setPågår(arbeidsforhold && arbeidsforhold.ongoing ? [true] : []);
         };
 
-        oppdaterArbeidsforhold(arbeidsforhold);
-    }, [arbeidsforhold]);
+        oppdaterArbeidsforhold(gjeldendeElement);
+    }, [gjeldendeElement]);
 
     const lagre = async () => {
         const erPågående = pågår.includes(true);
@@ -51,8 +51,8 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, arbeidsforhold, l
         if (!erPågående && !sluttdato) setSluttdatoError(true);
 
         if (stillingstittel && startdato && (sluttdato || erPågående)) {
-            await lagreArbeidsforhold({
-                ...arbeidsforhold,
+            await lagreElement({
+                ...gjeldendeElement,
                 employer: arbeidsgiver,
                 jobTitle: stillingstittel,
                 conceptId: konseptId,
@@ -77,7 +77,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, arbeidsforhold, l
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel="Legg til arbeidsforhold"
+            tittel={"Legg til arbeidsforhold"}
             feilet={feilet}
             laster={laster}
             lagre={lagre}
@@ -131,7 +131,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, arbeidsforhold, l
                 onChange={(e) => setArbeidsoppgaver(e.target.value)}
             />
             <CheckboxGroup legend="Jobb jeg har nå" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value>Jobb jeg har nå</Checkbox>
+                <Checkbox value={true}>Jobb jeg har nå</Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">
@@ -157,4 +157,4 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, arbeidsforhold, l
             </HStack>
         </CvModal>
     );
-}
+};

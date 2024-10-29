@@ -6,7 +6,15 @@ import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import ValidateEmail from "@/app/_common/components/ValidateEmail";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, lagrePersonalia, laster, feilet }) {
+export default function PersonaliaModal({
+    modalÅpen,
+    toggleModal,
+    gjeldendeElement: personalia,
+    lagreElement: lagrePersonalia,
+    laster,
+    feilet,
+}) {
+    console.log(personalia);
     const [fornavn, setFornavn] = useState("");
     const [etternavn, setEtternavn] = useState("");
     const [epost, setEpost] = useState("");
@@ -139,7 +147,6 @@ export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, l
                 label="Gateadresse"
                 value={adresse}
                 onChange={(e) => setAdresse(e.target.value)}
-                disabled={laster}
             />
             <HStack justify="space-between">
                 <VStack className={styles.element}>

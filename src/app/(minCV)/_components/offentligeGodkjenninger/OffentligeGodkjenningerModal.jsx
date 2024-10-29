@@ -9,18 +9,18 @@ import { CvModal } from "@/app/_common/components/CvModal";
 export default function OffentligeGodkjenningerModal({
     modalÅpen,
     toggleModal,
-    godkjenning,
-    lagreGodkjenning,
+    gjeldendeElement,
+    lagreElement,
     laster,
     feilet,
 }) {
-    const [valgtGodkjenning, setValgtGodkjenning] = useState(godkjenning || null);
-    const [utsteder, setUtsteder] = useState(godkjenning?.issuer || "");
+    const [valgtGodkjenning, setValgtGodkjenning] = useState(gjeldendeElement || null);
+    const [utsteder, setUtsteder] = useState(gjeldendeElement?.issuer || "");
     const [godkjenningFraDato, setGodkjenningFraDato] = useState(
-        godkjenning?.fromDate ? new Date(godkjenning.fromDate) : null,
+        gjeldendeElement?.fromDate ? new Date(gjeldendeElement.fromDate) : null,
     );
     const [godkjenningTilDato, setGodkjenningTilDato] = useState(
-        godkjenning?.toDate ? new Date(godkjenning.toDate) : null,
+        gjeldendeElement?.toDate ? new Date(gjeldendeElement.toDate) : null,
     );
     const [valgtGodkjenningError, setValgtGodkjenningError] = useState(false);
     const [godkjenningFraDatoError, setGodkjenningFraDatoError] = useState(false);
@@ -33,15 +33,15 @@ export default function OffentligeGodkjenningerModal({
             setGodkjenningFraDato(godkjenning?.fromDate ? new Date(godkjenning.fromDate) : null);
             setGodkjenningTilDato(godkjenning?.toDate ? new Date(godkjenning.toDate) : null);
         };
-        oppdaterGodkjenning(godkjenning || []);
-    }, [godkjenning]);
+        oppdaterGodkjenning(gjeldendeElement || []);
+    }, [gjeldendeElement]);
 
     const lagre = () => {
         if (!valgtGodkjenning || valgtGodkjenning.length === 0) setValgtGodkjenningError(true);
         if (!godkjenningFraDato) setGodkjenningFraDatoError(true);
 
         if (valgtGodkjenning && valgtGodkjenning.length !== 0 && godkjenningFraDato && !godkjenningTilDatoError) {
-            lagreGodkjenning({
+            lagreElement({
                 title: valgtGodkjenning.title,
                 conceptId: valgtGodkjenning.conceptId,
                 issuer: utsteder,

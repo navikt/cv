@@ -5,11 +5,15 @@ import førerkortData from "@/app/_common/data/førerkort.json";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, lagreFørerkort, laster, feilet }) {
-    const [valgtFørerkort, setValgtFørerkort] = useState(førerkort || null);
-    const [gyldigFra, setGyldigFra] = useState(førerkort?.acquiredDate ? new Date(førerkort.acquiredDate) : null);
-    const [gyldigTil, setGyldigTil] = useState(førerkort?.expiryDate ? new Date(førerkort.expiryDate) : null);
-    const [kreverDato, setKreverDato] = useState(!!førerkort?.acquiredDate);
+export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const [valgtFørerkort, setValgtFørerkort] = useState(gjeldendeElement || null);
+    const [gyldigFra, setGyldigFra] = useState(
+        gjeldendeElement?.acquiredDate ? new Date(gjeldendeElement.acquiredDate) : null,
+    );
+    const [gyldigTil, setGyldigTil] = useState(
+        gjeldendeElement?.expiryDate ? new Date(gjeldendeElement.expiryDate) : null,
+    );
+    const [kreverDato, setKreverDato] = useState(!!gjeldendeElement?.acquiredDate);
     const [valgtForerkortError, setValgtForerkortError] = useState(false);
     const [gyldigFraError, setGyldigFraError] = useState(false);
     const [gyldigTilError, setGyldigTilError] = useState(false);
@@ -18,8 +22,8 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
 
     useEffect(() => {
         const oppdaterFørerkort = (førerkort) => setValgtFørerkort(førerkort);
-        oppdaterFørerkort(førerkort || []);
-    }, [førerkort]);
+        oppdaterFørerkort(gjeldendeElement || []);
+    }, [gjeldendeElement]);
 
     const velgFørerkort = (verdi) => {
         const valgtFørerkort = gyldigeFørerkort.find((e) => e.type === verdi);
@@ -34,7 +38,7 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
         if (kreverDato && !gyldigTil) setGyldigTilError(true);
 
         if (valgtFørerkort && valgtFørerkort.length !== 0 && (kreverDato ? gyldigFra && gyldigTil : true)) {
-            lagreFørerkort({
+            lagreElement({
                 type: valgtFørerkort.label || valgtFørerkort.type,
                 acquiredDate: gyldigFra,
                 expiryDate: gyldigTil,

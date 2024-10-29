@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export function UtdanningModal({ modalÅpen, toggleModal, utdanning, lagreUtdanning, laster, feilet }) {
+export const UtdanningModal = ({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) => {
     const [utdanningsnivå, setUtdanningsnivå] = useState("");
     const [gradOgRetning, setGradOgRetning] = useState("");
     const [institusjon, setInstitusjon] = useState("");
@@ -28,8 +28,8 @@ export function UtdanningModal({ modalÅpen, toggleModal, utdanning, lagreUtdann
             setPågår(utdanning && utdanning.ongoing ? [true] : []);
         };
 
-        oppdaterUtdanning(utdanning);
-    }, [utdanning]);
+        oppdaterUtdanning(gjeldendeElement);
+    }, [gjeldendeElement]);
 
     const lagre = () => {
         const erPågående = pågår.includes(true);
@@ -39,8 +39,8 @@ export function UtdanningModal({ modalÅpen, toggleModal, utdanning, lagreUtdann
         if (!erPågående && !sluttdato) setSluttdatoError(true);
 
         if (utdanningsnivå && startdato && (sluttdato || erPågående)) {
-            lagreUtdanning({
-                ...utdanning,
+            lagreElement({
+                ...gjeldendeElement,
                 nuskode: utdanningsnivå,
                 field: gradOgRetning,
                 institution: institusjon,
@@ -55,7 +55,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, utdanning, lagreUtdann
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel="Legg til utdanning"
+            tittel={"Legg til utdanning"}
             feilet={feilet}
             laster={laster}
             lagre={lagre}
@@ -75,7 +75,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, utdanning, lagreUtdann
                 }}
                 error={utdanningsnivaError && "Utdanningsnivå mangler"}
             >
-                <option value="">Velg</option>
+                <option value={""}>Velg</option>
                 {Object.keys(UtdanningsnivåEnum).map((nuskode) => (
                     <option key={nuskode} value={nuskode}>
                         {UtdanningsnivåEnum[nuskode]}
@@ -104,7 +104,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, utdanning, lagreUtdann
                 onChange={(e) => setBeskrivelse(e.target.value)}
             />
             <CheckboxGroup legend="Utdanning jeg tar nå" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value>Utdanning jeg tar nå</Checkbox>
+                <Checkbox value={true}>Utdanning jeg tar nå</Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">
@@ -130,4 +130,4 @@ export function UtdanningModal({ modalÅpen, toggleModal, utdanning, lagreUtdann
             </HStack>
         </CvModal>
     );
-}
+};

@@ -4,20 +4,20 @@ import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export default function KompetanserModal({ modalÅpen, toggleModal, kompetanse, lagreKompetanse, laster, feilet }) {
-    const [valgtKompetanse, setValgtKompetanse] = useState(kompetanse || null);
+export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const [valgtKompetanse, setValgtKompetanse] = useState(gjeldendeElement || null);
     const [valgtKompetanseError, setValgtKompetanseError] = useState(false);
 
     useEffect(() => {
         const oppdaterKompetanse = (kompetanse) => setValgtKompetanse(kompetanse);
-        oppdaterKompetanse(kompetanse || []);
-    }, [kompetanse]);
+        oppdaterKompetanse(gjeldendeElement || []);
+    }, [gjeldendeElement]);
 
     const lagre = () => {
         if (!valgtKompetanse || valgtKompetanse.length === 0) setValgtKompetanseError(true);
 
         if (valgtKompetanse && valgtKompetanse.length !== 0) {
-            lagreKompetanse({
+            lagreElement({
                 title: valgtKompetanse.label || valgtKompetanse.title,
                 type: valgtKompetanse.type,
                 conceptId: valgtKompetanse.conceptId,

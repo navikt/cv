@@ -6,11 +6,11 @@ import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useHentArbeidsforhold } from "@/app/_common/hooks/swr/useHentArbeidsforhold";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
-import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
-import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import parse from "html-react-parser";
 import { HentArbeidsforholdSkeleton } from "@/app/(minCV)/_components/arbeidsforhold/HentArbeidsforholdSkeleton";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 function ArbeidsforholdIcon() {
     return (
@@ -34,24 +34,10 @@ function ArbeidsforholdIcon() {
 }
 export default function Arbeidsforhold() {
     const { arbeidsforhold, cvLaster } = useCv();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.ARBEIDSFORHOLD,
-    );
-    const { aaregManglerData, aaregLaster, setSkalHenteData } = useHentArbeidsforhold(
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-    );
-
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
-        arbeidsforhold,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.ARBEIDSFORHOLD);
+    const { aaregManglerData, aaregLaster, setSkalHenteData } = useHentArbeidsforhold(oppdateringprops);
+    const modalProps = useCvModal(arbeidsforhold, oppdateringprops);
+    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
 
     const arbeidsforholdManglerFelter = (forhold) => {
         const verdiMangler = (verdi) => !verdi || verdi === "string";
@@ -155,6 +141,7 @@ export default function Arbeidsforhold() {
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
+                                            loading={laster}
                                         >
                                             Fjern
                                         </Button>
@@ -168,16 +155,7 @@ export default function Arbeidsforhold() {
                     )}
                 </Box>
             )}
-            {modalÅpen && (
-                <ArbeidsforholdModal
-                    modalÅpen={modalÅpen}
-                    toggleModal={toggleModal}
-                    arbeidsforhold={gjeldendeElement}
-                    lagreArbeidsforhold={lagreElement}
-                    laster={laster}
-                    feilet={feilet}
-                />
-            )}
+            {modalÅpen && <ArbeidsforholdModal {...modalProps} />}
         </div>
     );
 }

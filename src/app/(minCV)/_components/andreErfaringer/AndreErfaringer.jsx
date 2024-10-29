@@ -5,12 +5,17 @@ import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { AndreErfaringerModal } from "@/app/(minCV)/_components/andreErfaringer/AndreErfaringerModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
-import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
-function AndreErfaringerIcon() {
-    return (
+export default function AndreErfaringer() {
+    const { andreErfaringer, cvLaster } = useCv();
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_ERFARINGER);
+    const modalProps = useCvModal(andreErfaringer, oppdateringprops);
+    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
+
+    const AndreErfaringerIcon = () => (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
@@ -27,22 +32,6 @@ function AndreErfaringerIcon() {
                 fill="#23262A"
             />
         </svg>
-    );
-}
-
-export default function AndreErfaringer() {
-    const { andreErfaringer, cvLaster } = useCv();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.ANDRE_ERFARINGER,
-    );
-
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
-        andreErfaringer,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
     );
 
     return (
@@ -100,6 +89,7 @@ export default function AndreErfaringer() {
                                                 icon={<TrashIcon aria-hidden />}
                                                 variant="tertiary"
                                                 onClick={() => slettElement(index)}
+                                                loading={laster}
                                             >
                                                 Fjern
                                             </Button>
@@ -114,16 +104,7 @@ export default function AndreErfaringer() {
                     </>
                 </Box>
             )}
-            {modalÅpen && (
-                <AndreErfaringerModal
-                    modalÅpen={modalÅpen}
-                    toggleModal={toggleModal}
-                    erfaring={gjeldendeElement}
-                    lagreErfaring={lagreElement}
-                    laster={laster}
-                    feilet={feilet}
-                />
-            )}
+            {modalÅpen && <AndreErfaringerModal {...modalProps} />}
         </div>
     );
 }

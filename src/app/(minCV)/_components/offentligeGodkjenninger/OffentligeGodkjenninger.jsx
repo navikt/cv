@@ -5,12 +5,17 @@ import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import OffentligeGodkjenningerModal from "@/app/(minCV)/_components/offentligeGodkjenninger/OffentligeGodkjenningerModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
-import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
-function OffentligeGodkjenningerIcon() {
-    return (
+export default function OffentligeGodkjenninger() {
+    const { offentligeGodkjenninger, cvLaster } = useCv();
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER);
+    const modalProps = useCvModal(offentligeGodkjenninger, oppdateringprops);
+    const { modalÅpen, toggleModal, laster, slettElement } = modalProps;
+
+    const OffentligeGodkjenningerIcon = () => (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
@@ -27,22 +32,6 @@ function OffentligeGodkjenningerIcon() {
                 fill="#23262A"
             />
         </svg>
-    );
-}
-
-export default function OffentligeGodkjenninger() {
-    const { offentligeGodkjenninger, cvLaster } = useCv();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER,
-    );
-
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
-        offentligeGodkjenninger,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
     );
 
     return (
@@ -106,6 +95,7 @@ export default function OffentligeGodkjenninger() {
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
+                                            loading={laster}
                                         >
                                             Fjern
                                         </Button>
@@ -119,16 +109,7 @@ export default function OffentligeGodkjenninger() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && (
-                <OffentligeGodkjenningerModal
-                    modalÅpen={modalÅpen}
-                    toggleModal={toggleModal}
-                    godkjenning={gjeldendeElement}
-                    lagreGodkjenning={lagreElement}
-                    laster={laster}
-                    feilet={feilet}
-                />
-            )}
+            {modalÅpen && <OffentligeGodkjenningerModal {...modalProps} />}
         </div>
     );
 }

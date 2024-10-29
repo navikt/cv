@@ -12,9 +12,9 @@ import {
 import { formatterListeAvObjekterTilTekst } from "@/app/_common/utils/stringUtils";
 import { JobbonskerModal } from "@/app/(minCV)/_components/jobbonsker/JobbonskerModal";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
-import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 function JobbonskerIcon() {
     return (
@@ -39,17 +39,10 @@ function JobbonskerIcon() {
 
 export default function Jobbonsker() {
     const { jobbønsker, cvLaster } = useCv();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.JOBBØNSKER,
-    );
-    const { modalÅpen, toggleModal } = useCvModal(
-        jobbønsker,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.JOBBØNSKER);
+    const modalProps = useCvModal(jobbønsker, oppdateringprops);
+    const { modalÅpen, toggleModal, laster } = modalProps;
+    const { oppdaterSeksjon } = oppdateringprops;
 
     const slettJobbønsker = async () => {
         const tommeJobbønsker = {
@@ -62,7 +55,7 @@ export default function Jobbonsker() {
             workLoadTypes: [],
             workScheduleTypes: [],
         };
-        oppdaterMedData(tommeJobbønsker);
+        oppdaterSeksjon(tommeJobbønsker);
     };
 
     const jobbønskerErTomt = () =>
@@ -138,6 +131,7 @@ export default function Jobbonsker() {
                                     icon={<TrashIcon aria-hidden />}
                                     variant="secondary"
                                     onClick={() => slettJobbønsker()}
+                                    loading={laster}
                                 >
                                     Fjern
                                 </Button>
@@ -147,14 +141,7 @@ export default function Jobbonsker() {
                 </Box>
             )}
             {modalÅpen && (
-                <JobbonskerModal
-                    toggleModal={toggleModal}
-                    modalÅpen={modalÅpen}
-                    jobbønsker={jobbønsker}
-                    lagreJobbønsker={oppdaterMedData}
-                    laster={laster}
-                    feilet={feilet}
-                />
+                <JobbonskerModal {...modalProps} lagreElement={oppdaterSeksjon} gjeldendeElement={jobbønsker} />
             )}
         </div>
     );
