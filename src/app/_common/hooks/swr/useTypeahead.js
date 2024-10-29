@@ -11,6 +11,7 @@ export const useTypeahead = (type, visningsfelt, forhåndshentet, alleredeValgte
     const { errorNotifikasjon } = useContext(ApplicationContext);
     const [typeaheadverdi, setTypeaheadverdi] = useState("");
     const [typeaheadforslag, setTypeaheadforslag] = useState([]);
+    const [typeaheaddataFraBackend, setTypeaheaddataFraBackend] = useState([]);
     const debouncedSetTypeaheadverdi = useMemo(() => debounce(setTypeaheadverdi, 200), []);
 
     const fetcher = async (url) => {
@@ -32,6 +33,7 @@ export const useTypeahead = (type, visningsfelt, forhåndshentet, alleredeValgte
         }));
 
         oppdaterTypeaheadForslag(mappetData.map((e) => e[visningsfelt]));
+        setTypeaheaddataFraBackend(mappetData);
         return mappetData;
     };
 
@@ -39,7 +41,7 @@ export const useTypeahead = (type, visningsfelt, forhåndshentet, alleredeValgte
         if (!verdi) return;
 
         if (forhåndshentet) {
-            const filtrertTypeahead = typeaheadforslag
+            const filtrertTypeahead = typeaheaddataFraBackend
                 .map((e) => e[visningsfelt])
                 .filter((e) => e.toLowerCase().includes(verdi.toLowerCase()));
             oppdaterTypeaheadForslag(filtrertTypeahead);
