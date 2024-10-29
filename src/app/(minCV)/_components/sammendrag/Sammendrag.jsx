@@ -1,28 +1,20 @@
-import { Alert, BodyLong, Box, Button, Heading, HStack, Textarea, VStack } from "@navikt/ds-react";
+import { BodyLong, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { useEffect, useState } from "react";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import parse from "html-react-parser";
-import { CvModal } from "@/app/_common/components/CvModal";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import SammendragModal from "@/app/(minCV)/_components/sammendrag/SammendragModal";
 
 export default function Sammendrag() {
     const { sammendrag, cvLaster } = useCv();
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.SAMMENDRAG);
     const modalProps = useCvModal(sammendrag, oppdateringprops);
     const { oppdaterSeksjon } = oppdateringprops;
-    const { modalÅpen, toggleModal, laster, feilet } = modalProps;
-
-    const [sammendragEndring, setSammendragEndring] = useState(sammendrag || "");
-    const [sammendragError, setSammendragError] = useState(false);
-
-    useEffect(() => {
-        if (sammendrag) setSammendragEndring(sammendrag);
-    }, [sammendrag]);
+    const { modalÅpen, toggleModal, laster } = modalProps;
 
     const SammendragIcon = () => (
         <svg
@@ -42,11 +34,6 @@ export default function Sammendrag() {
             />
         </svg>
     );
-
-    const lagre = () => {
-        if (!sammendragEndring) setSammendragError(true);
-        if (sammendragEndring) oppdaterSeksjon(sammendragEndring);
-    };
 
     return (
         <div data-section id={SeksjonsIdEnum.SAMMENDRAG}>
@@ -106,41 +93,7 @@ export default function Sammendrag() {
             )}
 
             {modalÅpen && (
-                <CvModal
-                    modalÅpen={modalÅpen}
-                    tittel={"Legg til sammendrag"}
-                    feilet={feilet}
-                    laster={laster}
-                    lagre={lagre}
-                    toggleModal={toggleModal}
-                >
-                    <VStack>
-                        <Alert variant="warning" className={styles.mb12}>
-                            <Heading spacing size="xsmall" level="3">
-                                Viktig informasjon om personopplysninger
-                            </Heading>
-                            <BodyLong size="small">
-                                Husk at du <b>ikke</b> skal skrive sensitive opplysninger i CV-en om for eksempel din
-                                helse, religion eller politiske oppfatning.
-                            </BodyLong>
-                        </Alert>
-                        <BodyLong>
-                            <b>Gi en kort oppsummering av deg selv</b> *obligatorisk
-                        </BodyLong>
-                        <Textarea
-                            label=""
-                            description=""
-                            placeholder="En kort oppsummering av din kompetanse og dine personlige egenskaper."
-                            className={styles.mb6}
-                            value={sammendragEndring}
-                            onChange={(e) => {
-                                setSammendragEndring(e.target.value);
-                                setSammendragError(false);
-                            }}
-                            error={sammendragError && "Du må skrive inn sammendrag"}
-                        />
-                    </VStack>
-                </CvModal>
+                <SammendragModal {...modalProps} lagreElement={oppdaterSeksjon} gjeldendeElement={sammendrag} />
             )}
         </div>
     );
