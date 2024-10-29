@@ -1,4 +1,4 @@
-import { BodyLong, Button, Heading, HStack, Modal, Select, TextField, VStack } from "@navikt/ds-react";
+import { BodyLong, HStack, Select, TextField, VStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
@@ -6,13 +6,13 @@ import { TidsenhetEnum } from "@/app/_common/enums/cvEnums";
 import { formatterTidsenhet, storForbokstav } from "@/app/_common/utils/stringUtils";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs, laster, feilet }) {
-    const [valgtKurs, setValgtKurs] = useState(kurs || null);
-    const [kursnavn, setKursnavn] = useState(kurs?.title || "");
-    const [utsteder, setUtsteder] = useState(kurs?.issuer || "");
-    const [kursDato, setKursDato] = useState(kurs?.date ? new Date(kurs?.date) : null);
-    const [tidsenhet, setTidsenhet] = useState(kurs?.durationUnit || "");
-    const [lengde, setLengde] = useState(kurs?.duration || "");
+export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const [valgtKurs, setValgtKurs] = useState(gjeldendeElement || null);
+    const [kursnavn, setKursnavn] = useState(gjeldendeElement?.title || "");
+    const [utsteder, setUtsteder] = useState(gjeldendeElement?.issuer || "");
+    const [kursDato, setKursDato] = useState(gjeldendeElement?.date ? new Date(gjeldendeElement?.date) : null);
+    const [tidsenhet, setTidsenhet] = useState(gjeldendeElement?.durationUnit || "");
+    const [lengde, setLengde] = useState(gjeldendeElement?.duration || "");
     const [kursnavnError, setKursnavnError] = useState(false);
     const [kursDatoError, setKursDatoError] = useState(false);
     const [lengdeError, setLengdeError] = useState(false);
@@ -26,15 +26,15 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs, la
             setLengde(kurs?.duration || "");
             setKursDato(kurs?.date ? new Date(kurs.date) : null);
         };
-        oppdaterKurs(kurs);
-    }, [kurs]);
+        oppdaterKurs(gjeldendeElement);
+    }, [gjeldendeElement]);
 
     const lagre = async () => {
         if (!kursnavn) setKursnavnError(true);
         if (tidsenhet && !lengde) setLengdeError(true);
 
         if (kursnavn && !kursDatoError && (tidsenhet ? lengde : true)) {
-            await lagreKurs({
+            await lagreElement({
                 title: kursnavn,
                 issuer: utsteder,
                 date: kursDato,

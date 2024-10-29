@@ -5,24 +5,15 @@ import { formatterDato } from "@/app/_common/utils/stringUtils";
 import FørerkortModal from "@/app/(minCV)/_components/forerkort/FørerkortModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
-import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 export default function Forerkort() {
     const { førerkort, cvLaster } = useCv();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.FØRERKORT,
-    );
-
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
-        førerkort,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.FØRERKORT);
+    const modalProps = useCvModal(førerkort, oppdateringprops);
+    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
 
     const FørerkortIcon = () => (
         <svg
@@ -88,6 +79,7 @@ export default function Forerkort() {
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
+                                            loading={laster}
                                         >
                                             Fjern
                                         </Button>
@@ -102,16 +94,7 @@ export default function Forerkort() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && (
-                <FørerkortModal
-                    modalÅpen={modalÅpen}
-                    toggleModal={toggleModal}
-                    førerkort={gjeldendeElement}
-                    lagreFørerkort={lagreElement}
-                    laster={laster}
-                    feilet={feilet}
-                />
-            )}
+            {modalÅpen && <FørerkortModal {...modalProps} />}
         </div>
     );
 }

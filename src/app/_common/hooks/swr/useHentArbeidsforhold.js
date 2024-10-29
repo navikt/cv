@@ -5,19 +5,24 @@ import { simpleApiRequest } from "@/app/_common/utils/fetchUtils";
 import { useContext, useEffect, useState } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
-export const useHentArbeidsforhold = (
-    oppdaterArbeidsforhold,
+export const useHentArbeidsforhold = ({
+    oppdaterSeksjon: oppdaterArbeidsforhold,
     oppdateringSuksess,
     oppdateringLaster,
     oppdateringHarFeil,
-) => {
+}) => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
     const [skalHenteData, setSkalHenteData] = useState(false);
     const [aaregManglerData, setAaregManglerData] = useState(false);
+    const [skalViseSkeleton, setSkalViseSkeleton] = useState(false);
 
     useEffect(() => {
         if (oppdateringSuksess || oppdateringHarFeil) oppdaterArbeidsforhold(null);
     }, [oppdateringSuksess, oppdateringHarFeil]);
+
+    useEffect(() => {
+        if (oppdateringLaster === false) setSkalViseSkeleton(false);
+    }, [oppdateringLaster]);
 
     const fetcher = async (url) => {
         const response = await simpleApiRequest(url, "GET");
@@ -33,7 +38,9 @@ export const useHentArbeidsforhold = (
 
         if (data?.length === 0) {
             setAaregManglerData(true);
+            setSkalViseSkeleton(false);
         } else {
+            setSkalViseSkeleton(true);
             oppdaterArbeidsforhold(data);
         }
 
@@ -47,7 +54,7 @@ export const useHentArbeidsforhold = (
     return {
         aaregSuksess: !!data && !error,
         aaregManglerData: aaregManglerData,
-        aaregLaster: isLoading || (data && oppdateringLaster),
+        aaregLaster: isLoading || (skalViseSkeleton && oppdateringLaster),
         aaregHarFeil: error,
         setSkalHenteData,
     };

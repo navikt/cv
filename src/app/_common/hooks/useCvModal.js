@@ -2,15 +2,12 @@ import { useEffect, useState } from "react";
 
 export const useCvModal = (
     eksisterendeElementer,
-    oppdaterSeksjon,
-    oppdateringSuksess,
-    oppdateringLaster,
-    oppdateringHarFeil,
-    setVisFeilmelding,
+    { oppdaterSeksjon, oppdateringSuksess, oppdateringLaster, oppdateringHarFeil, setVisFeilmelding },
 ) => {
     const [modalÅpen, setModalÅpen] = useState(false);
     const [gjeldendeIndex, setGjeldendeIndex] = useState(-1);
     const [gjeldendeElement, setGjeldendeElement] = useState(null);
+    const [laster, setLaster] = useState(false);
 
     useEffect(() => {
         setGjeldendeElement(gjeldendeIndex >= 0 ? eksisterendeElementer[gjeldendeIndex] : null);
@@ -18,13 +15,16 @@ export const useCvModal = (
 
     useEffect(() => {
         if (oppdateringSuksess || oppdateringHarFeil) oppdaterSeksjon(null);
+        if (oppdateringHarFeil) setLaster(false);
         if (oppdateringSuksess && !oppdateringLaster && !oppdateringHarFeil) toggleModal(false);
+        if (oppdateringLaster) setLaster(true);
     }, [oppdateringSuksess, oppdateringLaster, oppdateringHarFeil]);
 
     const toggleModal = (åpen, index) => {
         setGjeldendeIndex(index >= 0 ? index : -1);
         setVisFeilmelding(false);
         setModalÅpen(åpen);
+        if (!åpen) setLaster(false);
     };
 
     const lagreElement = (oppdatertElement) => {
@@ -40,5 +40,13 @@ export const useCvModal = (
         oppdaterSeksjon(oppdaterteElementer);
     };
 
-    return { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement };
+    return {
+        modalÅpen,
+        gjeldendeElement,
+        toggleModal,
+        lagreElement,
+        slettElement,
+        laster,
+        feilet: oppdateringHarFeil,
+    };
 };

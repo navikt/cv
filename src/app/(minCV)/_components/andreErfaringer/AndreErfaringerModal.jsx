@@ -1,11 +1,10 @@
-import { BodyLong, Button, Checkbox, CheckboxGroup, Heading, HStack, Modal, TextField } from "@navikt/ds-react";
+import { BodyLong, Checkbox, CheckboxGroup, HStack, TextField } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
-import { PersonCircleIcon } from "@navikt/aksel-icons";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreErfaring, laster, feilet }) => {
+export const AndreErfaringerModal = ({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) => {
     const [beskrivelse, setBeskrivelse] = useState("");
     const [rolle, setRolle] = useState("");
     const [pågår, setPågår] = useState([]);
@@ -24,8 +23,8 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
             setPågår(erfaring && erfaring.ongoing ? [true] : []);
         };
 
-        oppdaterErfaring(erfaring);
-    }, [erfaring]);
+        oppdaterErfaring(gjeldendeElement);
+    }, [gjeldendeElement]);
 
     const lagre = () => {
         const erPågående = pågår.includes(true);
@@ -35,8 +34,8 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
         if (!erPågående && !sluttdato) setSluttdatoError(true);
 
         if (rolle && startdato && (sluttdato || erPågående)) {
-            lagreErfaring({
-                ...erfaring,
+            lagreElement({
+                ...gjeldendeElement,
                 role: rolle,
                 description: beskrivelse,
                 fromDate: startdato,

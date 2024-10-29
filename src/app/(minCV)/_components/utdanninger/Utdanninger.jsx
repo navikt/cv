@@ -5,10 +5,10 @@ import { CvSeksjonEnum, SeksjonsIdEnum, UtdanningsnivåEnum } from "@/app/_commo
 import { formatterDato } from "@/app/_common/utils/stringUtils";
 import { UtdanningModal } from "@/app/(minCV)/_components/utdanninger/UtdanningModal";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
-import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
-import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import parse from "html-react-parser";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 
 function UtdanningerIcon() {
     return (
@@ -33,18 +33,9 @@ function UtdanningerIcon() {
 
 export default function Utdanninger() {
     const { utdanninger, cvLaster } = useCv();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.UTDANNING,
-    );
-
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
-        utdanninger,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.UTDANNING);
+    const modalProps = useCvModal(utdanninger, oppdateringprops);
+    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.UTDANNING}>
@@ -118,6 +109,7 @@ export default function Utdanninger() {
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
+                                            loading={laster}
                                         >
                                             Fjern
                                         </Button>
@@ -131,16 +123,7 @@ export default function Utdanninger() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && (
-                <UtdanningModal
-                    modalÅpen={modalÅpen}
-                    toggleModal={toggleModal}
-                    utdanning={gjeldendeElement}
-                    lagreUtdanning={lagreElement}
-                    laster={laster}
-                    feilet={feilet}
-                />
-            )}
+            {modalÅpen && <UtdanningModal {...modalProps} />}
         </div>
     );
 }

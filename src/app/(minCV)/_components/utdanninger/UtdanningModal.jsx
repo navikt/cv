@@ -1,22 +1,11 @@
-import {
-    BodyLong,
-    Button,
-    Checkbox,
-    CheckboxGroup,
-    Heading,
-    HStack,
-    Modal,
-    Select,
-    Textarea,
-    TextField,
-} from "@navikt/ds-react";
+import { BodyLong, Checkbox, CheckboxGroup, HStack, Select, Textarea, TextField } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdanning, laster, feilet }) => {
+export const UtdanningModal = ({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) => {
     const [utdanningsnivå, setUtdanningsnivå] = useState("");
     const [gradOgRetning, setGradOgRetning] = useState("");
     const [institusjon, setInstitusjon] = useState("");
@@ -39,8 +28,8 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
             setPågår(utdanning && utdanning.ongoing ? [true] : []);
         };
 
-        oppdaterUtdanning(utdanning);
-    }, [utdanning]);
+        oppdaterUtdanning(gjeldendeElement);
+    }, [gjeldendeElement]);
 
     const lagre = () => {
         const erPågående = pågår.includes(true);
@@ -50,8 +39,8 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
         if (!erPågående && !sluttdato) setSluttdatoError(true);
 
         if (utdanningsnivå && startdato && (sluttdato || erPågående)) {
-            lagreUtdanning({
-                ...utdanning,
+            lagreElement({
+                ...gjeldendeElement,
                 nuskode: utdanningsnivå,
                 field: gradOgRetning,
                 institution: institusjon,

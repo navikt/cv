@@ -4,24 +4,15 @@ import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { CvSeksjonEnum, SeksjonsIdEnum, SpråkEnum } from "@/app/_common/enums/cvEnums";
 import SpråkModal from "@/app/(minCV)/_components/sprak/SpråkModal";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
-import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 export default function Sprak() {
     const { språk, cvLaster } = useCv();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.SPRÅK,
-    );
-
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
-        språk,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.SPRÅK);
+    const modalProps = useCvModal(språk, oppdateringprops);
+    const { modalÅpen, toggleModal, laster, slettElement } = modalProps;
 
     const SpråkIcon = () => (
         <svg
@@ -99,6 +90,7 @@ export default function Sprak() {
                                                 icon={<TrashIcon aria-hidden />}
                                                 variant="tertiary"
                                                 onClick={() => slettElement(index)}
+                                                loading={laster}
                                             >
                                                 Fjern
                                             </Button>
@@ -113,16 +105,7 @@ export default function Sprak() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && (
-                <SpråkModal
-                    modalÅpen={modalÅpen}
-                    toggleModal={toggleModal}
-                    språk={gjeldendeElement}
-                    lagreSpråk={lagreElement}
-                    laster={laster}
-                    feilet={feilet}
-                />
-            )}
+            {modalÅpen && <SpråkModal {...modalProps} />}
         </div>
     );
 }

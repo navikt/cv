@@ -5,24 +5,15 @@ import { formatterFullDato, formatterTidsenhet } from "@/app/_common/utils/strin
 import KursModal from "@/app/(minCV)/_components/kurs/KursModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
-import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 export default function Kurs() {
     const { kurs, cvLaster } = useCv();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.KURS,
-    );
-
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
-        kurs,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.KURS);
+    const modalProps = useCvModal(kurs, oppdateringprops);
+    const { modalÅpen, toggleModal, laster, slettElement } = modalProps;
 
     const KursIcon = () => (
         <svg
@@ -105,6 +96,7 @@ export default function Kurs() {
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
+                                            loading={laster}
                                         >
                                             Fjern
                                         </Button>
@@ -118,16 +110,7 @@ export default function Kurs() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && (
-                <KursModal
-                    modalÅpen={modalÅpen}
-                    toggleModal={toggleModal}
-                    kurs={gjeldendeElement}
-                    lagreKurs={lagreElement}
-                    laster={laster}
-                    feilet={feilet}
-                />
-            )}
+            {modalÅpen && <KursModal {...modalProps} />}
         </div>
     );
 }

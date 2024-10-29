@@ -4,24 +4,15 @@ import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import FagbrevModal from "@/app/(minCV)/_components/fagbrev/FagbrevModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
-import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 export default function Fagbrev() {
     const { fagbrev, cvLaster } = useCv();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.FAGBREV,
-    );
-
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
-        fagbrev,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.FAGBREV);
+    const modalProps = useCvModal(fagbrev, oppdateringprops);
+    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
 
     function FagbrevIcon() {
         return (
@@ -83,6 +74,7 @@ export default function Fagbrev() {
                                                 icon={<TrashIcon aria-hidden />}
                                                 variant="tertiary"
                                                 onClick={() => slettElement(index)}
+                                                loading={laster}
                                             >
                                                 Fjern
                                             </Button>
@@ -98,16 +90,7 @@ export default function Fagbrev() {
                     </>
                 </Box>
             )}
-            {modalÅpen && (
-                <FagbrevModal
-                    modalÅpen={modalÅpen}
-                    toggleModal={toggleModal}
-                    fagbrev={gjeldendeElement}
-                    lagreFagbrev={lagreElement}
-                    laster={laster}
-                    feilet={feilet}
-                />
-            )}
+            {modalÅpen && <FagbrevModal {...modalProps} />}
         </div>
     );
 }

@@ -1,15 +1,4 @@
-import {
-    BodyLong,
-    Button,
-    Checkbox,
-    CheckboxGroup,
-    Heading,
-    HStack,
-    Modal,
-    Radio,
-    RadioGroup,
-    VStack,
-} from "@navikt/ds-react";
+import { Checkbox, CheckboxGroup, HStack, Radio, RadioGroup, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { AnsettelsesformEnum, ArbeidstidEnum, OmfangEnum, StarttidspunktEnum } from "@/app/_common/enums/cvEnums";
 import { useEffect, useState } from "react";
@@ -17,7 +6,7 @@ import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJobbønsker, laster, feilet }) => {
+export const JobbonskerModal = ({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) => {
     const [yrker, setYrker] = useState([]);
     const [lokasjoner, setLokasjoner] = useState([]);
     const [omfang, setOmfang] = useState([]);
@@ -37,16 +26,16 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
             setStarttidspunkt(jobbønsker?.startOption || "ETTER_TRE_MND");
         };
 
-        oppdaterJobbønsker(jobbønsker);
-    }, [jobbønsker]);
+        oppdaterJobbønsker(gjeldendeElement);
+    }, [gjeldendeElement]);
 
     const lagre = () => {
         if (yrker.length === 0) setYrkerError(true);
         if (lokasjoner.length === 0) setLokasjonerError(true);
 
         if (yrker.length !== 0 && lokasjoner.length !== 0) {
-            lagreJobbønsker({
-                ...jobbønsker,
+            lagreElement({
+                ...gjeldendeElement,
                 occupations: yrker,
                 locations: lokasjoner,
                 workLoadTypes: omfang,

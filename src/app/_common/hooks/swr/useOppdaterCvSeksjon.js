@@ -8,7 +8,7 @@ import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 export const useOppdaterCvSeksjon = (seksjon) => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
-    const [dataForOppdatering, oppdaterMedData] = useState(null);
+    const [dataForOppdatering, oppdaterSeksjon] = useState(null);
     const [visFeilmelding, setVisFeilmelding] = useState(false);
 
     const fetcher = async ({ url, seksjon, body }) => {
@@ -34,10 +34,10 @@ export const useOppdaterCvSeksjon = (seksjon) => {
 
     const { data, error, isLoading } = useSWR(skalOppdatere ? { url, seksjon, body } : null, fetcher);
     return {
-        oppdateringOk: data,
-        laster: isLoading,
-        feilet: visFeilmelding || error,
-        oppdaterMedData,
+        oppdateringSuksess: data,
+        oppdateringLaster: isLoading,
+        oppdateringHarFeil: visFeilmelding || error,
+        oppdaterSeksjon,
         setVisFeilmelding,
     };
 };

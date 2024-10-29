@@ -1,15 +1,4 @@
-import {
-    BodyLong,
-    Button,
-    Checkbox,
-    CheckboxGroup,
-    Heading,
-    HStack,
-    Modal,
-    Textarea,
-    TextField,
-    VStack,
-} from "@navikt/ds-react";
+import { Checkbox, CheckboxGroup, HStack, Textarea, TextField, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
@@ -17,14 +6,7 @@ import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export const ArbeidsforholdModal = ({
-    modalÅpen,
-    toggleModal,
-    arbeidsforhold,
-    lagreArbeidsforhold,
-    laster,
-    feilet,
-}) => {
+export const ArbeidsforholdModal = ({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) => {
     const [arbeidsgiver, setArbeidsgiver] = useState("");
     const [alternativTittel, setAlternativTittel] = useState("");
     const [arbeidssted, setArbeidssted] = useState("");
@@ -34,7 +16,7 @@ export const ArbeidsforholdModal = ({
     const [sluttdato, setSluttdato] = useState(null);
     const [pågår, setPågår] = useState([]);
 
-    const [stillingstittel, setStillingstittel] = useState(arbeidsforhold?.jobTitle || "");
+    const [stillingstittel, setStillingstittel] = useState(gjeldendeElement?.jobTitle || "");
     const [konseptId, setKonseptId] = useState("");
     const [styrk, setStyrk] = useState("");
 
@@ -58,8 +40,8 @@ export const ArbeidsforholdModal = ({
             setPågår(arbeidsforhold && arbeidsforhold.ongoing ? [true] : []);
         };
 
-        oppdaterArbeidsforhold(arbeidsforhold);
-    }, [arbeidsforhold]);
+        oppdaterArbeidsforhold(gjeldendeElement);
+    }, [gjeldendeElement]);
 
     const lagre = async () => {
         const erPågående = pågår.includes(true);
@@ -69,8 +51,8 @@ export const ArbeidsforholdModal = ({
         if (!erPågående && !sluttdato) setSluttdatoError(true);
 
         if (stillingstittel && startdato && (sluttdato || erPågående)) {
-            await lagreArbeidsforhold({
-                ...arbeidsforhold,
+            await lagreElement({
+                ...gjeldendeElement,
                 employer: arbeidsgiver,
                 jobTitle: stillingstittel,
                 conceptId: konseptId,

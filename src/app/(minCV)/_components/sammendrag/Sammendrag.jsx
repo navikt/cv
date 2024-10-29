@@ -1,31 +1,28 @@
-import { Alert, BodyLong, Box, Button, Heading, HStack, Modal, Textarea, VStack } from "@navikt/ds-react";
+import { Alert, BodyLong, Box, Button, Heading, HStack, Textarea, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
-import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
-import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import parse from "html-react-parser";
 import { CvModal } from "@/app/_common/components/CvModal";
+import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 export default function Sammendrag() {
     const { sammendrag, cvLaster } = useCv();
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.SAMMENDRAG);
+    const modalProps = useCvModal(sammendrag, oppdateringprops);
+    const { oppdaterSeksjon } = oppdateringprops;
+    const { modalÅpen, toggleModal, laster, feilet } = modalProps;
+
     const [sammendragEndring, setSammendragEndring] = useState(sammendrag || "");
     const [sammendragError, setSammendragError] = useState(false);
 
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.SAMMENDRAG,
-    );
-    const { modalÅpen, toggleModal } = useCvModal(
-        sammendrag,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
+    useEffect(() => {
+        if (sammendrag) setSammendragEndring(sammendrag);
+    }, [sammendrag]);
 
     const SammendragIcon = () => (
         <svg
@@ -48,7 +45,7 @@ export default function Sammendrag() {
 
     const lagre = () => {
         if (!sammendragEndring) setSammendragError(true);
-        if (sammendragEndring) oppdaterMedData(sammendragEndring);
+        if (sammendragEndring) oppdaterSeksjon(sammendragEndring);
     };
 
     return (
@@ -97,7 +94,8 @@ export default function Sammendrag() {
                                 <Button
                                     icon={<TrashIcon aria-hidden />}
                                     variant="tertiary"
-                                    onClick={() => oppdaterMedData("")}
+                                    onClick={() => oppdaterSeksjon("")}
+                                    loading={laster}
                                 >
                                     Fjern
                                 </Button>
