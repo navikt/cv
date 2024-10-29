@@ -41,7 +41,7 @@ const RootLayout = async (props) => {
             </head>
             <body className={sourceSansPro.className}>
                 {Decorator.Header()}
-                {children}
+                <main id="maincontent">{children}</main>
                 {Decorator.Footer()}
                 {Decorator.Scripts({ loader: Script })}
             </body>
