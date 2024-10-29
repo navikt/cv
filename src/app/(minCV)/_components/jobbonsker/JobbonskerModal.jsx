@@ -15,6 +15,7 @@ import { AnsettelsesformEnum, ArbeidstidEnum, OmfangEnum, StarttidspunktEnum } f
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
+import { CvModal } from "@/app/_common/components/CvModal";
 
 export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJobbønsker, laster, feilet }) => {
     const [yrker, setYrker] = useState([]);
@@ -82,109 +83,92 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
     };
 
     return (
-        <Modal open={modalÅpen} aria-label="Legg til jobbønske" onClose={() => toggleModal(false)} width="medium">
-            <Modal.Header closeButton={true}>
-                <Heading align="start" level="3" size="medium">
-                    <HStack gap="1" align="center">
-                        Legg til Jobbønsker
-                    </HStack>
-                </Heading>
-            </Modal.Header>
-            <Modal.Body style={{ padding: "1rem 2.8rem 2.5rem 2.8rem" }}>
-                <VStack justify="space-between">
-                    <Typeahead
-                        className={styles.mb6}
-                        label="Jobber og yrker"
-                        description="Må fylles ut"
-                        type={TypeaheadEnum.STILLING}
-                        oppdaterValg={oppdaterYrker}
-                        valgtVerdi={yrker}
-                        multiselect={true}
-                        placeholder={"Søk og legg til yrker"}
-                        multiselectText={"Yrker"}
-                        error={yrkerError && "Du må legge til jobbønsker"}
-                    />
-                    <Typeahead
-                        className={styles.mb6}
-                        label="Hvor kan du jobbe"
-                        description="Må fylles ut"
-                        type={TypeaheadEnum.STED}
-                        oppdaterValg={oppdaterLokasjoner}
-                        valgtVerdi={lokasjoner}
-                        visningsfelt={"location"}
-                        multiselect={true}
-                        placeholder={"Søk og legg til steder"}
-                        multiselectText={"Steder"}
-                        error={lokasjonerError && "Du må legge til steder"}
-                    />
-                </VStack>
-                <CheckboxGroup
+        <CvModal
+            modalÅpen={modalÅpen}
+            tittel={"Legg til jobbønsker"}
+            feilet={feilet}
+            laster={laster}
+            lagre={lagre}
+            toggleModal={toggleModal}
+        >
+            <VStack justify="space-between">
+                <Typeahead
                     className={styles.mb6}
-                    onChange={setOmfang}
-                    value={omfang}
-                    legend="Vil du jobbe heltid eller deltid?"
-                >
-                    <HStack gap="4">
-                        {Object.keys(OmfangEnum).map((key) => (
-                            <Checkbox value={key} key={key}>
-                                {OmfangEnum[key]}
-                            </Checkbox>
-                        ))}
-                    </HStack>
-                </CheckboxGroup>
-                <CheckboxGroup
+                    label="Jobber og yrker"
+                    description="Må fylles ut"
+                    type={TypeaheadEnum.STILLING}
+                    oppdaterValg={oppdaterYrker}
+                    valgtVerdi={yrker}
+                    multiselect={true}
+                    placeholder={"Søk og legg til yrker"}
+                    multiselectText={"Yrker"}
+                    error={yrkerError && "Du må legge til jobbønsker"}
+                />
+                <Typeahead
                     className={styles.mb6}
-                    onChange={setArbeidstid}
-                    value={arbeidstid}
-                    legend="Når kan du jobbe?"
-                >
-                    <HStack>
-                        {Object.keys(ArbeidstidEnum).map((verdi) => (
-                            <Checkbox className={styles.checkbox} key={verdi} value={verdi}>
-                                {ArbeidstidEnum[verdi]}
-                            </Checkbox>
-                        ))}
-                    </HStack>
-                </CheckboxGroup>
-                <CheckboxGroup
-                    className={styles.mb6}
-                    onChange={setAnsettelsesform}
-                    value={ansettelsesform}
-                    legend="Hva slags ansettelse ønsker du?"
-                >
-                    <HStack>
-                        {Object.keys(AnsettelsesformEnum).map((verdi) => (
-                            <Checkbox className={styles.checkbox} key={verdi} value={verdi}>
-                                {AnsettelsesformEnum[verdi]}
-                            </Checkbox>
-                        ))}
-                    </HStack>
-                </CheckboxGroup>
-                <RadioGroup legend="Når kan du begynne i ny jobb?" onChange={setStarttidspunkt} value={starttidspunkt}>
-                    <HStack>
-                        {Object.keys(StarttidspunktEnum).map((verdi) => (
-                            <Radio className={styles.checkbox} key={verdi} value={verdi}>
-                                {StarttidspunktEnum[verdi]}
-                            </Radio>
-                        ))}
-                    </HStack>
-                </RadioGroup>
-            </Modal.Body>
-            <Modal.Footer>
+                    label="Hvor kan du jobbe"
+                    description="Må fylles ut"
+                    type={TypeaheadEnum.STED}
+                    oppdaterValg={oppdaterLokasjoner}
+                    valgtVerdi={lokasjoner}
+                    visningsfelt={"location"}
+                    multiselect={true}
+                    placeholder={"Søk og legg til steder"}
+                    multiselectText={"Steder"}
+                    error={lokasjonerError && "Du må legge til steder"}
+                />
+            </VStack>
+            <CheckboxGroup
+                className={styles.mb6}
+                onChange={setOmfang}
+                value={omfang}
+                legend="Vil du jobbe heltid eller deltid?"
+            >
                 <HStack gap="4">
-                    {feilet && (
-                        <BodyLong size={"large"} className={styles.errorText}>
-                            Noe gikk galt, prøv å trykk lagre igjen
-                        </BodyLong>
-                    )}
-                    <Button variant="secondary" onClick={() => toggleModal(false)}>
-                        Avbryt
-                    </Button>
-                    <Button variant="primary" onClick={lagre}>
-                        Lagre
-                    </Button>
+                    {Object.keys(OmfangEnum).map((key) => (
+                        <Checkbox value={key} key={key}>
+                            {OmfangEnum[key]}
+                        </Checkbox>
+                    ))}
                 </HStack>
-            </Modal.Footer>
-        </Modal>
+            </CheckboxGroup>
+            <CheckboxGroup
+                className={styles.mb6}
+                onChange={setArbeidstid}
+                value={arbeidstid}
+                legend="Når kan du jobbe?"
+            >
+                <HStack>
+                    {Object.keys(ArbeidstidEnum).map((verdi) => (
+                        <Checkbox className={styles.checkbox} key={verdi} value={verdi}>
+                            {ArbeidstidEnum[verdi]}
+                        </Checkbox>
+                    ))}
+                </HStack>
+            </CheckboxGroup>
+            <CheckboxGroup
+                className={styles.mb6}
+                onChange={setAnsettelsesform}
+                value={ansettelsesform}
+                legend="Hva slags ansettelse ønsker du?"
+            >
+                <HStack>
+                    {Object.keys(AnsettelsesformEnum).map((verdi) => (
+                        <Checkbox className={styles.checkbox} key={verdi} value={verdi}>
+                            {AnsettelsesformEnum[verdi]}
+                        </Checkbox>
+                    ))}
+                </HStack>
+            </CheckboxGroup>
+            <RadioGroup legend="Når kan du begynne i ny jobb?" onChange={setStarttidspunkt} value={starttidspunkt}>
+                <HStack>
+                    {Object.keys(StarttidspunktEnum).map((verdi) => (
+                        <Radio className={styles.checkbox} key={verdi} value={verdi}>
+                            {StarttidspunktEnum[verdi]}
+                        </Radio>
+                    ))}
+                </HStack>
+            </RadioGroup>
+        </CvModal>
     );
 };

@@ -637,3 +637,12 @@
     color: var(--Text-Danger);
     align-self: center;
 }
+
+.modalBody {
+    padding: 1rem 2.8rem 2.5rem 2.8rem !important;
+}
+
+.modalBody--loading {
+    padding: 1rem 2.8rem 2.5rem 2.8rem !important;
+    opacity: 0.3;
+}
