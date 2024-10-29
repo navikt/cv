@@ -4,24 +4,15 @@ import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import KompetanserModal from "@/app/(minCV)/_components/kompetanser/KompetanserModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
-import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 export default function Kompetanser() {
     const { kompetanser, cvLaster } = useCv();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.KOMPETANSER,
-    );
-
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
-        kompetanser,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.KOMPETANSER);
+    const modalProps = useCvModal(kompetanser, oppdateringprops);
+    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
 
     const KompetanserIcon = () => (
         <svg
@@ -82,6 +73,7 @@ export default function Kompetanser() {
                                                 icon={<TrashIcon aria-hidden />}
                                                 variant="tertiary"
                                                 onClick={() => slettElement(index)}
+                                                loading={laster}
                                             >
                                                 Fjern
                                             </Button>
@@ -97,16 +89,7 @@ export default function Kompetanser() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && (
-                <KompetanserModal
-                    modalÅpen={modalÅpen}
-                    toggleModal={toggleModal}
-                    kompetanse={gjeldendeElement}
-                    lagreKompetanse={lagreElement}
-                    laster={laster}
-                    feilet={feilet}
-                />
-            )}
+            {modalÅpen && <KompetanserModal {...modalProps} />}
         </div>
     );
 }

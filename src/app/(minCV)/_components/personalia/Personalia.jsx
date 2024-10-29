@@ -5,9 +5,9 @@ import { formatterAdresse, formatterTelefon } from "@/app/_common/utils/stringUt
 import PersonaliaModal from "@/app/(minCV)/_components/personalia/PersonaliaModal";
 import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
+import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterPersonalia } from "@/app/_common/hooks/swr/useOppdaterPersonalia";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
-import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
 function PersonaliaIcon() {
     return (
@@ -32,16 +32,9 @@ function PersonaliaIcon() {
 
 export default function Personalia() {
     const { personalia, personLaster } = usePerson();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterPersonalia();
-
-    const { modalÅpen, toggleModal } = useCvModal(
-        personalia,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
+    const oppdateringprops = useOppdaterPersonalia();
+    const modalProps = useCvModal(personalia, oppdateringprops);
+    const { modalÅpen, toggleModal } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.PERSONALIA}>
@@ -84,12 +77,9 @@ export default function Personalia() {
             )}
             {modalÅpen && (
                 <PersonaliaModal
-                    modalÅpen={modalÅpen}
-                    toggleModal={toggleModal}
-                    personalia={personalia}
-                    lagrePersonalia={oppdaterMedData}
-                    laster={laster}
-                    feilet={feilet}
+                    {...modalProps}
+                    gjeldendeElement={personalia}
+                    lagreElement={oppdateringprops.oppdaterSeksjon}
                 />
             )}
         </div>
