@@ -65,7 +65,7 @@ export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, l
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til personalia"}
+            tittel="Legg til personalia"
             icon={<PersonCircleIcon fontSize="1.5rem" />}
             feilet={feilet}
             laster={laster}
@@ -162,7 +162,7 @@ export default function PersonaliaModal({ modalÅpen, toggleModal, personalia, l
             <TextField
                 label="Fødselsdato"
                 description="Kan ikke endres"
-                value={!!fødselsdato ? formatterFullDato(fødselsdato) : ""}
+                value={fødselsdato ? formatterFullDato(fødselsdato) : ""}
                 readOnly
             />
         </CvModal>

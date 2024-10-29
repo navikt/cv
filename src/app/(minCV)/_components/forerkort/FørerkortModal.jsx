@@ -1,4 +1,4 @@
-import { BodyLong, Button, Heading, HStack, Modal, Select, VStack } from "@navikt/ds-react";
+import { BodyLong, HStack, Select, VStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import styles from "@/app/page.module.css";
 import førerkortData from "@/app/_common/data/førerkort.json";
@@ -14,7 +14,7 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
     const [gyldigFraError, setGyldigFraError] = useState(false);
     const [gyldigTilError, setGyldigTilError] = useState(false);
 
-    const gyldigeFørerkort = førerkortData.gyldigeFørerkort;
+    const { gyldigeFørerkort } = førerkortData;
 
     useEffect(() => {
         const oppdaterFørerkort = (førerkort) => setValgtFørerkort(førerkort);
@@ -45,12 +45,12 @@ export default function FørerkortModal({ modalÅpen, toggleModal, førerkort, l
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til førerkort"}
+            tittel="Legg til førerkort"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible={true}
+            overflowVisible
         >
             <VStack>
                 <BodyLong>

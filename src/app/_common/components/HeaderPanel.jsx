@@ -17,7 +17,7 @@ function HeaderPanel({ title = "Din CV", visTag = true }) {
     );
 
     const sistEndretKomponent = !sistEndret ? (
-        <Detail as={Skeleton}>{"Sist endret 1. januar 1970"}</Detail>
+        <Detail as={Skeleton}>Sist endret 1. januar 1970</Detail>
     ) : (
         <Detail>{`Sist endret ${formatterFullDato(sistEndret)}`}</Detail>
     );

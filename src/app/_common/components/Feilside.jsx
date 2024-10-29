@@ -4,7 +4,7 @@ import styles from "@/app/page.module.css";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import { cvConfig } from "@/app/_common/config";
 
-export const Feilside = ({ årsak }) => {
+export function Feilside({ årsak }) {
     return (
         <>
             <HeaderPanel visTag={false} />
@@ -23,7 +23,7 @@ export const Feilside = ({ årsak }) => {
                         </Heading>
                         <BodyLong className={["text-center", styles.mb12]}>{årsak}</BodyLong>
 
-                        <HStack gap={"4"} className={[styles.mb3]}>
+                        <HStack gap="4" className={[styles.mb3]}>
                             <NextLink href={`${cvConfig.urls.nav}/person/kontakt-oss/nb`} passHref legacyBehavior>
                                 <Button variant="primary" as="a">
                                     Kontakt oss
@@ -38,7 +38,7 @@ export const Feilside = ({ årsak }) => {
             </HStack>
         </>
     );
-};
+}
 
 export const FeilsideTekst = Object.freeze({
     IKKE_UNDER_OPPFØLGING:

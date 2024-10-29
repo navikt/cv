@@ -1,4 +1,4 @@
-import { BodyLong, Button, Heading, HStack, Modal, Select } from "@navikt/ds-react";
+import { BodyLong, Select } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { SpråkEnum } from "@/app/_common/enums/cvEnums";
@@ -42,12 +42,12 @@ export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpr�
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til språk"}
+            tittel="Legg til språk"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible={true}
+            overflowVisible
         >
             <BodyLong>
                 <b>Språk</b> *obligatorisk
@@ -58,7 +58,7 @@ export default function SpråkModal({ modalÅpen, toggleModal, språk, lagreSpr�
                 valgtVerdi={valgtSpråk?.language || valgtSpråk?.title}
                 oppdaterValg={oppdaterValgtSpråk}
                 type={TypeaheadEnum.SPRÅK}
-                forhåndshentet={true}
+                forhåndshentet
                 error={valgtSprakError && "Du må velge et språk"}
             />
             <Select

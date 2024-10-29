@@ -9,22 +9,8 @@ import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksj
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
-export default function Kurs() {
-    const { kurs, cvLaster } = useCv();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.KURS,
-    );
-
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
-        kurs,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
-
-    const KursIcon = () => (
+function KursIcon() {
+    return (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
@@ -47,6 +33,22 @@ export default function Kurs() {
                 fill="#23262A"
             />
         </svg>
+    );
+}
+
+export default function Kurs() {
+    const { kurs, cvLaster } = useCv();
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.KURS,
+    );
+
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        kurs,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+        setVisFeilmelding,
     );
 
     return (

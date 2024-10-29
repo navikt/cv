@@ -9,22 +9,8 @@ import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksj
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
-export default function AndreGodkjenninger() {
-    const { andreGodkjenninger, cvLaster } = useCv();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.ANDRE_GODKJENNINGER,
-    );
-
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
-        andreGodkjenninger,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
-
-    const AndreGodkjenningerIcon = () => (
+function AndreGodkjenningerIcon() {
+    return (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
@@ -41,6 +27,22 @@ export default function AndreGodkjenninger() {
                 fill="#23262A"
             />
         </svg>
+    );
+}
+
+export default function AndreGodkjenninger() {
+    const { andreGodkjenninger, cvLaster } = useCv();
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.ANDRE_GODKJENNINGER,
+    );
+
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        andreGodkjenninger,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+        setVisFeilmelding,
     );
 
     return (

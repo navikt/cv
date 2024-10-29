@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "../../page.module.css";
 import "@navikt/ds-css";
 import { useState } from "react";
 import { Box, HStack, VStack, Hide, Show, Button } from "@navikt/ds-react";
@@ -25,6 +24,7 @@ import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 import Forhandsvisning from "@/app/(minCV)/_components/forhandsvisning/Forhandsvisning";
 import ApplicationProvider from "@/app/_common/contexts/ApplicationContext";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
+import styles from "../../page.module.css";
 
 export default function MinCVPage() {
     const { cvLaster } = useCv();
@@ -116,7 +116,7 @@ export default function MinCVPage() {
                 </>
             ) : (
                 <>
-                    <HeaderPanel title={"Forhåndsvis CV"} visTag={true} />
+                    <HeaderPanel title="Forhåndsvis CV" visTag />
                     <Forhandsvisning setVisHovedinnhold={setVisHovedinnhold} />
                 </>
             )}

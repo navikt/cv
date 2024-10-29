@@ -99,29 +99,29 @@ export default function Jobbonsker() {
                             <BodyLong spacing>
                                 {formatterListeAvObjekterTilTekst(jobbønsker.occupations, "title")}
                             </BodyLong>
-                            <div className={styles.divider}></div>
+                            <div className={styles.divider} />
 
                             <BodyLong weight="semibold">Områder</BodyLong>
                             <BodyLong spacing>
                                 {formatterListeAvObjekterTilTekst(jobbønsker.locations, "location")}
                             </BodyLong>
-                            <div className={styles.divider}></div>
+                            <div className={styles.divider} />
 
                             <BodyLong weight="semibold">Heltid eller deltid</BodyLong>
                             <BodyLong spacing>{jobbønsker.workLoadTypes.map((e) => OmfangEnum[e]).join(", ")}</BodyLong>
-                            <div className={styles.divider}></div>
+                            <div className={styles.divider} />
 
                             <BodyLong weight="semibold">Arbeidstider</BodyLong>
                             <BodyLong spacing>
                                 {jobbønsker.workScheduleTypes.map((e) => ArbeidstidEnum[e]).join(", ")}
                             </BodyLong>
-                            <div className={styles.divider}></div>
+                            <div className={styles.divider} />
 
                             <BodyLong weight="semibold">Ansettelsesform</BodyLong>
                             <BodyLong spacing>
                                 {jobbønsker.occupationTypes.map((e) => AnsettelsesformEnum[e]).join(", ")}
                             </BodyLong>
-                            <div className={styles.divider}></div>
+                            <div className={styles.divider} />
 
                             <BodyLong weight="semibold">Oppstart</BodyLong>
                             <BodyLong className={styles.mb16}>{StarttidspunktEnum[jobbønsker.startOption]}</BodyLong>

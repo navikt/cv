@@ -30,12 +30,8 @@ export function lastNedCvPdf(cv, personalia) {
     const filnavn = `CV-${personalia.fornavn}.${personalia.etternavn}.pdf`;
     const navn = `${personalia.fornavn} ${personalia.etternavn}`;
 
-    const formattertAdresse = () => {
-        return personaliaRad(
-            "Adresse:",
-            formatterAdresse(personalia.adresse, personalia.postnummer, personalia.poststed),
-        );
-    };
+    const formattertAdresse = () =>
+        personaliaRad("Adresse:", formatterAdresse(personalia.adresse, personalia.postnummer, personalia.poststed));
 
     const personaliaRad = (tittel, innhold) => ({
         columns: [
@@ -502,17 +498,15 @@ export function lastNedCvPdf(cv, personalia) {
                             vLineColor: () => "#b7b1a9",
                         },
                         table: {
-                            body: fagdokumentasjonInnhold.map((s, i) => {
-                                return [
-                                    {
-                                        border: [1, 0, 0, 0],
-                                        margin: [0, 4, 0, 0],
-                                        style: "fontNormal",
-                                        text: fagdokumentasjonInnhold[i].title,
-                                        width: "70%",
-                                    },
-                                ];
-                            }),
+                            body: fagdokumentasjonInnhold.map((s, i) => [
+                                {
+                                    border: [1, 0, 0, 0],
+                                    margin: [0, 4, 0, 0],
+                                    style: "fontNormal",
+                                    text: fagdokumentasjonInnhold[i].title,
+                                    width: "70%",
+                                },
+                            ]),
                         },
                     },
                 ],
@@ -542,17 +536,15 @@ export function lastNedCvPdf(cv, personalia) {
                             vLineColor: () => "#b7b1a9",
                         },
                         table: {
-                            body: kompetanser.map((s, i) => {
-                                return [
-                                    {
-                                        border: [1, 0, 0, 0],
-                                        margin: [0, 4, 0, 0],
-                                        style: "fontNormal",
-                                        text: kompetanser[i].title,
-                                        width: "70%",
-                                    },
-                                ];
-                            }),
+                            body: kompetanser.map((s, i) => [
+                                {
+                                    border: [1, 0, 0, 0],
+                                    margin: [0, 4, 0, 0],
+                                    style: "fontNormal",
+                                    text: kompetanser[i].title,
+                                    width: "70%",
+                                },
+                            ]),
                         },
                     },
                 ],
@@ -568,10 +560,9 @@ export function lastNedCvPdf(cv, personalia) {
         if (fradatoAsText) {
             if (tildatoAsText) {
                 return `${storForbokstav(fradatoAsText)} - \n${tildatoAsText}`;
-            } else {
-                return `${storForbokstav(fradatoAsText)}
-                        ${naavaerende ? "(Nåværende)" : ""}`;
             }
+            return `${storForbokstav(fradatoAsText)}
+                        ${naavaerende ? "(Nåværende)" : ""}`;
         }
         return `${storForbokstav(tildatoAsText)}
                 ${naavaerende ? "(Nåværende)" : ""}`;

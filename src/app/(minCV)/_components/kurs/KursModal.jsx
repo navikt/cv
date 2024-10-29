@@ -1,4 +1,4 @@
-import { BodyLong, Button, Heading, HStack, Modal, Select, TextField, VStack } from "@navikt/ds-react";
+import { BodyLong, HStack, Select, TextField, VStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
@@ -7,6 +7,7 @@ import { formatterTidsenhet, storForbokstav } from "@/app/_common/utils/stringUt
 import { CvModal } from "@/app/_common/components/CvModal";
 
 export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs, laster, feilet }) {
+    // eslint-disable-next-line
     const [valgtKurs, setValgtKurs] = useState(kurs || null);
     const [kursnavn, setKursnavn] = useState(kurs?.title || "");
     const [utsteder, setUtsteder] = useState(kurs?.issuer || "");
@@ -48,12 +49,12 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs, la
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til kurs"}
+            tittel="Legg til kurs"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible={true}
+            overflowVisible
         >
             <BodyLong>
                 <b>Kursnavn</b> *obligatorisk
@@ -106,7 +107,7 @@ export default function KursModal({ modalÅpen, toggleModal, kurs, lagreKurs, la
                             className={styles.mb6}
                             label={`Antall ${formatterTidsenhet(tidsenhet, 2)}`}
                             inputMode="numeric"
-                            type={"number"}
+                            type="number"
                             description=""
                             value={lengde}
                             onChange={(e) => {

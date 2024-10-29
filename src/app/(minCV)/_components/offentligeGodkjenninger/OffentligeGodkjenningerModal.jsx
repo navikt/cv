@@ -1,4 +1,4 @@
-import { BodyLong, Button, Heading, HStack, Modal, Select, TextField } from "@navikt/ds-react";
+import { BodyLong, HStack, TextField } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";
@@ -59,12 +59,12 @@ export default function OffentligeGodkjenningerModal({
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til offentlig godkjenning"}
+            tittel="Legg til offentlig godkjenning"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible={true}
+            overflowVisible
         >
             <BodyLong>
                 <b>Offentlig godkjenning</b> *obligatorisk

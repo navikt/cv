@@ -1,10 +1,9 @@
-import { BodyLong, Button, Heading, HStack, Modal, TextField } from "@navikt/ds-react";
+import { BodyLong, HStack, TextField } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
-import { PersonCircleIcon } from "@navikt/aksel-icons";
 import { CvModal } from "@/app/_common/components/CvModal";
 
 export default function AndreGodkjenningerModal({
@@ -60,12 +59,12 @@ export default function AndreGodkjenningerModal({
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til annen godkjenning"}
+            tittel="Legg til annen godkjenning"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible={true}
+            overflowVisible
         >
             <BodyLong>
                 <b>Annen godkjenning</b> *obligatorisk

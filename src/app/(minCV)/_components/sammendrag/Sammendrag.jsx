@@ -1,4 +1,4 @@
-import { Alert, BodyLong, Box, Button, Heading, HStack, Modal, Textarea, VStack } from "@navikt/ds-react";
+import { Alert, BodyLong, Box, Button, Heading, HStack, Textarea, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import { useState } from "react";
@@ -10,24 +10,8 @@ import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import parse from "html-react-parser";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export default function Sammendrag() {
-    const { sammendrag, cvLaster } = useCv();
-    const [sammendragEndring, setSammendragEndring] = useState(sammendrag || "");
-    const [sammendragError, setSammendragError] = useState(false);
-
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.SAMMENDRAG,
-    );
-    const { modalÅpen, toggleModal } = useCvModal(
-        sammendrag,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
-
-    const SammendragIcon = () => (
+function SammendragIcon() {
+    return (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
@@ -44,6 +28,24 @@ export default function Sammendrag() {
                 fill="#23262A"
             />
         </svg>
+    );
+}
+
+export default function Sammendrag() {
+    const { sammendrag, cvLaster } = useCv();
+    const [sammendragEndring, setSammendragEndring] = useState(sammendrag || "");
+    const [sammendragError, setSammendragError] = useState(false);
+
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.SAMMENDRAG,
+    );
+    const { modalÅpen, toggleModal } = useCvModal(
+        sammendrag,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+        setVisFeilmelding,
     );
 
     const lagre = () => {
@@ -110,7 +112,7 @@ export default function Sammendrag() {
             {modalÅpen && (
                 <CvModal
                     modalÅpen={modalÅpen}
-                    tittel={"Legg til sammendrag"}
+                    tittel="Legg til sammendrag"
                     feilet={feilet}
                     laster={laster}
                     lagre={lagre}

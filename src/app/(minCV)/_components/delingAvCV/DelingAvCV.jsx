@@ -1,5 +1,4 @@
 import { BodyLong, BodyShort, Box, Button, Heading, HStack, Link, Loader, Tag } from "@navikt/ds-react";
-import styles from "../../../page.module.css";
 import { cvConfig } from "@/app/_common/config";
 import { useContext, useState } from "react";
 import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
@@ -8,6 +7,7 @@ import { useHentEuresSamtykke } from "@/app/_common/hooks/swr/useHentEuresSamtyk
 import { useBekreftTidligereCv } from "@/app/_common/hooks/swr/useBekreftTidligereCv";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
+import styles from "../../../page.module.css";
 
 function StarsEUIcon() {
     return (
@@ -30,7 +30,7 @@ function StarsEUIcon() {
     );
 }
 
-const NavLogoIcon = () => {
+function NavLogoIcon() {
     return (
         <svg width="55" height="35" viewBox="0 0 55 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="R&#195;&#184;d 1" clipPath="url(#clip0_2705_18081)">
@@ -106,7 +106,7 @@ const NavLogoIcon = () => {
             </defs>
         </svg>
     );
-};
+}
 
 function EuresLogoIcon() {
     return (
@@ -244,7 +244,7 @@ function EuresLogoIcon() {
     );
 }
 
-const DelingTag = ({ erDelt, deltMed, laster = false, error = false }) => {
+function DelingTag({ erDelt, deltMed, laster = false, error = false }) {
     const icon = laster ? (
         <Loader size="medium" title="Laster..." />
     ) : error || !erDelt ? (
@@ -266,7 +266,7 @@ const DelingTag = ({ erDelt, deltMed, laster = false, error = false }) => {
             {tekst}
         </Tag>
     );
-};
+}
 
 export default function DelingAvCV() {
     const { person } = usePerson();
@@ -305,7 +305,7 @@ export default function DelingAvCV() {
                     .
                 </BodyLong>
                 <DelingTag
-                    deltMed={"Nav"}
+                    deltMed="Nav"
                     erDelt={!måBekrefteTidligereCv}
                     laster={bekreftLaster}
                     error={bekreftHarFeil}
@@ -336,7 +336,7 @@ export default function DelingAvCV() {
                     .
                 </BodyLong>
                 <HStack gap="4" align="center">
-                    <DelingTag deltMed={"EURES"} erDelt={delerEures} laster={euresIsLoading} error={euresIsError} />
+                    <DelingTag deltMed="EURES" erDelt={delerEures} laster={euresIsLoading} error={euresIsError} />
                 </HStack>
             </Box>
         </div>

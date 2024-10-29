@@ -6,25 +6,26 @@
 const compareDates = (firstDate, secondDate, startDate = "fromDate", endDate = "toDate", ongoing = "ongoing") => {
     if (secondDate[endDate] > firstDate[endDate]) {
         return 1;
-    } else if (secondDate[ongoing] && firstDate[ongoing]) {
+    }
+    if (secondDate[ongoing] && firstDate[ongoing]) {
         if (secondDate[startDate] > firstDate[startDate]) {
             return 1;
-        } else {
-            return -1;
         }
-    } else if (secondDate[ongoing]) {
-        return 1;
-    } else if (firstDate[ongoing]) {
-        return -1;
-    } else if (firstDate[endDate] === secondDate[endDate]) {
-        if (secondDate[startDate] > firstDate[startDate]) {
-            return 1;
-        } else {
-            return -1;
-        }
-    } else {
         return -1;
     }
+    if (secondDate[ongoing]) {
+        return 1;
+    }
+    if (firstDate[ongoing]) {
+        return -1;
+    }
+    if (firstDate[endDate] === secondDate[endDate]) {
+        if (secondDate[startDate] > firstDate[startDate]) {
+            return 1;
+        }
+        return -1;
+    }
+    return -1;
 };
 
 export const datosorterElementer = (elementer, startDate = "fromDate", endDate = "toDate", ongoing = "ongoing") => {

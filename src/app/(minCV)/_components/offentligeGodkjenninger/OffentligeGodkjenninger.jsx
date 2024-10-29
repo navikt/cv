@@ -9,22 +9,8 @@ import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksj
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 
-export default function OffentligeGodkjenninger() {
-    const { offentligeGodkjenninger, cvLaster } = useCv();
-    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
-        CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER,
-    );
-
-    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
-        offentligeGodkjenninger,
-        oppdaterMedData,
-        oppdateringOk,
-        laster,
-        feilet,
-        setVisFeilmelding,
-    );
-
-    const OffentligeGodkjenningerIcon = () => (
+function OffentligeGodkjenningerIcon() {
+    return (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
@@ -41,6 +27,22 @@ export default function OffentligeGodkjenninger() {
                 fill="#23262A"
             />
         </svg>
+    );
+}
+
+export default function OffentligeGodkjenninger() {
+    const { offentligeGodkjenninger, cvLaster } = useCv();
+    const { oppdateringOk, laster, feilet, oppdaterMedData, setVisFeilmelding } = useOppdaterCvSeksjon(
+        CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER,
+    );
+
+    const { modalÅpen, gjeldendeElement, toggleModal, lagreElement, slettElement } = useCvModal(
+        offentligeGodkjenninger,
+        oppdaterMedData,
+        oppdateringOk,
+        laster,
+        feilet,
+        setVisFeilmelding,
     );
 
     return (

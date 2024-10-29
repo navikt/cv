@@ -1,15 +1,4 @@
-import {
-    BodyLong,
-    Button,
-    Checkbox,
-    CheckboxGroup,
-    Heading,
-    HStack,
-    Modal,
-    Radio,
-    RadioGroup,
-    VStack,
-} from "@navikt/ds-react";
+import { Checkbox, CheckboxGroup, HStack, Radio, RadioGroup, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { AnsettelsesformEnum, ArbeidstidEnum, OmfangEnum, StarttidspunktEnum } from "@/app/_common/enums/cvEnums";
 import { useEffect, useState } from "react";
@@ -17,7 +6,7 @@ import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJobbønsker, laster, feilet }) => {
+export function JobbonskerModal({ modalÅpen, toggleModal, jobbønsker, lagreJobbønsker, laster, feilet }) {
     const [yrker, setYrker] = useState([]);
     const [lokasjoner, setLokasjoner] = useState([]);
     const [omfang, setOmfang] = useState([]);
@@ -85,7 +74,7 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til jobbønsker"}
+            tittel="Legg til jobbønsker"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
@@ -99,9 +88,9 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
                     type={TypeaheadEnum.STILLING}
                     oppdaterValg={oppdaterYrker}
                     valgtVerdi={yrker}
-                    multiselect={true}
-                    placeholder={"Søk og legg til yrker"}
-                    multiselectText={"Yrker"}
+                    multiselect
+                    placeholder="Søk og legg til yrker"
+                    multiselectText="Yrker"
                     error={yrkerError && "Du må legge til jobbønsker"}
                 />
                 <Typeahead
@@ -111,10 +100,10 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
                     type={TypeaheadEnum.STED}
                     oppdaterValg={oppdaterLokasjoner}
                     valgtVerdi={lokasjoner}
-                    visningsfelt={"location"}
-                    multiselect={true}
-                    placeholder={"Søk og legg til steder"}
-                    multiselectText={"Steder"}
+                    visningsfelt="location"
+                    multiselect
+                    placeholder="Søk og legg til steder"
+                    multiselectText="Steder"
                     error={lokasjonerError && "Du må legge til steder"}
                 />
             </VStack>
@@ -171,4 +160,4 @@ export const JobbonskerModal = ({ modalÅpen, toggleModal, jobbønsker, lagreJob
             </RadioGroup>
         </CvModal>
     );
-};
+}

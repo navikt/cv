@@ -1,8 +1,6 @@
-import { BodyLong, Button, Heading, HStack, Modal } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
-import styles from "@/app/page.module.css";
 import { CvModal } from "@/app/_common/components/CvModal";
 
 export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFagbrev, laster, feilet }) {
@@ -34,12 +32,12 @@ export default function FagbrevModal({ modalÅpen, toggleModal, fagbrev, lagreFa
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til fagbrev"}
+            tittel="Legg til fagbrev"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible={true}
+            overflowVisible
         >
             <Typeahead
                 label="Fagdokumentasjon"

@@ -1,15 +1,4 @@
-import {
-    BodyLong,
-    Button,
-    Checkbox,
-    CheckboxGroup,
-    Heading,
-    HStack,
-    Modal,
-    Textarea,
-    TextField,
-    VStack,
-} from "@navikt/ds-react";
+import { Checkbox, CheckboxGroup, HStack, Textarea, TextField, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
@@ -17,14 +6,7 @@ import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export const ArbeidsforholdModal = ({
-    modalÅpen,
-    toggleModal,
-    arbeidsforhold,
-    lagreArbeidsforhold,
-    laster,
-    feilet,
-}) => {
+export function ArbeidsforholdModal({ modalÅpen, toggleModal, arbeidsforhold, lagreArbeidsforhold, laster, feilet }) {
     const [arbeidsgiver, setArbeidsgiver] = useState("");
     const [alternativTittel, setAlternativTittel] = useState("");
     const [arbeidssted, setArbeidssted] = useState("");
@@ -95,7 +77,7 @@ export const ArbeidsforholdModal = ({
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til arbeidsforhold"}
+            tittel="Legg til arbeidsforhold"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
@@ -149,7 +131,7 @@ export const ArbeidsforholdModal = ({
                 onChange={(e) => setArbeidsoppgaver(e.target.value)}
             />
             <CheckboxGroup legend="Jobb jeg har nå" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value={true}>Jobb jeg har nå</Checkbox>
+                <Checkbox value>Jobb jeg har nå</Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">
@@ -175,4 +157,4 @@ export const ArbeidsforholdModal = ({
             </HStack>
         </CvModal>
     );
-};
+}

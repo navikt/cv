@@ -1,22 +1,11 @@
-import {
-    BodyLong,
-    Button,
-    Checkbox,
-    CheckboxGroup,
-    Heading,
-    HStack,
-    Modal,
-    Select,
-    Textarea,
-    TextField,
-} from "@navikt/ds-react";
+import { BodyLong, Checkbox, CheckboxGroup, HStack, Select, Textarea, TextField } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdanning, laster, feilet }) => {
+export function UtdanningModal({ modalÅpen, toggleModal, utdanning, lagreUtdanning, laster, feilet }) {
     const [utdanningsnivå, setUtdanningsnivå] = useState("");
     const [gradOgRetning, setGradOgRetning] = useState("");
     const [institusjon, setInstitusjon] = useState("");
@@ -66,7 +55,7 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til utdanning"}
+            tittel="Legg til utdanning"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
@@ -86,7 +75,7 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
                 }}
                 error={utdanningsnivaError && "Utdanningsnivå mangler"}
             >
-                <option value={""}>Velg</option>
+                <option value="">Velg</option>
                 {Object.keys(UtdanningsnivåEnum).map((nuskode) => (
                     <option key={nuskode} value={nuskode}>
                         {UtdanningsnivåEnum[nuskode]}
@@ -115,7 +104,7 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
                 onChange={(e) => setBeskrivelse(e.target.value)}
             />
             <CheckboxGroup legend="Utdanning jeg tar nå" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value={true}>Utdanning jeg tar nå</Checkbox>
+                <Checkbox value>Utdanning jeg tar nå</Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">
@@ -141,4 +130,4 @@ export const UtdanningModal = ({ modalÅpen, toggleModal, utdanning, lagreUtdann
             </HStack>
         </CvModal>
     );
-};
+}

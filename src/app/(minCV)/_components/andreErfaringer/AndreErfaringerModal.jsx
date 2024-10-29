@@ -1,11 +1,10 @@
-import { BodyLong, Button, Checkbox, CheckboxGroup, Heading, HStack, Modal, TextField } from "@navikt/ds-react";
+import { BodyLong, Checkbox, CheckboxGroup, HStack, TextField } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
-import { PersonCircleIcon } from "@navikt/aksel-icons";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreErfaring, laster, feilet }) => {
+export function AndreErfaringerModal({ modalÅpen, toggleModal, erfaring, lagreErfaring, laster, feilet }) {
     const [beskrivelse, setBeskrivelse] = useState("");
     const [rolle, setRolle] = useState("");
     const [pågår, setPågår] = useState([]);
@@ -16,7 +15,7 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
     const [sluttdatoError, setSluttdatoError] = useState(false);
 
     useEffect(() => {
-        const oppdaterErfaring = (erfaring) => {
+        const oppdaterErfaring = () => {
             setRolle(erfaring?.role || "");
             setBeskrivelse(erfaring?.description || "");
             setStartdato(erfaring ? new Date(erfaring.fromDate) : null);
@@ -24,7 +23,7 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
             setPågår(erfaring && erfaring.ongoing ? [true] : []);
         };
 
-        oppdaterErfaring(erfaring);
+        oppdaterErfaring();
     }, [erfaring]);
 
     const lagre = () => {
@@ -49,7 +48,7 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til annen erfaring"}
+            tittel="Legg til annen erfaring"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
@@ -77,7 +76,7 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
                 onChange={(e) => setBeskrivelse(e.target.value)}
             />
             <CheckboxGroup legend="" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value={true}>Pågår</Checkbox>
+                <Checkbox value>Pågår</Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">
@@ -103,4 +102,4 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, erfaring, lagreE
             </HStack>
         </CvModal>
     );
-};
+}

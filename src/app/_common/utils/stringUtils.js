@@ -15,16 +15,16 @@ export const formatterTelefon = (telefonnummer) => {
 
 export const formatterAdresse = (adresse, postnummer, sted) => {
     if (adresse && postnummer && sted) return `${adresse}, ${postnummer} ${sted}`;
-    else if (adresse && postnummer) return `${adresse}, ${postnummer}`;
-    else if (adresse && sted) return `${adresse}, ${sted}`;
-    else if (postnummer && sted) return `${postnummer} ${sted}`;
-    else return adresse || postnummer || sted || "";
+    if (adresse && postnummer) return `${adresse}, ${postnummer}`;
+    if (adresse && sted) return `${adresse}, ${sted}`;
+    if (postnummer && sted) return `${postnummer} ${sted}`;
+    return adresse || postnummer || sted || "";
 };
 
 export const formatterListeAvObjekterTilTekst = (liste, felt) => {
     if (!liste) return "";
     if (typeof liste === "string" || liste instanceof String) return liste;
-    let strenger = [];
+    const strenger = [];
     liste.forEach((e) => strenger.push(e[felt]));
     return strenger.join(", ");
 };
@@ -47,9 +47,7 @@ export const formatterTidsenhet = (enhet, antall) => {
     return `${TidsenhetEnum[enhet]}${antall > 1 && endelse}`;
 };
 
-export const storForbokstav = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-};
+export const storForbokstav = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
 export const fjernHtmlTags = (str) => {
     const formattertString = str?.replace(/<br \/>/g, "\n") || "";

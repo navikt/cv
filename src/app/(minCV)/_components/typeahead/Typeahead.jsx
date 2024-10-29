@@ -1,9 +1,8 @@
-import { BodyLong, Chips, debounce, UNSAFE_Combobox, VStack } from "@navikt/ds-react";
+import { BodyLong, Chips, UNSAFE_Combobox, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useTypeahead } from "@/app/_common/hooks/swr/useTypeahead";
-import { useMemo } from "react";
 
-export const Typeahead = ({
+export function Typeahead({
     type,
     oppdaterValg,
     valgtVerdi,
@@ -16,7 +15,7 @@ export const Typeahead = ({
     placeholder,
     multiselectText,
     error,
-}) => {
+}) {
     const alleredeValgte = multiselect ? valgtVerdi.map((e) => e[visningsfelt]) : valgtVerdi ? [valgtVerdi] : [];
 
     const { typeaheadforslag, typeaheadLaster, oppdaterTypeahead, velgVerdi } = useTypeahead(
@@ -68,4 +67,4 @@ export const Typeahead = ({
             )}
         </VStack>
     );
-};
+}
