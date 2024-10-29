@@ -131,7 +131,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
                 onChange={(e) => setArbeidsoppgaver(e.target.value)}
             />
             <CheckboxGroup legend="Jobb jeg har nå" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value>Jobb jeg har nå</Checkbox>
+                <Checkbox value="true">Jobb jeg har nå</Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">

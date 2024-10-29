@@ -104,7 +104,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                 onChange={(e) => setBeskrivelse(e.target.value)}
             />
             <CheckboxGroup legend="Utdanning jeg tar nå" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value>Utdanning jeg tar nå</Checkbox>
+                <Checkbox value="true">Utdanning jeg tar nå</Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">

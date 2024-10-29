@@ -76,7 +76,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
                 onChange={(e) => setBeskrivelse(e.target.value)}
             />
             <CheckboxGroup legend="" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value>Pågår</Checkbox>
+                <Checkbox value="true">Pågår</Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">
