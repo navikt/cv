@@ -4,6 +4,7 @@ import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import "./page.module.css";
 import { cvConfig } from "@/app/_common/config";
+import Axe from "./Axe";
 
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"] });
 
@@ -40,6 +41,7 @@ const RootLayout = async (props) => {
                 {Decorator.HeadAssets()}
             </head>
             <body className={sourceSansPro.className}>
+                <Axe />
                 {Decorator.Header()}
                 {children}
                 {Decorator.Footer()}
