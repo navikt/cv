@@ -5,6 +5,7 @@ import { putAPI } from "@/app/_common/utils/fetchUtils";
 import { CV_KEY } from "@/app/_common/hooks/swr/useCv";
 import { useContext, useState } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
+import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
 
 export const useOppdaterCvSeksjon = (seksjon) => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
@@ -28,7 +29,18 @@ export const useOppdaterCvSeksjon = (seksjon) => {
         }
     };
 
-    const skalOppdatere = !!dataForOppdatering && !!seksjon;
+    const dataErGyldigForSeksjon = (seksjon, data) => {
+        if (!seksjon) return false;
+
+        switch (seksjon) {
+            case CvSeksjonEnum.SAMMENDRAG:
+                return !!data || data === "";
+            default:
+                return !!data;
+        }
+    };
+
+    const skalOppdatere = dataErGyldigForSeksjon(seksjon, dataForOppdatering);
     const url = `${CV_KEY}/${seksjon}`;
     const body = { [seksjon]: dataForOppdatering };
 
