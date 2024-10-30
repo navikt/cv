@@ -2,11 +2,11 @@ import { BodyLong, Box, Button, Heading, HStack, Link, List } from "@navikt/ds-r
 import styles from "@/app/page.module.css";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import NextLink from "next/link";
-import { navBaseUrl } from "@/app/_common/config";
 import { useContext, useEffect, useState } from "react";
 import { useOppdaterSettHjemmel } from "@/app/_common/hooks/swr/useOppdaterSettHjemmel";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
+import { navBaseUrl } from "@/app/_common/utils/urlUtils";
 
 function HjemmelIcon() {
     return (

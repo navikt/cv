@@ -15,7 +15,7 @@ async function RootLayout(props) {
 
     const { children } = props;
 
-    logger.info(`Jeg har funnet miljø i layout: ${serverMiljø}`);
+    logger.info(`Jeg har funnet miljø i layout: ${serverMiljø()}`);
 
     const Decorator = await fetchDecoratorReact({
         env: serverConfig.dekoratoren.miljø,

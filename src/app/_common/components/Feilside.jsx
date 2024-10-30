@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import NextLink from "next/link";
 import styles from "@/app/page.module.css";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
-import { navBaseUrl } from "@/app/_common/config";
+import { navBaseUrl } from "@/app/_common/utils/urlUtils";
 
 export function Feilside({ årsak }) {
     const router = useRouter();
