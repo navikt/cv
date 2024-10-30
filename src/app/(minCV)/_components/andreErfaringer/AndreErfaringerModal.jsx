@@ -83,7 +83,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
                 <Datovelger
                     valgtDato={startdato}
                     oppdaterDato={setStartdato}
-                    label="Fra"
+                    label="Fra dato"
                     obligatorisk
                     error={startdatoError}
                     setError={setStartdatoError}
@@ -93,7 +93,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
                     <Datovelger
                         valgtDato={sluttdato}
                         oppdaterDato={setSluttdato}
-                        label="Til"
+                        label="Til dato"
                         obligatorisk
                         error={sluttdatoError}
                         setError={setSluttdatoError}

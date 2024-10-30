@@ -111,7 +111,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                 <Datovelger
                     valgtDato={startdato}
                     oppdaterDato={setStartdato}
-                    label="Fra"
+                    label="Fra dato"
                     obligatorisk
                     error={startdatoError}
                     setError={setStartdatoError}
@@ -121,7 +121,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                     <Datovelger
                         valgtDato={sluttdato}
                         oppdaterDato={setSluttdato}
-                        label="Til"
+                        label="Til dato"
                         obligatorisk
                         error={sluttdatoError}
                         setError={setSluttdatoError}
