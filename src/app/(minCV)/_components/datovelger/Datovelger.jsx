@@ -1,4 +1,4 @@
-import { BodyLong, DatePicker, HStack, useDatepicker, VStack } from "@navikt/ds-react";
+import { DatePicker, HStack, useDatepicker, VStack } from "@navikt/ds-react";
 import { useEffect } from "react";
 
 export function Datovelger({
@@ -36,12 +36,15 @@ export function Datovelger({
 
     return (
         <VStack className={className}>
-            <BodyLong>
-                <b>{label}</b> {obligatorisk && "*obligatorisk"}
-            </BodyLong>
             <HStack gap="4">
                 <DatePicker {...datepickerProps} dropdownCaption>
-                    <DatePicker.Input {...inputProps} placeholder="dd.mm.yy" error={error && "Dato er ikke gyldig"} />
+                    <DatePicker.Input
+                        {...inputProps}
+                        label={label}
+                        description={obligatorisk ? "*obligatorisk" : undefined}
+                        placeholder="dd.mm.yy"
+                        error={error && "Dato er ikke gyldig"}
+                    />
                 </DatePicker>
             </HStack>
         </VStack>
