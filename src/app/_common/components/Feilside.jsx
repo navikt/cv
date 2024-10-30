@@ -1,10 +1,13 @@
 import { BodyLong, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
+import { useRouter } from "next/navigation";
 import NextLink from "next/link";
 import styles from "@/app/page.module.css";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import { cvConfig } from "@/app/_common/config";
 
 export function Feilside({ årsak }) {
+    const router = useRouter();
+
     return (
         <>
             <HeaderPanel visTag={false} />
@@ -29,7 +32,7 @@ export function Feilside({ årsak }) {
                                     Kontakt oss
                                 </Button>
                             </NextLink>
-                            <Button variant="secondary" as="a" onClick={() => history.back()}>
+                            <Button variant="secondary" as="a" onClick={() => router.back()}>
                                 Gå tilbake
                             </Button>
                         </HStack>
