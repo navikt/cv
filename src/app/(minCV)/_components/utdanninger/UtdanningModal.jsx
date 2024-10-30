@@ -32,7 +32,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
     }, [gjeldendeElement]);
 
     const lagre = () => {
-        const erPågående = pågår.includes(true);
+        const erPågående = pågår.includes("true");
 
         if (!utdanningsnivå) setUtdanningsnivaError(true);
         if (!startdato) setStartdatoError(true);

@@ -27,7 +27,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
     }, [gjeldendeElement]);
 
     const lagre = () => {
-        const erPågående = pågår.includes(true);
+        const erPågående = pågår.includes("true");
 
         if (!rolle) setRolleError(true);
         if (!startdato) setStartdatoError(true);
