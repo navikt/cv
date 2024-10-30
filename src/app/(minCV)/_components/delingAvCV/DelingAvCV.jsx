@@ -1,5 +1,5 @@
 import { BodyLong, BodyShort, Box, Button, Heading, HStack, Link, Loader, Tag } from "@navikt/ds-react";
-import { cvConfig } from "@/app/_common/config";
+import { arbeidsplassenBaseUrl } from "@/app/_common/config";
 import { useContext, useState } from "react";
 import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { CheckmarkIcon, XMarkIcon } from "@navikt/aksel-icons";
@@ -330,7 +330,7 @@ export default function DelingAvCV() {
                 </HStack>
                 <BodyLong spacing>
                     Den Europeiske Jobbmobilitetsportalen. Du kan{" "}
-                    <Link rel="noopener noreferrer" href={`${cvConfig.urls.arbeidsplassen}/eures/`} inlineText>
+                    <Link rel="noopener noreferrer" href={`${arbeidsplassenBaseUrl}/eures/`} inlineText>
                         lese mer om EURES eller endre status på deling på arbeidsplassen.no
                     </Link>
                     .
