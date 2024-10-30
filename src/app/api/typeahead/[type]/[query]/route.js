@@ -8,7 +8,7 @@ export async function GET(request, context) {
     const callId = requestHeaders.get("nav-callid");
     const searchParams = new URLSearchParams({ q: query });
 
-    const typeaheadBaseUrl = serverConfig.urls.pamOntologi;
+    const typeaheadBaseUrl = serverConfig?.urls?.pamOntologi;
     const fullUrl = `${typeaheadBaseUrl}/${type}?${searchParams}`;
 
     logger.info(`Henter typeahead for ${type} med query ${query}. CallId: ${callId}`);

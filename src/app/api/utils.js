@@ -7,7 +7,7 @@ export const putData = async (url, audience, request) => {
     const headerList = headers();
     const callId = headerList.get("nav-callid");
 
-    const token = await exchangeToken(request, serverConfig.audience.cvApi);
+    const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
     const requestHeaders = createAuthorizationAndContentTypeHeaders(token, callId);
     const requestBody = await request.json();
 
