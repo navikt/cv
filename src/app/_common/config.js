@@ -1,3 +1,5 @@
+import getConfig from "next/config";
+
 const gyldigeMiljøer = ["localhost", "dev", "prod"];
 const erGyldigMiljø = (miljø) => gyldigeMiljøer.includes(miljø);
 
@@ -62,5 +64,7 @@ const hentConfig = (miljø) => {
     if (!erGyldigMiljø(miljø)) throw new Error(`Ukjent miljø ${miljø}`);
     return configMap[miljø];
 };
+
+export const miljø = getConfig()?.serverRuntimeConfig?.environment;
 
 export const cvConfig = hentConfig(process.env.NEXT_PUBLIC_ENVIRONMENT);
