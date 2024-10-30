@@ -52,7 +52,7 @@ const serverConfigMap = {
 };
 
 const hentConfig = (miljø) => {
-    if (!erGyldigMiljø(miljø)) throw new Error(`Ukjent miljø ${miljø}`);
+    if (!erGyldigMiljø(miljø)) return null;
     return serverConfigMap[miljø];
 };
 
@@ -63,4 +63,4 @@ export const serverMiljø = () => {
     return undefined;
 };
 
-export const serverConfig = hentConfig(process.env.NEXT_PUBLIC_ENVIRONMENT);
+export const serverConfig = hentConfig(serverMiljø());
