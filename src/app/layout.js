@@ -4,7 +4,7 @@ import Script from "next/script";
 import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import "./page.module.css";
-import { cvConfig, miljø } from "@/app/_common/config";
+import { serverConfig, serverMiljø } from "@/app/_common/config";
 import logger from "@/app/_common/utils/logger";
 
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"] });
@@ -16,10 +16,10 @@ async function RootLayout(props) {
 
     const { children } = props;
 
-    logger.info("Jeg har funnet miljø i layout", miljø);
+    logger.info(`Jeg har funnet miljø i layout: ${serverMiljø}`);
 
     const Decorator = await fetchDecoratorReact({
-        env: cvConfig.dekoratoren.miljø,
+        env: serverConfig.dekoratoren.miljø,
         params: {
             utilsBackground: "white",
             context: "privatperson",
@@ -27,7 +27,7 @@ async function RootLayout(props) {
             breadcrumbs: [
                 {
                     title: "Min side",
-                    url: cvConfig.dekoratoren.minSideUrl,
+                    url: serverConfig.dekoratoren.minSideUrl,
                 },
                 {
                     title: "Din CV",

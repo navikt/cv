@@ -2,7 +2,7 @@ import { BodyLong, Box, Button, Heading, HStack, Link, List } from "@navikt/ds-r
 import styles from "@/app/page.module.css";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import NextLink from "next/link";
-import { cvConfig } from "@/app/_common/config";
+import { navBaseUrl } from "@/app/_common/config";
 import { useContext, useEffect, useState } from "react";
 import { useOppdaterSettHjemmel } from "@/app/_common/hooks/swr/useOppdaterSettHjemmel";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
@@ -106,7 +106,7 @@ export default function Hjemmelside({ måBekrefte }) {
                         pålegger oss å arkivere alle opplysninger du legger inn. Les mer om{" "}
                         <Link
                             rel="noopener noreferrer"
-                            href={`${cvConfig.urls.nav}/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten`}
+                            href={`${navBaseUrl}/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten`}
                         >
                             behandling av personopplysninger.
                         </Link>
@@ -186,7 +186,7 @@ export default function Hjemmelside({ måBekrefte }) {
                             {måBekrefte ? "Gå til tjenesten" : "Gå tilbake til tjenesten"}
                         </Button>
                         {måBekrefte && (
-                            <NextLink href={`${cvConfig.urls.nav}/minside`} passHref legacyBehavior>
+                            <NextLink href={`${navBaseUrl}/minside`} passHref legacyBehavior>
                                 <Button variant="secondary" as="a">
                                     Tilbake til Min side
                                 </Button>

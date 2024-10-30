@@ -1,10 +1,10 @@
 import logger from "@/app/_common/utils/logger";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils";
-import { cvConfig } from "@/app/_common/config";
+import { serverConfig } from "@/app/_common/config";
 
 export async function GET(request) {
-    const token = await exchangeToken(request, cvConfig.audience.euresCvEksport);
-    const euresCvEksportUrl = cvConfig.urls.euresCvEksport;
+    const token = await exchangeToken(request, serverConfig.audience.euresCvEksport);
+    const euresCvEksportUrl = serverConfig.urls.euresCvEksport;
 
     const requestHeaders = new Headers(request.headers);
     const callId = requestHeaders.get("nav-callid");
