@@ -42,7 +42,7 @@ export default function Kompetanser() {
                     <HStack justify="center">
                         <KompetanserIcon />
                     </HStack>
-                    <Heading level="2" size="large" align="start" spacing>
+                    <Heading className={styles.mb6} level="2" size="large" align="start" spacing>
                         Kompetanser
                     </Heading>
                     <>
@@ -60,7 +60,7 @@ export default function Kompetanser() {
                             <div className={styles.mb6}>
                                 {kompetanser.map((kompetanse, index) => (
                                     <div key={index}>
-                                        <BodyLong weight="semibold">• {kompetanse.title}</BodyLong>
+                                        <BodyLong>{kompetanse.title}</BodyLong>
                                         <HStack justify="space-between" className={styles.mb3}>
                                             <Button
                                                 icon={<PencilIcon aria-hidden />}

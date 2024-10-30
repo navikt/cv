@@ -43,7 +43,7 @@ export default function Forerkort() {
                     <HStack justify="center">
                         <FørerkortIcon />
                     </HStack>
-                    <Heading level="2" size="large" align="start" spacing>
+                    <Heading className={styles.mb6} level="2" size="large" align="start" spacing>
                         Førerkort
                     </Heading>
                     {førerkort.length === 0 ? (
@@ -60,7 +60,7 @@ export default function Forerkort() {
                             {førerkort.map((fk, index) => (
                                 <div key={index}>
                                     <VStack className={styles.mb3}>
-                                        <BodyLong weight="semibold">• {fk.type}</BodyLong>
+                                        <BodyLong>{fk.type}</BodyLong>
                                         {fk.acquiredDate && (
                                             <BodyLong weight="regular">
                                                 {`Gyldig fra ${formatterDato(fk.acquiredDate)} - ${formatterDato(fk.expiryDate)}`}
