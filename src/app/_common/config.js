@@ -1,3 +1,5 @@
+import getConfig from "next/config";
+
 const gyldigeMiljøer = ["localhost", "dev", "prod"];
 const erGyldigMiljø = (miljø) => gyldigeMiljøer.includes(miljø);
 
@@ -63,4 +65,6 @@ const hentConfig = (miljø) => {
     return configMap[miljø];
 };
 
-export const cvConfig = hentConfig(process.env.NEXT_PUBLIC_ENVIRONMENT);
+export const miljø = getConfig()?.serverRuntimeConfig?.environment || process.env.NEXT_PUBLIC_ENVIRONMENT;
+
+export const cvConfig = hentConfig(miljø);

@@ -37,13 +37,13 @@ async function RootLayout(props) {
         <html lang="no">
             <head>
                 <title>Din CV - nav.no</title>
-                {Decorator.HeadAssets()}
+                <Decorator.HeadAssets />
             </head>
             <body className={sourceSansPro.className}>
-                {Decorator.Header()}
+                <Decorator.Header />
                 <main id="maincontent">{children}</main>
-                {Decorator.Footer()}
-                {Decorator.Scripts({ loader: Script })}
+                <Decorator.Footer />
+                <Decorator.Scripts loader={Script} />
             </body>
         </html>
     );
