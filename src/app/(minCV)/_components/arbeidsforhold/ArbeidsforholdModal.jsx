@@ -144,7 +144,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
                     setError={setStartdatoError}
                 />
 
-                {!pågår.includes(true) && (
+                {!pågår.includes("true") && (
                     <Datovelger
                         valgtDato={sluttdato}
                         oppdaterDato={setSluttdato}

@@ -117,7 +117,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                     setError={setStartdatoError}
                 />
 
-                {!pågår.includes(true) && (
+                {!pågår.includes("true") && (
                     <Datovelger
                         valgtDato={sluttdato}
                         oppdaterDato={setSluttdato}
