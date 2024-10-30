@@ -44,7 +44,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
     }, [gjeldendeElement]);
 
     const lagre = async () => {
-        const erPågående = pågår.includes(true);
+        const erPågående = pågår.includes("true");
 
         if (!stillingstittel) setStillingstittelError(true);
         if (!startdato) setStartdatoError(true);
