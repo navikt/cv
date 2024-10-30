@@ -54,11 +54,12 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
             lagre={lagre}
             toggleModal={toggleModal}
         >
-            <BodyLong>
-                <b>Rolle</b> *obligatorisk
-            </BodyLong>
             <TextField
-                label=""
+                label={
+                    <span>
+                        Rolle <span className="font-weight-normal">*obligatorisk</span>
+                    </span>
+                }
                 description="Eksempel: militærtjeneste, styreverv eller fotballtrener"
                 className={styles.mb6}
                 value={rolle}

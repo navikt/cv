@@ -53,3 +53,7 @@ a {
 .navds-date__caption__year {
     width: unset !important;
 }
+
+.font-weight-normal {
+    font-weight: normal !important;
+}
