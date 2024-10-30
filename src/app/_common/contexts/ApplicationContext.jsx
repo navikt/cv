@@ -10,7 +10,7 @@ import { Notifikasjoner } from "@/app/_common/components/Notifikasjoner";
 
 export const ApplicationContext = React.createContext({});
 
-const ApplicationProvider = ({ children }) => {
+function ApplicationProvider({ children }) {
     const { erInnlogget, innloggingLaster, innloggingHarFeil } = useErInnlogget();
     const { person, personHarFeil } = usePerson();
     const { cvHarFeil } = useCv();
@@ -44,7 +44,7 @@ const ApplicationProvider = ({ children }) => {
             <Notifikasjoner notifikasjoner={notifikasjoner} />
         </ApplicationContext.Provider>
     );
-};
+}
 
 ApplicationProvider.propTypes = {
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,

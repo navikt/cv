@@ -59,12 +59,12 @@ export default function AndreGodkjenningerModal({
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til annen godkjenning"}
+            tittel="Legg til annen godkjenning"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible={true}
+            overflowVisible
         >
             <BodyLong>
                 <b>Annen godkjenning</b> *obligatorisk

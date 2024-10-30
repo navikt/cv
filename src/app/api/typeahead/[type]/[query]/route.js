@@ -2,8 +2,8 @@ import logger from "@/app/_common/utils/logger";
 import { cvConfig } from "@/app/_common/config";
 
 export async function GET(request, context) {
-    const type = context.params.type;
-    const query = context.params.query;
+    const { type } = context.params;
+    const { query } = context.params;
     const requestHeaders = new Headers(request.headers);
     const callId = requestHeaders.get("nav-callid");
     const searchParams = new URLSearchParams({ q: query });

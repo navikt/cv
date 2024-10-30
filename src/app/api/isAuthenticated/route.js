@@ -12,11 +12,10 @@ export async function GET(request) {
                 return new Response("OK", {
                     status: 200,
                 });
-            } else {
-                return new Response("Unauthorized", {
-                    status: 401,
-                });
             }
+            return new Response("Unauthorized", {
+                status: 401,
+            });
         } catch (e) {
             logger.error(`Idporten-token kunne ikke valideres: ${e.message}`);
             return new Response(e.message, {

@@ -19,7 +19,7 @@ export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElem
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til sammendrag"}
+            tittel="Legg til sammendrag"
             feilet={feilet}
             laster={laster}
             lagre={lagre}

@@ -5,7 +5,7 @@ import { lastNedCvPdf } from "@/app/_common/utils/lastNedCvPdf";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 
-export const LastNedCv = () => {
+export function LastNedCv() {
     const { person } = usePerson();
     const { personalia } = person || {};
     const { cv, cvLaster } = useCv();
@@ -30,4 +30,4 @@ export const LastNedCv = () => {
             Last ned CV
         </Button>
     );
-};
+}

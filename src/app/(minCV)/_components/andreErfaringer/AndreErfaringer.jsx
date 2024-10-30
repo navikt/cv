@@ -9,13 +9,8 @@ import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
-export default function AndreErfaringer() {
-    const { andreErfaringer, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_ERFARINGER);
-    const modalProps = useCvModal(andreErfaringer, oppdateringprops);
-    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
-
-    const AndreErfaringerIcon = () => (
+function AndreErfaringerIcon() {
+    return (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
@@ -33,6 +28,13 @@ export default function AndreErfaringer() {
             />
         </svg>
     );
+}
+
+export default function AndreErfaringer() {
+    const { andreErfaringer, cvLaster } = useCv();
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_ERFARINGER);
+    const modalProps = useCvModal(andreErfaringer, oppdateringprops);
+    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.ANDRE_ERFARINGER}>

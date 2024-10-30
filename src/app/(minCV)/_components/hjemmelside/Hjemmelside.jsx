@@ -42,7 +42,7 @@ export default function Hjemmelside({ måBekrefte }) {
 
     return (
         <div>
-            <HeaderPanel title={"Slik bruker Nav CV-opplysningene"} visTag={false} />
+            <HeaderPanel title="Slik bruker Nav CV-opplysningene" visTag={false} />
             <Box className={styles.main}>
                 <Box background="surface-default" padding="10" className={styles.box}>
                     <HStack justify="center">
@@ -176,7 +176,7 @@ export default function Hjemmelside({ måBekrefte }) {
                         </>
                     )}
 
-                    <HStack gap={"4"} className={[styles.mb3]}>
+                    <HStack gap="4" className={[styles.mb3]}>
                         <Button
                             variant="primary"
                             loading={måBekrefte ? settHjemmelLaster : false}

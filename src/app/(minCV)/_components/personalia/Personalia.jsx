@@ -50,15 +50,15 @@ export default function Personalia() {
                     </Heading>
                     <BodyLong weight="semibold">Navn</BodyLong>
                     <BodyLong spacing>{personalia ? `${personalia.fornavn} ${personalia.etternavn}` : ""}</BodyLong>
-                    <div className={styles.divider}></div>
+                    <div className={styles.divider} />
                     <BodyLong weight="semibold">Telefon</BodyLong>
                     <BodyLong spacing>
                         {personalia?.telefonnummer ? formatterTelefon(personalia.telefonnummer) : ""}
                     </BodyLong>
-                    <div className={styles.divider}></div>
+                    <div className={styles.divider} />
                     <BodyLong weight="semibold">E-post</BodyLong>
                     <BodyLong spacing>{personalia ? personalia.epost : ""}</BodyLong>
-                    <div className={styles.divider}></div>
+                    <div className={styles.divider} />
                     <BodyLong weight="semibold">Adresse</BodyLong>
                     <BodyLong className={styles.mb16}>
                         {personalia

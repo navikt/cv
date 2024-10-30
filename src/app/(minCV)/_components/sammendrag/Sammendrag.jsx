@@ -9,14 +9,8 @@ import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksj
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import SammendragModal from "@/app/(minCV)/_components/sammendrag/SammendragModal";
 
-export default function Sammendrag() {
-    const { sammendrag, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.SAMMENDRAG);
-    const modalProps = useCvModal(sammendrag, oppdateringprops);
-    const { oppdaterSeksjon } = oppdateringprops;
-    const { modalÅpen, toggleModal, laster } = modalProps;
-
-    const SammendragIcon = () => (
+function SammendragIcon() {
+    return (
         <svg
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
@@ -34,6 +28,14 @@ export default function Sammendrag() {
             />
         </svg>
     );
+}
+
+export default function Sammendrag() {
+    const { sammendrag, cvLaster } = useCv();
+    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.SAMMENDRAG);
+    const modalProps = useCvModal(sammendrag, oppdateringprops);
+    const { oppdaterSeksjon } = oppdateringprops;
+    const { modalÅpen, toggleModal, laster } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.SAMMENDRAG}>

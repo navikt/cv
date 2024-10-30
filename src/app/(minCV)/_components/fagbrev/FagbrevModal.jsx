@@ -32,12 +32,12 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til fagbrev"}
+            tittel="Legg til fagbrev"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible={true}
+            overflowVisible
         >
             <Typeahead
                 label="Fagdokumentasjon"

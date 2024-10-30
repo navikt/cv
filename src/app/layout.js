@@ -7,7 +7,7 @@ import { cvConfig } from "@/app/_common/config";
 
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"] });
 
-const RootLayout = async (props) => {
+async function RootLayout(props) {
     if (process.env.NODE_ENV === "development") {
         import("../../mocks/mirage").then(() => console.warn("Mirage mock`s kjører!"));
     }
@@ -47,6 +47,6 @@ const RootLayout = async (props) => {
             </body>
         </html>
     );
-};
+}
 
 export default RootLayout;

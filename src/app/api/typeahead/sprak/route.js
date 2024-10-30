@@ -1,5 +1,4 @@
 import logger from "@/app/_common/utils/logger";
-import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { cvConfig } from "@/app/_common/config";
 
 export async function GET(request) {

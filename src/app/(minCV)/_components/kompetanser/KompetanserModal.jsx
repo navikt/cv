@@ -33,12 +33,12 @@ export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeEle
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til kompetanse"}
+            tittel="Legg til kompetanse"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible={true}
+            overflowVisible
         >
             <BodyLong>
                 <b>Hva er du flink til?</b> *obligatorisk

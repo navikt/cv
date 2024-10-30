@@ -93,7 +93,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         {cv.fagbrev.map((fagbrev, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}></div>
+                                    <div className={styles.previewItemLeft} />
                                     <div className={styles.previewItemRight}>
                                         <BodyLong className={styles.mb3}>{fagbrev.title}</BodyLong>
                                     </div>
@@ -244,7 +244,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         {cv.spraak.map((spraak, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}></div>
+                                    <div className={styles.previewItemLeft} />
                                     <div className={styles.previewItemRight}>
                                         <BodyLong weight="semibold">{spraak.language}</BodyLong>
                                         <BodyLong>Muntlig: {SpråkEnum[spraak.oralProficiency]}</BodyLong>
@@ -266,7 +266,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         {cv.kompetanser.map((kompetanse, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}></div>
+                                    <div className={styles.previewItemLeft} />
                                     <div className={styles.previewItemRight}>
                                         <BodyLong className={styles.mb3}>{kompetanse.title}</BodyLong>
                                     </div>

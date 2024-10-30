@@ -59,12 +59,12 @@ export default function OffentligeGodkjenningerModal({
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til offentlig godkjenning"}
+            tittel="Legg til offentlig godkjenning"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible={true}
+            overflowVisible
         >
             <BodyLong>
                 <b>Offentlig godkjenning</b> *obligatorisk

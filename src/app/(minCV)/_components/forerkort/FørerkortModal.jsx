@@ -18,7 +18,7 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
     const [gyldigFraError, setGyldigFraError] = useState(false);
     const [gyldigTilError, setGyldigTilError] = useState(false);
 
-    const gyldigeFørerkort = førerkortData.gyldigeFørerkort;
+    const { gyldigeFørerkort } = førerkortData;
 
     useEffect(() => {
         const oppdaterFørerkort = (førerkort) => setValgtFørerkort(førerkort);
@@ -49,12 +49,12 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til førerkort"}
+            tittel="Legg til førerkort"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible={true}
+            overflowVisible
         >
             <VStack>
                 <BodyLong>

@@ -6,8 +6,8 @@ export const simpleApiRequest = async (url, method, body = null, includeCredenti
         headers: { "Nav-CallId": `min-side-cv-${uuidv4()}` },
     };
 
-    if (includeCredentials) fetchOptions["credentials"] = "same-origin";
-    if (body !== null) fetchOptions["body"] = JSON.stringify(body);
+    if (includeCredentials) fetchOptions.credentials = "same-origin";
+    if (body !== null) fetchOptions.body = JSON.stringify(body);
 
     return await fetch(url, fetchOptions);
 };

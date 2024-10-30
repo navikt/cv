@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { CvModal } from "@/app/_common/components/CvModal";
 
-export const AndreErfaringerModal = ({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) => {
+export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [beskrivelse, setBeskrivelse] = useState("");
     const [rolle, setRolle] = useState("");
     const [pågår, setPågår] = useState([]);
@@ -48,7 +48,7 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, gjeldendeElement
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til annen erfaring"}
+            tittel="Legg til annen erfaring"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
@@ -76,7 +76,7 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, gjeldendeElement
                 onChange={(e) => setBeskrivelse(e.target.value)}
             />
             <CheckboxGroup legend="" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value={true}>Pågår</Checkbox>
+                <Checkbox value="true">Pågår</Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">
@@ -89,7 +89,7 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, gjeldendeElement
                     setError={setStartdatoError}
                 />
 
-                {!pågår.includes(true) && (
+                {!pågår.includes("true") && (
                     <Datovelger
                         valgtDato={sluttdato}
                         oppdaterDato={setSluttdato}
@@ -102,4 +102,4 @@ export const AndreErfaringerModal = ({ modalÅpen, toggleModal, gjeldendeElement
             </HStack>
         </CvModal>
     );
-};
+}

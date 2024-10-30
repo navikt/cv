@@ -1,6 +1,5 @@
 import { Issuer } from "openid-client";
 import { createRemoteJWKSet, jwtVerify } from "jose";
-import { v4 as uuidv4 } from "uuid";
 import logger from "@/app/_common/utils/logger";
 
 let issuer;
@@ -26,7 +25,7 @@ async function getIdPortenIssuer() {
 async function getClient() {
     if (client) return client;
 
-    let issuer = await getIssuer();
+    const issuer = await getIssuer();
 
     client = await new issuer.Client(
         {
@@ -96,7 +95,7 @@ const grant = async (accessToken, tokenAudience) => {
             additionalClaims,
         );
     } catch (e) {
-        let error = {
+        const error = {
             errorType: "OIDC_OP_RP_ERROR",
             message: createOidcUnknownError(e),
             error: e,

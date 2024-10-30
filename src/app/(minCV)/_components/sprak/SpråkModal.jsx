@@ -42,12 +42,12 @@ export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement,
     return (
         <CvModal
             modalÅpen={modalÅpen}
-            tittel={"Legg til språk"}
+            tittel="Legg til språk"
             feilet={feilet}
             laster={laster}
             lagre={lagre}
             toggleModal={toggleModal}
-            overflowVisible={true}
+            overflowVisible
         >
             <BodyLong>
                 <b>Språk</b> *obligatorisk
@@ -58,7 +58,7 @@ export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement,
                 valgtVerdi={valgtSpråk?.language || valgtSpråk?.title}
                 oppdaterValg={oppdaterValgtSpråk}
                 type={TypeaheadEnum.SPRÅK}
-                forhåndshentet={true}
+                forhåndshentet
                 error={valgtSprakError && "Du må velge et språk"}
             />
             <Select
