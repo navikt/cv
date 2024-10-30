@@ -1,4 +1,4 @@
-import getConfig from "next/config";
+import "./envConfig";
 
 const gyldigeMiljøer = ["localhost", "dev", "prod"];
 const erGyldigMiljø = (miljø) => gyldigeMiljøer.includes(miljø);
@@ -51,19 +51,16 @@ const serverConfigMap = {
     },
 };
 
-export const navBaseUrl =
-    process.env.NEXT_PUBLIC_ENVIRONMENT === "prod" ? "https://www.nav.no" : "https://www.ansatt.dev.nav.no";
-
-export const arbeidsplassenBaseUrl =
-    process.env.NEXT_PUBLIC_ENVIRONMENT === "prod"
-        ? "https://arbeidsplassen.nav.no"
-        : "https://arbeidsplassen.intern.dev.nav.no";
-
 const hentConfig = (miljø) => {
     if (!erGyldigMiljø(miljø)) throw new Error(`Ukjent miljø ${miljø}`);
     return serverConfigMap[miljø];
 };
 
-export const serverMiljø = getConfig().serverRuntimeConfig.environment;
+export const serverMiljø = () => {
+    if (process.env.NODE_ENV === "development") return "localhost";
+    if (process.env.NAIS_CLUSTER_NAME === "prod-gcp") return "prod";
+    if (process.env.NAIS_CLUSTER_NAME === "dev-gcp") return "dev";
+    return undefined;
+};
 
-export const serverConfig = hentConfig(serverMiljø || process.env.NEXT_PUBLIC_ENVIRONMENT);
+export const serverConfig = hentConfig(process.env.NEXT_PUBLIC_ENVIRONMENT);
