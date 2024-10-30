@@ -33,7 +33,7 @@ export default function Fagbrev() {
     const { fagbrev, cvLaster } = useCv();
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.FAGBREV);
     const modalProps = useCvModal(fagbrev, oppdateringprops);
-    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
+    const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.FAGBREV}>
@@ -74,7 +74,7 @@ export default function Fagbrev() {
                                                 icon={<TrashIcon aria-hidden />}
                                                 variant="tertiary"
                                                 onClick={() => slettElement(index)}
-                                                loading={laster}
+                                                loading={lastendeIndex === index}
                                             >
                                                 Fjern
                                             </Button>

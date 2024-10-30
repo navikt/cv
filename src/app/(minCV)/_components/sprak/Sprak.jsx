@@ -33,7 +33,7 @@ export default function Sprak() {
     const { språk, cvLaster } = useCv();
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.SPRÅK);
     const modalProps = useCvModal(språk, oppdateringprops);
-    const { modalÅpen, toggleModal, laster, slettElement } = modalProps;
+    const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.SPRÅK}>
@@ -90,7 +90,7 @@ export default function Sprak() {
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
-                                            loading={laster}
+                                            loading={lastendeIndex === index}
                                         >
                                             Fjern
                                         </Button>

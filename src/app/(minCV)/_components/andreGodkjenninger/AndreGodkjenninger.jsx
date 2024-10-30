@@ -34,7 +34,7 @@ export default function AndreGodkjenninger() {
     const { andreGodkjenninger, cvLaster } = useCv();
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_GODKJENNINGER);
     const modalProps = useCvModal(andreGodkjenninger, oppdateringprops);
-    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
+    const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.ANDRE_GODKJENNINGER}>
@@ -75,7 +75,7 @@ export default function AndreGodkjenninger() {
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>{`Gyldig${godkjenning.toDate ? "" : " fra"}`}</FormSummary.Label>
                                                 <FormSummary.Value>
-                                                    {`${formatterFullDato(godkjenning.fromDate)}${godkjenning.toDate ? " - " + formatterFullDato(godkjenning.toDate) : ""}`}
+                                                    {`${formatterFullDato(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDato(godkjenning.toDate)}` : ""}`}
                                                 </FormSummary.Value>
                                             </FormSummary.Answer>
                                         </FormSummary.Answers>
@@ -92,7 +92,7 @@ export default function AndreGodkjenninger() {
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
-                                            loading={laster}
+                                            loading={lastendeIndex === index}
                                         >
                                             Fjern
                                         </Button>

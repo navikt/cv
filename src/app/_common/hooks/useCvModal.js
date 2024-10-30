@@ -8,10 +8,15 @@ export const useCvModal = (
     const [gjeldendeIndex, setGjeldendeIndex] = useState(-1);
     const [gjeldendeElement, setGjeldendeElement] = useState(null);
     const [laster, setLaster] = useState(false);
+    const [lastendeIndex, setLastendeIndex] = useState(-1);
 
     useEffect(() => {
         setGjeldendeElement(gjeldendeIndex >= 0 ? eksisterendeElementer[gjeldendeIndex] : null);
     }, [gjeldendeIndex]);
+
+    useEffect(() => {
+        if (laster === false) setLastendeIndex(-1);
+    }, [laster]);
 
     useEffect(() => {
         if (oppdateringSuksess || oppdateringHarFeil) oppdaterSeksjon(null);
@@ -37,6 +42,7 @@ export const useCvModal = (
     const slettElement = (index) => {
         const oppdaterteElementer = [...eksisterendeElementer];
         oppdaterteElementer.splice(index, 1);
+        setLastendeIndex(index);
         oppdaterSeksjon(oppdaterteElementer);
     };
 
@@ -47,6 +53,7 @@ export const useCvModal = (
         lagreElement,
         slettElement,
         laster,
+        lastendeIndex: laster ? lastendeIndex : -1,
         feilet: oppdateringHarFeil,
     };
 };

@@ -34,7 +34,7 @@ export default function OffentligeGodkjenninger() {
     const { offentligeGodkjenninger, cvLaster } = useCv();
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER);
     const modalProps = useCvModal(offentligeGodkjenninger, oppdateringprops);
-    const { modalÅpen, toggleModal, laster, slettElement } = modalProps;
+    const { modalÅpen, toggleModal, lastendeIndex, slettElement } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.OFFENTLIGE_GODKJENNINGER}>
@@ -74,7 +74,7 @@ export default function OffentligeGodkjenninger() {
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>{`Gyldig${godkjenning.toDate ? "" : " fra"}`}</FormSummary.Label>
                                                 <FormSummary.Value>
-                                                    {`${formatterFullDato(godkjenning.fromDate)}${godkjenning.toDate ? " - " + formatterFullDato(godkjenning.toDate) : ""}`}
+                                                    {`${formatterFullDato(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDato(godkjenning.toDate)}` : ""}`}
                                                 </FormSummary.Value>
                                             </FormSummary.Answer>
                                         </FormSummary.Answers>
@@ -91,7 +91,7 @@ export default function OffentligeGodkjenninger() {
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
-                                            loading={laster}
+                                            loading={lastendeIndex === index}
                                         >
                                             Fjern
                                         </Button>
