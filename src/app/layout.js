@@ -4,7 +4,8 @@ import Script from "next/script";
 import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import "./page.module.css";
-import { cvConfig } from "@/app/_common/config";
+import { cvConfig, miljø } from "@/app/_common/config";
+import logger from "@/app/_common/utils/logger";
 
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"] });
 
@@ -14,6 +15,8 @@ async function RootLayout(props) {
     }
 
     const { children } = props;
+
+    logger.info("Jeg har funnet miljø i layout", miljø);
 
     const Decorator = await fetchDecoratorReact({
         env: cvConfig.dekoratoren.miljø,
@@ -38,13 +41,13 @@ async function RootLayout(props) {
         <html lang="no">
             <head>
                 <title>Din CV - nav.no</title>
-                {Decorator.HeadAssets()}
+                <Decorator.HeadAssets />
             </head>
             <body className={sourceSansPro.className}>
-                {Decorator.Header()}
+                <Decorator.Header />
                 <main id="maincontent">{children}</main>
-                {Decorator.Footer()}
-                {Decorator.Scripts({ loader: Script })}
+                <Decorator.Footer />
+                <Decorator.Scripts loader={Script} />
             </body>
         </html>
     );
