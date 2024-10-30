@@ -61,7 +61,7 @@ export default function Fagbrev() {
                             <div className={styles.mb6}>
                                 {fagbrev.map((fb, index) => (
                                     <div key={index}>
-                                        <BodyLong weight="semibold">• {fb.title}</BodyLong>
+                                        <BodyLong>{fb.title}</BodyLong>
                                         <HStack justify="space-between" className={styles.mb3}>
                                             <Button
                                                 icon={<PencilIcon aria-hidden />}
