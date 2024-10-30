@@ -3,8 +3,8 @@ import { exchangeToken } from "@/app/_common/utils/tokenUtils";
 import { serverConfig } from "@/app/_common/config";
 
 export async function GET(request) {
-    const token = await exchangeToken(request, serverConfig.audience.cvApi);
-    const cvApiBaseUrl = serverConfig.urls.cvApi;
+    const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
+    const cvApiBaseUrl = serverConfig?.urls?.cvApi;
     const fullUrl = `${cvApiBaseUrl}/aareg`;
 
     const requestHeaders = new Headers(request.headers);

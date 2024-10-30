@@ -6,7 +6,7 @@ export async function GET(request) {
     requestHeaders.append("Accept", "application/json");
     const callId = requestHeaders.get("nav-callid");
 
-    const typeaheadBaseUrl = serverConfig.urls.cvApi;
+    const typeaheadBaseUrl = serverConfig?.urls?.cvApi;
     const fullUrl = `${typeaheadBaseUrl}/koder/sprak`;
 
     logger.info(`Henter alternativer for språk fra cv-api. CallId: ${callId}`);

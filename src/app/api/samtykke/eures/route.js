@@ -3,8 +3,8 @@ import { exchangeToken } from "@/app/_common/utils/tokenUtils";
 import { serverConfig } from "@/app/_common/config";
 
 export async function GET(request) {
-    const token = await exchangeToken(request, serverConfig.audience.euresCvEksport);
-    const euresCvEksportUrl = serverConfig.urls.euresCvEksport;
+    const token = await exchangeToken(request, serverConfig?.audience?.euresCvEksport);
+    const euresCvEksportUrl = serverConfig?.urls?.euresCvEksport;
 
     const requestHeaders = new Headers(request.headers);
     const callId = requestHeaders.get("nav-callid");
