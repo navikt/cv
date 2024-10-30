@@ -51,12 +51,10 @@ module.exports = {
         "import/no-cycle": "warn",
         "react/jsx-no-constructed-context-values": "warn",
         "jsx-a11y/anchor-is-valid": "warn",
-        "no-restricted-globals": "warn",
         "react/no-array-index-key": "warn",
         "no-nested-ternary": "warn",
         "jsx-a11y/no-static-element-interactions": "warn",
         "jsx-a11y/click-events-have-key-events": "warn",
-        "no-unused-expressions": "warn",
     },
     settings: {
         "import/resolver": {

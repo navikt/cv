@@ -30,7 +30,9 @@ export function Datovelger({
             setError(false);
         },
         onValidate: (val) => {
-            !val.isEmpty && setError(!val.isValidDate);
+            if (!val.isEmpty) {
+                setError(!val.isValidDate);
+            }
         },
     });
 
