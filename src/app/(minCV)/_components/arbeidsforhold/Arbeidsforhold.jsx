@@ -37,7 +37,7 @@ export default function Arbeidsforhold() {
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.ARBEIDSFORHOLD);
     const { aaregManglerData, aaregLaster, setSkalHenteData } = useHentArbeidsforhold(oppdateringprops);
     const modalProps = useCvModal(arbeidsforhold, oppdateringprops);
-    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
+    const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
 
     const arbeidsforholdManglerFelter = (forhold) => {
         const verdiMangler = (verdi) => !verdi || verdi === "string";
@@ -141,7 +141,7 @@ export default function Arbeidsforhold() {
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
-                                            loading={laster}
+                                            loading={lastendeIndex === index}
                                         >
                                             Fjern
                                         </Button>

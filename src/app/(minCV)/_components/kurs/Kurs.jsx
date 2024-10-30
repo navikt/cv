@@ -40,7 +40,7 @@ export default function Kurs() {
     const { kurs, cvLaster } = useCv();
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.KURS);
     const modalProps = useCvModal(kurs, oppdateringprops);
-    const { modalÅpen, toggleModal, laster, slettElement } = modalProps;
+    const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.KURS}>
@@ -98,7 +98,7 @@ export default function Kurs() {
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
-                                            loading={laster}
+                                            loading={lastendeIndex === index}
                                         >
                                             Fjern
                                         </Button>

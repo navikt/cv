@@ -34,7 +34,7 @@ export default function Forerkort() {
     const { førerkort, cvLaster } = useCv();
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.FØRERKORT);
     const modalProps = useCvModal(førerkort, oppdateringprops);
-    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
+    const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.FØRERKORT}>
@@ -81,7 +81,7 @@ export default function Forerkort() {
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
-                                            loading={laster}
+                                            loading={lastendeIndex === index}
                                         >
                                             Fjern
                                         </Button>

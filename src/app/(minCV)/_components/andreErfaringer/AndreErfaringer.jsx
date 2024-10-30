@@ -34,7 +34,7 @@ export default function AndreErfaringer() {
     const { andreErfaringer, cvLaster } = useCv();
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_ERFARINGER);
     const modalProps = useCvModal(andreErfaringer, oppdateringprops);
-    const { modalÅpen, toggleModal, slettElement, laster } = modalProps;
+    const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
 
     return (
         <div data-section id={SeksjonsIdEnum.ANDRE_ERFARINGER}>
@@ -91,7 +91,7 @@ export default function AndreErfaringer() {
                                                 icon={<TrashIcon aria-hidden />}
                                                 variant="tertiary"
                                                 onClick={() => slettElement(index)}
-                                                loading={laster}
+                                                loading={lastendeIndex === index}
                                             >
                                                 Fjern
                                             </Button>
