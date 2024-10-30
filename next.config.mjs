@@ -1,9 +1,4 @@
 /** @type {import("next").NextConfig} */
-function hentMiljø() {
-    if (process.env.NODE_ENV === "development") return "localhost";
-    return process.env.NAIS_CLUSTER_NAME === "prod-gcp" ? "prod" : "dev";
-}
-
 const nextConfig = {
     basePath: "/personbruker",
     output: "standalone",
@@ -20,9 +15,6 @@ const nextConfig = {
             },
         );
         return config;
-    },
-    serverRuntimeConfig: {
-        environment: hentMiljø(),
     },
 };
 

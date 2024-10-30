@@ -1,5 +1,4 @@
 import { BodyLong, BodyShort, Box, Button, Heading, HStack, Link, Loader, Tag } from "@navikt/ds-react";
-import { arbeidsplassenBaseUrl } from "@/app/_common/config";
 import { useContext, useState } from "react";
 import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { CheckmarkIcon, XMarkIcon } from "@navikt/aksel-icons";
@@ -7,6 +6,7 @@ import { useHentEuresSamtykke } from "@/app/_common/hooks/swr/useHentEuresSamtyk
 import { useBekreftTidligereCv } from "@/app/_common/hooks/swr/useBekreftTidligereCv";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
+import { arbeidsplassenBaseUrl } from "@/app/_common/utils/urlUtils";
 import styles from "../../../page.module.css";
 
 function StarsEUIcon() {
