@@ -8,6 +8,9 @@ const hentDekoratørForMiljø = async (miljø) => {
 };
 
 export const hentDekoratør = async () => {
+    return hentDekoratørForMiljø("prod");
+
+    // eslint-disable-next-line no-unreachable
     const servermiljø = hentServermiljø();
 
     if (process.env.NODE_ENV === "development" || !servermiljø) return hentDekoratørForMiljø("localhost");
