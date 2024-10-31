@@ -11,14 +11,7 @@ export function Feilside({ årsak }) {
     return (
         <>
             <HeaderPanel visTag={false} />
-            <HStack
-                style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    justifyContent: "center",
-                    paddingBottom: "4rem",
-                }}
-            >
+            <HStack className={styles.pageContainer}>
                 <Box padding="10" className={[styles.box, styles.mt3]}>
                     <VStack>
                         <Heading level="1" size="xlarge" className="text-center" spacing>

@@ -73,7 +73,7 @@ export const hentDekoratørProps = (miljø) => {
             breadcrumbs: [
                 {
                     title: "Min side",
-                    url: config.dekoratoren.minSideUrl,
+                    url: "/minside",
                 },
                 {
                     title: "Din CV",
