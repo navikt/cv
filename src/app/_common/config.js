@@ -1,4 +1,5 @@
 import "./envConfig";
+import { arbeidsplassenBaseUrl } from "@/app/_common/utils/urlUtils";
 
 const gyldigeMiljøer = ["localhost", "dev", "prod"];
 const erGyldigMiljø = (miljø) => gyldigeMiljøer.includes(miljø);
@@ -54,6 +55,28 @@ const serverConfigMap = {
 const hentConfig = (miljø) => {
     if (!erGyldigMiljø(miljø)) return null;
     return serverConfigMap[miljø];
+};
+
+export const hentDekoratørProps = (miljø) => {
+    const config = hentConfig(miljø);
+    return {
+        env: config?.dekoratoren?.miljø || "prod",
+        params: {
+            utilsBackground: "white",
+            context: "privatperson",
+            redirectToApp: true,
+            breadcrumbs: [
+                {
+                    title: "Min side",
+                    url: config?.dekoratoren?.minSideUrl || arbeidsplassenBaseUrl,
+                },
+                {
+                    title: "Din CV",
+                    url: "/personbruker",
+                },
+            ],
+        },
+    };
 };
 
 export const serverMiljø = () => {

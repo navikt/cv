@@ -3,9 +3,9 @@ import Script from "next/script";
 import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import "./page.module.css";
-import { serverConfig, serverMiljø } from "@/app/_common/config";
+import { serverMiljø } from "@/app/_common/config";
 import logger from "@/app/_common/utils/logger";
-import { arbeidsplassenBaseUrl } from "@/app/_common/utils/urlUtils";
+import { hentDekoratør } from "@/app/_common/utils/dekoratør";
 
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"] });
 
@@ -18,24 +18,7 @@ async function RootLayout(props) {
 
     logger.info(`Jeg har funnet miljø i layout: ${serverMiljø()}`);
 
-    const Decorator = await fetchDecoratorReact({
-        env: serverConfig?.dekoratoren?.miljø || "prod",
-        params: {
-            utilsBackground: "white",
-            context: "privatperson",
-            redirectToApp: true,
-            breadcrumbs: [
-                {
-                    title: "Min side",
-                    url: serverConfig?.dekoratoren?.minSideUrl || arbeidsplassenBaseUrl,
-                },
-                {
-                    title: "Din CV",
-                    url: "/personbruker",
-                },
-            ],
-        },
-    });
+    const Decorator = await hentDekoratør();
 
     return (
         <html lang="no">
