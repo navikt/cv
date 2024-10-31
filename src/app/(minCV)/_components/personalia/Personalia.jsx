@@ -1,4 +1,5 @@
 import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
+import { useId } from "react";
 import { PencilIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { formatterAdresse, formatterTelefon } from "@/app/_common/utils/stringUtils";
@@ -12,6 +13,7 @@ import { useCvModal } from "@/app/_common/hooks/useCvModal";
 function PersonaliaIcon() {
     return (
         <svg
+            aria-hidden="true"
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
             height="64"
@@ -35,6 +37,7 @@ export default function Personalia() {
     const oppdateringprops = useOppdaterPersonalia();
     const modalProps = useCvModal(personalia, oppdateringprops);
     const { modalÅpen, toggleModal } = modalProps;
+    const headingId = useId();
 
     return (
         <div data-section id={SeksjonsIdEnum.PERSONALIA}>
@@ -45,26 +48,43 @@ export default function Personalia() {
                     <HStack justify="center">
                         <PersonaliaIcon />
                     </HStack>
-                    <Heading level="2" size="large" align="start" spacing>
+                    <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Personalia
                     </Heading>
-                    <BodyLong weight="semibold">Navn</BodyLong>
-                    <BodyLong spacing>{personalia ? `${personalia.fornavn} ${personalia.etternavn}` : ""}</BodyLong>
-                    <div className={styles.divider} />
-                    <BodyLong weight="semibold">Telefon</BodyLong>
-                    <BodyLong spacing>
-                        {personalia?.telefonnummer ? formatterTelefon(personalia.telefonnummer) : ""}
-                    </BodyLong>
-                    <div className={styles.divider} />
-                    <BodyLong weight="semibold">E-post</BodyLong>
-                    <BodyLong spacing>{personalia ? personalia.epost : ""}</BodyLong>
-                    <div className={styles.divider} />
-                    <BodyLong weight="semibold">Adresse</BodyLong>
-                    <BodyLong className={styles.mb16}>
-                        {personalia
-                            ? formatterAdresse(personalia.adresse, personalia.postnummer, personalia.poststed)
-                            : ""}
-                    </BodyLong>
+                    <dl className={styles.borderunder} aria-labelledby={headingId}>
+                        <dt>
+                            <BodyLong weight="semibold">Navn</BodyLong>
+                        </dt>
+                        <dd>
+                            <BodyLong spacing>
+                                {personalia ? `${personalia.fornavn} ${personalia.etternavn}` : ""}
+                            </BodyLong>
+                        </dd>
+                        <dt>
+                            <BodyLong weight="semibold">Telefon</BodyLong>
+                        </dt>
+                        <dd>
+                            <BodyLong spacing>
+                                {personalia?.telefonnummer ? formatterTelefon(personalia.telefonnummer) : ""}
+                            </BodyLong>
+                        </dd>
+                        <dt>
+                            <BodyLong weight="semibold">E-post</BodyLong>
+                        </dt>
+                        <dd>
+                            <BodyLong spacing>{personalia ? personalia.epost : ""}</BodyLong>
+                        </dd>
+                        <dt>
+                            <BodyLong weight="semibold">Adresse</BodyLong>
+                        </dt>
+                        <dd>
+                            <BodyLong className={styles.mb16}>
+                                {personalia
+                                    ? formatterAdresse(personalia.adresse, personalia.postnummer, personalia.poststed)
+                                    : ""}
+                            </BodyLong>
+                        </dd>
+                    </dl>
                     <Button
                         className={styles.mb6}
                         icon={<PencilIcon aria-hidden />}

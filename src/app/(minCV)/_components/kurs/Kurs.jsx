@@ -12,6 +12,7 @@ import { useCvModal } from "@/app/_common/hooks/useCvModal";
 function KursIcon() {
     return (
         <svg
+            aria-hidden="true"
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
             height="64"

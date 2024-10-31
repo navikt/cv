@@ -50,10 +50,17 @@ a {
 }
 
 /* Hack for datovelger som av en eller annen grunn har satt feil vidde i års-feltet*/
+/* stylelint-disable-next-line aksel/no-class-override */
 .navds-date__caption__year {
     width: unset !important;
 }
 
 .font-weight-normal {
     font-weight: normal !important;
+}
+
+dl,
+dl dd,
+dl dt {
+    margin: 0;
 }

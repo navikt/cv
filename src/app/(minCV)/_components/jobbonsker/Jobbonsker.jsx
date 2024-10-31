@@ -1,4 +1,5 @@
 import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
+import { useId } from "react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
 import {
@@ -19,6 +20,7 @@ import { useCvModal } from "@/app/_common/hooks/useCvModal";
 function JobbonskerIcon() {
     return (
         <svg
+            aria-hidden="true"
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
             height="64"
@@ -43,6 +45,7 @@ export default function Jobbonsker() {
     const modalProps = useCvModal(jobbønsker, oppdateringprops);
     const { modalÅpen, toggleModal, laster } = modalProps;
     const { oppdaterSeksjon } = oppdateringprops;
+    const headingId = useId();
 
     const slettJobbønsker = async () => {
         const tommeJobbønsker = {
@@ -70,7 +73,7 @@ export default function Jobbonsker() {
                     <HStack justify="center">
                         <JobbonskerIcon />
                     </HStack>
-                    <Heading level="2" size="large" align="start" spacing>
+                    <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Jobbønsker
                     </Heading>
 
@@ -88,36 +91,56 @@ export default function Jobbonsker() {
                         </div>
                     ) : (
                         <>
-                            <BodyLong weight="semibold">Jobber og yrker</BodyLong>
-                            <BodyLong spacing>
-                                {formatterListeAvObjekterTilTekst(jobbønsker.occupations, "title")}
-                            </BodyLong>
-                            <div className={styles.divider} />
-
-                            <BodyLong weight="semibold">Områder</BodyLong>
-                            <BodyLong spacing>
-                                {formatterListeAvObjekterTilTekst(jobbønsker.locations, "location")}
-                            </BodyLong>
-                            <div className={styles.divider} />
-
-                            <BodyLong weight="semibold">Heltid eller deltid</BodyLong>
-                            <BodyLong spacing>{jobbønsker.workLoadTypes.map((e) => OmfangEnum[e]).join(", ")}</BodyLong>
-                            <div className={styles.divider} />
-
-                            <BodyLong weight="semibold">Arbeidstider</BodyLong>
-                            <BodyLong spacing>
-                                {jobbønsker.workScheduleTypes.map((e) => ArbeidstidEnum[e]).join(", ")}
-                            </BodyLong>
-                            <div className={styles.divider} />
-
-                            <BodyLong weight="semibold">Ansettelsesform</BodyLong>
-                            <BodyLong spacing>
-                                {jobbønsker.occupationTypes.map((e) => AnsettelsesformEnum[e]).join(", ")}
-                            </BodyLong>
-                            <div className={styles.divider} />
-
-                            <BodyLong weight="semibold">Oppstart</BodyLong>
-                            <BodyLong className={styles.mb16}>{StarttidspunktEnum[jobbønsker.startOption]}</BodyLong>
+                            <dl className={styles.borderunder} aria-labelledby={headingId}>
+                                <dt>
+                                    <BodyLong weight="semibold">Jobber og yrker</BodyLong>
+                                </dt>
+                                <dd>
+                                    <BodyLong spacing>
+                                        {formatterListeAvObjekterTilTekst(jobbønsker.occupations, "title")}
+                                    </BodyLong>
+                                </dd>
+                                <dt>
+                                    <BodyLong weight="semibold">Områder</BodyLong>
+                                </dt>
+                                <dd>
+                                    <BodyLong spacing>
+                                        {formatterListeAvObjekterTilTekst(jobbønsker.locations, "location")}
+                                    </BodyLong>
+                                </dd>
+                                <dt>
+                                    <BodyLong weight="semibold">Heltid eller deltid</BodyLong>
+                                </dt>
+                                <dd>
+                                    <BodyLong spacing>
+                                        {jobbønsker.workLoadTypes.map((e) => OmfangEnum[e]).join(", ")}
+                                    </BodyLong>
+                                </dd>
+                                <dt>
+                                    <BodyLong weight="semibold">Arbeidstider</BodyLong>
+                                </dt>
+                                <dd>
+                                    <BodyLong spacing>
+                                        {jobbønsker.workScheduleTypes.map((e) => ArbeidstidEnum[e]).join(", ")}
+                                    </BodyLong>
+                                </dd>
+                                <dt>
+                                    <BodyLong weight="semibold">Ansettelsesform</BodyLong>
+                                </dt>
+                                <dd>
+                                    <BodyLong spacing>
+                                        {jobbønsker.occupationTypes.map((e) => AnsettelsesformEnum[e]).join(", ")}
+                                    </BodyLong>
+                                </dd>
+                                <dt>
+                                    <BodyLong weight="semibold">Oppstart</BodyLong>
+                                </dt>
+                                <dd>
+                                    <BodyLong className={styles.mb16}>
+                                        {StarttidspunktEnum[jobbønsker.startOption]}
+                                    </BodyLong>
+                                </dd>
+                            </dl>
 
                             <HStack justify="space-between">
                                 <Button

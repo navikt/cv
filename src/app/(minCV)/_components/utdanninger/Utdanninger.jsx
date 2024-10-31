@@ -13,6 +13,7 @@ import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksj
 function UtdanningerIcon() {
     return (
         <svg
+            aria-hidden="true"
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
             height="64"
