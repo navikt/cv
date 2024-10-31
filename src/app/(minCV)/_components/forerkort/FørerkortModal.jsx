@@ -26,9 +26,9 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
     }, [gjeldendeElement]);
 
     const velgFørerkort = (verdi) => {
-        const valgtFørerkort = gyldigeFørerkort.find((e) => e.type === verdi);
-        setValgtFørerkort(valgtFørerkort);
-        setKreverDato(valgtFørerkort?.kreverDato || false);
+        const funnetFørerkort = gyldigeFørerkort.find((e) => e.type === verdi);
+        setValgtFørerkort(funnetFørerkort);
+        setKreverDato(funnetFørerkort?.kreverDato || false);
         setValgtForerkortError(false);
     };
 

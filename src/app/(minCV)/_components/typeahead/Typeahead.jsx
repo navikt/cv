@@ -16,7 +16,15 @@ export function Typeahead({
     multiselectText,
     error,
 }) {
-    const alleredeValgte = multiselect ? valgtVerdi.map((e) => e[visningsfelt]) : valgtVerdi ? [valgtVerdi] : [];
+    let alleredeValgte;
+
+    if (multiselect) {
+        alleredeValgte = valgtVerdi.map((e) => e[visningsfelt]);
+    } else if (valgtVerdi) {
+        alleredeValgte = [valgtVerdi];
+    } else {
+        alleredeValgte = [];
+    }
 
     const { typeaheadforslag, typeaheadLaster, oppdaterTypeahead, velgVerdi } = useTypeahead(
         type,

@@ -245,21 +245,32 @@ function EuresLogoIcon() {
 }
 
 function DelingTag({ erDelt, deltMed, laster = false, error = false }) {
-    const icon = laster ? (
-        <Loader size="medium" title="Laster..." />
-    ) : error || !erDelt ? (
-        <XMarkIcon aria-hidden />
-    ) : (
-        <CheckmarkIcon aria-hidden />
-    );
+    let icon;
+    if (laster) {
+        icon = <Loader size="medium" title="Laster..." />;
+    } else if (error || !erDelt) {
+        icon = <XMarkIcon aria-hidden />;
+    } else {
+        icon = <CheckmarkIcon aria-hidden />;
+    }
 
-    const variant = error ? "error-moderate" : erDelt && !laster ? "success-moderate" : "neutral-moderate";
+    let variant;
+    if (error) {
+        variant = "error-moderate";
+    } else if (erDelt && !laster) {
+        variant = "success-moderate";
+    } else {
+        variant = "neutral-moderate";
+    }
 
-    const tekst = error
-        ? "Det oppstod en feil"
-        : laster
-          ? "Laster status"
-          : `CV-en er ${erDelt ? "" : "ikke "}delt med ${deltMed}`;
+    let tekst;
+    if (error) {
+        tekst = "Det oppstod en feil";
+    } else if (laster) {
+        tekst = "Laster status";
+    } else {
+        tekst = `CV-en er ${erDelt ? "" : "ikke "}delt med ${deltMed}`;
+    }
 
     return (
         <Tag variant={variant} icon={icon} className={styles.roundedTag}>

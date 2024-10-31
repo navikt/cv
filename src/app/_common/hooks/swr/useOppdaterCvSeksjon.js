@@ -12,8 +12,8 @@ export const useOppdaterCvSeksjon = (seksjon) => {
     const [dataForOppdatering, oppdaterSeksjon] = useState(null);
     const [visFeilmelding, setVisFeilmelding] = useState(false);
 
-    const fetcher = async ({ url, seksjon, body }) => {
-        if (!url || !body || !seksjon) return;
+    const fetcher = async ({ url, seksjon: lokalSeksjon, body }) => {
+        if (!url || !body || !lokalSeksjon) return;
 
         setVisFeilmelding(false);
 
@@ -29,10 +29,10 @@ export const useOppdaterCvSeksjon = (seksjon) => {
         }
     };
 
-    const dataErGyldigForSeksjon = (seksjon, data) => {
-        if (!seksjon) return false;
+    const dataErGyldigForSeksjon = (lokalSeksjon, data) => {
+        if (!lokalSeksjon) return false;
 
-        switch (seksjon) {
+        switch (lokalSeksjon) {
             case CvSeksjonEnum.SAMMENDRAG:
                 return !!data || data === "";
             default:
