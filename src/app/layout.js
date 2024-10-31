@@ -3,6 +3,7 @@ import "./globals.css";
 import "./page.module.css";
 import { hentDekoratør } from "@/app/_common/utils/dekoratør";
 
+export const dynamic = "force-dynamic";
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"] });
 
 async function RootLayout({ children }) {
