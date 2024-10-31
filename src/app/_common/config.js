@@ -79,11 +79,11 @@ export const hentDekoratørProps = (miljø) => {
     };
 };
 
-export const serverMiljø = () => {
+export const hentServermiljø = () => {
     if (process.env.NODE_ENV === "development") return "localhost";
     if (process.env.NAIS_CLUSTER_NAME === "prod-gcp") return "prod";
     if (process.env.NAIS_CLUSTER_NAME === "dev-gcp") return "dev";
     return undefined;
 };
 
-export const serverConfig = hentConfig(serverMiljø());
+export const serverConfig = hentConfig(hentServermiljø());
