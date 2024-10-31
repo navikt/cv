@@ -11,5 +11,5 @@ export const hentDekoratør = async () => {
     const servermiljø = hentServermiljø();
 
     if (process.env.NODE_ENV === "development" || !servermiljø) return hentDekoratørForMiljø("localhost");
-    return servermiljø === "prod" ? hentDekoratørForMiljø("prod") : hentDekoratørForMiljø("dev");
+    return servermiljø === "prod" ? hentDekoratørForMiljø("dev") : hentDekoratørForMiljø("prod");
 };
