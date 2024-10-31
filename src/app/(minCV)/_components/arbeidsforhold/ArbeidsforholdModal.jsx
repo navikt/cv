@@ -37,7 +37,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
 
             setStartdato(arbeidsforhold ? new Date(arbeidsforhold.fromDate) : null);
             setSluttdato(arbeidsforhold && arbeidsforhold?.toDate ? new Date(arbeidsforhold.toDate) : null);
-            setPågår(arbeidsforhold && arbeidsforhold.ongoing ? [true] : []);
+            setPågår(arbeidsforhold && arbeidsforhold.ongoing ? ["true"] : []);
         };
 
         oppdaterArbeidsforhold(gjeldendeElement);

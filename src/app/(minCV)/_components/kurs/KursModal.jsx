@@ -7,7 +7,6 @@ import { formatterTidsenhet, storForbokstav } from "@/app/_common/utils/stringUt
 import { CvModal } from "@/app/_common/components/CvModal";
 
 export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
-    const [valgtKurs, setValgtKurs] = useState(gjeldendeElement || null);
     const [kursnavn, setKursnavn] = useState(gjeldendeElement?.title || "");
     const [utsteder, setUtsteder] = useState(gjeldendeElement?.issuer || "");
     const [kursDato, setKursDato] = useState(gjeldendeElement?.date ? new Date(gjeldendeElement?.date) : null);
@@ -19,7 +18,6 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
 
     useEffect(() => {
         const oppdaterKurs = (kurs) => {
-            setValgtKurs(kurs);
             setKursnavn(kurs?.title || "");
             setUtsteder(kurs?.issuer || "");
             setTidsenhet(kurs?.durationUnit || "");
@@ -42,7 +40,6 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                 duration: lengde || null,
             });
         }
-        setValgtKurs(null);
     };
 
     return (

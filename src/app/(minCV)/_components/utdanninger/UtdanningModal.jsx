@@ -25,7 +25,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
             setBeskrivelse(utdanning?.description || "");
             setStartdato(utdanning ? new Date(utdanning.startDate) : null);
             setSluttdato(utdanning && utdanning?.endDate ? new Date(utdanning.endDate) : null);
-            setPågår(utdanning && utdanning.ongoing ? [true] : []);
+            setPågår(utdanning && utdanning.ongoing ? ["true"] : []);
         };
 
         oppdaterUtdanning(gjeldendeElement);

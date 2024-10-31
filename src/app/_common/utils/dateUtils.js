@@ -28,6 +28,8 @@ const compareDates = (firstDate, secondDate, startDate = "fromDate", endDate = "
     return -1;
 };
 
+// TODO:
+// eslint-disable-next-line no-unused-vars
 export const datosorterElementer = (elementer, startDate = "fromDate", endDate = "toDate", ongoing = "ongoing") => {
     if (!elementer) return elementer;
     return elementer.sort((a, b) => compareDates(a, b, startDate, endDate));

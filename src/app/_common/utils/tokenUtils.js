@@ -22,12 +22,13 @@ async function getIdPortenIssuer() {
     }
     return idPortenIssuer;
 }
+
 async function getClient() {
     if (client) return client;
 
-    const issuer = await getIssuer();
+    const hentIssuer = await getIssuer();
 
-    client = await new issuer.Client(
+    client = await new hentIssuer.Client(
         {
             client_id: process.env.TOKEN_X_CLIENT_ID,
             token_endpoint_auth_method: "private_key_jwt",
@@ -51,6 +52,7 @@ const getRemoteJWKSet = () => {
 
     return remoteJWKSet;
 };
+
 export async function isTokenValid(token) {
     try {
         const jwkSet = getRemoteJWKSet();

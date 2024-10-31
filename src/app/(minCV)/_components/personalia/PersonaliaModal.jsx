@@ -14,6 +14,7 @@ export default function PersonaliaModal({
     laster,
     feilet,
 }) {
+    // TODO: fjerne console?
     console.log(personalia);
     const [fornavn, setFornavn] = useState("");
     const [etternavn, setEtternavn] = useState("");
@@ -30,15 +31,15 @@ export default function PersonaliaModal({
     const [telefonError, setTelefonError] = useState(false);
 
     useEffect(() => {
-        const oppdaterPersonalia = (personalia) => {
-            setFornavn(personalia?.fornavn || "");
-            setEtternavn(personalia?.etternavn || "");
-            setEpost(personalia?.epost || "");
-            setTelefon(personalia?.telefonnummer || "");
-            setAdresse(personalia?.adresse || "");
-            setPostnummer(personalia?.postnummer || "");
-            setSted(personalia?.poststed || "");
-            setFødselsdato(personalia?.foedselsdato || "");
+        const oppdaterPersonalia = (personaliaVerdi) => {
+            setFornavn(personaliaVerdi?.fornavn || "");
+            setEtternavn(personaliaVerdi?.etternavn || "");
+            setEpost(personaliaVerdi?.epost || "");
+            setTelefon(personaliaVerdi?.telefonnummer || "");
+            setAdresse(personaliaVerdi?.adresse || "");
+            setPostnummer(personaliaVerdi?.postnummer || "");
+            setSted(personaliaVerdi?.poststed || "");
+            setFødselsdato(personaliaVerdi?.foedselsdato || "");
         };
 
         oppdaterPersonalia(personalia);

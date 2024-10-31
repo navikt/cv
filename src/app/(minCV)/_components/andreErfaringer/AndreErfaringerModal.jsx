@@ -1,4 +1,4 @@
-import { BodyLong, Checkbox, CheckboxGroup, HStack, TextField } from "@navikt/ds-react";
+import { Checkbox, CheckboxGroup, HStack, TextField } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
@@ -20,7 +20,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
             setBeskrivelse(erfaring?.description || "");
             setStartdato(erfaring ? new Date(erfaring.fromDate) : null);
             setSluttdato(erfaring && erfaring?.toDate ? new Date(erfaring.toDate) : null);
-            setPågår(erfaring && erfaring.ongoing ? [true] : []);
+            setPågår(erfaring && erfaring.ongoing ? ["true"] : []);
         };
 
         oppdaterErfaring(gjeldendeElement);

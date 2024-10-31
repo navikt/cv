@@ -1,3 +1,4 @@
+// eslint-disable-next-line camelcase
 import { BodyLong, Chips, UNSAFE_Combobox, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useTypeahead } from "@/app/_common/hooks/swr/useTypeahead";
@@ -16,7 +17,15 @@ export function Typeahead({
     multiselectText,
     error,
 }) {
-    const alleredeValgte = multiselect ? valgtVerdi.map((e) => e[visningsfelt]) : valgtVerdi ? [valgtVerdi] : [];
+    let alleredeValgte;
+
+    if (multiselect) {
+        alleredeValgte = valgtVerdi.map((e) => e[visningsfelt]);
+    } else if (valgtVerdi) {
+        alleredeValgte = [valgtVerdi];
+    } else {
+        alleredeValgte = [];
+    }
 
     const { typeaheadforslag, typeaheadLaster, oppdaterTypeahead, velgVerdi } = useTypeahead(
         type,

@@ -42,17 +42,13 @@ module.exports = {
         singleQuote: "off",
 
         //TODO: Fix these errors!
-        camelcase: "warn",
         "consistent-return": "warn",
-        "no-shadow": "warn",
         "no-return-await": "warn",
-        "no-unused-vars": "warn",
         "react/jsx-filename-extension": "warn",
         "import/no-cycle": "warn",
         "react/jsx-no-constructed-context-values": "warn",
         "jsx-a11y/anchor-is-valid": "warn",
         "react/no-array-index-key": "warn",
-        "no-nested-ternary": "warn",
         "jsx-a11y/no-static-element-interactions": "warn",
         "jsx-a11y/click-events-have-key-events": "warn",
     },

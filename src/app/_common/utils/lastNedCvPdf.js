@@ -516,8 +516,8 @@ export function lastNedCvPdf(cv, personalia) {
         }
     };
 
-    const kompetanserListe = (kompetanser) => {
-        if (kompetanser && kompetanser.length > 0) {
+    const kompetanserListe = (kompetanserVerdi) => {
+        if (kompetanserVerdi && kompetanserVerdi.length > 0) {
             return {
                 columns: [
                     {
@@ -536,12 +536,12 @@ export function lastNedCvPdf(cv, personalia) {
                             vLineColor: () => "#b7b1a9",
                         },
                         table: {
-                            body: kompetanser.map((s, i) => [
+                            body: kompetanserVerdi.map((s, i) => [
                                 {
                                     border: [1, 0, 0, 0],
                                     margin: [0, 4, 0, 0],
                                     style: "fontNormal",
-                                    text: kompetanser[i].title,
+                                    text: kompetanserVerdi[i].title,
                                     width: "70%",
                                 },
                             ]),

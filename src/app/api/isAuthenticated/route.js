@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import logger from "@/app/_common/utils/logger";
 import { isTokenValid } from "@/app/_common/utils/tokenUtils";
 
-export async function GET(request) {
+export async function GET() {
     const bearerToken = headers().get("authorization");
     if (bearerToken) {
         try {
