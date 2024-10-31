@@ -1,4 +1,5 @@
 import "./envConfig";
+import { logger } from "@navikt/next-logger";
 
 const gyldigeMiljøer = ["localhost", "dev", "prod"];
 const erGyldigMiljø = (miljø) => gyldigeMiljøer.includes(miljø);
@@ -58,6 +59,11 @@ const hentConfig = (miljø) => {
 
 export const hentDekoratørProps = (miljø) => {
     const config = hentConfig(miljø);
+
+    logger.info(
+        `Henter dekoratøren for miljl ${miljø}. Funnet miljø: ${config.dekoratoren.miljø}, min side url: ${config.dekoratoren.minSideUrl}`,
+    );
+
     return {
         env: config.dekoratoren.miljø,
         params: {
