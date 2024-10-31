@@ -20,7 +20,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
             setBeskrivelse(erfaring?.description || "");
             setStartdato(erfaring ? new Date(erfaring.fromDate) : null);
             setSluttdato(erfaring && erfaring?.toDate ? new Date(erfaring.toDate) : null);
-            setPågår(erfaring && erfaring.ongoing ? [true] : []);
+            setPågår(erfaring && erfaring.ongoing ? ["true"] : []);
         };
 
         oppdaterErfaring(gjeldendeElement);
