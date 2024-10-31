@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"] });
 
 async function RootLayout({ children }) {
-    if (serverConfig.nodeEnv) {
+    if (serverConfig.nodeEnv === "development") {
         import("../../mocks/mirage").then(() => console.warn("Mirage mock`s kjører!"));
     }
 

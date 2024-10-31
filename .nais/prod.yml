@@ -1,7 +1,4 @@
 ingress: "https://arbeidsplassen.nav.no/personbruker"
 next_public_environment: "prod"
-pam_cv_api_baseurl: "http://pam-cv-api-gcp/pam-cv-api/rest"
-pam_ontologi_baseurl: "http://pam-ontologi/rest/typeahead"
-pam_eures_cv_eksport_baseurl: "http://pam-eures-cv-eksport/pam-eures-cv-eksport/samtykke"
-pam_cv_api_audience: "prod-gcp:teampam:pam-cv-api-gcp",
-pam_eures_cv_eksport_audience: "prod-gcp:teampam:pam-eures-cv-eksport",
+pam_cv_api_audience: "prod-gcp:teampam:pam-cv-api-gcp"
+pam_eures_cv_eksport_audience: "prod-gcp:teampam:pam-eures-cv-eksport"
