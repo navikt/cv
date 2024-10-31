@@ -1,4 +1,4 @@
-import { BodyLong, Checkbox, CheckboxGroup, HStack, TextField } from "@navikt/ds-react";
+import { Checkbox, CheckboxGroup, HStack, TextField } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";

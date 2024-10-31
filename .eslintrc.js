@@ -45,7 +45,6 @@ module.exports = {
         camelcase: "warn",
         "consistent-return": "warn",
         "no-return-await": "warn",
-        "no-unused-vars": "warn",
         "react/jsx-filename-extension": "warn",
         "import/no-cycle": "warn",
         "react/jsx-no-constructed-context-values": "warn",
