@@ -47,13 +47,13 @@ spec:
     - name: NEXT_PUBLIC_ENVIRONMENT
       value: {{ next_public_environment }}
     - name: PAM_CV_API_BASEURL
-      value: {{ pam_cv_api_baseurl }}
-    - name: PAM_ONTOLOGI_BASEURL
-      value: {{ pam_ontologi_baseurl }}
-    - name: PAM_EURES_CV_EKSPORT_BASEURL
-      value: {{ pam_eures_cv_eksport_baseurl }}
+      value: http://pam-cv-api-gcp/pam-cv-api/rest
     - name: PAM_CV_API_AUDIENCE
       value: {{ pam_cv_api_audience }}
+    - name: PAM_ONTOLOGI_BASEURL
+      value: http://pam-ontologi/rest/typeahead
+    - name: PAM_EURES_CV_EKSPORT_BASEURL
+      value: http://pam-eures-cv-eksport/pam-eures-cv-eksport/samtykke
     - name: PAM_EURES_CV_EKSPORT_AUDIENCE
       value: {{ pam_eures_cv_eksport_audience }}
   accessPolicy:
