@@ -35,7 +35,7 @@ export default function MinCVPage() {
             {visHovedinnhold ? (
                 <>
                     <HeaderPanel />
-                    <Hide below="md">
+                    <Hide below="lg">
                         <HStack
                             style={{
                                 display: "flex",
@@ -84,7 +84,7 @@ export default function MinCVPage() {
                             </div>
                         </HStack>
                     </Hide>
-                    <Show below="md">
+                    <Show below="lg">
                         <Personalia />
                         <Jobbonsker />
                         <Utdanninger />
