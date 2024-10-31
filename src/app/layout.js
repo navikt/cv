@@ -18,7 +18,7 @@ async function RootLayout(props) {
 
     logger.info(`Jeg har funnet miljø i layout: ${serverMiljø()}`);
 
-    const Decorator = await hentDekoratør();
+    const Decorator = serverMiljø() === "prod" ? await hentDekoratør("prod") : await hentDekoratør("dev");
 
     return (
         <html lang="no">
