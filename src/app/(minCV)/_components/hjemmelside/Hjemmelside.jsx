@@ -11,6 +11,7 @@ import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 function HjemmelIcon() {
     return (
         <svg
+            aria-hidden="true"
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
             height="64"

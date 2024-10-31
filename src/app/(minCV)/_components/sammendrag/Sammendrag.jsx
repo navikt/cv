@@ -12,6 +12,7 @@ import SammendragModal from "@/app/(minCV)/_components/sammendrag/SammendragModa
 function SammendragIcon() {
     return (
         <svg
+            aria-hidden="true"
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
             height="68"

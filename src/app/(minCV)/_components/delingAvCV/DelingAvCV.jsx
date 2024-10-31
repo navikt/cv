@@ -12,6 +12,7 @@ import styles from "../../../page.module.css";
 function StarsEUIcon() {
     return (
         <svg
+            aria-hidden="true"
             style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
             width="64"
             height="64"
@@ -32,7 +33,14 @@ function StarsEUIcon() {
 
 function NavLogoIcon() {
     return (
-        <svg width="55" height="35" viewBox="0 0 55 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            aria-hidden="true"
+            width="55"
+            height="35"
+            viewBox="0 0 55 35"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
             <g id="R&#195;&#184;d 1" clipPath="url(#clip0_2705_18081)">
                 <g id="Modul-forslag">
                     <g id="NAV-logo-/-r&#195;&#184;d">
@@ -110,7 +118,14 @@ function NavLogoIcon() {
 
 function EuresLogoIcon() {
     return (
-        <svg width="50" height="56" viewBox="0 0 50 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            aria-hidden="true"
+            width="50"
+            height="56"
+            viewBox="0 0 50 56"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
             <g id="eures_logo">
                 <g id="eures_logo_2">
                     <path
