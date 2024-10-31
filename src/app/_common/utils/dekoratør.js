@@ -1,4 +1,4 @@
 import { fetchDecoratorReact } from "@navikt/nav-dekoratoren-moduler/ssr";
-import { hentDekoratørProps, serverMiljø } from "@/app/_common/config";
+import { hentDekoratørProps } from "@/app/_common/config";
 
-export const hentDekoratør = async () => fetchDecoratorReact(hentDekoratørProps(serverMiljø()));
+export const hentDekoratør = async (miljø) => fetchDecoratorReact(hentDekoratørProps(miljø));
