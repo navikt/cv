@@ -652,5 +652,5 @@
 }
 
 .borderunder dt {
-    margin-top: var(--a-spacing-6) !important;
+    margin-top: var(--a-spacing-6);
 }
