@@ -1,6 +1,6 @@
 import logger from "@/app/_common/utils/logger";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils";
-import { serverConfig } from "@/app/_common/config";
+import { serverConfig } from "@/app/_common/serverConfig";
 
 export async function POST(request) {
     const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
