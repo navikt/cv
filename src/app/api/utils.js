@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { createAuthorizationAndContentTypeHeaders, exchangeToken } from "@/app/_common/utils/tokenUtils";
-import { serverConfig } from "@/app/_common/config";
+import { serverConfig } from "@/app/_common/serverConfig";
 import logger from "@/app/_common/utils/logger";
 
 export const putData = async (url, audience, request) => {

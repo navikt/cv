@@ -1,4 +1,4 @@
-import { serverConfig } from "@/app/_common/config";
+import { serverConfig } from "@/app/_common/serverConfig";
 import { putData } from "@/app/api/utils";
 
 export async function PUT(request) {
