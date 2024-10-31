@@ -651,6 +651,6 @@
     border-bottom: 1px solid #bbb;
 }
 
-.borderunder dt {
+.borderunder dt:not(:first-child) {
     margin-top: var(--a-spacing-6);
 }
