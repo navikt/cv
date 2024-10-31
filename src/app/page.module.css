@@ -257,6 +257,8 @@
     top: 0;
     right: 0;
     padding: 5.5rem 4rem 0 0.2rem;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .sidepanel2 {
