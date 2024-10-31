@@ -1,6 +1,7 @@
 import { Issuer } from "openid-client";
 import { createRemoteJWKSet, jwtVerify } from "jose";
 import logger from "@/app/_common/utils/logger";
+import { serverConfig } from "@/app/_common/serverConfig";
 
 let issuer;
 let idPortenIssuer;
@@ -11,14 +12,14 @@ export const CSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
 
 async function getIssuer() {
     if (issuer == null) {
-        issuer = await Issuer.discover(process.env.TOKEN_X_WELL_KNOWN_URL);
+        issuer = await Issuer.discover(serverConfig.tokenx.wellKnownUrl);
     }
     return issuer;
 }
 
 async function getIdPortenIssuer() {
     if (idPortenIssuer == null) {
-        idPortenIssuer = await Issuer.discover(process.env.IDPORTEN_WELL_KNOWN_URL);
+        idPortenIssuer = await Issuer.discover(serverConfig.idPorten.wellKnownUrl);
     }
     return idPortenIssuer;
 }
@@ -30,12 +31,12 @@ async function getClient() {
 
     client = await new hentIssuer.Client(
         {
-            client_id: process.env.TOKEN_X_CLIENT_ID,
+            client_id: serverConfig.tokenx.clientId,
             token_endpoint_auth_method: "private_key_jwt",
             token_endpoint_auth_signing_alg: "RS256",
         },
         {
-            keys: [JSON.parse(process.env.TOKEN_X_PRIVATE_JWK)],
+            keys: [JSON.parse(serverConfig.tokenx.privateJwk)],
         },
     );
 
@@ -47,7 +48,7 @@ const getRemoteJWKSet = () => {
         return remoteJWKSet;
     }
 
-    const jwksUrl = new URL(process.env.IDPORTEN_JWKS_URI);
+    const jwksUrl = new URL(serverConfig.idPorten.jwksUri);
     remoteJWKSet = createRemoteJWKSet(jwksUrl);
 
     return remoteJWKSet;
@@ -59,7 +60,7 @@ export async function isTokenValid(token) {
         const idissuer = await getIdPortenIssuer();
 
         const verification = await jwtVerify(token, jwkSet, {
-            audience: process.env.IDPORTEN_AUDIENCE,
+            audience: serverConfig.idPorten.audience,
             issuer: idissuer.metadata.issuer,
         });
         return !!verification.payload;

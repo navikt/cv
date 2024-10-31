@@ -1,18 +1,26 @@
 import { fetchDecoratorReact } from "@navikt/nav-dekoratoren-moduler/ssr";
-import { hentDekoratørProps, hentServermiljø } from "@/app/_common/serverConfig";
 import Script from "next/script";
 
-const hentDekoratørForMiljø = async (miljø) => {
-    const { HeadAssets, Header, Footer, Scripts } = await fetchDecoratorReact(hentDekoratørProps(miljø));
-    return { HeadAssets: HeadAssets(), Header: Header(), Footer: Footer(), Scripts: Scripts({ loader: Script }) };
+const dekoratørProps = {
+    env: "prod",
+    params: {
+        utilsBackground: "white",
+        context: "privatperson",
+        redirectToApp: true,
+        breadcrumbs: [
+            {
+                title: "Min side",
+                url: "/minside",
+            },
+            {
+                title: "Din CV",
+                url: "/personbruker",
+            },
+        ],
+    },
 };
 
 export const hentDekoratør = async () => {
-    return hentDekoratørForMiljø("prod");
-
-    // eslint-disable-next-line no-unreachable
-    const servermiljø = hentServermiljø();
-
-    if (process.env.NODE_ENV === "development" || !servermiljø) return hentDekoratørForMiljø("localhost");
-    return servermiljø === "prod" ? hentDekoratørForMiljø("dev") : hentDekoratørForMiljø("prod");
+    const { HeadAssets, Header, Footer, Scripts } = await fetchDecoratorReact(dekoratørProps);
+    return { HeadAssets: HeadAssets(), Header: Header(), Footer: Footer(), Scripts: Scripts({ loader: Script }) };
 };
