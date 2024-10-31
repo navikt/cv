@@ -42,7 +42,6 @@ module.exports = {
         singleQuote: "off",
 
         //TODO: Fix these errors!
-        camelcase: "warn",
         "consistent-return": "warn",
         "no-return-await": "warn",
         "react/jsx-filename-extension": "warn",

@@ -1,5 +1,6 @@
 import { fetchDecoratorReact } from "@navikt/nav-dekoratoren-moduler/ssr";
 import Script from "next/script";
+// eslint-disable-next-line camelcase
 import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import "./page.module.css";

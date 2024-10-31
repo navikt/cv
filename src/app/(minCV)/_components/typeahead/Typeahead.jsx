@@ -1,3 +1,4 @@
+// eslint-disable-next-line camelcase
 import { BodyLong, Chips, UNSAFE_Combobox, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useTypeahead } from "@/app/_common/hooks/swr/useTypeahead";
