@@ -1,5 +1,4 @@
 import "./envConfig";
-import { arbeidsplassenBaseUrl } from "@/app/_common/utils/urlUtils";
 
 const gyldigeMiljøer = ["localhost", "dev", "prod"];
 const erGyldigMiljø = (miljø) => gyldigeMiljøer.includes(miljø);
