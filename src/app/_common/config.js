@@ -7,7 +7,7 @@ const erGyldigMiljø = (miljø) => gyldigeMiljøer.includes(miljø);
 const serverConfigMap = {
     localhost: {
         dekoratoren: {
-            minSideUrl: "https://www.ansatt.dev.nav.no/minside",
+            minSideUrl: "http://localhost:3000/personbruker",
             miljø: "dev",
         },
         audience: {
@@ -60,7 +60,7 @@ const hentConfig = (miljø) => {
 export const hentDekoratørProps = (miljø) => {
     const config = hentConfig(miljø);
     return {
-        env: config?.dekoratoren?.miljø || "prod",
+        env: config.dekoratoren.miljø,
         params: {
             utilsBackground: "white",
             context: "privatperson",
@@ -68,7 +68,7 @@ export const hentDekoratørProps = (miljø) => {
             breadcrumbs: [
                 {
                     title: "Min side",
-                    url: config?.dekoratoren?.minSideUrl || arbeidsplassenBaseUrl,
+                    url: config.dekoratoren.minSideUrl,
                 },
                 {
                     title: "Din CV",
