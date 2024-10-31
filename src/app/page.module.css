@@ -654,3 +654,10 @@
 .borderunder dt:not(:first-child) {
     margin-top: var(--a-spacing-6);
 }
+
+.pageContainer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-bottom: 4rem;
+}
