@@ -75,7 +75,7 @@ export default function PersonaliaModal({
         <CvModal
             modalÅpen={modalÅpen}
             tittel="Legg til personalia"
-            icon={<PersonCircleIcon fontSize="1.5rem" />}
+            icon={<PersonCircleIcon aria-hidden="true" fontSize="1.5rem" />}
             feilet={feilet}
             laster={laster}
             lagre={lagre}
