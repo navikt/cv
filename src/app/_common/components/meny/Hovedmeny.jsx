@@ -37,7 +37,7 @@ function Hovedmeny() {
     }, []);
 
     return (
-        <>
+        <nav>
             <HStack>
                 <a
                     href="#personalia"
@@ -287,7 +287,7 @@ function Hovedmeny() {
                     </HStack>
                 </a>
             </HStack>
-        </>
+        </nav>
     );
 }
 

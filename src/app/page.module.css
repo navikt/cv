@@ -256,8 +256,9 @@
     position: sticky;
     top: 0;
     right: 0;
-    padding-top: 5.5rem;
-    width: 18%;
+    padding: 5.5rem 4rem 0.2rem 0.2rem;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .sidepanel2 {
@@ -268,7 +269,7 @@
     margin-left: 3rem;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
     .hideStepper {
         display: none;
     }
@@ -301,7 +302,7 @@
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     .element {
         width: 48%;
     }
