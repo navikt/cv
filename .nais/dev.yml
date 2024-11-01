@@ -1,2 +1,4 @@
 ingress: "https://arbeidsplassen.intern.dev.nav.no/personbruker"
 next_public_environment: "dev"
+pam_cv_api_audience: "dev-gcp:teampam:pam-cv-api-gcp"
+pam_eures_cv_eksport_audience: "dev-gcp:teampam:pam-eures-cv-eksport"

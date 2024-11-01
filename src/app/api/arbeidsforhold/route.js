@@ -1,10 +1,10 @@
 import logger from "@/app/_common/utils/logger";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils";
-import { cvConfig } from "@/app/_common/config";
+import { serverConfig } from "@/app/_common/serverConfig";
 
 export async function GET(request) {
-    const token = await exchangeToken(request, cvConfig.audience.cvApi);
-    const cvApiBaseUrl = cvConfig.urls.cvApi;
+    const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
+    const cvApiBaseUrl = serverConfig?.urls?.cvApi;
     const fullUrl = `${cvApiBaseUrl}/aareg`;
 
     const requestHeaders = new Headers(request.headers);

@@ -36,14 +36,7 @@ export default function MinCVPage() {
                 <>
                     <HeaderPanel />
                     <Hide below="lg">
-                        <HStack
-                            style={{
-                                display: "flex",
-                                alignItems: "flex-start",
-                                justifyContent: "center",
-                                paddingBottom: "4rem",
-                            }}
-                        >
+                        <HStack className={styles.pageContainer}>
                             <div className={styles.sidepanel}>
                                 <Hovedmeny />
                             </div>

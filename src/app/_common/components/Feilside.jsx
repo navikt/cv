@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import NextLink from "next/link";
 import styles from "@/app/page.module.css";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
-import { cvConfig } from "@/app/_common/config";
+import { navBaseUrl } from "@/app/_common/utils/urlUtils";
 
 export function Feilside({ årsak }) {
     const router = useRouter();
@@ -11,14 +11,7 @@ export function Feilside({ årsak }) {
     return (
         <>
             <HeaderPanel visTag={false} />
-            <HStack
-                style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    justifyContent: "center",
-                    paddingBottom: "4rem",
-                }}
-            >
+            <HStack className={styles.pageContainer}>
                 <Box padding="10" className={[styles.box, styles.mt3]}>
                     <VStack>
                         <Heading level="1" size="xlarge" className="text-center" spacing>
@@ -27,7 +20,7 @@ export function Feilside({ årsak }) {
                         <BodyLong className={["text-center", styles.mb12]}>{årsak}</BodyLong>
 
                         <HStack gap="4" className={[styles.mb3]}>
-                            <NextLink href={`${cvConfig.urls.nav}/person/kontakt-oss/nb`} passHref legacyBehavior>
+                            <NextLink href={`${navBaseUrl}/person/kontakt-oss/nb`} passHref legacyBehavior>
                                 <Button variant="primary" as="a">
                                     Kontakt oss
                                 </Button>

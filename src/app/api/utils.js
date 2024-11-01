@@ -1,13 +1,13 @@
 import { headers } from "next/headers";
 import { createAuthorizationAndContentTypeHeaders, exchangeToken } from "@/app/_common/utils/tokenUtils";
-import { cvConfig } from "@/app/_common/config";
+import { serverConfig } from "@/app/_common/serverConfig";
 import logger from "@/app/_common/utils/logger";
 
 export const putData = async (url, audience, request) => {
     const headerList = headers();
     const callId = headerList.get("nav-callid");
 
-    const token = await exchangeToken(request, cvConfig.audience.cvApi);
+    const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
     const requestHeaders = createAuthorizationAndContentTypeHeaders(token, callId);
     const requestBody = await request.json();
 
