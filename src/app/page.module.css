@@ -134,7 +134,7 @@
 }
 
 .meny:focus-visible {
-    outline: 3px solid rgba(0, 52, 125, 1);
+    outline: 3px solid var(--a-border-focus);
     border-radius: 3px;
 }
 
@@ -351,13 +351,13 @@
     transition: background-color 0.25s;
     padding: 0.25em;
     border-radius: 50%;
-    background-color: rgba(204, 225, 255, 1);
+    background-color: var(--a-surface-action-subtle-hover);
     cursor: pointer;
 }
 
 .line {
     margin: 0.5rem 0 0.5rem 0.8rem;
-    border-left: 2px solid #0067c5;
+    border-left: 2px solid var(--a-border-action);
     height: 1.4rem;
 }
 
@@ -369,7 +369,7 @@
 
 .previewPersonalInfoWrapper {
     padding-bottom: 16px;
-    border-bottom: 2px solid lightgray;
+    border-bottom: 2px solid rgba(203, 207, 213, 1);
     margin-bottom: 24px;
 }
 
@@ -384,7 +384,7 @@
 }
 
 .previewItemRight {
-    border-left: 2px solid lightgray;
+    border-left: 2px solid rgba(203, 207, 213, 1);
     padding-left: 1rem;
     width: 470px;
 }
