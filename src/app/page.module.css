@@ -256,7 +256,7 @@
     position: sticky;
     top: 0;
     right: 0;
-    padding: 5.5rem 4rem 0.2rem 0.2rem;
+    padding: 5.5rem 4rem 0.3rem 0.3rem;
     max-height: 100vh;
     overflow-y: auto;
 }
@@ -338,6 +338,11 @@
 
 .meny:hover {
     text-decoration: underline;
+}
+
+.meny:focus-visible {
+    outline: 3px solid rgba(0, 52, 125, 1);
+    border-radius: 3px;
 }
 
 .icon-deling-av-cv {
