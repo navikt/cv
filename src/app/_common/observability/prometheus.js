@@ -45,6 +45,11 @@ const metrics = {
         name: "cv_bekreft_tidligere_cv_counter",
         help: "Antall bekreftelser av tidligere CV",
     }),
+
+    ikkeUnderOppfølgingCounter: new Counter({
+        name: "cv_ikke_under_oppfolging_counter",
+        help: "Antall forsøk på å logge inn på ny CV-løsning når man ikke er under oppfølging",
+    }),
 };
 
 export default metrics;
