@@ -1,7 +1,7 @@
 import logger from "@/app/_common/utils/logger";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils";
 import { serverConfig } from "@/app/_common/serverConfig";
-import AppMetrics from "@/app/_common/observability/prometheus";
+import metrics from "@/app/_common/observability/prometheus";
 
 export async function GET(request) {
     const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
@@ -30,8 +30,7 @@ export async function GET(request) {
 }
 
 const hentEllerOpprettPerson = async (url, headers) => {
-    const appMetrics = new AppMetrics();
-    const stopTimerHent = appMetrics.cvApiRequestTidsbrukHistorgram.startTimer({ path: url });
+    const stopTimerHent = metrics.cvApiRequestTidsbrukHistorgram.startTimer({ path: url });
     const response = await fetch(url, {
         credentials: "same-origin",
         method: "GET",
@@ -43,8 +42,8 @@ const hentEllerOpprettPerson = async (url, headers) => {
 
     logger.info("Fant ikke person i cv-api, oppretter...");
 
-    appMetrics.nyPersonCounter.inc(1);
-    const stopTimerOpprett = appMetrics.cvApiRequestTidsbrukHistorgram.startTimer({ path: url });
+    metrics.nyPersonCounter.inc(1);
+    const stopTimerOpprett = metrics.cvApiRequestTidsbrukHistorgram.startTimer({ path: url });
     const opprettResponse = await fetch(url, {
         credentials: "same-origin",
         method: "POST",
