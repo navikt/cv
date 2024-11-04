@@ -1,6 +1,6 @@
 import logger from "@/app/_common/utils/logger";
 import { serverConfig } from "@/app/_common/serverConfig";
-import AppMetrics from "@/app/_common/observability/prometheus";
+import metrics from "@/app/_common/observability/prometheus";
 
 export async function GET(request) {
     const requestHeaders = new Headers(request.headers);
@@ -12,7 +12,7 @@ export async function GET(request) {
 
     logger.info(`Henter alternativer for språk fra cv-api. CallId: ${callId}`);
 
-    const stopTimer = new AppMetrics().cvApiRequestTidsbrukHistorgram.startTimer({ path: fullUrl });
+    const stopTimer = metrics.cvApiRequestTidsbrukHistorgram.startTimer({ path: fullUrl });
     const response = await fetch(fullUrl, {
         credentials: "same-origin",
         method: "GET",

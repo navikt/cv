@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { createAuthorizationAndContentTypeHeaders, exchangeToken } from "@/app/_common/utils/tokenUtils";
 import { serverConfig } from "@/app/_common/serverConfig";
 import logger from "@/app/_common/utils/logger";
-import AppMetrics from "@/app/_common/observability/prometheus";
+import metrics from "@/app/_common/observability/prometheus";
 
 export const putData = async (url, audience, request) => {
     const headerList = headers();
@@ -14,7 +14,7 @@ export const putData = async (url, audience, request) => {
 
     logger.info(`Gjør PUT til ${url} med callId ${callId}`);
 
-    const stopTimer = new AppMetrics().cvApiRequestTidsbrukHistorgram.startTimer({ path: url });
+    const stopTimer = metrics.cvApiRequestTidsbrukHistorgram.startTimer({ path: url });
     const response = await fetch(url, {
         credentials: "same-origin",
         method: "PUT",
