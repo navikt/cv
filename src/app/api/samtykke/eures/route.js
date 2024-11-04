@@ -1,7 +1,7 @@
 import logger from "@/app/_common/utils/logger";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils";
 import { serverConfig } from "@/app/_common/serverConfig";
-import AppMetrics from "@/app/_common/observability/prometheus";
+import metrics from "@/app/_common/observability/prometheus";
 
 export async function GET(request) {
     const token = await exchangeToken(request, serverConfig?.audience?.euresCvEksport);
@@ -14,7 +14,7 @@ export async function GET(request) {
 
     logger.info(`Henter EURES-samtykke`);
 
-    const stopTimer = new AppMetrics().cvApiRequestTidsbrukHistorgram.startTimer({ path: euresCvEksportUrl });
+    const stopTimer = metrics.cvApiRequestTidsbrukHistorgram.startTimer({ path: euresCvEksportUrl });
     const response = await fetch(euresCvEksportUrl, {
         credentials: "same-origin",
         method: "GET",
