@@ -104,6 +104,7 @@ export default function Arbeidsforhold() {
                                 Hent arbeidsforhold
                             </Button>
                             <Button
+                                aria-label="Jeg vil legge til arbeidsforhold selv"
                                 icon={<PencilWritingIcon aria-hidden />}
                                 variant="secondary"
                                 onClick={() => toggleModal(true)}
@@ -149,6 +150,7 @@ export default function Arbeidsforhold() {
                                 </FormSummary>
                                 <HStack justify="space-between" className={styles.mb12}>
                                     <Button
+                                        aria-label={"Endre arbeidsforhold " + erfaring.jobTitle}
                                         icon={<PencilIcon aria-hidden />}
                                         variant="tertiary"
                                         onClick={() => toggleModal(true, index)}
@@ -156,6 +158,7 @@ export default function Arbeidsforhold() {
                                         Endre
                                     </Button>
                                     <Button
+                                        aria-label={"Fjern arbeidsforhold " + erfaring.jobTitle}
                                         icon={<TrashIcon aria-hidden />}
                                         variant="tertiary"
                                         onClick={() => slettElement(index)}
@@ -166,7 +169,12 @@ export default function Arbeidsforhold() {
                                 </HStack>
                             </div>
                         ))}
-                        <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                        <Button
+                            aria-label="Legg til flere arbeidsforhold"
+                            icon={<PlusIcon aria-hidden />}
+                            variant="primary"
+                            onClick={() => toggleModal(true)}
+                        >
                             Legg til flere
                         </Button>
                     </>

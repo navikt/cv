@@ -74,6 +74,7 @@ export default function Forerkort() {
                                     </VStack>
                                     <HStack justify="space-between" className={styles.mb3}>
                                         <Button
+                                            aria-label={"Endre førerkort " + fk.type}
                                             icon={<PencilIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => toggleModal(true, index)}
@@ -81,6 +82,7 @@ export default function Forerkort() {
                                             Endre
                                         </Button>
                                         <Button
+                                            aria-label={"Fjern førerkort " + fk.type}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
@@ -94,7 +96,12 @@ export default function Forerkort() {
                             ))}
                         </div>
                     )}
-                    <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                    <Button
+                        aria-label={førerkort.length === 0 ? "Legg til førerkort" : "Legg til flere førerkort"}
+                        icon={<PlusIcon aria-hidden />}
+                        variant="primary"
+                        onClick={() => toggleModal(true)}
+                    >
                         {førerkort.length === 0 ? "Legg til" : "Legg til flere"}
                     </Button>
                 </Box>

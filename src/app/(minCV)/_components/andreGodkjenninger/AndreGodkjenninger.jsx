@@ -89,6 +89,7 @@ export default function AndreGodkjenninger() {
                                     </FormSummary>
                                     <HStack justify="space-between" className={styles.mb6}>
                                         <Button
+                                            aria-label={"Endre godkjenning " + godkjenning.certificateName}
                                             icon={<PencilIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => toggleModal(true, index)}
@@ -96,6 +97,7 @@ export default function AndreGodkjenninger() {
                                             Endre
                                         </Button>
                                         <Button
+                                            aria-label={"Fjern godkjenning " + godkjenning.certificateName}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
@@ -108,7 +110,14 @@ export default function AndreGodkjenninger() {
                             ))}
                         </div>
                     )}
-                    <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                    <Button
+                        aria-label={
+                            andreGodkjenninger.length === 0 ? "Legg til godkjenning" : "Legg til flere godkjenninger"
+                        }
+                        icon={<PlusIcon aria-hidden />}
+                        variant="primary"
+                        onClick={() => toggleModal(true)}
+                    >
                         {andreGodkjenninger.length === 0 ? "Legg til" : "Legg til flere"}
                     </Button>
                 </Box>

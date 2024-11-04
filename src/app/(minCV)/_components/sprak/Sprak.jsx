@@ -83,6 +83,7 @@ export default function Sprak() {
                                     </FormSummary>
                                     <HStack justify="space-between" className={styles.mb6}>
                                         <Button
+                                            aria-label={"Endre språk " + sp.language}
                                             icon={<PencilIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => toggleModal(true, index)}
@@ -90,6 +91,7 @@ export default function Sprak() {
                                             Endre
                                         </Button>
                                         <Button
+                                            aria-label={"Fjern språk " + sp.language}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
@@ -103,7 +105,12 @@ export default function Sprak() {
                         </div>
                     )}
 
-                    <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                    <Button
+                        aria-label={språk.length === 0 ? "Legg til språk" : "Legg til flere språk"}
+                        icon={<PlusIcon aria-hidden />}
+                        variant="primary"
+                        onClick={() => toggleModal(true)}
+                    >
                         {språk.length === 0 ? "Legg til" : "Legg til flere"}
                     </Button>
                 </Box>

@@ -84,6 +84,7 @@ export default function AndreErfaringer() {
                                         </FormSummary>
                                         <HStack justify="space-between" className={styles.mb6}>
                                             <Button
+                                                aria-label={"Endre erfaring " + erfaring.role}
                                                 icon={<PencilIcon aria-hidden />}
                                                 variant="tertiary"
                                                 onClick={() => toggleModal(true, index)}
@@ -91,6 +92,7 @@ export default function AndreErfaringer() {
                                                 Endre
                                             </Button>
                                             <Button
+                                                aria-label={"Fjern erfaring " + erfaring.role}
                                                 icon={<TrashIcon aria-hidden />}
                                                 variant="tertiary"
                                                 onClick={() => slettElement(index)}
@@ -103,7 +105,16 @@ export default function AndreErfaringer() {
                                 ))}
                             </div>
                         )}
-                        <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                        <Button
+                            aria-label={
+                                andreErfaringer.length === 0
+                                    ? "Legg til annen erfaring"
+                                    : "Legg til flere erfaringer"
+                            }
+                            icon={<PlusIcon aria-hidden />}
+                            variant="primary"
+                            onClick={() => toggleModal(true)}
+                        >
                             {andreErfaringer.length === 0 ? "Legg til" : "Legg til flere"}
                         </Button>
                     </>
