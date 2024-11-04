@@ -107,9 +107,7 @@ export default function AndreErfaringer() {
                         )}
                         <Button
                             aria-label={
-                                andreErfaringer.length === 0
-                                    ? "Legg til annen erfaring"
-                                    : "Legg til flere erfaringer"
+                                andreErfaringer.length === 0 ? "Legg til annen erfaring" : "Legg til flere erfaringer"
                             }
                             icon={<PlusIcon aria-hidden />}
                             variant="primary"
