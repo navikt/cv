@@ -35,6 +35,16 @@ const metrics = {
         help: "Antall oppdateringer av CV",
         labelNames: ["seksjon"],
     }),
+
+    hjemmelGodtatCounter: new Counter({
+        name: "cv_bekreft_lest_hjemmel_counter",
+        help: "Antall bekreftelser av sett hjemmel",
+    }),
+
+    bekreftetTidligereCvCounter: new Counter({
+        name: "cv_bekreft_tidligere_cv_counter",
+        help: "Antall bekreftelser av tidligere CV",
+    }),
 };
 
 export default metrics;

@@ -14,6 +14,7 @@ export async function POST(request) {
 
     logger.info(`Godtar hjemmel mot cv-api`);
 
+    metrics.hjemmelGodtatCounter.inc();
     const stopTimer = metrics.cvApiRequestTidsbrukHistorgram.startTimer({ path: fullUrl });
     const response = await fetch(fullUrl, {
         credentials: "same-origin",
