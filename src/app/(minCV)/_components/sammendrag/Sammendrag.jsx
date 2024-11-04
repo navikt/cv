@@ -63,7 +63,12 @@ export default function Sammendrag() {
                                     egenskaper.
                                 </BodyLong>
                             </VStack>
-                            <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                            <Button
+                                aria-label="Legg til sammendrag"
+                                icon={<PlusIcon aria-hidden />}
+                                variant="primary"
+                                onClick={() => toggleModal(true)}
+                            >
                                 Legg til
                             </Button>
                         </div>
@@ -77,6 +82,7 @@ export default function Sammendrag() {
                             </VStack>
                             <HStack justify="space-between">
                                 <Button
+                                    aria-label="Endre sammendrag"
                                     icon={<PencilIcon aria-hidden />}
                                     variant="primary"
                                     onClick={() => toggleModal(true)}
@@ -84,6 +90,7 @@ export default function Sammendrag() {
                                     Endre
                                 </Button>
                                 <Button
+                                    aria-label="Fjern sammendrag"
                                     icon={<TrashIcon aria-hidden />}
                                     variant="tertiary"
                                     onClick={() => oppdaterSeksjon("")}

@@ -91,6 +91,7 @@ export default function Kurs() {
                                     </FormSummary>
                                     <HStack justify="space-between" className={styles.mb6}>
                                         <Button
+                                            aria-label={`Endre kurs ${k.title}`}
                                             icon={<PencilIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => toggleModal(true, index)}
@@ -98,6 +99,7 @@ export default function Kurs() {
                                             Endre
                                         </Button>
                                         <Button
+                                            aria-label={`Fjern kurs ${k.title}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
@@ -110,7 +112,12 @@ export default function Kurs() {
                             ))}
                         </div>
                     )}
-                    <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                    <Button
+                        aria-label={kurs.length === 0 ? "Legg til kurs" : "Legg til flere kurs"}
+                        icon={<PlusIcon aria-hidden />}
+                        variant="primary"
+                        onClick={() => toggleModal(true)}
+                    >
                         {kurs.length === 0 ? "Legg til" : "Legg til flere"}
                     </Button>
                 </Box>

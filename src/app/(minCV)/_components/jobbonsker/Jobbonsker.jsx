@@ -85,7 +85,12 @@ export default function Jobbonsker() {
                             <BodyLong className={styles.mb12}>
                                 Når du skal legge til jobbønsker velger du hvilke yrker du er interessert i å jobbe som
                             </BodyLong>
-                            <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                            <Button
+                                aria-label="Legg til jobbønsker"
+                                icon={<PlusIcon aria-hidden />}
+                                variant="primary"
+                                onClick={() => toggleModal(true)}
+                            >
                                 Legg til
                             </Button>
                         </div>
@@ -144,6 +149,7 @@ export default function Jobbonsker() {
 
                             <HStack justify="space-between">
                                 <Button
+                                    aria-label="Endre jobbønsker"
                                     icon={<PencilIcon aria-hidden />}
                                     variant="primary"
                                     onClick={() => toggleModal(true)}
@@ -151,6 +157,7 @@ export default function Jobbonsker() {
                                     Endre
                                 </Button>
                                 <Button
+                                    aria-label="Fjern jobbønsker"
                                     icon={<TrashIcon aria-hidden />}
                                     variant="secondary"
                                     onClick={() => slettJobbønsker()}

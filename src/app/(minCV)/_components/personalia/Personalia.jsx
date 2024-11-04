@@ -86,6 +86,7 @@ export default function Personalia() {
                         </dd>
                     </dl>
                     <Button
+                        aria-label="Endre personalia"
                         className={styles.mb6}
                         icon={<PencilIcon aria-hidden />}
                         variant="primary"

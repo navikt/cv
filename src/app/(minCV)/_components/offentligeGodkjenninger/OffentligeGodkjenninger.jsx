@@ -88,6 +88,7 @@ export default function OffentligeGodkjenninger() {
                                     </FormSummary>
                                     <HStack justify="space-between" className={styles.mb6}>
                                         <Button
+                                            aria-label={`Endre offentlig godkjenning ${godkjenning.title}`}
                                             icon={<PencilIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => toggleModal(true, index)}
@@ -95,6 +96,7 @@ export default function OffentligeGodkjenninger() {
                                             Endre
                                         </Button>
                                         <Button
+                                            aria-label={`Fjern offentlig godkjenning ${godkjenning.title}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
@@ -107,7 +109,16 @@ export default function OffentligeGodkjenninger() {
                             ))}
                         </div>
                     )}
-                    <Button icon={<PlusIcon aria-hidden />} variant="primary" onClick={() => toggleModal(true)}>
+                    <Button
+                        aria-label={
+                            offentligeGodkjenninger.length === 0
+                                ? "Legg til offentlig godkjenning"
+                                : "Legg til flere offentlige godkjenninger"
+                        }
+                        icon={<PlusIcon aria-hidden />}
+                        variant="primary"
+                        onClick={() => toggleModal(true)}
+                    >
                         {offentligeGodkjenninger.length === 0 ? "Legg til" : "Legg til flere"}
                     </Button>
                 </Box>
