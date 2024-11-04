@@ -7,6 +7,7 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { useId } from "react";
 
 function SpråkIcon() {
     return (
@@ -35,9 +36,10 @@ export default function Sprak() {
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.SPRÅK);
     const modalProps = useCvModal(språk, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const headingId = useId();
 
     return (
-        <div data-section id={SeksjonsIdEnum.SPRÅK}>
+        <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.SPRÅK}>
             {cvLaster ? (
                 <SeksjonSkeleton icon={<SpråkIcon />} />
             ) : (
@@ -45,7 +47,7 @@ export default function Sprak() {
                     <HStack justify="center">
                         <SpråkIcon />
                     </HStack>
-                    <Heading level="2" size="large" align="start" spacing>
+                    <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Språk
                     </Heading>
 
@@ -107,6 +109,6 @@ export default function Sprak() {
                 </Box>
             )}
             {modalÅpen && <SpråkModal {...modalProps} />}
-        </div>
+        </section>
     );
 }

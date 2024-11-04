@@ -8,6 +8,7 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { useId } from "react";
 
 function KursIcon() {
     return (
@@ -42,9 +43,10 @@ export default function Kurs() {
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.KURS);
     const modalProps = useCvModal(kurs, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const headingId = useId();
 
     return (
-        <div data-section id={SeksjonsIdEnum.KURS}>
+        <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.KURS}>
             {cvLaster ? (
                 <SeksjonSkeleton icon={<KursIcon />} />
             ) : (
@@ -52,7 +54,7 @@ export default function Kurs() {
                     <HStack justify="center">
                         <KursIcon />
                     </HStack>
-                    <Heading level="2" size="large" align="start" spacing>
+                    <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Kurs
                     </Heading>
                     {kurs.length === 0 ? (
@@ -114,6 +116,6 @@ export default function Kurs() {
                 </Box>
             )}
             {modalÅpen && <KursModal {...modalProps} />}
-        </div>
+        </section>
     );
 }

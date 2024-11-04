@@ -8,6 +8,7 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { useId } from "react";
 
 function AndreErfaringerIcon() {
     return (
@@ -36,9 +37,10 @@ export default function AndreErfaringer() {
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_ERFARINGER);
     const modalProps = useCvModal(andreErfaringer, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const headingId = useId();
 
     return (
-        <div data-section id={SeksjonsIdEnum.ANDRE_ERFARINGER}>
+        <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.ANDRE_ERFARINGER}>
             {cvLaster ? (
                 <SeksjonSkeleton icon={<AndreErfaringerIcon />} />
             ) : (
@@ -46,7 +48,7 @@ export default function AndreErfaringer() {
                     <HStack justify="center">
                         <AndreErfaringerIcon />
                     </HStack>
-                    <Heading level="2" size="large" align="start" spacing>
+                    <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Andre erfaringer
                     </Heading>
                     <>
@@ -108,6 +110,6 @@ export default function AndreErfaringer() {
                 </Box>
             )}
             {modalÅpen && <AndreErfaringerModal {...modalProps} />}
-        </div>
+        </section>
     );
 }

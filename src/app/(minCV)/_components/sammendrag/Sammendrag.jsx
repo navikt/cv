@@ -8,6 +8,7 @@ import parse from "html-react-parser";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import SammendragModal from "@/app/(minCV)/_components/sammendrag/SammendragModal";
+import { useId } from "react";
 
 function SammendragIcon() {
     return (
@@ -37,9 +38,10 @@ export default function Sammendrag() {
     const modalProps = useCvModal(sammendrag, oppdateringprops);
     const { oppdaterSeksjon } = oppdateringprops;
     const { modalÅpen, toggleModal, laster } = modalProps;
+    const headingId = useId();
 
     return (
-        <div data-section id={SeksjonsIdEnum.SAMMENDRAG}>
+        <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.SAMMENDRAG}>
             {cvLaster ? (
                 <SeksjonSkeleton icon={<SammendragIcon />} />
             ) : (
@@ -47,7 +49,7 @@ export default function Sammendrag() {
                     <HStack justify="center">
                         <SammendragIcon />
                     </HStack>
-                    <Heading level="2" size="large" align="start" spacing>
+                    <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Sammendrag
                     </Heading>
                     {!sammendrag ? (
@@ -98,6 +100,6 @@ export default function Sammendrag() {
             {modalÅpen && (
                 <SammendragModal {...modalProps} lagreElement={oppdaterSeksjon} gjeldendeElement={sammendrag} />
             )}
-        </div>
+        </section>
     );
 }

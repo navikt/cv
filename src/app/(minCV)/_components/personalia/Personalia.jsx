@@ -40,7 +40,7 @@ export default function Personalia() {
     const headingId = useId();
 
     return (
-        <div data-section id={SeksjonsIdEnum.PERSONALIA}>
+        <section aria-labelledby={personLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.PERSONALIA}>
             {personLaster ? (
                 <SeksjonSkeleton icon={<PersonaliaIcon />} />
             ) : (
@@ -102,6 +102,6 @@ export default function Personalia() {
                     lagreElement={oppdateringprops.oppdaterSeksjon}
                 />
             )}
-        </div>
+        </section>
     );
 }

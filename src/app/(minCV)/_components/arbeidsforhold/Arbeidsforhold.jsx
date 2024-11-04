@@ -11,6 +11,7 @@ import parse from "html-react-parser";
 import { HentArbeidsforholdSkeleton } from "@/app/(minCV)/_components/arbeidsforhold/HentArbeidsforholdSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { useId } from "react";
 
 function ArbeidsforholdIcon() {
     return (
@@ -39,6 +40,7 @@ export default function Arbeidsforhold() {
     const { aaregManglerData, aaregLaster, setSkalHenteData } = useHentArbeidsforhold(oppdateringprops);
     const modalProps = useCvModal(arbeidsforhold, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const headingId = useId();
 
     const arbeidsforholdManglerFelter = (forhold) => {
         const verdiMangler = (verdi) => !verdi || verdi === "string";
@@ -49,27 +51,31 @@ export default function Arbeidsforhold() {
 
     if (cvLaster) {
         return (
-            <div data-section id={SeksjonsIdEnum.ARBEIDSFORHOLD}>
+            <section data-section id={SeksjonsIdEnum.ARBEIDSFORHOLD}>
                 <SeksjonSkeleton icon={<ArbeidsforholdIcon />} />
-            </div>
+            </section>
         );
     }
 
     if (aaregLaster) {
         return (
-            <div data-section id={SeksjonsIdEnum.ARBEIDSFORHOLD}>
+            <section data-section id={SeksjonsIdEnum.ARBEIDSFORHOLD}>
                 <HentArbeidsforholdSkeleton icon={<ArbeidsforholdIcon />} />
-            </div>
+            </section>
         );
     }
 
     return (
-        <div data-section id={SeksjonsIdEnum.ARBEIDSFORHOLD}>
+        <section
+            aria-labelledby={cvLaster || aaregLaster ? undefined : headingId}
+            data-section
+            id={SeksjonsIdEnum.ARBEIDSFORHOLD}
+        >
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
                     <ArbeidsforholdIcon />
                 </HStack>
-                <Heading level="2" size="large" align="start" spacing>
+                <Heading id={headingId} level="2" size="large" align="start" spacing>
                     Arbeidsforhold
                 </Heading>
                 {((aaregManglerData === true && arbeidsforhold.length === 0) || manglerFelter) && (
@@ -167,6 +173,6 @@ export default function Arbeidsforhold() {
                 )}
             </Box>
             {modalÅpen && <ArbeidsforholdModal {...modalProps} />}
-        </div>
+        </section>
     );
 }

@@ -7,6 +7,7 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { useId } from "react";
 
 function KompetanserIcon() {
     return (
@@ -35,9 +36,10 @@ export default function Kompetanser() {
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.KOMPETANSER);
     const modalProps = useCvModal(kompetanser, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const headingId = useId();
 
     return (
-        <div data-section id={SeksjonsIdEnum.KOMPETANSER}>
+        <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.KOMPETANSER}>
             {cvLaster ? (
                 <SeksjonSkeleton icon={<KompetanserIcon />} />
             ) : (
@@ -45,7 +47,7 @@ export default function Kompetanser() {
                     <HStack justify="center">
                         <KompetanserIcon />
                     </HStack>
-                    <Heading className={styles.mb6} level="2" size="large" align="start" spacing>
+                    <Heading id={headingId} className={styles.mb6} level="2" size="large" align="start" spacing>
                         Kompetanser
                     </Heading>
                     {kompetanser.length === 0 ? (
@@ -91,6 +93,6 @@ export default function Kompetanser() {
                 </Box>
             )}
             {modalÅpen && <KompetanserModal {...modalProps} />}
-        </div>
+        </section>
     );
 }

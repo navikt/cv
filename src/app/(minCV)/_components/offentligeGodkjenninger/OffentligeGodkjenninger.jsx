@@ -8,6 +8,7 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { useId } from "react";
 
 function OffentligeGodkjenningerIcon() {
     return (
@@ -36,9 +37,14 @@ export default function OffentligeGodkjenninger() {
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER);
     const modalProps = useCvModal(offentligeGodkjenninger, oppdateringprops);
     const { modalÅpen, toggleModal, lastendeIndex, slettElement } = modalProps;
+    const headingId = useId();
 
     return (
-        <div data-section id={SeksjonsIdEnum.OFFENTLIGE_GODKJENNINGER}>
+        <section
+            aria-labelledby={cvLaster ? undefined : headingId}
+            data-section
+            id={SeksjonsIdEnum.OFFENTLIGE_GODKJENNINGER}
+        >
             {cvLaster ? (
                 <SeksjonSkeleton icon={<OffentligeGodkjenningerIcon />} />
             ) : (
@@ -46,7 +52,7 @@ export default function OffentligeGodkjenninger() {
                     <HStack justify="center">
                         <OffentligeGodkjenningerIcon />
                     </HStack>
-                    <Heading level="2" size="large" align="start" spacing>
+                    <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Offentlige godkjenninger
                     </Heading>
                     {offentligeGodkjenninger.length === 0 ? (
@@ -107,6 +113,6 @@ export default function OffentligeGodkjenninger() {
                 </Box>
             )}
             {modalÅpen && <OffentligeGodkjenningerModal {...modalProps} />}
-        </div>
+        </section>
     );
 }

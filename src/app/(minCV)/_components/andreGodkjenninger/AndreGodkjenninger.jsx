@@ -8,6 +8,7 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { useId } from "react";
 
 function AndreGodkjenningerIcon() {
     return (
@@ -36,9 +37,14 @@ export default function AndreGodkjenninger() {
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_GODKJENNINGER);
     const modalProps = useCvModal(andreGodkjenninger, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const headingId = useId();
 
     return (
-        <div data-section id={SeksjonsIdEnum.ANDRE_GODKJENNINGER}>
+        <section
+            aria-labelledby={cvLaster ? undefined : headingId}
+            data-section
+            id={SeksjonsIdEnum.ANDRE_GODKJENNINGER}
+        >
             {cvLaster ? (
                 <SeksjonSkeleton icon={<AndreGodkjenningerIcon />} />
             ) : (
@@ -46,7 +52,7 @@ export default function AndreGodkjenninger() {
                     <HStack justify="center">
                         <AndreGodkjenningerIcon />
                     </HStack>
-                    <Heading level="2" size="large" align="start" spacing>
+                    <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Andre godkjenninger
                     </Heading>
                     {andreGodkjenninger.length === 0 ? (
@@ -108,6 +114,6 @@ export default function AndreGodkjenninger() {
                 </Box>
             )}
             {modalÅpen && <AndreGodkjenningerModal {...modalProps} />}
-        </div>
+        </section>
     );
 }

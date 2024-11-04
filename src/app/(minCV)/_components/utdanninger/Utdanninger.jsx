@@ -9,6 +9,7 @@ import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import parse from "html-react-parser";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useId } from "react";
 
 function UtdanningerIcon() {
     return (
@@ -37,9 +38,10 @@ export default function Utdanninger() {
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.UTDANNING);
     const modalProps = useCvModal(utdanninger, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const headingId = useId();
 
     return (
-        <div data-section id={SeksjonsIdEnum.UTDANNING}>
+        <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.UTDANNING}>
             {cvLaster ? (
                 <SeksjonSkeleton icon={<UtdanningerIcon />} />
             ) : (
@@ -47,7 +49,7 @@ export default function Utdanninger() {
                     <HStack justify="center">
                         <UtdanningerIcon />
                     </HStack>
-                    <Heading level="2" size="large" align="start" spacing>
+                    <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Utdanninger
                     </Heading>
                     {utdanninger.length === 0 ? (
@@ -125,6 +127,6 @@ export default function Utdanninger() {
                 </Box>
             )}
             {modalÅpen && <UtdanningModal {...modalProps} />}
-        </div>
+        </section>
     );
 }
