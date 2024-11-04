@@ -1,7 +1,7 @@
 import logger from "@/app/_common/utils/logger";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils";
 import { serverConfig } from "@/app/_common/serverConfig";
-import AppMetrics from "@/app/_common/observability/prometheus";
+import metrics from "@/app/_common/observability/prometheus";
 
 export async function GET(request) {
     const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
@@ -15,7 +15,7 @@ export async function GET(request) {
 
     logger.info(`Henter arbeidsforhold fra aareg`);
 
-    const stopTimer = new AppMetrics().cvApiRequestTidsbrukHistorgram.startTimer({ path: fullUrl });
+    const stopTimer = metrics.cvApiRequestTidsbrukHistorgram.startTimer({ path: fullUrl });
     const response = await fetch(fullUrl, {
         credentials: "same-origin",
         method: "GET",
