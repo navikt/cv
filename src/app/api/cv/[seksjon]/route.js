@@ -5,5 +5,6 @@ export async function PUT(request, context) {
     const { seksjon } = context.params;
     const cvApiBaseUrl = serverConfig?.urls?.cvApi;
     const fullUrl = `${cvApiBaseUrl}/v2/cv/${seksjon}`;
-    return await putData(fullUrl, serverConfig?.audience?.cvApi, request);
+    const response = await putData(fullUrl, serverConfig?.audience?.cvApi, request);
+    return response;
 }
