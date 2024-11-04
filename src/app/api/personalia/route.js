@@ -5,6 +5,6 @@ import metrics from "@/app/_common/observability/prometheus";
 export async function PUT(request) {
     const cvApiBaseUrl = serverConfig?.urls?.cvApi;
     const fullUrl = `${cvApiBaseUrl}/v2/personalia`;
-    metrics.cvOppdateringCounter.inc("personalia", 1);
+    metrics.cvOppdateringCounter.inc({ seksjon: "personalia" });
     return putData(fullUrl, serverConfig?.audience?.cvApi, request);
 }

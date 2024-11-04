@@ -9,7 +9,7 @@ const sourceSansPro = Source_Sans_3({ subsets: ["latin"] });
 
 async function RootLayout({ children }) {
     if (process.env.NODE_ENV === "development") {
-        import("../../mocks/mirage").then(() => console.warn("Mirage mock`s kjører!"));
+        import("../../mocks/mirage").then(() => console.warn("Mirage mocks kjører!"));
     }
 
     const { HeadAssets, Header, Footer, Scripts } = await hentDekoratør();
