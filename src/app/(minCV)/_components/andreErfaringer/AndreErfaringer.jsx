@@ -84,7 +84,7 @@ export default function AndreErfaringer() {
                                         </FormSummary>
                                         <HStack justify="space-between" className={styles.mb6}>
                                             <Button
-                                                aria-label={"Endre erfaring " + erfaring.role}
+                                                aria-label={`Endre erfaring ${erfaring.role}`}
                                                 icon={<PencilIcon aria-hidden />}
                                                 variant="tertiary"
                                                 onClick={() => toggleModal(true, index)}
@@ -92,7 +92,7 @@ export default function AndreErfaringer() {
                                                 Endre
                                             </Button>
                                             <Button
-                                                aria-label={"Fjern erfaring " + erfaring.role}
+                                                aria-label={`Fjern erfaring ${erfaring.role}`}
                                                 icon={<TrashIcon aria-hidden />}
                                                 variant="tertiary"
                                                 onClick={() => slettElement(index)}

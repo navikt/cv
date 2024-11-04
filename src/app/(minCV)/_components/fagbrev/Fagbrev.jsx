@@ -67,7 +67,7 @@ export default function Fagbrev() {
                                         <BodyLong>{fb.title}</BodyLong>
                                         <HStack justify="space-between" className={styles.mb3}>
                                             <Button
-                                                aria-label={"Endre " + fb.title}
+                                                aria-label={`Endre ${fb.title}`}
                                                 icon={<PencilIcon aria-hidden />}
                                                 variant="tertiary"
                                                 onClick={() => toggleModal(true, index)}
@@ -75,7 +75,7 @@ export default function Fagbrev() {
                                                 Endre
                                             </Button>
                                             <Button
-                                                aria-label={"Fjern " + fb.title}
+                                                aria-label={`Fjern ${fb.title}`}
                                                 icon={<TrashIcon aria-hidden />}
                                                 variant="tertiary"
                                                 onClick={() => slettElement(index)}

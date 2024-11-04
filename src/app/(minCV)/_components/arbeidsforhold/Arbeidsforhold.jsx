@@ -150,7 +150,7 @@ export default function Arbeidsforhold() {
                                 </FormSummary>
                                 <HStack justify="space-between" className={styles.mb12}>
                                     <Button
-                                        aria-label={"Endre arbeidsforhold " + erfaring.jobTitle}
+                                        aria-label={`Endre arbeidsforhold ${erfaring.jobTitle}`}
                                         icon={<PencilIcon aria-hidden />}
                                         variant="tertiary"
                                         onClick={() => toggleModal(true, index)}
@@ -158,7 +158,7 @@ export default function Arbeidsforhold() {
                                         Endre
                                     </Button>
                                     <Button
-                                        aria-label={"Fjern arbeidsforhold " + erfaring.jobTitle}
+                                        aria-label={`Fjern arbeidsforhold ${erfaring.jobTitle}`}
                                         icon={<TrashIcon aria-hidden />}
                                         variant="tertiary"
                                         onClick={() => slettElement(index)}

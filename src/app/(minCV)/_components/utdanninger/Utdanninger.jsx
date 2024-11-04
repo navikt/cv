@@ -102,7 +102,7 @@ export default function Utdanninger() {
                                     </FormSummary>
                                     <HStack justify="space-between" className={styles.mb12}>
                                         <Button
-                                            aria-label={"Endre utdanning " + utdanning.field}
+                                            aria-label={`Endre utdanning ${utdanning.field}`}
                                             icon={<PencilIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => toggleModal(true, index)}
@@ -110,7 +110,7 @@ export default function Utdanninger() {
                                             Endre
                                         </Button>
                                         <Button
-                                            aria-label={"Fjern utdanning " + utdanning.field}
+                                            aria-label={`Fjern utdanning ${utdanning.field}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}

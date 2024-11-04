@@ -88,7 +88,7 @@ export default function OffentligeGodkjenninger() {
                                     </FormSummary>
                                     <HStack justify="space-between" className={styles.mb6}>
                                         <Button
-                                            aria-label={"Endre offentlig godkjenning " + godkjenning.title}
+                                            aria-label={`Endre offentlig godkjenning ${godkjenning.title}`}
                                             icon={<PencilIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => toggleModal(true, index)}
@@ -96,7 +96,7 @@ export default function OffentligeGodkjenninger() {
                                             Endre
                                         </Button>
                                         <Button
-                                            aria-label={"Fjern offentlig godkjenning " + godkjenning.title}
+                                            aria-label={`Fjern offentlig godkjenning ${godkjenning.title}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}

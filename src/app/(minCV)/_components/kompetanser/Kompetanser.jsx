@@ -67,7 +67,7 @@ export default function Kompetanser() {
                                     <BodyLong>{kompetanse.title}</BodyLong>
                                     <HStack justify="space-between" className={styles.mb3}>
                                         <Button
-                                            aria-label={"Endre kompetanse " + kompetanse.title}
+                                            aria-label={`Endre kompetanse ${kompetanse.title}`}
                                             icon={<PencilIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => toggleModal(true, index)}
@@ -75,7 +75,7 @@ export default function Kompetanser() {
                                             Endre
                                         </Button>
                                         <Button
-                                            aria-label={"Fjern kompetanse " + kompetanse.title}
+                                            aria-label={`Fjern kompetanse ${kompetanse.title}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
                                             onClick={() => slettElement(index)}
