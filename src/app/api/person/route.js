@@ -39,9 +39,11 @@ const hentEllerOpprettPerson = async (url, headers) => {
 
     logger.info("Fant ikke person i cv-api, oppretter...");
 
-    return await fetch(url, {
+    const reponseNewPerson = await fetch(url, {
         credentials: "same-origin",
         method: "POST",
         headers: headers,
     });
+
+    return reponseNewPerson;
 };

@@ -9,7 +9,8 @@ export const simpleApiRequest = async (url, method, body = null, includeCredenti
     if (includeCredentials) fetchOptions.credentials = "same-origin";
     if (body !== null) fetchOptions.body = JSON.stringify(body);
 
-    return await fetch(url, fetchOptions);
+    const reponse = await fetch(url, fetchOptions);
+    return reponse;
 };
 
 export const getAPI = async (url) => {
@@ -21,7 +22,8 @@ export const getAPI = async (url) => {
         throw error;
     }
 
-    return await response.json();
+    const responseJson = await response.json();
+    return responseJson;
 };
 
 export const putAPI = async (url, body) => {
@@ -32,6 +34,6 @@ export const putAPI = async (url, body) => {
         error.status = response.status;
         throw error;
     }
-
-    return await response.json();
+    const responseJson = await response.json();
+    return responseJson;
 };

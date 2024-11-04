@@ -8,6 +8,7 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { useId } from "react";
 
 function FørerkortIcon() {
     return (
@@ -36,9 +37,10 @@ export default function Forerkort() {
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.FØRERKORT);
     const modalProps = useCvModal(førerkort, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const headingId = useId();
 
     return (
-        <div data-section id={SeksjonsIdEnum.FØRERKORT}>
+        <div aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.FØRERKORT}>
             {cvLaster ? (
                 <SeksjonSkeleton icon={<FørerkortIcon />} />
             ) : (
@@ -46,7 +48,7 @@ export default function Forerkort() {
                     <HStack justify="center">
                         <FørerkortIcon />
                     </HStack>
-                    <Heading className={styles.mb6} level="2" size="large" align="start" spacing>
+                    <Heading id={headingId} className={styles.mb6} level="2" size="large" align="start" spacing>
                         Førerkort
                     </Heading>
                     {førerkort.length === 0 ? (

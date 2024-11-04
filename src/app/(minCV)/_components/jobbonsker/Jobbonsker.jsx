@@ -65,7 +65,7 @@ export default function Jobbonsker() {
         !jobbønsker || Object.keys(jobbønsker).length === 0 || jobbønsker?.locations?.length === 0;
 
     return (
-        <div data-section id={SeksjonsIdEnum.JOBBØNSKER}>
+        <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.JOBBØNSKER}>
             {cvLaster ? (
                 <SeksjonSkeleton icon={<JobbonskerIcon />} />
             ) : (
@@ -166,6 +166,6 @@ export default function Jobbonsker() {
             {modalÅpen && (
                 <JobbonskerModal {...modalProps} lagreElement={oppdaterSeksjon} gjeldendeElement={jobbønsker} />
             )}
-        </div>
+        </section>
     );
 }

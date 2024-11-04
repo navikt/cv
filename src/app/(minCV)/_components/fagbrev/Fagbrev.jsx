@@ -7,6 +7,7 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { useId } from "react";
 
 function FagbrevIcon() {
     return (
@@ -35,9 +36,10 @@ export default function Fagbrev() {
     const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.FAGBREV);
     const modalProps = useCvModal(fagbrev, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const headingId = useId();
 
     return (
-        <div data-section id={SeksjonsIdEnum.FAGBREV}>
+        <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.FAGBREV}>
             {cvLaster ? (
                 <SeksjonSkeleton icon={<FagbrevIcon />} />
             ) : (
@@ -45,7 +47,7 @@ export default function Fagbrev() {
                     <HStack justify="center">
                         <FagbrevIcon />
                     </HStack>
-                    <Heading className={styles.mb6} level="2" size="large" align="start" spacing>
+                    <Heading id={headingId} className={styles.mb6} level="2" size="large" align="start" spacing>
                         Fagbrev
                     </Heading>
                     <>
@@ -92,6 +94,6 @@ export default function Fagbrev() {
                 </Box>
             )}
             {modalÅpen && <FagbrevModal {...modalProps} />}
-        </div>
+        </section>
     );
 }

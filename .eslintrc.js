@@ -43,7 +43,6 @@ module.exports = {
 
         //TODO: Fix these errors!
         "consistent-return": "warn",
-        "no-return-await": "warn",
         "react/jsx-filename-extension": "warn",
         "import/no-cycle": "warn",
         "react/jsx-no-constructed-context-values": "warn",
