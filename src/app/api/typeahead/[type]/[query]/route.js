@@ -1,6 +1,6 @@
 import logger from "@/app/_common/utils/logger";
 import { serverConfig } from "@/app/_common/serverConfig";
-import AppMetrics from "@/app/_common/observability/prometheus";
+import metrics from "@/app/_common/observability/prometheus";
 
 export async function GET(request, context) {
     const { type } = context.params;
@@ -14,7 +14,7 @@ export async function GET(request, context) {
 
     logger.info(`Henter typeahead for ${type} med query ${query}. CallId: ${callId}`);
 
-    const stopTimer = new AppMetrics().cvApiRequestTidsbrukHistorgram.startTimer({
+    const stopTimer = metrics.cvApiRequestTidsbrukHistorgram.startTimer({
         path: `${typeaheadBaseUrl}/${type}`,
     });
     const response = await fetch(fullUrl, {
