@@ -6,6 +6,6 @@ export async function PUT(request, context) {
     const { seksjon } = context.params;
     const cvApiBaseUrl = serverConfig?.urls?.cvApi;
     const fullUrl = `${cvApiBaseUrl}/v2/cv/${seksjon}`;
-    metrics.cvOppdateringCounter.inc(seksjon, 1);
+    metrics.cvOppdateringCounter.inc({ [seksjon]: 1 });
     return putData(fullUrl, serverConfig?.audience?.cvApi, request);
 }
