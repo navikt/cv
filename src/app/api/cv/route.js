@@ -1,8 +1,10 @@
 import logger from "@/app/_common/utils/logger";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils";
 import { serverConfig } from "@/app/_common/serverConfig";
+import AppMetrics from "@/app/_common/observability/prometheus";
 
 export async function GET(request) {
+    const appMetrics = new AppMetrics();
     const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
     const cvApiBaseUrl = serverConfig?.urls?.cvApi;
     const fullUrl = `${cvApiBaseUrl}/v2/cv`;
@@ -14,14 +16,17 @@ export async function GET(request) {
 
     logger.info(`Henter CV fra cv-api`);
 
+    const stopTimer = appMetrics.cvApiRequestTidsbrukHistorgram.startTimer({ path: fullUrl });
     const response = await fetch(fullUrl, {
         credentials: "same-origin",
         method: "GET",
         headers: requestHeaders,
     });
+    stopTimer();
 
     if (response.status === 404) {
         logger.info(`Fant ikke eksisterende CV`);
+        appMetrics.tomCvCounter.inc(1);
         return Response.json({});
     }
 

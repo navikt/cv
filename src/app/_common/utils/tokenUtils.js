@@ -2,6 +2,7 @@ import { Issuer } from "openid-client";
 import { createRemoteJWKSet, jwtVerify } from "jose";
 import logger from "@/app/_common/utils/logger";
 import { serverConfig } from "@/app/_common/serverConfig";
+import AppMetrics from "@/app/_common/observability/prometheus";
 
 let issuer;
 let idPortenIssuer;
@@ -121,7 +122,9 @@ export async function exchangeToken(request, audience) {
     const idportenToken = request.headers.get("authorization");
 
     const replacedToken = idportenToken.replace("Bearer ", "");
+    const stopTimer = new AppMetrics().tokenExchangeTidsbrukHistogram.startTimer();
     const token = await grant(replacedToken, audience);
+    stopTimer();
 
     if (token === "") {
         return new Response("Det har skjedd en feil ved utveksling av token", {

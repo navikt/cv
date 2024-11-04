@@ -38,9 +38,17 @@ spec:
     enabled: true
   prometheus:
     enabled: true
-    path: /metrics
+    path: /personbruker/api/internal/metrics
   ingresses:
     - {{ ingress }}
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
+    logging:
+      destinations:
+        - id: loki
+        - id: elastic
   env:
     - name: PORT
       value: "8095"
@@ -56,6 +64,8 @@ spec:
       value: http://pam-eures-cv-eksport/pam-eures-cv-eksport/samtykke
     - name: PAM_EURES_CV_EKSPORT_AUDIENCE
       value: {{ pam_eures_cv_eksport_audience }}
+    - name: NEXT_PUBLIC_TELEMETRY_URL
+      value: https://telemetry.nav.no/collect
   accessPolicy:
     outbound:
       rules:
