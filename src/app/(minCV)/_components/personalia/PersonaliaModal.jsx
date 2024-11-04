@@ -14,8 +14,6 @@ export default function PersonaliaModal({
     laster,
     feilet,
 }) {
-    // TODO: fjerne console?
-    console.log(personalia);
     const [fornavn, setFornavn] = useState("");
     const [etternavn, setEtternavn] = useState("");
     const [epost, setEpost] = useState("");
