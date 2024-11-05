@@ -65,7 +65,7 @@ spec:
     - name: PAM_EURES_CV_EKSPORT_AUDIENCE
       value: {{ pam_eures_cv_eksport_audience }}
     - name: NEXT_PUBLIC_TELEMETRY_URL
-      value: https://telemetry.nav.no/collect
+      value: {{ next_public_telemetry_url }}
   accessPolicy:
     outbound:
       rules:
