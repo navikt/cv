@@ -50,6 +50,11 @@ const metrics = {
         name: "cv_ikke_under_oppfolging_counter",
         help: "Antall forsøk på å logge inn på ny CV-løsning når man ikke er under oppfølging",
     }),
+
+    hentArbeidsforholdCounter: new Counter({
+        name: "cv_hent_arbeidsforhold_aareg",
+        help: "Antall hentinger arbeids",
+    }),
 };
 
 export default metrics;
