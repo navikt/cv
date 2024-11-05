@@ -60,7 +60,7 @@ export default function Hjemmelside({ måBekrefte }) {
                         få kontakt med arbeidsgivere.
                     </BodyLong>
 
-                    <Heading size="small" spacing>
+                    <Heading size="small" spacing level="2">
                         Hva bruker Nav CV-en din til?
                     </Heading>
                     <BodyLong spacing>
@@ -78,10 +78,7 @@ export default function Hjemmelside({ måBekrefte }) {
                         ).
                     </BodyLong>
 
-                    <Heading size="small" spacing>
-                        Slik gjør vi det:
-                    </Heading>
-                    <List className={styles.mb6}>
+                    <List title="Slik gjør vi det:" headingTag="h2" className={styles.mb6}>
                         <List.Item className={styles.mb3}>
                             Nav-veilederen kan gjøre et søk som automatisk finner CV-er som matcher en ledig stilling
                             eller en jobbmesse.
@@ -112,17 +109,14 @@ export default function Hjemmelside({ måBekrefte }) {
                         </Link>
                     </BodyLong>
 
-                    <Heading size="small" spacing>
+                    <Heading size="small" spacing level="2">
                         Hva kan arbeidsgivere se?
                     </Heading>
                     <BodyLong spacing>
                         Hvis Nav har sendt CV-en din til en arbeidsgiver, kan arbeidsgiveren se CV-opplysningene dine.
                     </BodyLong>
 
-                    <Heading size="small" spacing>
-                        Hva skjer hvis du ikke registrerer en CV?
-                    </Heading>
-                    <List className={styles.mb6}>
+                    <List title="Hva skjer hvis du ikke registrerer en CV?" headingTag="h2" className={styles.mb6}>
                         <List.Item className={styles.mb3}>
                             Du kan risikere at Nav ikke har mulighet til å gi deg oppfølgingen du trenger.
                         </List.Item>
@@ -139,10 +133,7 @@ export default function Hjemmelside({ måBekrefte }) {
                         </List.Item>
                     </List>
 
-                    <Heading size="small" spacing>
-                        Utarbeide statistikk og analyser
-                    </Heading>
-                    <List className={styles.mb6}>
+                    <List title="Utarbeide statistikk og analyser" headingTag="h2" className={styles.mb6}>
                         <List.Item className={styles.mb3}>
                             Vi bruker personopplysninger til å utarbeide statistikk og analyser (
                             <Link
@@ -161,7 +152,7 @@ export default function Hjemmelside({ måBekrefte }) {
 
                     {person.maaBekrefteTidligereCv && (
                         <>
-                            <Heading size="small" spacing>
+                            <Heading size="small" spacing level="2">
                                 Du har allerede en CV på arbeidsplassen.no
                             </Heading>
                             <BodyLong spacing>
