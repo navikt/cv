@@ -27,6 +27,7 @@ services:
       --redis.tls=false
       --redis.address=redis:6379
       --log-format=text
+      # --cookie.secure=false # Fjern '#' på denne linjen for å kunne bruke wonderwall i safari
     restart: on-failure
     environment:
       WONDERWALL_OPENID_CLIENT_JWK: >

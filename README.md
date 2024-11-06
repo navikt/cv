@@ -52,3 +52,11 @@ For å kunne hente @navikt-pakker via npm er du nødt til å gjøre følgende:
 
 > [!CAUTION]
 > Ikke sjekk inn `.npmrc` til GitHub.
+
+### Teste i safari
+
+Safari har strengere regler enn andre browsere for å sette cookies for localhost, og derfor fungerer vanligvis ikke wonderwall med Safari. Dersom man vil teste i safari må man gå inn i `docker-compose.yml` og fjerne "#" fremst i linja
+
+```
+# --cookie.secure=false # Fjern '#' på denne linjen for å kunne bruke wonderwall i safari
+```
