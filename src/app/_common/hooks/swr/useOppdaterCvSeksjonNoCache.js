@@ -45,9 +45,9 @@ export const useOppdaterCvSeksjonNoCache = (seksjon) => {
     const url = `${CV_KEY}/${seksjon}`;
     const { trigger, data, error, isMutating } = useSWRMutation(url, fetcher, { revalidate: false });
 
-    const triggerOppdatering = (data) => {
-        if (dataErGyldigForSeksjon(seksjon, data)) {
-            trigger({ body: { [seksjon]: data } });
+    const triggerOppdatering = (nyData) => {
+        if (dataErGyldigForSeksjon(seksjon, nyData)) {
+            trigger({ body: { [seksjon]: nyData } });
         }
     };
 
