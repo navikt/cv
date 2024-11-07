@@ -114,7 +114,7 @@ export default function Utdanninger() {
                                             aria-label={`Fjern utdanning ${utdanning.field}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettElement(index)}
+                                            onClick={() => slettElement(index, triggerOppdatering)}
                                             loading={lastendeIndex === index}
                                         >
                                             Fjern

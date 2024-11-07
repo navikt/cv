@@ -37,17 +37,21 @@ export const useCvModal = (
         if (gjeldendeIndex >= 0) oppdaterteElementer.splice(gjeldendeIndex, 1, oppdatertElement);
         else oppdaterteElementer.push(oppdatertElement);
 
+        oppdaterSeksjon(oppdaterteElementer);
         if (trigger) {
             trigger(oppdaterteElementer);
         }
-        oppdaterSeksjon(oppdaterteElementer);
     };
 
-    const slettElement = (index) => {
+    const slettElement = (index, trigger) => {
         const oppdaterteElementer = [...eksisterendeElementer];
         oppdaterteElementer.splice(index, 1);
         setLastendeIndex(index);
+
         oppdaterSeksjon(oppdaterteElementer);
+        if (trigger) {
+            trigger(oppdaterteElementer);
+        }
     };
 
     return {
