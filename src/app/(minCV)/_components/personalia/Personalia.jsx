@@ -100,7 +100,7 @@ export default function Personalia() {
                 <PersonaliaModal
                     {...modalProps}
                     gjeldendeElement={personalia}
-                    lagreElement={oppdateringprops.oppdaterPersonalia}
+                    lagreElement={oppdateringprops.triggerOppdatering}
                 />
             )}
         </section>
