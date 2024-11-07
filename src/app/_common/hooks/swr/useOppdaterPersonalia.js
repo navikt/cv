@@ -9,6 +9,7 @@ import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 export const useOppdaterPersonalia = () => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
+    // eslint-disable-next-line
     const [dataForOppdatering, oppdaterSeksjon] = useState(null);
     const [visFeilmelding, setVisFeilmelding] = useState(false);
 

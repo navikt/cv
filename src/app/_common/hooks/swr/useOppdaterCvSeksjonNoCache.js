@@ -1,5 +1,6 @@
 "use client";
 
+import useSWRMutation from "swr/mutation";
 import { mutate } from "swr";
 import { putAPI } from "@/app/_common/utils/fetchUtils";
 import { CV_KEY } from "@/app/_common/hooks/swr/useCv";
@@ -9,10 +10,9 @@ import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
 
 export const useOppdaterCvSeksjonNoCache = (seksjon) => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
+    // eslint-disable-next-line
     const [dataForOppdatering, oppdaterSeksjon] = useState(null);
     const [visFeilmelding, setVisFeilmelding] = useState(false);
-    const [oppdateringLaster, setOppdateringLaster] = useState(false);
-    const [oppdateringSuksess, setOppdateringSuksess] = useState(false);
 
     const dataErGyldigForSeksjon = (lokalSeksjon, data) => {
         if (!lokalSeksjon) return false;
@@ -24,36 +24,39 @@ export const useOppdaterCvSeksjonNoCache = (seksjon) => {
         }
     };
 
-    const oppdaterCvSeksjon = async (data) => {
-        if (!dataErGyldigForSeksjon(seksjon, data)) return;
+    const fetcher = async (url, { arg }) => {
+        const { body } = arg;
+        if (!url || !body) return;
 
-        setOppdateringLaster(true);
         setVisFeilmelding(false);
-
-        const url = `${CV_KEY}/${seksjon}`;
-        const body = { [seksjon]: data };
 
         try {
             const response = await putAPI(url, body);
             await mutate(CV_KEY, response, { revalidate: false });
-            setOppdateringSuksess(true);
             suksessNotifikasjon("CV-en din ble oppdatert");
-            return response;
+            return true;
         } catch (error) {
             errorNotifikasjon("Det oppstod en feil ved lagring");
             setVisFeilmelding(true);
             throw error;
-        } finally {
-            setOppdateringLaster(false);
+        }
+    };
+
+    const url = `${CV_KEY}/${seksjon}`;
+    const { trigger, data, error, isMutating } = useSWRMutation(url, fetcher, { revalidate: false });
+
+    const triggerOppdatering = (data) => {
+        if (dataErGyldigForSeksjon(seksjon, data)) {
+            trigger({ body: { [seksjon]: data } });
         }
     };
 
     return {
-        oppdateringSuksess,
-        oppdateringLaster,
-        oppdateringHarFeil: visFeilmelding,
-        oppdaterCvSeksjon,
+        oppdateringSuksess: data,
+        oppdateringLaster: isMutating,
+        oppdateringHarFeil: visFeilmelding || error,
         oppdaterSeksjon,
         setVisFeilmelding,
+        triggerOppdatering,
     };
 };

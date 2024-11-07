@@ -44,7 +44,7 @@ export default function Jobbonsker() {
     const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.JOBBØNSKER);
     const modalProps = useCvModal(jobbønsker, oppdateringprops);
     const { modalÅpen, toggleModal, laster } = modalProps;
-    const { oppdaterCvSeksjon } = oppdateringprops;
+    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     const slettJobbønsker = async () => {
@@ -58,7 +58,7 @@ export default function Jobbonsker() {
             workLoadTypes: [],
             workScheduleTypes: [],
         };
-        oppdaterCvSeksjon(tommeJobbønsker);
+        triggerOppdatering(tommeJobbønsker);
     };
 
     const jobbønskerErTomt = () =>
@@ -171,7 +171,7 @@ export default function Jobbonsker() {
                 </Box>
             )}
             {modalÅpen && (
-                <JobbonskerModal {...modalProps} lagreElement={oppdaterCvSeksjon} gjeldendeElement={jobbønsker} />
+                <JobbonskerModal {...modalProps} lagreElement={triggerOppdatering} gjeldendeElement={jobbønsker} />
             )}
         </section>
     );
