@@ -1,4 +1,4 @@
-import { BodyLong, HStack, Select, TextField, VStack } from "@navikt/ds-react";
+import { BodyShort, HStack, Select, TextField, VStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
@@ -52,13 +52,10 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
             toggleModal={toggleModal}
             overflowVisible
         >
-            <BodyLong>
-                <b>Kursnavn</b> *obligatorisk
-            </BodyLong>
             <TextField
                 className={styles.mb6}
-                label=""
-                description=""
+                label="Kursnavn"
+                description="Må fylles ut"
                 value={kursnavn}
                 onChange={(e) => {
                     setKursnavn(e.target.value);
@@ -101,7 +98,12 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                     <VStack>
                         <TextField
                             className={styles.mb6}
-                            label={`Antall ${formatterTidsenhet(tidsenhet, 2)}`}
+                            label={
+                                <HStack gap="2">
+                                    <BodyShort weight="semibold">Antall {formatterTidsenhet(tidsenhet, 2)}</BodyShort>
+                                    <BodyShort className={styles.description}>Må fylles ut</BodyShort>
+                                </HStack>
+                            }
                             inputMode="numeric"
                             type="number"
                             description=""
