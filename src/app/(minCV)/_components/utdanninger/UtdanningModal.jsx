@@ -5,7 +5,15 @@ import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
-export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet, trigger }) {
+export function UtdanningModal({
+    modalÅpen,
+    toggleModal,
+    gjeldendeElement,
+    lagreElement,
+    laster,
+    feilet,
+    triggerOppdatering,
+}) {
     const [utdanningsnivå, setUtdanningsnivå] = useState("");
     const [gradOgRetning, setGradOgRetning] = useState("");
     const [institusjon, setInstitusjon] = useState("");
@@ -50,7 +58,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                     endDate: erPågående ? null : sluttdato,
                     ongoing: erPågående,
                 },
-                trigger,
+                triggerOppdatering,
             );
         }
     };

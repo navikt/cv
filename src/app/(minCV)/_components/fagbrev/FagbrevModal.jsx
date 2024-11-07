@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
-export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+export default function FagbrevModal({
+    modalÅpen,
+    toggleModal,
+    gjeldendeElement,
+    lagreElement,
+    laster,
+    feilet,
+    triggerOppdatering,
+}) {
     const [valgtFagbrev, setValgtFagbrev] = useState(gjeldendeElement || null);
     const [valgtFagbrevError, setValgtFagbrevError] = useState(false);
 
@@ -16,11 +24,14 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
         if (!valgtFagbrev || valgtFagbrev.length === 0) setValgtFagbrevError(true);
 
         if (valgtFagbrev && valgtFagbrev.length !== 0) {
-            lagreElement({
-                title: valgtFagbrev.label || valgtFagbrev.title,
-                type: valgtFagbrev.type || valgtFagbrev.undertype === "MB" ? "MESTERBREV" : "SVENNEBREV_FAGBREV",
-                conceptId: valgtFagbrev.conceptId,
-            });
+            lagreElement(
+                {
+                    title: valgtFagbrev.label || valgtFagbrev.title,
+                    type: valgtFagbrev.type || valgtFagbrev.undertype === "MB" ? "MESTERBREV" : "SVENNEBREV_FAGBREV",
+                    conceptId: valgtFagbrev.conceptId,
+                },
+                triggerOppdatering,
+            );
         }
     };
 
@@ -30,12 +41,12 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til fagbrev"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
         >
@@ -47,6 +58,6 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
                 valgtVerdi={valgtFagbrev?.title}
                 error={valgtFagbrevError && "Du må velge et fagbrev"}
             />
-        </CvModal>
+        </CvModalForm>
     );
 }

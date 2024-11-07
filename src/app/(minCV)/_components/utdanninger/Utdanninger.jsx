@@ -135,7 +135,7 @@ export default function Utdanninger() {
                 </Box>
             )}
 
-            {modalÅpen && <UtdanningModal {...modalProps} utdanninger={utdanninger} trigger={triggerOppdatering} />}
+            {modalÅpen && <UtdanningModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
         </section>
     );
 }
