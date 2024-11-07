@@ -78,7 +78,8 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                         <BodyLong>{utdanning.institution}</BodyLong>
                                         <BodyLong>{utdanning.field}</BodyLong>
                                         <BodyLong className={styles.mb3}>
-                                            {parse(utdanning.description.replace(/\n/g, "<br>"))}
+                                            {utdanning.description &&
+                                                parse(utdanning.description.replace(/\n/g, "<br>"))}
                                         </BodyLong>
                                     </div>
                                 </div>
