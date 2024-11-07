@@ -32,10 +32,14 @@ export const useCvModal = (
         if (!åpen) setLaster(false);
     };
 
-    const lagreElement = (oppdatertElement) => {
+    const lagreElement = (oppdatertElement, trigger) => {
         const oppdaterteElementer = [...eksisterendeElementer];
         if (gjeldendeIndex >= 0) oppdaterteElementer.splice(gjeldendeIndex, 1, oppdatertElement);
         else oppdaterteElementer.push(oppdatertElement);
+
+        if (trigger) {
+            trigger(oppdaterteElementer);
+        }
         oppdaterSeksjon(oppdaterteElementer);
     };
 

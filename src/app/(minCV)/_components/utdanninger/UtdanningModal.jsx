@@ -3,9 +3,9 @@ import styles from "@/app/page.module.css";
 import { UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
-export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet, trigger }) {
     const [utdanningsnivå, setUtdanningsnivå] = useState("");
     const [gradOgRetning, setGradOgRetning] = useState("");
     const [institusjon, setInstitusjon] = useState("");
@@ -39,26 +39,29 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
         if (!erPågående && !sluttdato) setSluttdatoError(true);
 
         if (utdanningsnivå && startdato && (sluttdato || erPågående)) {
-            lagreElement({
-                ...gjeldendeElement,
-                nuskode: utdanningsnivå,
-                field: gradOgRetning,
-                institution: institusjon,
-                description: beskrivelse,
-                startDate: startdato,
-                endDate: erPågående ? null : sluttdato,
-                ongoing: erPågående,
-            });
+            lagreElement(
+                {
+                    ...gjeldendeElement,
+                    nuskode: utdanningsnivå,
+                    field: gradOgRetning,
+                    institution: institusjon,
+                    description: beskrivelse,
+                    startDate: startdato,
+                    endDate: erPågående ? null : sluttdato,
+                    ongoing: erPågående,
+                },
+                trigger,
+            );
         }
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til utdanning"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
         >
             <BodyLong>
@@ -128,6 +131,6 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                     />
                 )}
             </HStack>
-        </CvModal>
+        </CvModalForm>
     );
 }

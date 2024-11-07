@@ -8,7 +8,7 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import parse from "html-react-parser";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
-import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useId } from "react";
 
 function UtdanningerIcon() {
@@ -35,9 +35,10 @@ function UtdanningerIcon() {
 
 export default function Utdanninger() {
     const { utdanninger, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.UTDANNING);
+    const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.UTDANNING);
     const modalProps = useCvModal(utdanninger, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -133,7 +134,8 @@ export default function Utdanninger() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && <UtdanningModal {...modalProps} />}
+
+            {modalÅpen && <UtdanningModal {...modalProps} utdanninger={utdanninger} trigger={triggerOppdatering} />}
         </section>
     );
 }
