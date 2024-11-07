@@ -40,7 +40,9 @@ spec:
     enabled: true
     path: /personbruker/api/internal/metrics
   ingresses:
-    - {{ ingress }}
+  {{#each ingress as |url|}}
+     - {{url}}
+  {{/each}}
   observability:
     autoInstrumentation:
       enabled: true
