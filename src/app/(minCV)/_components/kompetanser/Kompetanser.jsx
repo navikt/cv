@@ -5,7 +5,7 @@ import KompetanserModal from "@/app/(minCV)/_components/kompetanser/KompetanserM
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
-import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useId } from "react";
 
@@ -33,9 +33,10 @@ function KompetanserIcon() {
 
 export default function Kompetanser() {
     const { kompetanser, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.KOMPETANSER);
+    const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.KOMPETANSER);
     const modalProps = useCvModal(kompetanser, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -78,7 +79,7 @@ export default function Kompetanser() {
                                             aria-label={`Fjern kompetanse ${kompetanse.title}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettElement(index)}
+                                            onClick={() => slettElement(index, triggerOppdatering)}
                                             loading={lastendeIndex === index}
                                         >
                                             Fjern
@@ -99,7 +100,7 @@ export default function Kompetanser() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && <KompetanserModal {...modalProps} />}
+            {modalÅpen && <KompetanserModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
         </section>
     );
 }

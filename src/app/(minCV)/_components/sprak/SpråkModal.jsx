@@ -4,9 +4,17 @@ import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { SpråkEnum } from "@/app/_common/enums/cvEnums";
 import styles from "@/app/page.module.css";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
-export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+export default function SpråkModal({
+    modalÅpen,
+    toggleModal,
+    gjeldendeElement,
+    lagreElement,
+    laster,
+    feilet,
+    triggerOppdatering,
+}) {
     const [valgtSpråk, setValgtSpråk] = useState(gjeldendeElement || null);
     const [muntligEvne, setMuntligEvne] = useState("IKKE_OPPGITT");
     const [skriftligEvne, setSkriftligEvne] = useState("IKKE_OPPGITT");
@@ -25,12 +33,15 @@ export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement,
         if (!valgtSpråk || valgtSpråk.length === 0) setValgtSprakError(true);
 
         if (valgtSpråk && valgtSpråk.length !== 0) {
-            lagreElement({
-                language: valgtSpråk.language || valgtSpråk.title,
-                iso3Code: valgtSpråk.iso3Code || valgtSpråk.kode,
-                oralProficiency: muntligEvne,
-                writtenProficiency: skriftligEvne,
-            });
+            lagreElement(
+                {
+                    language: valgtSpråk.language || valgtSpråk.title,
+                    iso3Code: valgtSpråk.iso3Code || valgtSpråk.kode,
+                    oralProficiency: muntligEvne,
+                    writtenProficiency: skriftligEvne,
+                },
+                triggerOppdatering,
+            );
         }
     };
 
@@ -40,12 +51,12 @@ export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement,
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til språk"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
         >
@@ -87,6 +98,6 @@ export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement,
                     </option>
                 ))}
             </Select>
-        </CvModal>
+        </CvModalForm>
     );
 }

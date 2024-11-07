@@ -4,7 +4,7 @@ import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export default function AndreGodkjenningerModal({
     modalÅpen,
@@ -13,6 +13,7 @@ export default function AndreGodkjenningerModal({
     lagreElement,
     laster,
     feilet,
+    triggerOppdatering,
 }) {
     const [valgtGodkjenning, setValgtGodkjenning] = useState(gjeldendeElement || null);
     const [utsteder, setUtsteder] = useState(gjeldendeElement?.issuer || "");
@@ -41,13 +42,16 @@ export default function AndreGodkjenningerModal({
         if (!godkjenningFraDato) setGodkjenningFraDatoError(true);
 
         if (valgtGodkjenning && valgtGodkjenning.length !== 0 && godkjenningFraDato && !godkjenningTilDatoError) {
-            lagreElement({
-                certificateName: valgtGodkjenning.title || valgtGodkjenning.certificateName,
-                conceptId: valgtGodkjenning.conceptId,
-                issuer: utsteder,
-                fromDate: godkjenningFraDato,
-                toDate: godkjenningTilDato,
-            });
+            lagreElement(
+                {
+                    certificateName: valgtGodkjenning.title || valgtGodkjenning.certificateName,
+                    conceptId: valgtGodkjenning.conceptId,
+                    issuer: utsteder,
+                    fromDate: godkjenningFraDato,
+                    toDate: godkjenningTilDato,
+                },
+                triggerOppdatering,
+            );
         }
     };
 
@@ -57,12 +61,12 @@ export default function AndreGodkjenningerModal({
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til annen godkjenning"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
         >
@@ -103,6 +107,6 @@ export default function AndreGodkjenningerModal({
                     setError={setGodkjenningTilDatoError}
                 />
             </HStack>
-        </CvModal>
+        </CvModalForm>
     );
 }

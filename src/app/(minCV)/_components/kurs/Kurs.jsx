@@ -6,7 +6,7 @@ import KursModal from "@/app/(minCV)/_components/kurs/KursModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
-import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useId } from "react";
 
@@ -40,9 +40,10 @@ function KursIcon() {
 
 export default function Kurs() {
     const { kurs, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.KURS);
+    const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.KURS);
     const modalProps = useCvModal(kurs, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -102,7 +103,7 @@ export default function Kurs() {
                                             aria-label={`Fjern kurs ${k.title}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettElement(index)}
+                                            onClick={() => slettElement(index, triggerOppdatering)}
                                             loading={lastendeIndex === index}
                                         >
                                             Fjern
@@ -122,7 +123,7 @@ export default function Kurs() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && <KursModal {...modalProps} />}
+            {modalÅpen && <KursModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
         </section>
     );
 }

@@ -6,7 +6,7 @@ import OffentligeGodkjenningerModal from "@/app/(minCV)/_components/offentligeGo
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
-import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useId } from "react";
 
@@ -34,9 +34,10 @@ function OffentligeGodkjenningerIcon() {
 
 export default function OffentligeGodkjenninger() {
     const { offentligeGodkjenninger, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER);
+    const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER);
     const modalProps = useCvModal(offentligeGodkjenninger, oppdateringprops);
     const { modalÅpen, toggleModal, lastendeIndex, slettElement } = modalProps;
+    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -99,7 +100,7 @@ export default function OffentligeGodkjenninger() {
                                             aria-label={`Fjern offentlig godkjenning ${godkjenning.title}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettElement(index)}
+                                            onClick={() => slettElement(index, triggerOppdatering)}
                                             loading={lastendeIndex === index}
                                         >
                                             Fjern
@@ -123,7 +124,7 @@ export default function OffentligeGodkjenninger() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && <OffentligeGodkjenningerModal {...modalProps} />}
+            {modalÅpen && <OffentligeGodkjenningerModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
         </section>
     );
 }

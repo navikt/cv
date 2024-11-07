@@ -6,7 +6,7 @@ import FørerkortModal from "@/app/(minCV)/_components/forerkort/FørerkortModal
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
-import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useId } from "react";
 
@@ -34,9 +34,10 @@ function FørerkortIcon() {
 
 export default function Forerkort() {
     const { førerkort, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.FØRERKORT);
+    const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.FØRERKORT);
     const modalProps = useCvModal(førerkort, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -85,7 +86,7 @@ export default function Forerkort() {
                                             aria-label={`Fjern førerkort ${fk.type}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettElement(index)}
+                                            onClick={() => slettElement(index, triggerOppdatering)}
                                             loading={lastendeIndex === index}
                                         >
                                             Fjern
@@ -106,7 +107,7 @@ export default function Forerkort() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && <FørerkortModal {...modalProps} />}
+            {modalÅpen && <FørerkortModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
         </div>
     );
 }

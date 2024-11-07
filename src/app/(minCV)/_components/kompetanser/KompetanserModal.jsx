@@ -2,9 +2,17 @@ import { BodyLong } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
-export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+export default function KompetanserModal({
+    modalÅpen,
+    toggleModal,
+    gjeldendeElement,
+    lagreElement,
+    laster,
+    feilet,
+    triggerOppdatering,
+}) {
     const [valgtKompetanse, setValgtKompetanse] = useState(gjeldendeElement || null);
     const [valgtKompetanseError, setValgtKompetanseError] = useState(false);
 
@@ -17,11 +25,14 @@ export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeEle
         if (!valgtKompetanse || valgtKompetanse.length === 0) setValgtKompetanseError(true);
 
         if (valgtKompetanse && valgtKompetanse.length !== 0) {
-            lagreElement({
-                title: valgtKompetanse.label || valgtKompetanse.title,
-                type: valgtKompetanse.type,
-                conceptId: valgtKompetanse.conceptId,
-            });
+            lagreElement(
+                {
+                    title: valgtKompetanse.label || valgtKompetanse.title,
+                    type: valgtKompetanse.type,
+                    conceptId: valgtKompetanse.conceptId,
+                },
+                triggerOppdatering,
+            );
         }
     };
 
@@ -31,12 +42,12 @@ export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeEle
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til kompetanse"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
         >
@@ -51,6 +62,6 @@ export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeEle
                 valgtVerdi={valgtKompetanse?.title}
                 error={valgtKompetanseError && "Du må velge en eller flere kompetanser"}
             />
-        </CvModal>
+        </CvModalForm>
     );
 }

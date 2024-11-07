@@ -5,7 +5,7 @@ import { CvSeksjonEnum, SeksjonsIdEnum, SpråkEnum } from "@/app/_common/enums/c
 import SpråkModal from "@/app/(minCV)/_components/sprak/SpråkModal";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
-import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useId } from "react";
 
@@ -33,9 +33,10 @@ function SpråkIcon() {
 
 export default function Sprak() {
     const { språk, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.SPRÅK);
+    const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.SPRÅK);
     const modalProps = useCvModal(språk, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
+    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -94,7 +95,7 @@ export default function Sprak() {
                                             aria-label={`Fjern språk ${sp.language}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettElement(index)}
+                                            onClick={() => slettElement(index, triggerOppdatering)}
                                             loading={lastendeIndex === index}
                                         >
                                             Fjern
@@ -115,7 +116,7 @@ export default function Sprak() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && <SpråkModal {...modalProps} />}
+            {modalÅpen && <SpråkModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
         </section>
     );
 }

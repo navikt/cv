@@ -2,9 +2,17 @@ import { Checkbox, CheckboxGroup, HStack, TextField } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
-export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+export function AndreErfaringerModal({
+    modalÅpen,
+    toggleModal,
+    gjeldendeElement,
+    lagreElement,
+    laster,
+    feilet,
+    triggerOppdatering,
+}) {
     const [beskrivelse, setBeskrivelse] = useState("");
     const [rolle, setRolle] = useState("");
     const [pågår, setPågår] = useState([]);
@@ -34,24 +42,27 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
         if (!erPågående && !sluttdato) setSluttdatoError(true);
 
         if (rolle && startdato && (sluttdato || erPågående)) {
-            lagreElement({
-                ...gjeldendeElement,
-                role: rolle,
-                description: beskrivelse,
-                fromDate: startdato,
-                toDate: erPågående ? null : sluttdato,
-                ongoing: erPågående,
-            });
+            lagreElement(
+                {
+                    ...gjeldendeElement,
+                    role: rolle,
+                    description: beskrivelse,
+                    fromDate: startdato,
+                    toDate: erPågående ? null : sluttdato,
+                    ongoing: erPågående,
+                },
+                triggerOppdatering,
+            );
         }
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til annen erfaring"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
         >
             <TextField
@@ -101,6 +112,6 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
                     />
                 )}
             </HStack>
-        </CvModal>
+        </CvModalForm>
     );
 }
