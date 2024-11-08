@@ -505,6 +505,6 @@
     border-color: rgb(0, 103, 197);
 }
 
-.description {
+.mandatoryColor {
     color: var(--a-text-subtle);
 }

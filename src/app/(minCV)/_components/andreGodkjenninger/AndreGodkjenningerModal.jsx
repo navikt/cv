@@ -71,7 +71,7 @@ export default function AndreGodkjenningerModal({
                 label={
                     <HStack gap="2">
                         <BodyShort weight="semibold">Annen godkjenning</BodyShort>
-                        <BodyShort className={styles.description}>Må fylles ut</BodyShort>
+                        <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                     </HStack>
                 }
                 description="Yrkessertifikater, attester, bevis o.l."
@@ -94,7 +94,7 @@ export default function AndreGodkjenningerModal({
                     label={
                         <HStack gap="2">
                             <BodyShort weight="semibold">Fullført</BodyShort>
-                            <BodyShort className={styles.description}>Må fylles ut</BodyShort>
+                            <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                         </HStack>
                     }
                     error={godkjenningFraDatoError}

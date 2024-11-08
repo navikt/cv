@@ -45,7 +45,7 @@ export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeEle
                 label={
                     <HStack gap="2">
                         <BodyShort weight="semibold">Hva er du flink til?</BodyShort>
-                        <BodyShort className={styles.description}>Må fylles ut</BodyShort>
+                        <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                     </HStack>
                 }
                 description="Legg til kompetanser, ferdigheter, verktøy o.l."

@@ -66,7 +66,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                 label={
                     <HStack gap="2">
                         <BodyShort weight="semibold">Utdanningsnivå</BodyShort>
-                        <BodyShort className={styles.description}>Må fylles ut</BodyShort>
+                        <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                     </HStack>
                 }
                 description="Hvilken type utdanning har du gått?"

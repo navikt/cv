@@ -58,7 +58,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
                 label={
                     <HStack gap="2">
                         <BodyShort weight="semibold">Rolle</BodyShort>
-                        <BodyShort className={styles.description}>Må fylles ut</BodyShort>
+                        <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                     </HStack>
                 }
                 description="Eksempel: militærtjeneste, styreverv eller fotballtrener"
