@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ErrorSummary, HStack, TextField, VStack } from "@navikt/ds-react";
+import { HStack, TextField, VStack } from "@navikt/ds-react";
 import { PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
@@ -172,12 +172,6 @@ export default function PersonaliaModal({
                 value={fødselsdato ? formatterFullDato(fødselsdato) : ""}
                 readOnly
             />
-            {fornavnError && (
-                <ErrorSummary heading="Du må rette disse feilene i skjemaet" headingTag="h3">
-                    <ErrorSummary.Item href="#1">Felt må fylles ut med alder</ErrorSummary.Item>
-                    <ErrorSummary.Item href="#2">Tekstfeltet må ha en godkjent e-mail</ErrorSummary.Item>
-                </ErrorSummary>
-            )}
         </CvModalForm>
     );
 }
