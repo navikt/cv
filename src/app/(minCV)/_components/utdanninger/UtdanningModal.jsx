@@ -5,15 +5,7 @@ import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
-export function UtdanningModal({
-    modalÅpen,
-    toggleModal,
-    gjeldendeElement,
-    lagreElement,
-    laster,
-    feilet,
-    triggerOppdatering,
-}) {
+export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [utdanningsnivå, setUtdanningsnivå] = useState("");
     const [gradOgRetning, setGradOgRetning] = useState("");
     const [institusjon, setInstitusjon] = useState("");
@@ -47,19 +39,16 @@ export function UtdanningModal({
         if (!erPågående && !sluttdato) setSluttdatoError(true);
 
         if (utdanningsnivå && startdato && (sluttdato || erPågående)) {
-            lagreElement(
-                {
-                    ...gjeldendeElement,
-                    nuskode: utdanningsnivå,
-                    field: gradOgRetning,
-                    institution: institusjon,
-                    description: beskrivelse,
-                    startDate: startdato,
-                    endDate: erPågående ? null : sluttdato,
-                    ongoing: erPågående,
-                },
-                triggerOppdatering,
-            );
+            lagreElement({
+                ...gjeldendeElement,
+                nuskode: utdanningsnivå,
+                field: gradOgRetning,
+                institution: institusjon,
+                description: beskrivelse,
+                startDate: startdato,
+                endDate: erPågående ? null : sluttdato,
+                ongoing: erPågående,
+            });
         }
     };
 
