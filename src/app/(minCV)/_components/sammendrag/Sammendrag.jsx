@@ -5,7 +5,7 @@ import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import parse from "html-react-parser";
-import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import SammendragModal from "@/app/(minCV)/_components/sammendrag/SammendragModal";
 import { useId } from "react";
@@ -34,10 +34,10 @@ function SammendragIcon() {
 
 export default function Sammendrag() {
     const { sammendrag, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.SAMMENDRAG);
+    const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.SAMMENDRAG);
     const modalProps = useCvModal(sammendrag, oppdateringprops);
-    const { oppdaterSeksjon } = oppdateringprops;
     const { modalÅpen, toggleModal, laster } = modalProps;
+    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -93,7 +93,7 @@ export default function Sammendrag() {
                                     aria-label="Fjern sammendrag"
                                     icon={<TrashIcon aria-hidden />}
                                     variant="tertiary"
-                                    onClick={() => oppdaterSeksjon("")}
+                                    onClick={() => triggerOppdatering("")}
                                     loading={laster}
                                 >
                                     Fjern
@@ -105,7 +105,7 @@ export default function Sammendrag() {
             )}
 
             {modalÅpen && (
-                <SammendragModal {...modalProps} lagreElement={oppdaterSeksjon} gjeldendeElement={sammendrag} />
+                <SammendragModal {...modalProps} lagreElement={triggerOppdatering} gjeldendeElement={sammendrag} />
             )}
         </section>
     );

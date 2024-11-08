@@ -3,7 +3,7 @@ import styles from "@/app/page.module.css";
 import { UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [utdanningsnivå, setUtdanningsnivå] = useState("");
@@ -53,12 +53,12 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til utdanning"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
         >
             <Select
@@ -131,6 +131,6 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                     />
                 )}
             </HStack>
-        </CvModal>
+        </CvModalForm>
     );
 }

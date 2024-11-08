@@ -5,7 +5,7 @@ import FagbrevModal from "@/app/(minCV)/_components/fagbrev/FagbrevModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
-import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useId } from "react";
 
@@ -33,7 +33,7 @@ function FagbrevIcon() {
 
 export default function Fagbrev() {
     const { fagbrev, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.FAGBREV);
+    const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.FAGBREV);
     const modalProps = useCvModal(fagbrev, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
     const headingId = useId();

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, BodyLong, Heading, Textarea, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [sammendragEndring, setSammendragEndring] = useState(gjeldendeElement || "");
@@ -17,12 +17,12 @@ export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElem
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til sammendrag"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
         >
             <VStack>
@@ -48,6 +48,6 @@ export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElem
                     error={sammendragError && "Du må skrive inn sammendrag"}
                 />
             </VStack>
-        </CvModal>
+        </CvModalForm>
     );
 }

@@ -1,24 +1,35 @@
 "use client";
 
-import useSWR, { mutate } from "swr";
+import useSWRMutation from "swr/mutation";
+import { mutate } from "swr";
 import { putAPI } from "@/app/_common/utils/fetchUtils";
 import { CV_KEY } from "@/app/_common/hooks/swr/useCv";
 import { useContext, useState } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
 
-export const useOppdaterCvSeksjon = (seksjon) => {
+export const useOppdaterCvSeksjonNoCache = (seksjon) => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
-    const [dataForOppdatering, oppdaterSeksjon] = useState(null);
     const [visFeilmelding, setVisFeilmelding] = useState(false);
 
-    const fetcher = async ({ url, seksjon: lokalSeksjon, body }) => {
-        if (!url || !body || !lokalSeksjon) return;
+    const dataErGyldigForSeksjon = (lokalSeksjon, data) => {
+        if (!lokalSeksjon) return false;
+        switch (lokalSeksjon) {
+            case CvSeksjonEnum.SAMMENDRAG:
+                return !!data || data === "";
+            default:
+                return !!data;
+        }
+    };
+
+    const fetcher = async (url, { arg }) => {
+        const { body } = arg;
+        if (!url || !body) return;
 
         setVisFeilmelding(false);
 
         try {
-            const response = await putAPI(url, body, suksessNotifikasjon, errorNotifikasjon);
+            const response = await putAPI(url, body);
             await mutate(CV_KEY, response, { revalidate: false });
             suksessNotifikasjon("CV-en din ble oppdatert");
             return true;
@@ -29,27 +40,20 @@ export const useOppdaterCvSeksjon = (seksjon) => {
         }
     };
 
-    const dataErGyldigForSeksjon = (lokalSeksjon, data) => {
-        if (!lokalSeksjon) return false;
+    const url = `${CV_KEY}/${seksjon}`;
+    const { trigger, data, error, isMutating } = useSWRMutation(url, fetcher, { revalidate: false });
 
-        switch (lokalSeksjon) {
-            case CvSeksjonEnum.SAMMENDRAG:
-                return !!data || data === "";
-            default:
-                return !!data;
+    const triggerOppdatering = (nyData) => {
+        if (dataErGyldigForSeksjon(seksjon, nyData)) {
+            trigger({ body: { [seksjon]: nyData } });
         }
     };
 
-    const skalOppdatere = dataErGyldigForSeksjon(seksjon, dataForOppdatering);
-    const url = `${CV_KEY}/${seksjon}`;
-    const body = { [seksjon]: dataForOppdatering };
-
-    const { data, error, isLoading } = useSWR(skalOppdatere ? { url, seksjon, body } : null, fetcher);
     return {
         oppdateringSuksess: data,
-        oppdateringLaster: isLoading,
+        oppdateringLaster: isMutating,
         oppdateringHarFeil: visFeilmelding || error,
-        oppdaterSeksjon,
         setVisFeilmelding,
+        triggerOppdatering,
     };
 };

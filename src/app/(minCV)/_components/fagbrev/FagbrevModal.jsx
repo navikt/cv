@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [valgtFagbrev, setValgtFagbrev] = useState(gjeldendeElement || null);
@@ -30,12 +30,12 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til fagbrev"
             feilet={feilet}
-            laster={laster}
-            lagre={lagre}
+            hand={laster}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
         >
@@ -47,6 +47,6 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
                 valgtVerdi={valgtFagbrev?.title}
                 error={valgtFagbrevError && "Du må velge et fagbrev"}
             />
-        </CvModal>
+        </CvModalForm>
     );
 }

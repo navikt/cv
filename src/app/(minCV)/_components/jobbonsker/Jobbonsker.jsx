@@ -14,7 +14,7 @@ import { formatterListeAvObjekterTilTekst } from "@/app/_common/utils/stringUtil
 import { JobbonskerModal } from "@/app/(minCV)/_components/jobbonsker/JobbonskerModal";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
-import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 function JobbonskerIcon() {
@@ -41,10 +41,10 @@ function JobbonskerIcon() {
 
 export default function Jobbonsker() {
     const { jobbønsker, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.JOBBØNSKER);
+    const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.JOBBØNSKER);
     const modalProps = useCvModal(jobbønsker, oppdateringprops);
     const { modalÅpen, toggleModal, laster } = modalProps;
-    const { oppdaterSeksjon } = oppdateringprops;
+    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     const slettJobbønsker = async () => {
@@ -58,7 +58,7 @@ export default function Jobbonsker() {
             workLoadTypes: [],
             workScheduleTypes: [],
         };
-        oppdaterSeksjon(tommeJobbønsker);
+        triggerOppdatering(tommeJobbønsker);
     };
 
     const jobbønskerErTomt = () =>
@@ -171,7 +171,7 @@ export default function Jobbonsker() {
                 </Box>
             )}
             {modalÅpen && (
-                <JobbonskerModal {...modalProps} lagreElement={oppdaterSeksjon} gjeldendeElement={jobbønsker} />
+                <JobbonskerModal {...modalProps} lagreElement={triggerOppdatering} gjeldendeElement={jobbønsker} />
             )}
         </section>
     );

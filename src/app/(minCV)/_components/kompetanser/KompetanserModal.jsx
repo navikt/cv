@@ -2,7 +2,7 @@ import { BodyShort, HStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import styles from "@/app/page.module.css";
 
 export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
@@ -32,12 +32,12 @@ export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeEle
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til kompetanse"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
         >
@@ -54,6 +54,6 @@ export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeEle
                 valgtVerdi={valgtKompetanse?.title}
                 error={valgtKompetanseError && "Du må velge en eller flere kompetanser"}
             />
-        </CvModal>
+        </CvModalForm>
     );
 }

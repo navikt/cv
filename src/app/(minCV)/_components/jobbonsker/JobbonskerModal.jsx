@@ -4,7 +4,7 @@ import { AnsettelsesformEnum, ArbeidstidEnum, OmfangEnum, StarttidspunktEnum } f
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [yrker, setYrker] = useState([]);
@@ -72,12 +72,12 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til jobbønsker"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
         >
             <VStack justify="space-between">
@@ -158,6 +158,6 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
                     ))}
                 </HStack>
             </RadioGroup>
-        </CvModal>
+        </CvModalForm>
     );
 }
