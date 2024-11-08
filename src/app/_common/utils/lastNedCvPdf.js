@@ -468,8 +468,8 @@ export function lastNedCvPdf(cv, personalia) {
 
                     return språkRad(
                         s.language,
-                        muntlig === "Ikke oppgitt" ? "" : `Muntlig: ${muntlig}`,
-                        skriftlig === "Ikke oppgitt" ? "" : `Skriftlig: ${skriftlig}`,
+                        muntlig === "Språknivå ikke oppgitt" ? "" : `Muntlig: ${muntlig}`,
+                        skriftlig === "Språknivå ikke oppgitt" ? "" : `Skriftlig: ${skriftlig}`,
                     );
                 }),
             ];
