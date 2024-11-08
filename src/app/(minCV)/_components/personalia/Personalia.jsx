@@ -7,7 +7,7 @@ import PersonaliaModal from "@/app/(minCV)/_components/personalia/PersonaliaModa
 import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
-import { useOppdaterPersonalia } from "@/app/_common/hooks/swr/useOppdaterPersonalia";
+import { useOppdaterPersonaliaNoCache } from "@/app/_common/hooks/swr/useOppdaterPersonaliaNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 
 function PersonaliaIcon() {
@@ -34,7 +34,7 @@ function PersonaliaIcon() {
 
 export default function Personalia() {
     const { personalia, personLaster } = usePerson();
-    const oppdateringprops = useOppdaterPersonalia();
+    const oppdateringprops = useOppdaterPersonaliaNoCache();
     const modalProps = useCvModal(personalia, oppdateringprops);
     const { modalÅpen, toggleModal } = modalProps;
     const headingId = useId();
