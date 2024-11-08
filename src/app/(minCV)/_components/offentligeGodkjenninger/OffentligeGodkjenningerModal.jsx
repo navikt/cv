@@ -13,7 +13,6 @@ export default function OffentligeGodkjenningerModal({
     lagreElement,
     laster,
     feilet,
-    triggerOppdatering,
 }) {
     const [valgtGodkjenning, setValgtGodkjenning] = useState(gjeldendeElement || null);
     const [utsteder, setUtsteder] = useState(gjeldendeElement?.issuer || "");
@@ -42,16 +41,13 @@ export default function OffentligeGodkjenningerModal({
         if (!godkjenningFraDato) setGodkjenningFraDatoError(true);
 
         if (valgtGodkjenning && valgtGodkjenning.length !== 0 && godkjenningFraDato && !godkjenningTilDatoError) {
-            lagreElement(
-                {
-                    title: valgtGodkjenning.title,
-                    conceptId: valgtGodkjenning.conceptId,
-                    issuer: utsteder,
-                    fromDate: godkjenningFraDato,
-                    toDate: godkjenningTilDato,
-                },
-                triggerOppdatering,
-            );
+            lagreElement({
+                title: valgtGodkjenning.title,
+                conceptId: valgtGodkjenning.conceptId,
+                issuer: utsteder,
+                fromDate: godkjenningFraDato,
+                toDate: godkjenningTilDato,
+            });
         }
     };
 

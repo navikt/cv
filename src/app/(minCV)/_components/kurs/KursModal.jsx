@@ -6,15 +6,7 @@ import { TidsenhetEnum } from "@/app/_common/enums/cvEnums";
 import { formatterTidsenhet, storForbokstav } from "@/app/_common/utils/stringUtils";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
-export default function KursModal({
-    modalÅpen,
-    toggleModal,
-    gjeldendeElement,
-    lagreElement,
-    laster,
-    feilet,
-    triggerOppdatering,
-}) {
+export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [kursnavn, setKursnavn] = useState(gjeldendeElement?.title || "");
     const [utsteder, setUtsteder] = useState(gjeldendeElement?.issuer || "");
     const [kursDato, setKursDato] = useState(gjeldendeElement?.date ? new Date(gjeldendeElement?.date) : null);
@@ -40,16 +32,13 @@ export default function KursModal({
         if (tidsenhet && !lengde) setLengdeError(true);
 
         if (kursnavn && !kursDatoError && (tidsenhet ? lengde : true)) {
-            await lagreElement(
-                {
-                    title: kursnavn,
-                    issuer: utsteder,
-                    date: kursDato,
-                    durationUnit: tidsenhet || null,
-                    duration: lengde || null,
-                },
-                triggerOppdatering,
-            );
+            await lagreElement({
+                title: kursnavn,
+                issuer: utsteder,
+                date: kursDato,
+                durationUnit: tidsenhet || null,
+                duration: lengde || null,
+            });
         }
     };
 

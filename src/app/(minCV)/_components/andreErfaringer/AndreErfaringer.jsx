@@ -37,7 +37,6 @@ export default function AndreErfaringer() {
     const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.ANDRE_ERFARINGER);
     const modalProps = useCvModal(andreErfaringer, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
-    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -96,7 +95,7 @@ export default function AndreErfaringer() {
                                                 aria-label={`Fjern erfaring ${erfaring.role}`}
                                                 icon={<TrashIcon aria-hidden />}
                                                 variant="tertiary"
-                                                onClick={() => slettElement(index, triggerOppdatering)}
+                                                onClick={() => slettElement(index)}
                                                 loading={lastendeIndex === index}
                                             >
                                                 Fjern
@@ -119,7 +118,7 @@ export default function AndreErfaringer() {
                     </>
                 </Box>
             )}
-            {modalÅpen && <AndreErfaringerModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
+            {modalÅpen && <AndreErfaringerModal {...modalProps} />}
         </section>
     );
 }

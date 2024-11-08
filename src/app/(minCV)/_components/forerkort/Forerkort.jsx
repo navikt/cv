@@ -37,7 +37,6 @@ export default function Forerkort() {
     const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.FØRERKORT);
     const modalProps = useCvModal(førerkort, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
-    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -86,7 +85,7 @@ export default function Forerkort() {
                                             aria-label={`Fjern førerkort ${fk.type}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettElement(index, triggerOppdatering)}
+                                            onClick={() => slettElement(index)}
                                             loading={lastendeIndex === index}
                                         >
                                             Fjern
@@ -107,7 +106,7 @@ export default function Forerkort() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && <FørerkortModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
+            {modalÅpen && <FørerkortModal {...modalProps} />}
         </div>
     );
 }

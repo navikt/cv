@@ -36,7 +36,6 @@ export default function Sprak() {
     const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.SPRÅK);
     const modalProps = useCvModal(språk, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
-    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -95,7 +94,7 @@ export default function Sprak() {
                                             aria-label={`Fjern språk ${sp.language}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettElement(index, triggerOppdatering)}
+                                            onClick={() => slettElement(index)}
                                             loading={lastendeIndex === index}
                                         >
                                             Fjern
@@ -116,7 +115,7 @@ export default function Sprak() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && <SpråkModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
+            {modalÅpen && <SpråkModal {...modalProps} />}
         </section>
     );
 }

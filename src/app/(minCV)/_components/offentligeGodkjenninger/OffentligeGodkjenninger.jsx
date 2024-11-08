@@ -37,7 +37,6 @@ export default function OffentligeGodkjenninger() {
     const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.OFFENTLIGE_GODKJENNINGER);
     const modalProps = useCvModal(offentligeGodkjenninger, oppdateringprops);
     const { modalÅpen, toggleModal, lastendeIndex, slettElement } = modalProps;
-    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -100,7 +99,7 @@ export default function OffentligeGodkjenninger() {
                                             aria-label={`Fjern offentlig godkjenning ${godkjenning.title}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettElement(index, triggerOppdatering)}
+                                            onClick={() => slettElement(index)}
                                             loading={lastendeIndex === index}
                                         >
                                             Fjern
@@ -124,7 +123,7 @@ export default function OffentligeGodkjenninger() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && <OffentligeGodkjenningerModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
+            {modalÅpen && <OffentligeGodkjenningerModal {...modalProps} />}
         </section>
     );
 }

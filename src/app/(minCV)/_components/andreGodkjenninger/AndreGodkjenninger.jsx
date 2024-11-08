@@ -37,7 +37,6 @@ export default function AndreGodkjenninger() {
     const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.ANDRE_GODKJENNINGER);
     const modalProps = useCvModal(andreGodkjenninger, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
-    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -101,7 +100,7 @@ export default function AndreGodkjenninger() {
                                             aria-label={`Fjern godkjenning ${godkjenning.certificateName}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettElement(index, triggerOppdatering)}
+                                            onClick={() => slettElement(index)}
                                             loading={lastendeIndex === index}
                                         >
                                             Fjern
@@ -123,7 +122,7 @@ export default function AndreGodkjenninger() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && <AndreGodkjenningerModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
+            {modalÅpen && <AndreGodkjenningerModal {...modalProps} />}
         </section>
     );
 }

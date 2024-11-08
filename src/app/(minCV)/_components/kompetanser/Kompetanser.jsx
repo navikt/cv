@@ -36,7 +36,6 @@ export default function Kompetanser() {
     const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.KOMPETANSER);
     const modalProps = useCvModal(kompetanser, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
-    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -79,7 +78,7 @@ export default function Kompetanser() {
                                             aria-label={`Fjern kompetanse ${kompetanse.title}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettElement(index, triggerOppdatering)}
+                                            onClick={() => slettElement(index)}
                                             loading={lastendeIndex === index}
                                         >
                                             Fjern
@@ -100,7 +99,7 @@ export default function Kompetanser() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && <KompetanserModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
+            {modalÅpen && <KompetanserModal {...modalProps} />}
         </section>
     );
 }

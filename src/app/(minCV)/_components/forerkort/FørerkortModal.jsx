@@ -5,15 +5,7 @@ import førerkortData from "@/app/_common/data/førerkort.json";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
-export default function FørerkortModal({
-    modalÅpen,
-    toggleModal,
-    gjeldendeElement,
-    lagreElement,
-    laster,
-    feilet,
-    triggerOppdatering,
-}) {
+export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [valgtFørerkort, setValgtFørerkort] = useState(gjeldendeElement || null);
     const [gyldigFra, setGyldigFra] = useState(
         gjeldendeElement?.acquiredDate ? new Date(gjeldendeElement.acquiredDate) : null,
@@ -46,14 +38,11 @@ export default function FørerkortModal({
         if (kreverDato && !gyldigTil) setGyldigTilError(true);
 
         if (valgtFørerkort && valgtFørerkort.length !== 0 && (kreverDato ? gyldigFra && gyldigTil : true)) {
-            lagreElement(
-                {
-                    type: valgtFørerkort.label || valgtFørerkort.type,
-                    acquiredDate: gyldigFra,
-                    expiryDate: gyldigTil,
-                },
-                triggerOppdatering,
-            );
+            lagreElement({
+                type: valgtFørerkort.label || valgtFørerkort.type,
+                acquiredDate: gyldigFra,
+                expiryDate: gyldigTil,
+            });
         }
     };
 

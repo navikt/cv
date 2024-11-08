@@ -6,15 +6,7 @@ import styles from "@/app/page.module.css";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
-export default function SpråkModal({
-    modalÅpen,
-    toggleModal,
-    gjeldendeElement,
-    lagreElement,
-    laster,
-    feilet,
-    triggerOppdatering,
-}) {
+export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [valgtSpråk, setValgtSpråk] = useState(gjeldendeElement || null);
     const [muntligEvne, setMuntligEvne] = useState("IKKE_OPPGITT");
     const [skriftligEvne, setSkriftligEvne] = useState("IKKE_OPPGITT");
@@ -33,15 +25,12 @@ export default function SpråkModal({
         if (!valgtSpråk || valgtSpråk.length === 0) setValgtSprakError(true);
 
         if (valgtSpråk && valgtSpråk.length !== 0) {
-            lagreElement(
-                {
-                    language: valgtSpråk.language || valgtSpråk.title,
-                    iso3Code: valgtSpråk.iso3Code || valgtSpråk.kode,
-                    oralProficiency: muntligEvne,
-                    writtenProficiency: skriftligEvne,
-                },
-                triggerOppdatering,
-            );
+            lagreElement({
+                language: valgtSpråk.language || valgtSpråk.title,
+                iso3Code: valgtSpråk.iso3Code || valgtSpråk.kode,
+                oralProficiency: muntligEvne,
+                writtenProficiency: skriftligEvne,
+            });
         }
     };
 

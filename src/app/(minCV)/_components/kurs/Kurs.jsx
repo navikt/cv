@@ -43,7 +43,6 @@ export default function Kurs() {
     const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.KURS);
     const modalProps = useCvModal(kurs, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
-    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -103,7 +102,7 @@ export default function Kurs() {
                                             aria-label={`Fjern kurs ${k.title}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettElement(index, triggerOppdatering)}
+                                            onClick={() => slettElement(index)}
                                             loading={lastendeIndex === index}
                                         >
                                             Fjern
@@ -123,7 +122,7 @@ export default function Kurs() {
                     </Button>
                 </Box>
             )}
-            {modalÅpen && <KursModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
+            {modalÅpen && <KursModal {...modalProps} />}
         </section>
     );
 }

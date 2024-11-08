@@ -38,7 +38,6 @@ export default function Utdanninger() {
     const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.UTDANNING);
     const modalProps = useCvModal(utdanninger, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
-    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -114,7 +113,7 @@ export default function Utdanninger() {
                                             aria-label={`Fjern utdanning ${utdanning.field}`}
                                             icon={<TrashIcon aria-hidden />}
                                             variant="tertiary"
-                                            onClick={() => slettElement(index, triggerOppdatering)}
+                                            onClick={() => slettElement(index)}
                                             loading={lastendeIndex === index}
                                         >
                                             Fjern
@@ -135,7 +134,7 @@ export default function Utdanninger() {
                 </Box>
             )}
 
-            {modalÅpen && <UtdanningModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
+            {modalÅpen && <UtdanningModal {...modalProps} />}
         </section>
     );
 }

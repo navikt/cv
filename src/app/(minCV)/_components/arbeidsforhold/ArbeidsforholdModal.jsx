@@ -6,15 +6,7 @@ import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
-export function ArbeidsforholdModal({
-    modalÅpen,
-    toggleModal,
-    gjeldendeElement,
-    lagreElement,
-    laster,
-    feilet,
-    triggerOppdatering,
-}) {
+export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [arbeidsgiver, setArbeidsgiver] = useState("");
     const [alternativTittel, setAlternativTittel] = useState("");
     const [arbeidssted, setArbeidssted] = useState("");
@@ -59,22 +51,19 @@ export function ArbeidsforholdModal({
         if (!erPågående && !sluttdato) setSluttdatoError(true);
 
         if (stillingstittel && startdato && (sluttdato || erPågående)) {
-            await lagreElement(
-                {
-                    ...gjeldendeElement,
-                    employer: arbeidsgiver,
-                    jobTitle: stillingstittel,
-                    conceptId: konseptId,
-                    styrkkode: styrk,
-                    alternativeJobTitle: alternativTittel,
-                    location: arbeidssted,
-                    description: arbeidsoppgaver,
-                    fromDate: startdato,
-                    toDate: erPågående ? null : sluttdato,
-                    ongoing: erPågående,
-                },
-                triggerOppdatering,
-            );
+            await lagreElement({
+                ...gjeldendeElement,
+                employer: arbeidsgiver,
+                jobTitle: stillingstittel,
+                conceptId: konseptId,
+                styrkkode: styrk,
+                alternativeJobTitle: alternativTittel,
+                location: arbeidssted,
+                description: arbeidsoppgaver,
+                fromDate: startdato,
+                toDate: erPågående ? null : sluttdato,
+                ongoing: erPågående,
+            });
         }
     };
 

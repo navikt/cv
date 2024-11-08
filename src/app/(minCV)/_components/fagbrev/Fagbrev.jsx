@@ -36,7 +36,6 @@ export default function Fagbrev() {
     const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.FAGBREV);
     const modalProps = useCvModal(fagbrev, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
-    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     return (
@@ -79,7 +78,7 @@ export default function Fagbrev() {
                                                 aria-label={`Fjern ${fb.title}`}
                                                 icon={<TrashIcon aria-hidden />}
                                                 variant="tertiary"
-                                                onClick={() => slettElement(index, triggerOppdatering)}
+                                                onClick={() => slettElement(index)}
                                                 loading={lastendeIndex === index}
                                             >
                                                 Fjern
@@ -101,7 +100,7 @@ export default function Fagbrev() {
                     </>
                 </Box>
             )}
-            {modalÅpen && <FagbrevModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
+            {modalÅpen && <FagbrevModal {...modalProps} />}
         </section>
     );
 }

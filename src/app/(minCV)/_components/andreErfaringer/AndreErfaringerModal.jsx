@@ -4,15 +4,7 @@ import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
-export function AndreErfaringerModal({
-    modalÅpen,
-    toggleModal,
-    gjeldendeElement,
-    lagreElement,
-    laster,
-    feilet,
-    triggerOppdatering,
-}) {
+export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [beskrivelse, setBeskrivelse] = useState("");
     const [rolle, setRolle] = useState("");
     const [pågår, setPågår] = useState([]);
@@ -42,17 +34,14 @@ export function AndreErfaringerModal({
         if (!erPågående && !sluttdato) setSluttdatoError(true);
 
         if (rolle && startdato && (sluttdato || erPågående)) {
-            lagreElement(
-                {
-                    ...gjeldendeElement,
-                    role: rolle,
-                    description: beskrivelse,
-                    fromDate: startdato,
-                    toDate: erPågående ? null : sluttdato,
-                    ongoing: erPågående,
-                },
-                triggerOppdatering,
-            );
+            lagreElement({
+                ...gjeldendeElement,
+                role: rolle,
+                description: beskrivelse,
+                fromDate: startdato,
+                toDate: erPågående ? null : sluttdato,
+                ongoing: erPågående,
+            });
         }
     };
 

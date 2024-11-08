@@ -40,7 +40,6 @@ export default function Arbeidsforhold() {
     const { aaregManglerData, aaregLaster, setSkalHenteData } = useHentArbeidsforhold(oppdateringprops);
     const modalProps = useCvModal(arbeidsforhold, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
-    const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
     const arbeidsforholdManglerFelter = (forhold) => {
@@ -162,7 +161,7 @@ export default function Arbeidsforhold() {
                                         aria-label={`Fjern arbeidsforhold ${erfaring.jobTitle}`}
                                         icon={<TrashIcon aria-hidden />}
                                         variant="tertiary"
-                                        onClick={() => slettElement(index, triggerOppdatering)}
+                                        onClick={() => slettElement(index)}
                                         loading={lastendeIndex === index}
                                     >
                                         Fjern
@@ -181,7 +180,7 @@ export default function Arbeidsforhold() {
                     </>
                 )}
             </Box>
-            {modalÅpen && <ArbeidsforholdModal {...modalProps} triggerOppdatering={triggerOppdatering} />}
+            {modalÅpen && <ArbeidsforholdModal {...modalProps} />}
         </section>
     );
 }
