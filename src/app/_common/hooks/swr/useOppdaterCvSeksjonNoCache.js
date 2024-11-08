@@ -10,8 +10,6 @@ import { CvSeksjonEnum } from "@/app/_common/enums/cvEnums";
 
 export const useOppdaterCvSeksjonNoCache = (seksjon) => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
-    // eslint-disable-next-line
-    const [dataForOppdatering, oppdaterSeksjon] = useState(null);
     const [visFeilmelding, setVisFeilmelding] = useState(false);
 
     const dataErGyldigForSeksjon = (lokalSeksjon, data) => {
@@ -55,7 +53,6 @@ export const useOppdaterCvSeksjonNoCache = (seksjon) => {
         oppdateringSuksess: data,
         oppdateringLaster: isMutating,
         oppdateringHarFeil: visFeilmelding || error,
-        oppdaterSeksjon,
         setVisFeilmelding,
         triggerOppdatering,
     };

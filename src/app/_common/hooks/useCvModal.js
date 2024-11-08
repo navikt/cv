@@ -2,14 +2,7 @@ import { useEffect, useState } from "react";
 
 export const useCvModal = (
     eksisterendeElementer,
-    {
-        oppdaterSeksjon,
-        oppdateringSuksess,
-        oppdateringLaster,
-        oppdateringHarFeil,
-        setVisFeilmelding,
-        triggerOppdatering,
-    },
+    { oppdateringSuksess, oppdateringLaster, oppdateringHarFeil, setVisFeilmelding, triggerOppdatering },
 ) => {
     const [modalÅpen, setModalÅpen] = useState(false);
     const [gjeldendeIndex, setGjeldendeIndex] = useState(-1);
@@ -26,7 +19,6 @@ export const useCvModal = (
     }, [laster]);
 
     useEffect(() => {
-        if (oppdateringSuksess || oppdateringHarFeil) oppdaterSeksjon(null);
         if (oppdateringHarFeil) setLaster(false);
         if (oppdateringSuksess && !oppdateringLaster && !oppdateringHarFeil) toggleModal(false);
         if (oppdateringLaster) setLaster(true);
@@ -44,7 +36,6 @@ export const useCvModal = (
         if (gjeldendeIndex >= 0) oppdaterteElementer.splice(gjeldendeIndex, 1, oppdatertElement);
         else oppdaterteElementer.push(oppdatertElement);
 
-        oppdaterSeksjon(oppdaterteElementer);
         if (triggerOppdatering) {
             triggerOppdatering(oppdaterteElementer);
         }
@@ -55,7 +46,6 @@ export const useCvModal = (
         oppdaterteElementer.splice(index, 1);
         setLastendeIndex(index);
 
-        oppdaterSeksjon(oppdaterteElementer);
         if (triggerOppdatering) {
             triggerOppdatering(oppdaterteElementer);
         }
