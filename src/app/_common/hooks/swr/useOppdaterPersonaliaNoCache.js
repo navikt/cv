@@ -7,7 +7,7 @@ import { PERSON_KEY, usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useContext, useState } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
-export const useOppdaterPersonalia = () => {
+export const useOppdaterPersonaliaNoCache = () => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
     // eslint-disable-next-line
     const [dataForOppdatering, oppdaterSeksjon] = useState(null);

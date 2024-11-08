@@ -20,7 +20,12 @@ export function CvModalForm({
             width="medium"
             className={overflowVisible && "overflow-visible"}
         >
-            <form action={handleFormSubmit}>
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    handleFormSubmit();
+                }}
+            >
                 <Modal.Header closeButton>
                     <Heading align="start" level="3" size="medium">
                         <HStack gap="1" align="center">

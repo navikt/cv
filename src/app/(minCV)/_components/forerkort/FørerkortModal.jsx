@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "@/app/page.module.css";
 import førerkortData from "@/app/_common/data/førerkort.json";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [valgtFørerkort, setValgtFørerkort] = useState(gjeldendeElement || null);
@@ -47,12 +47,12 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til førerkort"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
         >
@@ -97,6 +97,6 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
                     </HStack>
                 )}
             </VStack>
-        </CvModal>
+        </CvModalForm>
     );
 }

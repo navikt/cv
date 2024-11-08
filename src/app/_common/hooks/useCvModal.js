@@ -2,7 +2,14 @@ import { useEffect, useState } from "react";
 
 export const useCvModal = (
     eksisterendeElementer,
-    { oppdaterSeksjon, oppdateringSuksess, oppdateringLaster, oppdateringHarFeil, setVisFeilmelding },
+    {
+        oppdaterSeksjon,
+        oppdateringSuksess,
+        oppdateringLaster,
+        oppdateringHarFeil,
+        setVisFeilmelding,
+        triggerOppdatering,
+    },
 ) => {
     const [modalÅpen, setModalÅpen] = useState(false);
     const [gjeldendeIndex, setGjeldendeIndex] = useState(-1);
@@ -32,25 +39,25 @@ export const useCvModal = (
         if (!åpen) setLaster(false);
     };
 
-    const lagreElement = (oppdatertElement, trigger) => {
+    const lagreElement = (oppdatertElement) => {
         const oppdaterteElementer = [...eksisterendeElementer];
         if (gjeldendeIndex >= 0) oppdaterteElementer.splice(gjeldendeIndex, 1, oppdatertElement);
         else oppdaterteElementer.push(oppdatertElement);
 
         oppdaterSeksjon(oppdaterteElementer);
-        if (trigger) {
-            trigger(oppdaterteElementer);
+        if (triggerOppdatering) {
+            triggerOppdatering(oppdaterteElementer);
         }
     };
 
-    const slettElement = (index, trigger) => {
+    const slettElement = (index) => {
         const oppdaterteElementer = [...eksisterendeElementer];
         oppdaterteElementer.splice(index, 1);
         setLastendeIndex(index);
 
         oppdaterSeksjon(oppdaterteElementer);
-        if (trigger) {
-            trigger(oppdaterteElementer);
+        if (triggerOppdatering) {
+            triggerOppdatering(oppdaterteElementer);
         }
     };
 

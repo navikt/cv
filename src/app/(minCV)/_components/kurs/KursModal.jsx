@@ -4,7 +4,7 @@ import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TidsenhetEnum } from "@/app/_common/enums/cvEnums";
 import { formatterTidsenhet, storForbokstav } from "@/app/_common/utils/stringUtils";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [kursnavn, setKursnavn] = useState(gjeldendeElement?.title || "");
@@ -43,12 +43,12 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til kurs"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
         >
@@ -115,6 +115,6 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                     </VStack>
                 )}
             </HStack>
-        </CvModal>
+        </CvModalForm>
     );
 }

@@ -6,7 +6,7 @@ import AndreGodkjenningerModal from "@/app/(minCV)/_components/andreGodkjenninge
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
-import { useOppdaterCvSeksjon } from "@/app/_common/hooks/swr/useOppdaterCvSeksjon";
+import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useId } from "react";
 
@@ -34,7 +34,7 @@ function AndreGodkjenningerIcon() {
 
 export default function AndreGodkjenninger() {
     const { andreGodkjenninger, cvLaster } = useCv();
-    const oppdateringprops = useOppdaterCvSeksjon(CvSeksjonEnum.ANDRE_GODKJENNINGER);
+    const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.ANDRE_GODKJENNINGER);
     const modalProps = useCvModal(andreGodkjenninger, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
     const headingId = useId();
