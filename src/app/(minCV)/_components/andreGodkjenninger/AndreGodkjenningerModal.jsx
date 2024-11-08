@@ -70,9 +70,7 @@ export default function AndreGodkjenningerModal({
                 className={styles.mb6}
                 label={
                     <HStack gap="2">
-                        <BodyShort align="start" weight="semibold">
-                            Annen godkjenning
-                        </BodyShort>
+                        <BodyShort weight="semibold">Annen godkjenning</BodyShort>
                         <BodyShort className={styles.description}>Må fylles ut</BodyShort>
                     </HStack>
                 }
@@ -95,9 +93,7 @@ export default function AndreGodkjenningerModal({
                     oppdaterDato={setGodkjenningFraDato}
                     label={
                         <HStack gap="2">
-                            <BodyShort align="start" weight="semibold">
-                                Fullført
-                            </BodyShort>
+                            <BodyShort weight="semibold">Fullført</BodyShort>
                             <BodyShort className={styles.description}>Må fylles ut</BodyShort>
                         </HStack>
                     }

@@ -57,9 +57,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
             <TextField
                 label={
                     <HStack gap="2">
-                        <BodyShort align="start" weight="semibold">
-                            Rolle
-                        </BodyShort>
+                        <BodyShort weight="semibold">Rolle</BodyShort>
                         <BodyShort className={styles.description}>Må fylles ut</BodyShort>
                     </HStack>
                 }

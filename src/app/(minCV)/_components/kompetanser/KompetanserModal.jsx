@@ -44,9 +44,7 @@ export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeEle
             <Typeahead
                 label={
                     <HStack gap="2">
-                        <BodyShort align="start" weight="semibold">
-                            Hva er du flink til?
-                        </BodyShort>
+                        <BodyShort weight="semibold">Hva er du flink til?</BodyShort>
                         <BodyShort className={styles.description}>Må fylles ut</BodyShort>
                     </HStack>
                 }
