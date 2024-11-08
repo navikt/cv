@@ -4,7 +4,7 @@ import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { SpråkEnum } from "@/app/_common/enums/cvEnums";
 import styles from "@/app/page.module.css";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [valgtSpråk, setValgtSpråk] = useState(gjeldendeElement || null);
@@ -40,12 +40,12 @@ export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement,
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til språk"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
         >
@@ -87,6 +87,6 @@ export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement,
                     </option>
                 ))}
             </Select>
-        </CvModal>
+        </CvModalForm>
     );
 }

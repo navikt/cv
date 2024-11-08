@@ -4,7 +4,7 @@ import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export default function AndreGodkjenningerModal({
     modalÅpen,
@@ -57,12 +57,12 @@ export default function AndreGodkjenningerModal({
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til annen godkjenning"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
         >
@@ -103,6 +103,6 @@ export default function AndreGodkjenningerModal({
                     setError={setGodkjenningTilDatoError}
                 />
             </HStack>
-        </CvModal>
+        </CvModalForm>
     );
 }

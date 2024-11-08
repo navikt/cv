@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { HStack, TextField, VStack } from "@navikt/ds-react";
+import { ErrorSummary, HStack, TextField, VStack } from "@navikt/ds-react";
 import { PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { formatterFullDato } from "@/app/_common/utils/stringUtils";
 import ValidateEmail from "@/app/_common/components/ValidateEmail";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export default function PersonaliaModal({
     modalÅpen,
@@ -45,7 +45,6 @@ export default function PersonaliaModal({
 
     const lagre = () => {
         let isEpostValid = false;
-
         if (!fornavn) setFornavnError(true);
         if (!etternavn) setEtternavnError(true);
         if (!telefon) setTelefonError(true);
@@ -55,7 +54,6 @@ export default function PersonaliaModal({
             isEpostValid = ValidateEmail(epost);
             setEpostValidationError(!isEpostValid);
         }
-
         if (fornavn && etternavn && isEpostValid && telefon) {
             lagrePersonalia({
                 fornavn: fornavn,
@@ -70,18 +68,19 @@ export default function PersonaliaModal({
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til personalia"
             icon={<PersonCircleIcon aria-hidden="true" fontSize="1.5rem" />}
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
             toggleModal={toggleModal}
+            handleFormSubmit={lagre}
         >
             <HStack justify="space-between">
                 <VStack className={styles.element}>
                     <TextField
+                        name="fornavn"
                         className={styles.mb6}
                         label="Fornavn"
                         description="Må fylles ut"
@@ -171,6 +170,12 @@ export default function PersonaliaModal({
                 value={fødselsdato ? formatterFullDato(fødselsdato) : ""}
                 readOnly
             />
-        </CvModal>
+            {fornavnError && (
+                <ErrorSummary heading="Du må rette disse feilene i skjemaet" headingTag="h3">
+                    <ErrorSummary.Item href="#1">Felt må fylles ut med alder</ErrorSummary.Item>
+                    <ErrorSummary.Item href="#2">Tekstfeltet må ha en godkjent e-mail</ErrorSummary.Item>
+                </ErrorSummary>
+            )}
+        </CvModalForm>
     );
 }

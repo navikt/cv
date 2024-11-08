@@ -1,19 +1,20 @@
 "use client";
 
-import useSWR, { mutate } from "swr";
+import useSWRMutation from "swr/mutation";
+import { mutate } from "swr";
 import { putAPI } from "@/app/_common/utils/fetchUtils";
 import { PERSON_KEY, usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useContext, useState } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
-export const useOppdaterPersonalia = () => {
+export const useOppdaterPersonaliaNoCache = () => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
-    const [dataForOppdatering, oppdaterSeksjon] = useState(null);
     const [visFeilmelding, setVisFeilmelding] = useState(false);
 
     const { person } = usePerson();
 
-    const fetcher = async ({ url, body }) => {
+    const fetcher = async (url, { arg }) => {
+        const { body } = arg;
         if (!url || !body) return;
 
         setVisFeilmelding(false);
@@ -30,16 +31,16 @@ export const useOppdaterPersonalia = () => {
         }
     };
 
-    const skalOppdatere = !!dataForOppdatering;
     const url = "personbruker/api/personalia";
+    const { trigger, data, error, isMutating } = useSWRMutation(url, fetcher, { revalidate: false });
 
-    const { data, error, isLoading } = useSWR(skalOppdatere ? { url, body: dataForOppdatering } : null, fetcher);
+    const triggerOppdatering = (body) => trigger({ body });
 
     return {
         oppdateringSuksess: data,
-        oppdateringLaster: isLoading,
+        oppdateringLaster: isMutating,
         oppdateringHarFeil: visFeilmelding || error,
-        oppdaterSeksjon,
         setVisFeilmelding,
+        triggerOppdatering,
     };
 };

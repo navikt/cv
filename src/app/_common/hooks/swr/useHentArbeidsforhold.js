@@ -5,20 +5,11 @@ import { simpleApiRequest } from "@/app/_common/utils/fetchUtils";
 import { useContext, useEffect, useState } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
-export const useHentArbeidsforhold = ({
-    oppdaterSeksjon: oppdaterArbeidsforhold,
-    oppdateringSuksess,
-    oppdateringLaster,
-    oppdateringHarFeil,
-}) => {
+export const useHentArbeidsforhold = ({ oppdateringLaster, triggerOppdatering }) => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
     const [skalHenteData, setSkalHenteData] = useState(false);
     const [aaregManglerData, setAaregManglerData] = useState(false);
     const [skalViseSkeleton, setSkalViseSkeleton] = useState(false);
-
-    useEffect(() => {
-        if (oppdateringSuksess || oppdateringHarFeil) oppdaterArbeidsforhold(null);
-    }, [oppdateringSuksess, oppdateringHarFeil]);
 
     useEffect(() => {
         if (oppdateringLaster === false) setSkalViseSkeleton(false);
@@ -41,7 +32,7 @@ export const useHentArbeidsforhold = ({
             setSkalViseSkeleton(false);
         } else {
             setSkalViseSkeleton(true);
-            oppdaterArbeidsforhold(data);
+            triggerOppdatering(data);
         }
 
         setSkalHenteData(false);
