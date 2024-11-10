@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
-import { CvModal } from "@/app/_common/components/CvModal";
+import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [arbeidsgiver, setArbeidsgiver] = useState("");
@@ -75,12 +75,12 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
     };
 
     return (
-        <CvModal
+        <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til arbeidsforhold"
             feilet={feilet}
             laster={laster}
-            lagre={lagre}
+            handleFormSubmit={lagre}
             toggleModal={toggleModal}
         >
             <HStack justify="space-between">
@@ -155,6 +155,6 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
                     />
                 )}
             </HStack>
-        </CvModal>
+        </CvModalForm>
     );
 }

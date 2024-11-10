@@ -1,4 +1,4 @@
-import { BodyLong, Button, Heading, HStack, Loader, Modal } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, HStack, Modal } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 
 export function CvModalForm({
@@ -46,12 +46,11 @@ export function CvModalForm({
                                 Noe gikk galt, prøv å trykk lagre igjen
                             </BodyLong>
                         )}
-                        {laster && <Loader size="xlarge" />}
                         <Button variant="secondary" type="button" onClick={() => toggleModal(false)} disabled={laster}>
                             Avbryt
                         </Button>
 
-                        <Button variant="primary" type="submit" disabled={laster}>
+                        <Button loading={laster} variant="primary" type="submit" disabled={laster}>
                             Lagre
                         </Button>
                     </HStack>
