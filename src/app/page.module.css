@@ -505,3 +505,19 @@
     color: rgb(0, 103, 197);
     border-color: rgb(0, 103, 197);
 }
+
+.visuallyhidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.modalFormFieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
