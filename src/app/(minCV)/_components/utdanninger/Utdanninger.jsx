@@ -39,6 +39,7 @@ export default function Utdanninger() {
     const modalProps = useCvModal(utdanninger, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
     const headingId = useId();
+    const summaryHeadingId = useId();
 
     return (
         <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.UTDANNING}>
@@ -68,12 +69,12 @@ export default function Utdanninger() {
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "2rem" }}>
                                         <FormSummary.Header>
-                                            <FormSummary.Heading level="2">
+                                            <FormSummary.Heading id={summaryHeadingId} level="2">
                                                 {UtdanningsnivåEnum[utdanning.nuskode]}
                                             </FormSummary.Heading>
                                         </FormSummary.Header>
 
-                                        <FormSummary.Answers>
+                                        <FormSummary.Answers aria-labelledby={summaryHeadingId}>
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>Grad og utdanningsretning</FormSummary.Label>
                                                 <FormSummary.Value>{utdanning.field}</FormSummary.Value>
