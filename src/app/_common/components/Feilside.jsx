@@ -1,13 +1,10 @@
 import { BodyLong, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
-import { useRouter } from "next/navigation";
 import NextLink from "next/link";
 import styles from "@/app/page.module.css";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import { navBaseUrl } from "@/app/_common/utils/urlUtils";
 
 export function Feilside({ årsak }) {
-    const router = useRouter();
-
     return (
         <>
             <HeaderPanel visTag={false} />
@@ -21,13 +18,15 @@ export function Feilside({ årsak }) {
 
                         <HStack gap="4" className={[styles.mb3]}>
                             <NextLink href={`${navBaseUrl}/person/kontakt-oss/nb`} passHref legacyBehavior>
-                                <Button variant="primary" as="a">
+                                <Button variant="primary" as="a" role="link">
                                     Kontakt oss
                                 </Button>
                             </NextLink>
-                            <Button variant="secondary" as="a" onClick={() => router.back()}>
-                                Gå tilbake
-                            </Button>
+                            <NextLink href={navBaseUrl} passHref legacyBehavior>
+                                <Button variant="secondary" as="a" role="link">
+                                    Gå til nav.no
+                                </Button>
+                            </NextLink>
                         </HStack>
                     </VStack>
                 </Box>
