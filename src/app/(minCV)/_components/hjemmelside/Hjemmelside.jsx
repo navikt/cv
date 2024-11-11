@@ -178,7 +178,7 @@ export default function Hjemmelside({ måBekrefte }) {
                         </Button>
                         {måBekrefte && (
                             <NextLink href={`${navBaseUrl}/minside`} passHref legacyBehavior>
-                                <Button variant="secondary" as="a">
+                                <Button variant="secondary" as="a" role="link">
                                     Tilbake til Min side
                                 </Button>
                             </NextLink>
