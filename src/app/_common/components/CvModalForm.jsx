@@ -37,7 +37,10 @@ export function CvModalForm({
                 <Modal.Body
                     className={[styles[`modalBody${laster ? "--loading" : ""}`], overflowVisible && "overflow-visible"]}
                 >
-                    {children}
+                    <fieldset className={styles.modalFormFieldset}>
+                        <legend className={styles.visuallyhidden}>{tittel}</legend>
+                        {children}
+                    </fieldset>
                 </Modal.Body>
                 <Modal.Footer>
                     <HStack gap="4">

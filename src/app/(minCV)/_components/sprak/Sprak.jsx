@@ -37,6 +37,7 @@ export default function Sprak() {
     const modalProps = useCvModal(språk, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
     const headingId = useId();
+    const summaryHeadingId = useId();
 
     return (
         <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.SPRÅK}>
@@ -66,9 +67,11 @@ export default function Sprak() {
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "1rem" }}>
                                         <FormSummary.Header>
-                                            <FormSummary.Heading level="2">{sp.language}</FormSummary.Heading>
+                                            <FormSummary.Heading id={summaryHeadingId} level="2">
+                                                {sp.language}
+                                            </FormSummary.Heading>
                                         </FormSummary.Header>
-                                        <FormSummary.Answers>
+                                        <FormSummary.Answers aria-labelledby={summaryHeadingId}>
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>Muntlig</FormSummary.Label>
                                                 <FormSummary.Value>{SpråkEnum[sp.oralProficiency]}</FormSummary.Value>
