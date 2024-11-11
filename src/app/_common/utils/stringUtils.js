@@ -43,8 +43,11 @@ export const formatterFullDato = (dato) => {
 
 export const formatterTidsenhet = (enhet, antall) => {
     if (enhet === TidsenhetEnum.UKJENT) return "Ukjent";
-    const endelse = enhet.slice(-1) === "E" ? "r" : "er";
-    return `${TidsenhetEnum[enhet]}${antall > 1 && endelse}`;
+    if (antall > 1) {
+        const endelse = enhet.slice(-1) === "E" ? "r" : "er";
+        return `${TidsenhetEnum[enhet]}${antall > 1 && endelse}`;
+    }
+    return TidsenhetEnum[enhet];
 };
 
 export const storForbokstav = (str) => str.charAt(0).toUpperCase() + str.slice(1);
