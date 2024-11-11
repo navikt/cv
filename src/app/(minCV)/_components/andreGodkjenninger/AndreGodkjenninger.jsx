@@ -38,6 +38,7 @@ export default function AndreGodkjenninger() {
     const modalProps = useCvModal(andreGodkjenninger, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
     const headingId = useId();
+    const summaryHeadingId = useId();
 
     return (
         <section
@@ -70,11 +71,11 @@ export default function AndreGodkjenninger() {
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "1rem" }}>
                                         <FormSummary.Header>
-                                            <FormSummary.Heading level="2">
+                                            <FormSummary.Heading id={summaryHeadingId} level="2">
                                                 {godkjenning.certificateName}
                                             </FormSummary.Heading>
                                         </FormSummary.Header>
-                                        <FormSummary.Answers>
+                                        <FormSummary.Answers aria-labelledby={summaryHeadingId}>
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>Utsteder</FormSummary.Label>
                                                 <FormSummary.Value>{godkjenning.issuer}</FormSummary.Value>

@@ -41,6 +41,7 @@ export default function Arbeidsforhold() {
     const modalProps = useCvModal(arbeidsforhold, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
     const headingId = useId();
+    const summaryHeadingId = useId();
 
     const arbeidsforholdManglerFelter = (forhold) => {
         const verdiMangler = (verdi) => !verdi || verdi === "string";
@@ -119,11 +120,11 @@ export default function Arbeidsforhold() {
                             <div key={index}>
                                 <FormSummary className={styles.mb3}>
                                     <FormSummary.Header>
-                                        <FormSummary.Heading level="2">
+                                        <FormSummary.Heading id={summaryHeadingId} level="2">
                                             {erfaring.jobTitle || erfaring.alternativeJobTitle}
                                         </FormSummary.Heading>
                                     </FormSummary.Header>
-                                    <FormSummary.Answers>
+                                    <FormSummary.Answers aria-labelledby={summaryHeadingId}>
                                         <FormSummary.Answer>
                                             <FormSummary.Label>Bedrift</FormSummary.Label>
                                             <FormSummary.Value>{erfaring.employer}</FormSummary.Value>

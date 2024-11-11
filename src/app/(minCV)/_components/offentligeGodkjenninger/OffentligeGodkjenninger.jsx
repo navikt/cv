@@ -38,6 +38,7 @@ export default function OffentligeGodkjenninger() {
     const modalProps = useCvModal(offentligeGodkjenninger, oppdateringprops);
     const { modalÅpen, toggleModal, lastendeIndex, slettElement } = modalProps;
     const headingId = useId();
+    const summaryHeadingId = useId();
 
     return (
         <section
@@ -71,9 +72,11 @@ export default function OffentligeGodkjenninger() {
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "1rem" }}>
                                         <FormSummary.Header>
-                                            <FormSummary.Heading level="2">{godkjenning.title}</FormSummary.Heading>
+                                            <FormSummary.Heading id={summaryHeadingId} level="2">
+                                                {godkjenning.title}
+                                            </FormSummary.Heading>
                                         </FormSummary.Header>
-                                        <FormSummary.Answers>
+                                        <FormSummary.Answers aria-labelledby={summaryHeadingId}>
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>Utsteder</FormSummary.Label>
                                                 <FormSummary.Value>{godkjenning.issuer}</FormSummary.Value>

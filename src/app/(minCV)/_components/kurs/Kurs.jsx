@@ -44,6 +44,7 @@ export default function Kurs() {
     const modalProps = useCvModal(kurs, oppdateringprops);
     const { modalÅpen, toggleModal, slettElement, lastendeIndex } = modalProps;
     const headingId = useId();
+    const summaryHeadingId = useId();
 
     return (
         <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.KURS}>
@@ -72,9 +73,11 @@ export default function Kurs() {
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "1rem" }}>
                                         <FormSummary.Header>
-                                            <FormSummary.Heading level="2">{k.title}</FormSummary.Heading>
+                                            <FormSummary.Heading id={summaryHeadingId} level="2">
+                                                {k.title}
+                                            </FormSummary.Heading>
                                         </FormSummary.Header>
-                                        <FormSummary.Answers>
+                                        <FormSummary.Answers aria-labelledby={summaryHeadingId}>
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>Utsteder</FormSummary.Label>
                                                 <FormSummary.Value>{k.issuer}</FormSummary.Value>
