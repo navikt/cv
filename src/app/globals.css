@@ -30,10 +30,6 @@ a {
     width: unset !important;
 }
 
-.font-weight-normal {
-    font-weight: normal !important;
-}
-
 dl,
 dl dd,
 dl dt {

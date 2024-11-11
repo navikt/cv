@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup, HStack, TextField } from "@navikt/ds-react";
+import { BodyShort, Checkbox, CheckboxGroup, HStack, TextField } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
@@ -56,9 +56,10 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
         >
             <TextField
                 label={
-                    <span>
-                        Rolle <span className="font-weight-normal">*obligatorisk</span>
-                    </span>
+                    <HStack gap="2">
+                        <BodyShort weight="semibold">Rolle</BodyShort>
+                        <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
+                    </HStack>
                 }
                 description="Eksempel: militærtjeneste, styreverv eller fotballtrener"
                 className={styles.mb6}

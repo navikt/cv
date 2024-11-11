@@ -1,4 +1,4 @@
-import { BodyLong, HStack, Select, VStack } from "@navikt/ds-react";
+import { HStack, Select, VStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import styles from "@/app/page.module.css";
 import førerkortData from "@/app/_common/data/førerkort.json";
@@ -57,12 +57,10 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
             overflowVisible
         >
             <VStack>
-                <BodyLong>
-                    <b>Førerkort</b> *obligatorisk
-                </BodyLong>
                 <Select
                     id="Førerkort"
-                    label=""
+                    label="Førerkort"
+                    description="Må fylles ut"
                     className={styles.mb6}
                     value={valgtFørerkort?.type || ""}
                     onChange={(e) => velgFørerkort(e.target.value)}

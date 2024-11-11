@@ -35,12 +35,9 @@ export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElem
                         religion eller politiske oppfatning.
                     </BodyLong>
                 </Alert>
-                <BodyLong>
-                    <b>Gi en kort oppsummering av deg selv</b> *obligatorisk
-                </BodyLong>
                 <Textarea
-                    label=""
-                    description=""
+                    label="Gi en kort oppsummering av deg selv"
+                    description="Må fylles ut"
                     placeholder="En kort oppsummering av din kompetanse og dine personlige egenskaper."
                     className={styles.mb6}
                     value={sammendragEndring}

@@ -1,4 +1,4 @@
-import { BodyLong, HStack, TextField } from "@navikt/ds-react";
+import { BodyShort, HStack, TextField } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";
@@ -66,12 +66,14 @@ export default function AndreGodkjenningerModal({
             toggleModal={toggleModal}
             overflowVisible
         >
-            <BodyLong>
-                <b>Annen godkjenning</b> *obligatorisk
-            </BodyLong>
             <Typeahead
                 className={styles.mb6}
-                label=""
+                label={
+                    <HStack gap="2">
+                        <BodyShort weight="semibold">Annen godkjenning</BodyShort>
+                        <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
+                    </HStack>
+                }
                 description="Yrkessertifikater, attester, bevis o.l."
                 type={TypeaheadEnum.ANDRE_GODKJENNINGER}
                 oppdaterValg={oppdaterValgtGodkjenning}
@@ -89,8 +91,12 @@ export default function AndreGodkjenningerModal({
                 <Datovelger
                     valgtDato={godkjenningFraDato}
                     oppdaterDato={setGodkjenningFraDato}
-                    label="Fullført"
-                    obligatorisk
+                    label={
+                        <HStack gap="2">
+                            <BodyShort weight="semibold">Fullført</BodyShort>
+                            <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
+                        </HStack>
+                    }
                     error={godkjenningFraDatoError}
                     setError={setGodkjenningFraDatoError}
                 />

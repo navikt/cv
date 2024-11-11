@@ -1,4 +1,4 @@
-import { BodyLong, Checkbox, CheckboxGroup, HStack, Select, Textarea, TextField } from "@navikt/ds-react";
+import { BodyShort, Checkbox, CheckboxGroup, HStack, Select, Textarea, TextField } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import { useEffect, useState } from "react";
@@ -61,12 +61,15 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
         >
-            <BodyLong>
-                <b>Utdanningsnivå</b> *obligatorisk
-            </BodyLong>
             <Select
                 id="utdanningsnivå"
-                label="Hvilken type utdanning har du gått?"
+                label={
+                    <HStack gap="2">
+                        <BodyShort weight="semibold">Utdanningsnivå</BodyShort>
+                        <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
+                    </HStack>
+                }
+                description="Hvilken type utdanning har du gått?"
                 className={styles.mb6}
                 value={utdanningsnivå}
                 onChange={(e) => {

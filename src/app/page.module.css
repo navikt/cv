@@ -521,3 +521,7 @@
     margin: 0;
     padding: 0;
 }
+
+.mandatoryColor {
+    color: var(--a-text-subtle);
+}

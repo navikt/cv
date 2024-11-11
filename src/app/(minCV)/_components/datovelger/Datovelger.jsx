@@ -43,7 +43,7 @@ export function Datovelger({
                     <DatePicker.Input
                         {...inputProps}
                         label={label}
-                        description={obligatorisk ? "*obligatorisk" : undefined}
+                        description={obligatorisk ? "Må fylles ut" : undefined}
                         placeholder="dd.mm.yy"
                         error={error && "Dato er ikke gyldig"}
                     />

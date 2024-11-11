@@ -1,4 +1,4 @@
-import { BodyLong, Select } from "@navikt/ds-react";
+import { Select } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { SpråkEnum } from "@/app/_common/enums/cvEnums";
@@ -49,12 +49,10 @@ export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement,
             toggleModal={toggleModal}
             overflowVisible
         >
-            <BodyLong>
-                <b>Språk</b> *obligatorisk
-            </BodyLong>
             <Typeahead
                 className={styles.mb6}
-                label=""
+                label="Språk"
+                description="Må fylles ut"
                 valgtVerdi={valgtSpråk?.language || valgtSpråk?.title}
                 oppdaterValg={oppdaterValgtSpråk}
                 type={TypeaheadEnum.SPRÅK}
