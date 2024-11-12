@@ -1,4 +1,4 @@
-import { BodyLong, Box, Button, HStack } from "@navikt/ds-react";
+import { BodyLong, Box, Button, HStack, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useRef } from "react";
 import { SpråkEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
@@ -34,18 +34,40 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 <BodyLong weight="semibold" className={styles.mb3}>
                     {personalia ? `${personalia.fornavn} ${personalia.etternavn}` : ""}
                 </BodyLong>
-                <div className={styles.previewPersonalInfoWrapper}>
-                    <BodyLong size="small" className={styles.previewPersonalInfo}>
-                        <div className={styles.PersonalInfoLabel}>Fødselsdato:</div>
-                        <div className={styles.PersonalInfoValue}>{personalia ? personalia.foedselsdato : ""}</div>
-                        <div className={styles.PersonalInfoLabel}>Adresse:</div>
-                        <div className={styles.PersonalInfoValue}>{personalia ? personalia.adresse : ""}</div>
-                        <div className={styles.PersonalInfoLabel}>Tlf:</div>
-                        <div className={styles.PersonalInfoValue}>{personalia ? personalia.telefonnummer : ""}</div>
-                        <div className={styles.PersonalInfoLabel}>E-post:</div>
-                        <div className={styles.PersonalInfoValue}>{personalia ? personalia.epost : ""}</div>
-                    </BodyLong>
-                </div>
+                <VStack className={styles.previewPersonalInfoWrapper}>
+                    <HStack className={styles.previewPersonalInfo}>
+                        <BodyLong size="small" className={styles.PersonalInfoLabel}>
+                            Fødselsdato:
+                        </BodyLong>
+                        <BodyLong size="small" className={styles.PersonalInfoValue}>
+                            {personalia ? personalia.foedselsdato : ""}
+                        </BodyLong>
+                    </HStack>
+                    <HStack className={styles.previewPersonalInfo}>
+                        <BodyLong size="small" className={styles.PersonalInfoLabel}>
+                            Adresse:
+                        </BodyLong>
+                        <BodyLong size="small" className={styles.PersonalInfoValue}>
+                            {personalia ? personalia.adresse : ""}
+                        </BodyLong>
+                    </HStack>
+                    <HStack className={styles.previewPersonalInfo}>
+                        <BodyLong size="small" className={styles.PersonalInfoLabel}>
+                            Tlf:
+                        </BodyLong>
+                        <BodyLong size="small" className={styles.PersonalInfoValue}>
+                            {personalia ? personalia.telefonnummer : ""}
+                        </BodyLong>
+                    </HStack>
+                    <HStack className={styles.previewPersonalInfo}>
+                        <BodyLong size="small" className={styles.PersonalInfoLabel}>
+                            E-post:
+                        </BodyLong>
+                        <BodyLong size="small" className={styles.PersonalInfoValue}>
+                            {personalia ? personalia.epost : ""}
+                        </BodyLong>
+                    </HStack>
+                </VStack>
 
                 {cv.sammendrag && (
                     <div className={styles.mb6}>
