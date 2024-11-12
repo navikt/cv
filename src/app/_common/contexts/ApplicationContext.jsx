@@ -7,18 +7,14 @@ import Hjemmelside from "@/app/(minCV)/_components/hjemmelside/Hjemmelside";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useNotifikasjoner } from "@/app/_common/hooks/useNotifikasjoner";
 import { Notifikasjoner } from "@/app/_common/components/Notifikasjoner";
-import { useSearchParams } from "next/navigation";
 
 export const ApplicationContext = React.createContext({});
 
 function ApplicationProvider({ children }) {
-    const { erInnlogget, innloggingLaster, innloggingHarFeil } = useErInnlogget();
+    const { erInnlogget, innloggingLaster, innloggingHarFeil, harBlittUtlogget } = useErInnlogget();
     const { person, personHarFeil } = usePerson();
     const { cvHarFeil } = useCv();
     const { notifikasjoner, suksessNotifikasjon, errorNotifikasjon } = useNotifikasjoner();
-    const searchParams = useSearchParams();
-
-    const erLoggetUt = searchParams.get("logged_out") === "true";
 
     const [visHjemmelside, setVisHjemmelside] = useState(false);
 
@@ -28,7 +24,7 @@ function ApplicationProvider({ children }) {
         }
 
         if (!erInnlogget && !innloggingLaster) {
-            const årsak = erLoggetUt ? FeilsideÅrsak.LOGGET_UT : FeilsideÅrsak.IKKE_LOGGET_INN;
+            const årsak = harBlittUtlogget ? FeilsideÅrsak.LOGGET_UT : FeilsideÅrsak.IKKE_LOGGET_INN;
             return <Feilside årsak={årsak} />;
         }
 

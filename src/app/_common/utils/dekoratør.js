@@ -7,7 +7,6 @@ const dekoratørProps = {
         utilsBackground: "white",
         context: "privatperson",
         redirectToApp: true,
-        redirectToUrlLogout: "/personbruker?logged_out=true",
         breadcrumbs: [
             {
                 title: "Min side",
