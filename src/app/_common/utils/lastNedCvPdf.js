@@ -570,16 +570,8 @@ export function lastNedCvPdf(cv, personalia) {
 
     const calculateVarighetOgEnhet = (varighet, varighetEnhet) => {
         let varighetOgEnhet;
-        if (varighet && varighet > 1) {
-            const enhet = varighetEnhet ? formatterTidsenhet(varighetEnhet, 2) : "timer";
-
-            if (!enhet) {
-                return "";
-            }
-
-            varighetOgEnhet = `${varighet} ${enhet.toLocaleLowerCase()}`;
-        } else if (varighet && varighet === 1) {
-            const enhet = varighetEnhet ? formatterTidsenhet(varighetEnhet, 2) : "timer";
+        if (varighet) {
+            const enhet = varighetEnhet ? formatterTidsenhet(varighetEnhet, varighet) : "timer";
 
             if (!enhet) {
                 return "";

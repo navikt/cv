@@ -78,18 +78,22 @@ export default function Kurs() {
                                             </FormSummary.Heading>
                                         </FormSummary.Header>
                                         <FormSummary.Answers aria-labelledby={summaryHeadingId}>
-                                            <FormSummary.Answer>
-                                                <FormSummary.Label>Utsteder</FormSummary.Label>
-                                                <FormSummary.Value>{k.issuer}</FormSummary.Value>
-                                            </FormSummary.Answer>
+                                            {k.issuer && (
+                                                <FormSummary.Answer>
+                                                    <FormSummary.Label>Utsteder</FormSummary.Label>
+                                                    <FormSummary.Value>{k.issuer}</FormSummary.Value>
+                                                </FormSummary.Answer>
+                                            )}
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>Fullført</FormSummary.Label>
                                                 <FormSummary.Value>{formatterFullDato(k.date)}</FormSummary.Value>
                                             </FormSummary.Answer>
-                                            <FormSummary.Answer>
-                                                <FormSummary.Label>Kursvarighet</FormSummary.Label>
-                                                <FormSummary.Value>{`${k.duration} ${formatterTidsenhet(k.durationUnit, k.duration)}`}</FormSummary.Value>
-                                            </FormSummary.Answer>
+                                            {k.durationUnit !== "UKJENT" && (
+                                                <FormSummary.Answer>
+                                                    <FormSummary.Label>Kursvarighet</FormSummary.Label>
+                                                    <FormSummary.Value>{`${k.duration} ${formatterTidsenhet(k.durationUnit, k.duration)}`}</FormSummary.Value>
+                                                </FormSummary.Answer>
+                                            )}
                                         </FormSummary.Answers>
                                     </FormSummary>
                                     <HStack justify="space-between" className={styles.mb6}>

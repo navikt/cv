@@ -29,9 +29,9 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
 
     const lagre = async () => {
         if (!kursnavn) setKursnavnError(true);
-        if (tidsenhet && !lengde) setLengdeError(true);
+        if (tidsenhet && tidsenhet !== "UKJENT" && !lengde) setLengdeError(true);
 
-        if (kursnavn && !kursDatoError && (tidsenhet ? lengde : true)) {
+        if (kursnavn && !kursDatoError && (tidsenhet && tidsenhet !== "UKJENT" ? lengde : true)) {
             await lagreElement({
                 title: kursnavn,
                 issuer: utsteder,
@@ -84,7 +84,10 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                         label="Kurslengde"
                         className={styles.mb6}
                         value={tidsenhet}
-                        onChange={(e) => setTidsenhet(e.target.value)}
+                        onChange={(e) => {
+                            setTidsenhet(e.target.value);
+                            setLengdeError(false);
+                        }}
                     >
                         <option value="">Velg</option>
                         {Object.keys(TidsenhetEnum).map((enhet) => (
@@ -94,7 +97,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                         ))}
                     </Select>
                 </VStack>
-                {tidsenhet && (
+                {tidsenhet && tidsenhet !== "UKJENT" && (
                     <VStack>
                         <TextField
                             className={styles.mb6}
@@ -106,6 +109,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                             }
                             inputMode="numeric"
                             type="number"
+                            min="1"
                             description=""
                             value={lengde}
                             onChange={(e) => {
