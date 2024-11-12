@@ -84,7 +84,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
             toggleModal={toggleModal}
         >
             <HStack justify="space-between">
-                <VStack className={styles.element}>
+                <VStack className={styles.fullWidth}>
                     <Typeahead
                         className={styles.mb6}
                         label="Stilling/yrke"
@@ -94,8 +94,6 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
                         valgtVerdi={stillingstittel}
                         error={stillingstittelError && "Du må velge stilling/yrke"}
                     />
-                </VStack>
-                <VStack className={styles.element}>
                     <TextField
                         className={styles.mb6}
                         label="Alternativ tittel"
