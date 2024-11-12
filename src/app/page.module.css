@@ -525,3 +525,7 @@
 .mandatoryColor {
     color: var(--a-text-subtle);
 }
+
+.fullWidth {
+    width: 100%;
+}
