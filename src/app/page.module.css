@@ -96,7 +96,7 @@
     }
 
     .notifikasjonContainer {
-        width: 280px;
+        max-width: 280px;
         position: fixed;
         bottom: var(--a-spacing-6);
         right: var(--a-spacing-6);
