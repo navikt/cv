@@ -17,7 +17,9 @@ export const useErInnlogget = () => {
         throw error;
     };
 
-    const { data, error, isLoading } = useSWR("/personbruker/api/isAuthenticated", fetcher);
+    const { data, error, isLoading } = useSWR("/personbruker/api/isAuthenticated", fetcher, {
+        refreshInterval: 60 * 1000,
+    });
 
     return {
         erInnlogget: data,
