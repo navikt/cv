@@ -12,9 +12,9 @@ export function Feilside({ årsak }) {
                 <Box padding="10" className={[styles.box, styles.mt3]}>
                     <VStack>
                         <Heading level="1" size="xlarge" className="text-center" spacing>
-                            CV er ikke tilgjengelig
+                            {årsak.tittel}
                         </Heading>
-                        <BodyLong className={["text-center", styles.mb12]}>{årsak}</BodyLong>
+                        <BodyLong className={["text-center", styles.mb12]}>{årsak.tekst}</BodyLong>
 
                         <HStack gap="4" className={[styles.mb3]}>
                             <NextLink href={`${navBaseUrl}/person/kontakt-oss/nb`} passHref legacyBehavior>
@@ -35,9 +35,21 @@ export function Feilside({ årsak }) {
     );
 }
 
-export const FeilsideTekst = Object.freeze({
-    IKKE_UNDER_OPPFØLGING:
-        "Du er ikke under arbeidsrettet oppfølging og har derfor ikke tilgang til din CV. Ønsker du å se CV-en din kan du ta kontakt med oss.",
-    FETCH_ERROR: "Det har skjedd en feil under lasting av CVen din. Vennligst prøv igjen eller kom tilbake senere.",
-    IKKE_LOGGET_INN: "Du er ikke logget inn. Min CV er en innlogget tjensete. Vennligst logg inn, eller gå tilbake.",
+export const FeilsideÅrsak = Object.freeze({
+    IKKE_UNDER_OPPFØLGING: {
+        tittel: "CV er ikke tilgjengelig",
+        tekst: "Du er ikke under arbeidsrettet oppfølging og har derfor ikke tilgang til din CV. Ønsker du å se CV-en din kan du ta kontakt med oss.",
+    },
+    FETCH_ERROR: {
+        tittel: "CV er ikke tilgjengelig",
+        tekst: "Det har skjedd en feil under lasting av CVen din. Vennligst prøv igjen eller kom tilbake senere.",
+    },
+    IKKE_LOGGET_INN: {
+        tittel: "Du er ikke logget inn",
+        tekst: "Du er ikke logget inn. Min CV er en innlogget tjeneste. Vennligst logg inn, eller gå tilbake til Nav.no.",
+    },
+    LOGGET_UT: {
+        tittel: "Du er blitt logget ut",
+        tekst: "Du har blitt logget ut på grunn av inaktivitet. Vennligst logg inn igjen, eller gå tilbake til Nav.no.",
+    },
 });
