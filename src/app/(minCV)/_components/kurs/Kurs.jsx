@@ -1,7 +1,7 @@
 import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { formatterFullDato, formatterTidsenhet } from "@/app/_common/utils/stringUtils";
+import { formatterFullDatoMedFallback, formatterTidsenhet } from "@/app/_common/utils/stringUtils";
 import KursModal from "@/app/(minCV)/_components/kurs/KursModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
@@ -86,7 +86,9 @@ export default function Kurs() {
                                             )}
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>Fullført</FormSummary.Label>
-                                                <FormSummary.Value>{formatterFullDato(k.date)}</FormSummary.Value>
+                                                <FormSummary.Value>
+                                                    {formatterFullDatoMedFallback(k.date)}
+                                                </FormSummary.Value>
                                             </FormSummary.Answer>
                                             {k.durationUnit !== "UKJENT" && (
                                                 <FormSummary.Answer>

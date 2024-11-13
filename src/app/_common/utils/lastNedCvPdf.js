@@ -3,7 +3,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import { SpråkEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import {
     formatterDato,
-    formatterFullDato,
+    formatterFullDatoMedFallback,
     formatterTidsenhet,
     fjernHtmlTags,
     storForbokstav,
@@ -388,7 +388,7 @@ export function lastNedCvPdf(cv, personalia) {
                 "",
                 førsteGodkjenning.issuer,
                 førsteGodkjenning.title || " ",
-                førsteGodkjenning.toDate ? `Utløper: ${formatterFullDato(førsteGodkjenning.toDate)}` : "",
+                førsteGodkjenning.toDate ? `Utløper: ${formatterFullDatoMedFallback(førsteGodkjenning.toDate)}` : "",
             ),
         ],
         unbreakable: true,
@@ -412,7 +412,7 @@ export function lastNedCvPdf(cv, personalia) {
                 førsteSertifikat.ongoing,
                 førsteSertifikat.issuer,
                 førsteSertifikat.alternativeName || førsteSertifikat.certificateName || " ",
-                førsteSertifikat.toDate ? `Utløper: ${formatterFullDato(førsteSertifikat.toDate)}` : "",
+                førsteSertifikat.toDate ? `Utløper: ${formatterFullDatoMedFallback(førsteSertifikat.toDate)}` : "",
             ),
         ],
         unbreakable: true,
@@ -431,7 +431,7 @@ export function lastNedCvPdf(cv, personalia) {
                             "",
                             s.issuer,
                             s.title || " ",
-                            s.toDate ? `Utløper: ${formatterFullDato(s.toDate)}` : "",
+                            s.toDate ? `Utløper: ${formatterFullDatoMedFallback(s.toDate)}` : "",
                         ),
                     ),
             ];
@@ -451,7 +451,7 @@ export function lastNedCvPdf(cv, personalia) {
                             s.ongoing,
                             s.issuer,
                             s.alternativeName || s.certificateName || " ",
-                            s.toDate ? `Utløper: ${formatterFullDato(s.toDate)}` : "",
+                            s.toDate ? `Utløper: ${formatterFullDatoMedFallback(s.toDate)}` : "",
                         ),
                     ),
             ];
@@ -606,7 +606,7 @@ export function lastNedCvPdf(cv, personalia) {
             personaliaRad("E-post:", personalia.epost),
             personaliaRad("Telefon:", personalia.telefonnummer),
             formattertAdresse(),
-            personaliaRad("Fødselsdato:", formatterFullDato(personalia.foedselsdato)),
+            personaliaRad("Fødselsdato:", formatterFullDatoMedFallback(personalia.foedselsdato)),
             verticalLine(),
             sammendragRad(sammendrag),
             utdanningListe(datosorterElementer(utdanning)),

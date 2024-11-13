@@ -1,5 +1,5 @@
 import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Skeleton, Tag, VStack } from "@navikt/ds-react";
-import { formatterFullDato } from "@/app/_common/utils/stringUtils";
+import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 
 function HeaderPanel({ title = "Din CV", visTag = true }) {
@@ -19,7 +19,7 @@ function HeaderPanel({ title = "Din CV", visTag = true }) {
     const sistEndretKomponent = !sistEndret ? (
         <Detail as={Skeleton}>Sist endret 1. januar 1970</Detail>
     ) : (
-        <Detail>{`Sist endret ${formatterFullDato(sistEndret)}`}</Detail>
+        <Detail>{`Sist endret ${formatterFullDatoMedFallback(sistEndret)}`}</Detail>
     );
 
     return (

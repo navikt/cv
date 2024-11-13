@@ -1,7 +1,7 @@
 import { BodyLong, Box, Button, FormSummary, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { PencilIcon, PlusIcon, TrashIcon } from "@navikt/aksel-icons";
-import { formatterFullDato } from "@/app/_common/utils/stringUtils";
+import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
 import AndreGodkjenningerModal from "@/app/(minCV)/_components/andreGodkjenninger/AndreGodkjenningerModal";
 import { CvSeksjonEnum, SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
@@ -83,7 +83,7 @@ export default function AndreGodkjenninger() {
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>{`Gyldig${godkjenning.toDate ? "" : " fra"}`}</FormSummary.Label>
                                                 <FormSummary.Value>
-                                                    {`${formatterFullDato(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDato(godkjenning.toDate)}` : ""}`}
+                                                    {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
                                                 </FormSummary.Value>
                                             </FormSummary.Answer>
                                         </FormSummary.Answers>

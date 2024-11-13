@@ -2,7 +2,12 @@ import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useRef } from "react";
 import { SpråkEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
-import { formatterDato, formatterFullDato, formatterTidsenhet } from "@/app/_common/utils/stringUtils";
+import {
+    formatterDato,
+    formatterFullDato,
+    formatterFullDatoMedFallback,
+    formatterTidsenhet,
+} from "@/app/_common/utils/stringUtils";
 import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
@@ -188,7 +193,10 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         {cv.foererkort.map((foererkort, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft} />
+                                    <div className={styles.previewItemLeft}>
+                                        {foererkort.acquiredDate &&
+                                            `${formatterDato(foererkort.acquiredDate)} - ${formatterDato(foererkort.expiryDate)}`}
+                                    </div>
                                     <div className={styles.previewItemRight}>
                                         <BodyLong weight="semibold" className={styles.mb3}>
                                             {foererkort.type}
@@ -208,13 +216,15 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         {cv.kurs.map((kurs, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>{formatterFullDato(kurs.date)}</div>
+                                    <div className={styles.previewItemLeft}>{formatterFullDato(kurs.date) || ""}</div>
                                     <div className={styles.previewItemRight}>
                                         <BodyLong weight="semibold">{kurs.title}</BodyLong>
                                         <BodyLong>{kurs.issuer}</BodyLong>
-                                        <BodyLong
-                                            className={styles.mb3}
-                                        >{`${kurs.duration} ${formatterTidsenhet(kurs.durationUnit, kurs.duration)}`}</BodyLong>
+                                        {kurs.durationUnit && kurs.duration && (
+                                            <BodyLong
+                                                className={styles.mb3}
+                                            >{`${kurs.duration} ${formatterTidsenhet(kurs.durationUnit, kurs.duration)}`}</BodyLong>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -236,7 +246,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>
-                                        {`${formatterFullDato(godkjenning.fromDate)} - ${formatterFullDato(godkjenning.toDate)}`}
+                                        {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
                                     </div>
                                     <div className={styles.previewItemRight}>
                                         <BodyLong weight="semibold">{godkjenning.title}</BodyLong>
@@ -262,7 +272,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>
-                                        {`${formatterFullDato(godkjenning.fromDate)} - ${formatterFullDato(godkjenning.toDate)}`}
+                                        {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
                                     </div>
                                     <div className={styles.previewItemRight}>
                                         <BodyLong weight="semibold">{godkjenning.certificateName}</BodyLong>
