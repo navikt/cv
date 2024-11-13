@@ -49,7 +49,7 @@ export const FeilsideÅrsak = Object.freeze({
         tekst: "Du er ikke logget inn. Min CV er en innlogget tjeneste. Vennligst logg inn, eller gå tilbake til Nav.no.",
     },
     LOGGET_UT: {
-        tittel: "Du er blitt logget ut",
+        tittel: "Du har blitt logget ut",
         tekst: "Du har blitt logget ut på grunn av inaktivitet. Vennligst logg inn igjen, eller gå tilbake til Nav.no.",
     },
 });
