@@ -2,7 +2,7 @@ import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Skeleton, Tag, VSt
 import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 
-function HeaderPanel({ title = "Din CV", visTag = true }) {
+function HeaderPanel({ title = "Min CV", visTag = true }) {
     const { personalia } = usePerson();
 
     const navn = personalia ? `${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase() : null;

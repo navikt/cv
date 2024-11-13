@@ -10,7 +10,7 @@ export default function NotFound() {
                 <HStack className={styles.notFoundHeaderContainer}>
                     <Pictogram />
                     <Heading level="1" size="large">
-                        Din CV
+                        Min CV
                     </Heading>
                 </HStack>
             </Box>
@@ -25,7 +25,7 @@ export default function NotFound() {
 
                     <HStack className={styles.notFoundHStack}>
                         <Link
-                            href={`${arbeidsplassenBaseUrl}/personbruker`}
+                            href={`${arbeidsplassenBaseUrl}/min-cv`}
                             className={[styles.notFoundButton, styles.notFoundButtonPrimary]}
                         >
                             Tilbake til CV

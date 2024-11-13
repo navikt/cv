@@ -6,7 +6,7 @@ import { samtykkeEuresMock } from "./samtykkeEuresMock";
 import { arbeidsforholdMock } from "./arbeidsforholdMock";
 
 createServer({
-    namespace: "/personbruker",
+    namespace: "/min-cv",
     logging: false,
     routes() {
         this.get("/api/samtykke/eures", samtykkeEuresMock);

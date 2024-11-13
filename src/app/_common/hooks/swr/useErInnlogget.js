@@ -21,7 +21,7 @@ export const useErInnlogget = () => {
         throw error;
     };
 
-    const { data, error, isLoading } = useSWR("/personbruker/api/isAuthenticated", fetcher, {
+    const { data, error, isLoading } = useSWR("/min-cv/api/isAuthenticated", fetcher, {
         refreshInterval: 60 * 1000,
     });
 

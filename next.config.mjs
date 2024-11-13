@@ -1,6 +1,6 @@
 /** @type {import("next").NextConfig} */
 const nextConfig = {
-    basePath: "/personbruker",
+    basePath: "/min-cv",
     output: "standalone",
     webpack: (config, options) => {
         config.resolve.alias["fs"] = "pdfkit/js/virtual-fs.js";

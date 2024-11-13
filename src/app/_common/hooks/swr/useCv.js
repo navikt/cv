@@ -5,7 +5,7 @@ import { getAPI } from "@/app/_common/utils/fetchUtils";
 import { useErInnlogget } from "@/app/_common/hooks/swr/useErInnlogget";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 
-export const CV_KEY = "/personbruker/api/cv";
+export const CV_KEY = "/min-cv/api/cv";
 
 export const useCv = () => {
     const { erInnlogget } = useErInnlogget();

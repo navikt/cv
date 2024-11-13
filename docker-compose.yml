@@ -17,7 +17,7 @@ services:
       --upstream-host=docker.host:3001
       --log-level=info
       --bind-address=0.0.0.0:3000
-      --ingress=http://localhost:3000/personbruker
+      --ingress=http://localhost:3000/min-cv
       --openid.well-known-url=http://host.docker.internal:8237/idporten/.well-known/openid-configuration
       --openid.client-id=local-idporten-client-id
       --openid.post-logout-redirect-uri=http://localhost:3000/

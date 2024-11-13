@@ -20,10 +20,7 @@ export const useBekreftTidligereCv = () => {
         return true;
     };
 
-    const { data, error, isLoading } = useSWR(
-        bekreft ? `/personbruker/api/samtykke/bekreft_tidligere_cv` : null,
-        fetcher,
-    );
+    const { data, error, isLoading } = useSWR(bekreft ? `/min-cv/api/samtykke/bekreft_tidligere_cv` : null, fetcher);
 
     if (data === true) setBekreft(false);
 

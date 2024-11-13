@@ -9,10 +9,10 @@ spec:
   image: {{ image }}
   port: 8095
   liveness:
-    path: /personbruker/api/internal/isAlive
+    path: /min-cv/api/internal/isAlive
     initialDelay: 10
   readiness:
-    path: /personbruker/api/internal/isReady
+    path: /min-cv/api/internal/isReady
     initialDelay: 10
   replicas:
     min: 2
@@ -38,7 +38,7 @@ spec:
     enabled: true
   prometheus:
     enabled: true
-    path: /personbruker/api/internal/metrics
+    path: /min-cv/api/internal/metrics
   ingresses:
   {{#each ingress as |url|}}
      - {{url}}
