@@ -35,14 +35,15 @@ export const formatterDato = (dato) => {
     return `${MånedEnum[date.getMonth()]} ${date.getFullYear()}`;
 };
 
+export const formatterFullDatoMedFallback = (dato, fallback = "nå") => formatterFullDato(dato) || fallback;
+
 export const formatterFullDato = (dato) => {
-    if (!dato) return "nå";
+    if (!dato) return null;
     const date = new Date(dato);
     return `${date.getDate()}. ${MånedEnum[date.getMonth()].toLowerCase()} ${date.getFullYear()}`;
 };
 
 export const formatterTidsenhet = (enhet, antall) => {
-    if (enhet === TidsenhetEnum.UKJENT) return "Ukjent";
     if (antall > 1) {
         const endelse = enhet.slice(-1) === "E" ? "r" : "er";
         return `${TidsenhetEnum[enhet]}${antall > 1 && endelse}`;

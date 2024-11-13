@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ErrorSummary, HStack, TextField, VStack } from "@navikt/ds-react";
 import { PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
-import { formatterFullDato } from "@/app/_common/utils/stringUtils";
+import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
 import ValidateEmail from "@/app/_common/components/ValidateEmail";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
@@ -167,7 +167,7 @@ export default function PersonaliaModal({
             <TextField
                 label="Fødselsdato"
                 description="Kan ikke endres"
-                value={fødselsdato ? formatterFullDato(fødselsdato) : ""}
+                value={fødselsdato ? formatterFullDatoMedFallback(fødselsdato) : ""}
                 readOnly
             />
             {fornavnError && (
