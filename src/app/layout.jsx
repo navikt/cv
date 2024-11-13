@@ -17,7 +17,7 @@ async function RootLayout({ children }) {
     return (
         <html lang="no">
             <head>
-                <title>Din CV - nav.no</title>
+                <title>Min CV - nav.no</title>
                 {HeadAssets}
             </head>
             <body className={sourceSansPro.className}>

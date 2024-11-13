@@ -13,8 +13,8 @@ const dekoratørProps = {
                 url: "/minside",
             },
             {
-                title: "Din CV",
-                url: "/personbruker",
+                title: "Min CV",
+                url: "/min-cv",
             },
         ],
     },

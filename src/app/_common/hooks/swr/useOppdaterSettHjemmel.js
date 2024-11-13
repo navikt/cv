@@ -22,7 +22,7 @@ export const useOppdaterSettHjemmel = (skalOppdatere) => {
         return true;
     };
 
-    const { data, error, isLoading } = useSWR(skalOppdatere ? `/personbruker/api/samtykke` : null, fetcher);
+    const { data, error, isLoading } = useSWR(skalOppdatere ? `/min-cv/api/samtykke` : null, fetcher);
 
     return {
         settHjemmelSuksess: data,

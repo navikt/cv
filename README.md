@@ -23,7 +23,7 @@ $ npm run setup_dependencies # Starter docker-containere for wonderwall, redis o
 $ npm run dev # Kjører dev
 ```
 
-Da kan du nå applikasjonen med innlogging på [http://localhost:3000/personbruker](http://localhost:3000/personbruker). Bruk testbruker `04010100653`.
+Da kan du nå applikasjonen med innlogging på [http://localhost:3000/min-cv](http://localhost:3000/min-cv). Bruk testbruker `04010100653`.
 
 > [!TIP]
 > Selve applikasjonen kjører på http://localhost:3001, men siden alle requester må routes gjennom Wonderwall som kjører på port 3000 vil det fortsatt være https://localhost:3000 som gjelder
@@ -55,7 +55,7 @@ For å kunne hente @navikt-pakker via npm er du nødt til å gjøre følgende:
 
 ### Teste i safari
 
-Safari har strengere regler enn andre browsere for å sette cookies for localhost, og derfor fungerer vanligvis ikke wonderwall med Safari. Dersom man vil teste i safari må man gå inn i `docker-compose.yml` og fjerne "#" fremst i linja
+Safari har strengere regler enn andre browsere for å sette cookies for localhost, og derfor fungerer vanligvis ikke wonderwall med Safari. Dersom man vil teste i safari må man gå inn i `docker-compose.yml` og fjerne "#" fremst i følgende linje
 
 ```
 # --cookie.secure=false # Fjern '#' på denne linjen for å kunne bruke wonderwall i safari

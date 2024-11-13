@@ -31,7 +31,7 @@ export const useOppdaterPersonaliaNoCache = () => {
         }
     };
 
-    const url = "personbruker/api/personalia";
+    const url = "/min-cv/api/personalia";
     const { trigger, data, error, isMutating } = useSWRMutation(url, fetcher, { revalidate: false });
 
     const triggerOppdatering = (body) => trigger({ body });

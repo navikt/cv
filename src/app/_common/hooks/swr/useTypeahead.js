@@ -58,7 +58,7 @@ export const useTypeahead = (type, visningsfelt, forhåndshentet, alleredeValgte
     const skalHente = type === TypeaheadEnum.SPRÅK || typeaheadverdi?.length >= 2;
     const query = type !== TypeaheadEnum.SPRÅK ? encodeURIComponent(typeaheadverdi) : "";
 
-    const url = skalHente ? `/personbruker/api/typeahead/${type}/${query}` : null;
+    const url = skalHente ? `/min-cv/api/typeahead/${type}/${query}` : null;
 
     const { data, error, isLoading } = useSWR(url, fetcher, { fallbackData: [] });
 

@@ -40,7 +40,7 @@ export const useHentArbeidsforhold = ({ oppdateringLaster, triggerOppdatering })
         return data;
     };
 
-    const { data, error, isLoading } = useSWR(skalHenteData ? `/personbruker/api/arbeidsforhold` : null, fetcher);
+    const { data, error, isLoading } = useSWR(skalHenteData ? `/min-cv/api/arbeidsforhold` : null, fetcher);
 
     return {
         aaregSuksess: !!data && !error,
