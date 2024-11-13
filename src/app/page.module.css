@@ -94,6 +94,13 @@
         justify-content: space-around;
         padding: 0 1rem 2rem 1rem;
     }
+
+    .notifikasjonContainer {
+        max-width: 280px;
+        position: fixed;
+        bottom: var(--a-spacing-6);
+        right: var(--a-spacing-6);
+    }
 }
 
 @media (min-width: 1024px) {
@@ -118,6 +125,13 @@
     .previewItem {
         display: flex;
         flex-direction: row;
+    }
+
+    .notifikasjonContainer {
+        width: 400px;
+        position: fixed;
+        bottom: var(--a-spacing-12);
+        right: var(--a-spacing-12);
     }
 }
 
@@ -388,13 +402,6 @@
     border-left: 2px solid rgba(203, 207, 213, 1);
     padding-left: 1rem;
     width: 470px;
-}
-
-.notifikasjonContainer {
-    width: 400px;
-    position: fixed;
-    bottom: var(--a-spacing-12);
-    right: var(--a-spacing-12);
 }
 
 .notifikasjon {
