@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HStack, TextField, VStack } from "@navikt/ds-react";
+import { HStack, TextField } from "@navikt/ds-react";
 import { PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
@@ -62,7 +62,7 @@ export default function PersonaliaModal({
             handleFormSubmit={lagre}
         >
             <HStack justify="space-between">
-                <VStack className={styles.element}>
+                <div className={styles.element}>
                     <TextField
                         id="fornavn"
                         name="fornavn"
@@ -76,8 +76,8 @@ export default function PersonaliaModal({
                         }}
                         error={errors?.fornavn}
                     />
-                </VStack>
-                <VStack className={styles.element}>
+                </div>
+                <div className={styles.element}>
                     <TextField
                         id="etternavn"
                         name="etternavn"
@@ -91,10 +91,10 @@ export default function PersonaliaModal({
                         }}
                         error={errors?.etternavn}
                     />
-                </VStack>
+                </div>
             </HStack>
             <HStack justify="space-between">
-                <VStack className={styles.element}>
+                <div className={styles.element}>
                     <TextField
                         className={styles.mb6}
                         id="epost"
@@ -109,8 +109,8 @@ export default function PersonaliaModal({
                         }}
                         error={errors?.epost}
                     />
-                </VStack>
-                <VStack className={styles.element}>
+                </div>
+                <div className={styles.element}>
                     <TextField
                         className={styles.mb6}
                         id="telefonnummer"
@@ -125,21 +125,21 @@ export default function PersonaliaModal({
                         }}
                         error={errors?.telefon}
                     />
-                </VStack>
+                </div>
             </HStack>
             <TextField name="adresse" className={styles.mb6} label="Gateadresse" defaultValue={personalia.adresse} />
             <HStack justify="space-between">
-                <VStack className={styles.element}>
+                <div className={styles.element}>
                     <TextField
                         name="postnummer"
                         className={styles.mb6}
                         label="Postnummer"
                         defaultValue={personalia.postnummer}
                     />
-                </VStack>
-                <VStack className={styles.element}>
+                </div>
+                <div className={styles.element}>
                     <TextField name="poststed" className={styles.mb6} label="Sted" defaultValue={personalia.poststed} />
-                </VStack>
+                </div>
             </HStack>
             <TextField
                 label="Fødselsdato"
