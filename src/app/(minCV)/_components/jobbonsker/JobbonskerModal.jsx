@@ -6,7 +6,7 @@ import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
-import { handleZodValidation, revalidate } from "@/app/_common/utils/validationHelper";
+import { handleZodValidation, revalidateExplicitValue } from "@/app/_common/utils/validationHelper";
 import z from "zod";
 
 export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
@@ -14,68 +14,36 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
     const [errors, setErrors] = useState({});
     const [yrker, setYrker] = useState([]);
     const [lokasjoner, setLokasjoner] = useState([]);
-    const [omfang, setOmfang] = useState([]);
-    const [ansettelsesform, setAnsettelsesform] = useState([]);
-    const [arbeidstid, setArbeidstid] = useState([]);
-    const [starttidspunkt, setStarttidspunkt] = useState("");
-    const [yrkerError, setYrkerError] = useState(false);
-    const [lokasjonerError, setLokasjonerError] = useState(false);
 
     useEffect(() => {
         const oppdaterJobbønsker = (jobbønsker) => {
             setYrker(jobbønsker?.occupations || []);
             setLokasjoner(jobbønsker?.locations || []);
-            // setOmfang(jobbønsker?.workLoadTypes || []);
-            // setAnsettelsesform(jobbønsker?.occupationTypes || []);
-            // setArbeidstid(jobbønsker?.workScheduleTypes || []);
-            // setStarttidspunkt(jobbønsker?.startOption || "ETTER_TRE_MND");
         };
 
         oppdaterJobbønsker(gjeldendeElement);
-    }, [gjeldendeElement]);
+    }, []);
 
     const JobbonskerSchema = z.object({
-        occupations: z.string().min(1, "Du må legge til jobbønsker"),
-        locations: z.string().min(1, "Du må legge til steder"),
-        workLoadTypes: z.string().optional(),
-        occupationTypes: z.string().optional(),
-        workScheduleTypes: z.string().optional(),
+        occupations: z.object({}).passthrough().array().min(1, "Du må legge til jobbønsker"),
+        locations: z.object({}).passthrough().array().min(1, "Du må legge til steder"),
+        workLoadTypes: z.string().array().optional(),
+        occupationTypes: z.string().array().optional(),
+        workScheduleTypes: z.string().array().optional(),
         startOption: z.string().optional(),
     });
-
-    // const lagre = (e) => {
-    //     const data = Object.fromEntries(new FormData(e.currentTarget));
-    //     setShouldAutoFocusErrors(true);
-
-    //     handleZodValidation({
-    //         onError: setErrors,
-    //         data: data,
-    //         onSuccess: (res) => {
-    //             lagrePersonalia({
-    //                 fornavn: res.fornavn,
-    //                 etternavn: res.etternavn,
-    //                 epost: res.epost,
-    //                 telefonnummer: res.telefonnummer,
-    //                 adresse: res.adresse,
-    //                 postnummer: res.postnummer,
-    //                 poststed: res.poststed,
-    //             });
-    //         },
-    //         schema: PersonaliaSchema,
-    //     });
-    // };
 
     const lagre = (e) => {
         const formData = new FormData(e.currentTarget);
 
-        formData.append("occupations", JSON.stringify(yrker));
-        formData.append("locations", JSON.stringify(lokasjoner));
-        const data = Object.fromEntries(
-            Array.from(formData.keys()).map((key) => [
-                key,
-                formData.getAll(key).length > 1 ? formData.getAll(key) : formData.get(key),
-            ]),
-        );
+        const data = {
+            ...Object.fromEntries(formData),
+            workLoadTypes: formData.getAll("workLoadTypes"),
+            occupationTypes: formData.getAll("occupationTypes"),
+            workScheduleTypes: formData.getAll("workScheduleTypes"),
+            occupations: yrker,
+            locations: lokasjoner,
+        };
 
         setShouldAutoFocusErrors(true);
 
@@ -85,31 +53,16 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
             onSuccess: (res) => {
                 lagreElement({
                     ...gjeldendeElement,
-                    occupations: yrker,
-                    locations: lokasjoner,
-                    workLoadTypes: omfang,
-                    occupationTypes: ansettelsesform,
-                    workScheduleTypes: arbeidstid,
-                    startOption: starttidspunkt,
+                    occupations: res.occupations,
+                    locations: res.locations,
+                    workLoadTypes: res.workLoadTypes,
+                    occupationTypes: res.occupationTypes,
+                    workScheduleTypes: res.workScheduleTypes,
+                    startOption: res.startOption,
                 });
             },
             schema: JobbonskerSchema,
         });
-
-        // if (yrker.length === 0) setYrkerError(true);
-        // if (lokasjoner.length === 0) setLokasjonerError(true);
-
-        // if (yrker.length !== 0 && lokasjoner.length !== 0) {
-        //     lagreElement({
-        //         ...gjeldendeElement,
-        //         occupations: yrker,
-        //         locations: lokasjoner,
-        //         workLoadTypes: omfang,
-        //         occupationTypes: ansettelsesform,
-        //         workScheduleTypes: arbeidstid,
-        //         startOption: starttidspunkt,
-        //     });
-        // }
     };
 
     const oppdaterYrker = (yrke, erValgt) => {
@@ -121,7 +74,8 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
             oppdaterteYrker.splice(eksisterendeIndex, 1);
         }
         setYrker(oppdaterteYrker);
-        setYrkerError(false);
+        setShouldAutoFocusErrors(false);
+        revalidateExplicitValue("occupations", oppdaterteYrker, JobbonskerSchema, errors, setErrors);
     };
 
     const oppdaterLokasjoner = (lokasjon, erValgt) => {
@@ -132,9 +86,9 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
             const eksisterendeIndex = oppdaterteLokasjoner.findIndex((e) => e.location === lokasjon.location);
             oppdaterteLokasjoner.splice(eksisterendeIndex, 1);
         }
-
         setLokasjoner(oppdaterteLokasjoner);
-        setLokasjonerError(false);
+        setShouldAutoFocusErrors(false);
+        revalidateExplicitValue("locations", oppdaterteLokasjoner, JobbonskerSchema, errors, setErrors);
     };
 
     return (
@@ -148,6 +102,7 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
         >
             <VStack justify="space-between">
                 <Typeahead
+                    id="occupations"
                     className={styles.mb6}
                     label="Jobber og yrker"
                     description="Må fylles ut"
@@ -157,9 +112,10 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
                     multiselect
                     placeholder="Søk og legg til yrker"
                     multiselectText="Yrker"
-                    error={yrkerError && "Du må legge til jobbønsker"}
+                    error={errors?.occupations}
                 />
                 <Typeahead
+                    id="locations"
                     className={styles.mb6}
                     label="Hvor kan du jobbe"
                     description="Må fylles ut"
@@ -170,7 +126,7 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
                     multiselect
                     placeholder="Søk og legg til steder"
                     multiselectText="Steder"
-                    error={lokasjonerError && "Du må legge til steder"}
+                    error={errors?.locations}
                 />
             </VStack>
             <CheckboxGroup

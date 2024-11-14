@@ -4,6 +4,7 @@ import styles from "@/app/page.module.css";
 import { useTypeahead } from "@/app/_common/hooks/swr/useTypeahead";
 
 export function Typeahead({
+    id = undefined,
     type,
     oppdaterValg,
     valgtVerdi,
@@ -38,6 +39,7 @@ export function Typeahead({
     return (
         <VStack className={className}>
             <UNSAFE_Combobox
+                id={id}
                 label={label}
                 description={description}
                 options={typeaheadforslag}
