@@ -175,7 +175,7 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
                 id="startOption"
                 name="startOption"
                 legend="Når kan du begynne i ny jobb?"
-                defaultValue={gjeldendeElement.startOption}
+                defaultValue={gjeldendeElement.startOption || "ETTER_TRE_MND"}
             >
                 <HStack>
                     {Object.keys(StarttidspunktEnum).map((verdi) => (
