@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
-import { ErrorSummary, HStack, TextField, VStack } from "@navikt/ds-react";
+import { useState } from "react";
+import { HStack, TextField } from "@navikt/ds-react";
 import { PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
-import ValidateEmail from "@/app/_common/components/ValidateEmail";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
+import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
+import { handleZodValidation, revalidate } from "@/app/_common/utils/validationHelper";
+import z from "zod";
 
 export default function PersonaliaModal({
     modalÅpen,
@@ -14,57 +16,39 @@ export default function PersonaliaModal({
     laster,
     feilet,
 }) {
-    const [fornavn, setFornavn] = useState("");
-    const [etternavn, setEtternavn] = useState("");
-    const [epost, setEpost] = useState("");
-    const [telefon, setTelefon] = useState("");
-    const [adresse, setAdresse] = useState("");
-    const [postnummer, setPostnummer] = useState("");
-    const [sted, setSted] = useState("");
-    const [fødselsdato, setFødselsdato] = useState("");
-    const [fornavnError, setFornavnError] = useState(false);
-    const [etternavnError, setEtternavnError] = useState(false);
-    const [epostError, setEpostError] = useState(false);
-    const [epostValidationError, setEpostValidationError] = useState(false);
-    const [telefonError, setTelefonError] = useState(false);
+    const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
+    const [errors, setErrors] = useState({});
 
-    useEffect(() => {
-        const oppdaterPersonalia = (personaliaVerdi) => {
-            setFornavn(personaliaVerdi?.fornavn || "");
-            setEtternavn(personaliaVerdi?.etternavn || "");
-            setEpost(personaliaVerdi?.epost || "");
-            setTelefon(personaliaVerdi?.telefonnummer || "");
-            setAdresse(personaliaVerdi?.adresse || "");
-            setPostnummer(personaliaVerdi?.postnummer || "");
-            setSted(personaliaVerdi?.poststed || "");
-            setFødselsdato(personaliaVerdi?.foedselsdato || "");
-        };
+    const PersonaliaSchema = z.object({
+        fornavn: z.string().min(1, "Fornavn må fylles ut"),
+        etternavn: z.string().min(1, "Etternavn må fylles ut"),
+        telefonnummer: z.string().min(1, "Telefon må fylles ut"),
+        epost: z.string().email("Du har lagt inn en ugyldig e-post").min(1, "E-post må fylles ut"),
+        postnummer: z.string().optional(),
+        poststed: z.string().optional(),
+        adresse: z.string().optional(),
+    });
 
-        oppdaterPersonalia(personalia);
-    }, [personalia]);
+    const lagre = (e) => {
+        const data = Object.fromEntries(new FormData(e.currentTarget));
+        setShouldAutoFocusErrors(true);
 
-    const lagre = () => {
-        let isEpostValid = false;
-        if (!fornavn) setFornavnError(true);
-        if (!etternavn) setEtternavnError(true);
-        if (!telefon) setTelefonError(true);
-        if (!epost) {
-            setEpostError(true);
-        } else {
-            isEpostValid = ValidateEmail(epost);
-            setEpostValidationError(!isEpostValid);
-        }
-        if (fornavn && etternavn && isEpostValid && telefon) {
-            lagrePersonalia({
-                fornavn: fornavn,
-                etternavn: etternavn,
-                epost: epost,
-                telefonnummer: telefon,
-                adresse: adresse,
-                postnummer: postnummer,
-                poststed: sted,
-            });
-        }
+        handleZodValidation({
+            onError: setErrors,
+            data: data,
+            onSuccess: (res) => {
+                lagrePersonalia({
+                    fornavn: res.fornavn,
+                    etternavn: res.etternavn,
+                    epost: res.epost,
+                    telefonnummer: res.telefonnummer,
+                    adresse: res.adresse,
+                    postnummer: res.postnummer,
+                    poststed: res.poststed,
+                });
+            },
+            schema: PersonaliaSchema,
+        });
     };
 
     return (
@@ -78,104 +62,92 @@ export default function PersonaliaModal({
             handleFormSubmit={lagre}
         >
             <HStack justify="space-between">
-                <VStack className={styles.element}>
+                <div className={styles.element}>
                     <TextField
+                        id="fornavn"
                         name="fornavn"
                         className={styles.mb6}
                         label="Fornavn"
                         description="Må fylles ut"
-                        value={fornavn}
-                        onChange={(e) => {
-                            setFornavn(e.target.value);
-                            setFornavnError(false);
+                        defaultValue={personalia.fornavn}
+                        onBlur={(e) => {
+                            setShouldAutoFocusErrors(false);
+                            revalidate(e, PersonaliaSchema, errors, setErrors);
                         }}
-                        error={fornavnError && "Fornavn må fylles ut"}
+                        error={errors?.fornavn}
                     />
-                </VStack>
-                <VStack className={styles.element}>
+                </div>
+                <div className={styles.element}>
                     <TextField
+                        id="etternavn"
+                        name="etternavn"
                         className={styles.mb6}
                         label="Etternavn"
                         description="Må fylles ut"
-                        value={etternavn}
-                        onChange={(e) => {
-                            setEtternavn(e.target.value);
-                            setEtternavnError(false);
+                        defaultValue={personalia.etternavn}
+                        onBlur={(e) => {
+                            setShouldAutoFocusErrors(false);
+                            revalidate(e, PersonaliaSchema, errors, setErrors);
                         }}
-                        error={etternavnError && "Etternavn må fylles ut"}
+                        error={errors?.etternavn}
                     />
-                </VStack>
+                </div>
             </HStack>
             <HStack justify="space-between">
-                <VStack className={styles.element}>
+                <div className={styles.element}>
                     <TextField
                         className={styles.mb6}
+                        id="epost"
+                        name="epost"
                         type="email"
                         label="E-post"
                         description="Må fylles ut"
-                        value={epost}
-                        onChange={(e) => {
-                            setEpost(e.target.value);
-                            setEpostError(false);
-                            setEpostValidationError(false);
+                        defaultValue={personalia.epost}
+                        onBlur={(e) => {
+                            setShouldAutoFocusErrors(false);
+                            revalidate(e, PersonaliaSchema, errors, setErrors);
                         }}
-                        error={
-                            (epostError && "E-post må fylles ut") ||
-                            (epostValidationError && "Du har lagt inn en ugyldig E-post")
-                        }
+                        error={errors?.epost}
                     />
-                </VStack>
-                <VStack className={styles.element}>
+                </div>
+                <div className={styles.element}>
                     <TextField
                         className={styles.mb6}
+                        id="telefonnummer"
+                        name="telefonnummer"
                         type="tel"
                         label="Telefon"
                         description="Må fylles ut"
-                        value={telefon}
-                        onChange={(e) => {
-                            setTelefon(e.target.value);
-                            setTelefonError(false);
+                        defaultValue={personalia.telefonnummer}
+                        onBlur={(e) => {
+                            setShouldAutoFocusErrors(false);
+                            revalidate(e, PersonaliaSchema, errors, setErrors);
                         }}
-                        error={telefonError && "Telefon må fylles ut"}
+                        error={errors?.telefon}
                     />
-                </VStack>
+                </div>
             </HStack>
-            <TextField
-                className={styles.mb6}
-                label="Gateadresse"
-                value={adresse}
-                onChange={(e) => setAdresse(e.target.value)}
-            />
+            <TextField name="adresse" className={styles.mb6} label="Gateadresse" defaultValue={personalia.adresse} />
             <HStack justify="space-between">
-                <VStack className={styles.element}>
+                <div className={styles.element}>
                     <TextField
+                        name="postnummer"
                         className={styles.mb6}
                         label="Postnummer"
-                        value={postnummer}
-                        onChange={(e) => setPostnummer(e.target.value)}
+                        defaultValue={personalia.postnummer}
                     />
-                </VStack>
-                <VStack className={styles.element}>
-                    <TextField
-                        className={styles.mb6}
-                        label="Sted"
-                        value={sted}
-                        onChange={(e) => setSted(e.target.value)}
-                    />
-                </VStack>
+                </div>
+                <div className={styles.element}>
+                    <TextField name="poststed" className={styles.mb6} label="Sted" defaultValue={personalia.poststed} />
+                </div>
             </HStack>
             <TextField
                 label="Fødselsdato"
                 description="Kan ikke endres"
-                value={fødselsdato ? formatterFullDatoMedFallback(fødselsdato) : ""}
+                value={personalia.foedselsdato ? formatterFullDatoMedFallback(personalia.foedselsdato) : ""}
                 readOnly
             />
-            {fornavnError && (
-                <ErrorSummary heading="Du må rette disse feilene i skjemaet" headingTag="h3">
-                    <ErrorSummary.Item href="#1">Felt må fylles ut med alder</ErrorSummary.Item>
-                    <ErrorSummary.Item href="#2">Tekstfeltet må ha en godkjent e-mail</ErrorSummary.Item>
-                </ErrorSummary>
-            )}
+            <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
         </CvModalForm>
     );
 }
