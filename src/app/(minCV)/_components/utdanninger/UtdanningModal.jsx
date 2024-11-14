@@ -132,7 +132,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                     oppdaterDato={setStartdato}
                     label={
                         <VStack>
-                            <BodyShort weight="semibold">Til dato</BodyShort>
+                            <BodyShort weight="semibold">Fra dato</BodyShort>
                             <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                         </VStack>
                     }
@@ -153,7 +153,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                         oppdaterDato={setSluttdato}
                         label={
                             <VStack>
-                                <BodyShort weight="semibold">Fra dato</BodyShort>
+                                <BodyShort weight="semibold">Til dato</BodyShort>
                                 <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                             </VStack>
                         }
