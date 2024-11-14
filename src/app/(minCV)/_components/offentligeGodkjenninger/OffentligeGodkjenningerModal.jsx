@@ -30,7 +30,8 @@ export default function OffentligeGodkjenningerModal({
     const [tilDatoIsAfterError, setTilDatoIsAfterError] = useState(false);
     const [tilDatoIsValidDateError, setTilDatoIsValidDateError] = useState(false);
 
-    const [isLagre, setIsLagre] = useState(false);
+    const [isLagreFraDato, setIsLagreFraDato] = useState(false);
+    const [isLagreTilDato, setIsLagreTilDato] = useState(false);
 
     useEffect(() => {
         const oppdaterGodkjenning = (godkjenning) => {
@@ -43,7 +44,9 @@ export default function OffentligeGodkjenningerModal({
     }, [gjeldendeElement]);
 
     const lagre = () => {
-        setIsLagre(true);
+        setIsLagreFraDato(true);
+        setIsLagreTilDato(true);
+
         if (!valgtGodkjenning || valgtGodkjenning.length === 0) setValgtGodkjenningError(true);
         if (!godkjenningFraDato) setGodkjenningFraDatoError(true);
 
@@ -120,8 +123,8 @@ export default function OffentligeGodkjenningerModal({
                     setIsAfterError={setFraDatoIsAfterError}
                     isValidDateError={fraDatoIsValidDateError}
                     setIsValidDateError={setFraDatoIsValidDateError}
-                    isLagre={isLagre}
-                    setIsLagre={setIsLagre}
+                    isLagre={isLagreFraDato}
+                    setIsLagre={setIsLagreFraDato}
                 />
                 <Datovelger
                     valgtDato={godkjenningTilDato}
@@ -134,8 +137,8 @@ export default function OffentligeGodkjenningerModal({
                     setIsAfterError={setTilDatoIsAfterError}
                     isValidDateError={tilDatoIsValidDateError}
                     setIsValidDateError={setTilDatoIsValidDateError}
-                    isLagre={isLagre}
-                    setIsLagre={setIsLagre}
+                    isLagre={isLagreTilDato}
+                    setIsLagre={setIsLagreTilDato}
                 />
             </HStack>
         </CvModalForm>

@@ -22,7 +22,8 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
     const [sluttdatoIsAfterError, setSluttdatoIsAfterError] = useState(false);
     const [sluttdatoIsValidDateError, setSluttdatoIsValidDateError] = useState(false);
 
-    const [isLagre, setIsLagre] = useState(false);
+    const [isLagreStartdato, setIsLagreStartdato] = useState(false);
+    const [isLagreSluttdato, setIsLagreSluttdato] = useState(false);
 
     useEffect(() => {
         const oppdaterUtdanning = (utdanning) => {
@@ -39,7 +40,9 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
     }, [gjeldendeElement]);
 
     const lagre = () => {
-        setIsLagre(true);
+        setIsLagreStartdato(true);
+        setIsLagreSluttdato(true);
+
         const erPågående = pågår.includes("true");
 
         if (!utdanningsnivå) setUtdanningsnivaError(true);
@@ -143,8 +146,8 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                     setIsAfterError={setStartdatoIsAfterError}
                     isValidDateError={startdatoIsValidDateError}
                     setIsValidDateError={setStartdatoIsValidDateError}
-                    isLagre={isLagre}
-                    setIsLagre={setIsLagre}
+                    isLagre={isLagreStartdato}
+                    setIsLagre={setIsLagreStartdato}
                 />
 
                 {!pågår.includes("true") && (
@@ -164,8 +167,8 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                         setIsAfterError={setSluttdatoIsAfterError}
                         isValidDateError={sluttdatoIsValidDateError}
                         setIsValidDateError={setSluttdatoIsValidDateError}
-                        isLagre={isLagre}
-                        setIsLagre={setIsLagre}
+                        isLagre={isLagreSluttdato}
+                        setIsLagre={setIsLagreSluttdato}
                     />
                 )}
             </HStack>

@@ -28,7 +28,8 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
     const [sluttdatoIsAfterError, setSluttdatoIsAfterError] = useState(false);
     const [sluttdatoIsValidDateError, setSluttdatoIsValidDateError] = useState(false);
 
-    const [isLagre, setIsLagre] = useState(false);
+    const [isLagreStartdato, setIsLagreStartdato] = useState(false);
+    const [isLagreSluttdato, setIsLagreSluttdato] = useState(false);
 
     useEffect(() => {
         const oppdaterArbeidsforhold = (arbeidsforhold) => {
@@ -50,7 +51,9 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
     }, [gjeldendeElement]);
 
     const lagre = async () => {
-        setIsLagre(true);
+        setIsLagreStartdato(true);
+        setIsLagreSluttdato(true);
+
         const erPågående = pågår.includes("true");
 
         if (!stillingstittel) setStillingstittelError(true);
@@ -164,8 +167,8 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
                     setIsAfterError={setStartdatoIsAfterError}
                     isValidDateError={startdatoIsValidDateError}
                     setIsValidDateError={setStartdatoIsValidDateError}
-                    isLagre={isLagre}
-                    setIsLagre={setIsLagre}
+                    isLagre={isLagreStartdato}
+                    setIsLagre={setIsLagreStartdato}
                 />
 
                 {!pågår.includes("true") && (
@@ -185,8 +188,8 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
                         setIsAfterError={setSluttdatoIsAfterError}
                         isValidDateError={sluttdatoIsValidDateError}
                         setIsValidDateError={setSluttdatoIsValidDateError}
-                        isLagre={isLagre}
-                        setIsLagre={setIsLagre}
+                        isLagre={isLagreSluttdato}
+                        setIsLagre={setIsLagreSluttdato}
                     />
                 )}
             </HStack>
