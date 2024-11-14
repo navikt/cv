@@ -8,8 +8,14 @@ export function Datovelger({
     fremtid = false,
     obligatorisk = false,
     className,
-    error,
-    setError,
+    isEmptyError,
+    setIsEmptyError,
+    isAfterError,
+    setIsAfterError,
+    isValidDateError,
+    setIsValidDateError,
+    isLagre,
+    setIsLagre,
 }) {
     useEffect(() => {
         const oppdaterDatepickerDato = (dato) => setSelected(dato);
@@ -27,11 +33,20 @@ export function Datovelger({
         toDate: hentDatoMedÅrsforskjell(fremtid ? 25 : 0),
         onDateChange: (val) => {
             oppdaterDato(val);
-            setError(false);
+            setIsEmptyError(false);
+            setIsValidDateError(false);
+            setIsAfterError(false);
+            setIsLagre(false);
         },
         onValidate: (val) => {
+            if (val.isAfter) {
+                setIsAfterError(true);
+            }
             if (!val.isEmpty) {
-                setError(!val.isValidDate);
+                setIsValidDateError(!val.isValidDate);
+            }
+            if (obligatorisk && val.isEmpty) {
+                setIsEmptyError(true);
             }
         },
     });
@@ -43,9 +58,12 @@ export function Datovelger({
                     <DatePicker.Input
                         {...inputProps}
                         label={label}
-                        description={obligatorisk ? "Må fylles ut" : undefined}
                         placeholder="dd.mm.yy"
-                        error={error && "Dato er ikke gyldig"}
+                        error={
+                            (isLagre && isAfterError && "Dato er frem i tid") ||
+                            (isLagre && isValidDateError && "Dato er ikke gyldig") ||
+                            (isLagre && isEmptyError && "Dato må fylles ut")
+                        }
                     />
                 </DatePicker>
             </HStack>

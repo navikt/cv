@@ -24,7 +24,13 @@ export default function OffentligeGodkjenningerModal({
     );
     const [valgtGodkjenningError, setValgtGodkjenningError] = useState(false);
     const [godkjenningFraDatoError, setGodkjenningFraDatoError] = useState(false);
+    const [fraDatoIsAfterError, setFraDatoIsAfterError] = useState(false);
+    const [fraDatoIsValidDateError, setFraDatoIsValidDateError] = useState(false);
     const [godkjenningTilDatoError, setGodkjenningTilDatoError] = useState(false);
+    const [tilDatoIsAfterError, setTilDatoIsAfterError] = useState(false);
+    const [tilDatoIsValidDateError, setTilDatoIsValidDateError] = useState(false);
+
+    const [isLagre, setIsLagre] = useState(false);
 
     useEffect(() => {
         const oppdaterGodkjenning = (godkjenning) => {
@@ -37,10 +43,20 @@ export default function OffentligeGodkjenningerModal({
     }, [gjeldendeElement]);
 
     const lagre = () => {
+        setIsLagre(true);
         if (!valgtGodkjenning || valgtGodkjenning.length === 0) setValgtGodkjenningError(true);
         if (!godkjenningFraDato) setGodkjenningFraDatoError(true);
 
-        if (valgtGodkjenning && valgtGodkjenning.length !== 0 && godkjenningFraDato && !godkjenningTilDatoError) {
+        if (
+            valgtGodkjenning &&
+            valgtGodkjenning.length !== 0 &&
+            godkjenningFraDato &&
+            !fraDatoIsAfterError &&
+            !fraDatoIsValidDateError &&
+            !godkjenningTilDatoError &&
+            !tilDatoIsAfterError &&
+            !tilDatoIsValidDateError
+        ) {
             lagreElement({
                 title: valgtGodkjenning.title,
                 conceptId: valgtGodkjenning.conceptId,
@@ -97,16 +113,29 @@ export default function OffentligeGodkjenningerModal({
                             <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                         </HStack>
                     }
-                    error={godkjenningFraDatoError}
-                    setError={setGodkjenningFraDatoError}
+                    obligatorisk
+                    isEmptyError={godkjenningFraDatoError}
+                    setIsEmptyError={setGodkjenningFraDatoError}
+                    isAfterError={fraDatoIsAfterError}
+                    setIsAfterError={setFraDatoIsAfterError}
+                    isValidDateError={fraDatoIsValidDateError}
+                    setIsValidDateError={setFraDatoIsValidDateError}
+                    isLagre={isLagre}
+                    setIsLagre={setIsLagre}
                 />
                 <Datovelger
                     valgtDato={godkjenningTilDato}
                     oppdaterDato={setGodkjenningTilDato}
                     label="Utløper"
                     fremtid
-                    error={godkjenningTilDatoError}
-                    setError={setGodkjenningTilDatoError}
+                    isEmptyError={godkjenningTilDatoError}
+                    setIsEmptyError={setGodkjenningTilDatoError}
+                    isAfterError={tilDatoIsAfterError}
+                    setIsAfterError={setTilDatoIsAfterError}
+                    isValidDateError={tilDatoIsValidDateError}
+                    setIsValidDateError={setTilDatoIsValidDateError}
+                    isLagre={isLagre}
+                    setIsLagre={setIsLagre}
                 />
             </HStack>
         </CvModalForm>

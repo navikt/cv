@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup, HStack, Textarea, TextField, VStack } from "@navikt/ds-react";
+import { BodyShort, Checkbox, CheckboxGroup, HStack, Textarea, TextField, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
@@ -22,7 +22,13 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
 
     const [stillingstittelError, setStillingstittelError] = useState(false);
     const [startdatoError, setStartdatoError] = useState(false);
+    const [startdatoIsAfterError, setStartdatoIsAfterError] = useState(false);
+    const [startdatoIsValidDateError, setStartdatoIsValidDateError] = useState(false);
     const [sluttdatoError, setSluttdatoError] = useState(false);
+    const [sluttdatoIsAfterError, setSluttdatoIsAfterError] = useState(false);
+    const [sluttdatoIsValidDateError, setSluttdatoIsValidDateError] = useState(false);
+
+    const [isLagre, setIsLagre] = useState(false);
 
     useEffect(() => {
         const oppdaterArbeidsforhold = (arbeidsforhold) => {
@@ -44,13 +50,22 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
     }, [gjeldendeElement]);
 
     const lagre = async () => {
+        setIsLagre(true);
         const erPågående = pågår.includes("true");
 
         if (!stillingstittel) setStillingstittelError(true);
         if (!startdato) setStartdatoError(true);
         if (!erPågående && !sluttdato) setSluttdatoError(true);
 
-        if (stillingstittel && startdato && (sluttdato || erPågående)) {
+        if (
+            stillingstittel &&
+            startdato &&
+            (sluttdato || erPågående) &&
+            !startdatoIsAfterError &&
+            !startdatoIsValidDateError &&
+            !sluttdatoIsAfterError &&
+            !sluttdatoIsValidDateError
+        ) {
             await lagreElement({
                 ...gjeldendeElement,
                 employer: arbeidsgiver,
@@ -136,20 +151,42 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
                 <Datovelger
                     valgtDato={startdato}
                     oppdaterDato={setStartdato}
-                    label="Fra dato"
+                    label={
+                        <VStack>
+                            <BodyShort weight="semibold">Fra dato</BodyShort>
+                            <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
+                        </VStack>
+                    }
                     obligatorisk
-                    error={startdatoError}
-                    setError={setStartdatoError}
+                    isEmptyError={startdatoError}
+                    setIsEmptyError={setStartdatoError}
+                    isAfterError={startdatoIsAfterError}
+                    setIsAfterError={setStartdatoIsAfterError}
+                    isValidDateError={startdatoIsValidDateError}
+                    setIsValidDateError={setStartdatoIsValidDateError}
+                    isLagre={isLagre}
+                    setIsLagre={setIsLagre}
                 />
 
                 {!pågår.includes("true") && (
                     <Datovelger
                         valgtDato={sluttdato}
                         oppdaterDato={setSluttdato}
-                        label="Til dato"
+                        label={
+                            <VStack>
+                                <BodyShort weight="semibold">Til dato</BodyShort>
+                                <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
+                            </VStack>
+                        }
                         obligatorisk
-                        error={sluttdatoError}
-                        setError={setSluttdatoError}
+                        isEmptyError={sluttdatoError}
+                        setIsEmptyError={setSluttdatoError}
+                        isAfterError={sluttdatoIsAfterError}
+                        setIsAfterError={setSluttdatoIsAfterError}
+                        isValidDateError={sluttdatoIsValidDateError}
+                        setIsValidDateError={setSluttdatoIsValidDateError}
+                        isLagre={isLagre}
+                        setIsLagre={setIsLagre}
                     />
                 )}
             </HStack>

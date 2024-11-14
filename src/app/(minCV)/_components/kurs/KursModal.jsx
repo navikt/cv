@@ -15,6 +15,10 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
     const [kursnavnError, setKursnavnError] = useState(false);
     const [kursDatoError, setKursDatoError] = useState(false);
     const [lengdeError, setLengdeError] = useState(false);
+    const [isAfterError, setIsAfterError] = useState(false);
+    const [isValidDateError, setIsValidDateError] = useState(false);
+
+    const [isLagre, setIsLagre] = useState(false);
 
     useEffect(() => {
         const oppdaterKurs = (kurs) => {
@@ -28,10 +32,17 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
     }, [gjeldendeElement]);
 
     const lagre = async () => {
+        setIsLagre(true);
         if (!kursnavn) setKursnavnError(true);
         if (tidsenhet && tidsenhet !== "UKJENT" && !lengde) setLengdeError(true);
 
-        if (kursnavn && !kursDatoError && (tidsenhet && tidsenhet !== "UKJENT" ? lengde : true)) {
+        if (
+            kursnavn &&
+            !kursDatoError &&
+            (tidsenhet && tidsenhet !== "UKJENT" ? lengde : true) &&
+            !isAfterError &&
+            !isValidDateError
+        ) {
             await lagreElement({
                 title: kursnavn,
                 issuer: utsteder,
@@ -75,8 +86,14 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                 oppdaterDato={setKursDato}
                 label="Fullført"
                 className={styles.mb6}
-                error={kursDatoError}
-                setError={setKursDatoError}
+                isEmptyError={kursDatoError}
+                setIsEmptyError={setKursDatoError}
+                isAfterError={isAfterError}
+                setIsAfterError={setIsAfterError}
+                isValidDateError={isValidDateError}
+                setIsValidDateError={setIsValidDateError}
+                isLagre={isLagre}
+                setIsLagre={setIsLagre}
             />
             <HStack gap="8">
                 <VStack>
