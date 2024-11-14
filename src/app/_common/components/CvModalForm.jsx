@@ -23,7 +23,7 @@ export function CvModalForm({
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    handleFormSubmit();
+                    handleFormSubmit(e);
                 }}
             >
                 <Modal.Header closeButton>

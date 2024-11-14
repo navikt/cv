@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { ErrorSummary, HStack, TextField, VStack } from "@navikt/ds-react";
+import { HStack, TextField, VStack } from "@navikt/ds-react";
 import { PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
-import ValidateEmail from "@/app/_common/components/ValidateEmail";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
+import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
+import { handleZodValidation, revalidate } from "@/app/_common/utils/validationHelper";
+import z from "zod";
 
 export default function PersonaliaModal({
     modalÅpen,
@@ -22,11 +24,17 @@ export default function PersonaliaModal({
     const [postnummer, setPostnummer] = useState("");
     const [sted, setSted] = useState("");
     const [fødselsdato, setFødselsdato] = useState("");
-    const [fornavnError, setFornavnError] = useState(false);
-    const [etternavnError, setEtternavnError] = useState(false);
-    const [epostError, setEpostError] = useState(false);
-    const [epostValidationError, setEpostValidationError] = useState(false);
-    const [telefonError, setTelefonError] = useState(false);
+    const [errors, setErrors] = useState({});
+
+    const PersonaliaSchema = z.object({
+        fornavn: z.string().min(1, "Fornavn må fylles ut"),
+        etternavn: z.string().min(1, "Etternavn må fylles ut"),
+        telefonnummer: z.string().min(1, "Telefon må fylles ut"),
+        epost: z.string().email("Du har lagt inn en ugyldig e-post").min(1, "E-post må fylles ut"),
+        postnummer: z.string().optional(),
+        poststed: z.string().optional(),
+        adresse: z.string().optional(),
+    });
 
     useEffect(() => {
         const oppdaterPersonalia = (personaliaVerdi) => {
@@ -43,28 +51,25 @@ export default function PersonaliaModal({
         oppdaterPersonalia(personalia);
     }, [personalia]);
 
-    const lagre = () => {
-        let isEpostValid = false;
-        if (!fornavn) setFornavnError(true);
-        if (!etternavn) setEtternavnError(true);
-        if (!telefon) setTelefonError(true);
-        if (!epost) {
-            setEpostError(true);
-        } else {
-            isEpostValid = ValidateEmail(epost);
-            setEpostValidationError(!isEpostValid);
-        }
-        if (fornavn && etternavn && isEpostValid && telefon) {
-            lagrePersonalia({
-                fornavn: fornavn,
-                etternavn: etternavn,
-                epost: epost,
-                telefonnummer: telefon,
-                adresse: adresse,
-                postnummer: postnummer,
-                poststed: sted,
-            });
-        }
+    const lagre = (e) => {
+        const data = Object.fromEntries(new FormData(e.currentTarget));
+
+        handleZodValidation({
+            onError: setErrors,
+            data: data,
+            onSuccess: () => {
+                lagrePersonalia({
+                    fornavn: fornavn,
+                    etternavn: etternavn,
+                    epost: epost,
+                    telefonnummer: telefon,
+                    adresse: adresse,
+                    postnummer: postnummer,
+                    poststed: sted,
+                });
+            },
+            schema: PersonaliaSchema,
+        });
     };
 
     return (
@@ -80,6 +85,7 @@ export default function PersonaliaModal({
             <HStack justify="space-between">
                 <VStack className={styles.element}>
                     <TextField
+                        id="fornavn"
                         name="fornavn"
                         className={styles.mb6}
                         label="Fornavn"
@@ -87,22 +93,28 @@ export default function PersonaliaModal({
                         value={fornavn}
                         onChange={(e) => {
                             setFornavn(e.target.value);
-                            setFornavnError(false);
                         }}
-                        error={fornavnError && "Fornavn må fylles ut"}
+                        onBlur={(e) => {
+                            revalidate(e, PersonaliaSchema, errors, setErrors);
+                        }}
+                        error={errors?.fornavn}
                     />
                 </VStack>
                 <VStack className={styles.element}>
                     <TextField
+                        id="etternavn"
+                        name="etternavn"
                         className={styles.mb6}
                         label="Etternavn"
                         description="Må fylles ut"
                         value={etternavn}
                         onChange={(e) => {
                             setEtternavn(e.target.value);
-                            setEtternavnError(false);
                         }}
-                        error={etternavnError && "Etternavn må fylles ut"}
+                        onBlur={(e) => {
+                            revalidate(e, PersonaliaSchema, errors, setErrors);
+                        }}
+                        error={errors?.etternavn}
                     />
                 </VStack>
             </HStack>
@@ -110,37 +122,42 @@ export default function PersonaliaModal({
                 <VStack className={styles.element}>
                     <TextField
                         className={styles.mb6}
+                        id="epost"
+                        name="epost"
                         type="email"
                         label="E-post"
                         description="Må fylles ut"
                         value={epost}
                         onChange={(e) => {
                             setEpost(e.target.value);
-                            setEpostError(false);
-                            setEpostValidationError(false);
                         }}
-                        error={
-                            (epostError && "E-post må fylles ut") ||
-                            (epostValidationError && "Du har lagt inn en ugyldig E-post")
-                        }
+                        onBlur={(e) => {
+                            revalidate(e, PersonaliaSchema, errors, setErrors);
+                        }}
+                        error={errors?.epost}
                     />
                 </VStack>
                 <VStack className={styles.element}>
                     <TextField
                         className={styles.mb6}
+                        id="telefonnummer"
+                        name="telefonnummer"
                         type="tel"
                         label="Telefon"
                         description="Må fylles ut"
                         value={telefon}
                         onChange={(e) => {
                             setTelefon(e.target.value);
-                            setTelefonError(false);
                         }}
-                        error={telefonError && "Telefon må fylles ut"}
+                        onBlur={(e) => {
+                            revalidate(e, PersonaliaSchema, errors, setErrors);
+                        }}
+                        error={errors?.telefon}
                     />
                 </VStack>
             </HStack>
             <TextField
+                name="adresse"
                 className={styles.mb6}
                 label="Gateadresse"
                 value={adresse}
@@ -149,6 +166,7 @@ export default function PersonaliaModal({
             <HStack justify="space-between">
                 <VStack className={styles.element}>
                     <TextField
+                        name="postnummer"
                         className={styles.mb6}
                         label="Postnummer"
                         value={postnummer}
@@ -157,6 +175,7 @@ export default function PersonaliaModal({
                 </VStack>
                 <VStack className={styles.element}>
                     <TextField
+                        name="poststed"
                         className={styles.mb6}
                         label="Sted"
                         value={sted}
@@ -170,12 +189,7 @@ export default function PersonaliaModal({
                 value={fødselsdato ? formatterFullDatoMedFallback(fødselsdato) : ""}
                 readOnly
             />
-            {fornavnError && (
-                <ErrorSummary heading="Du må rette disse feilene i skjemaet" headingTag="h3">
-                    <ErrorSummary.Item href="#1">Felt må fylles ut med alder</ErrorSummary.Item>
-                    <ErrorSummary.Item href="#2">Tekstfeltet må ha en godkjent e-mail</ErrorSummary.Item>
-                </ErrorSummary>
-            )}
+            <ValidationErrors validationErrors={errors} />
         </CvModalForm>
     );
 }
