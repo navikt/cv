@@ -1,4 +1,4 @@
-import { BodyShort, Checkbox, CheckboxGroup, HStack, TextField } from "@navikt/ds-react";
+import { BodyShort, Checkbox, CheckboxGroup, HStack, TextField, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useState } from "react";
 import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
@@ -10,9 +10,17 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
     const [pågår, setPågår] = useState([]);
     const [startdato, setStartdato] = useState(null);
     const [sluttdato, setSluttdato] = useState(null);
+
     const [rolleError, setRolleError] = useState(false);
     const [startdatoError, setStartdatoError] = useState(false);
+    const [startdatoIsAfterError, setStartdatoIsAfterError] = useState(false);
+    const [startdatoIsValidDateError, setStartdatoIsValidDateError] = useState(false);
     const [sluttdatoError, setSluttdatoError] = useState(false);
+    const [sluttdatoIsAfterError, setSluttdatoIsAfterError] = useState(false);
+    const [sluttdatoIsValidDateError, setSluttdatoIsValidDateError] = useState(false);
+
+    const [isLagreStartdato, setIsLagreStartdato] = useState(false);
+    const [isLagreSluttdato, setIsLagreSluttdato] = useState(false);
 
     useEffect(() => {
         const oppdaterErfaring = (erfaring) => {
@@ -27,13 +35,24 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
     }, [gjeldendeElement]);
 
     const lagre = () => {
+        setIsLagreStartdato(true);
+        setIsLagreSluttdato(true);
+
         const erPågående = pågår.includes("true");
 
         if (!rolle) setRolleError(true);
         if (!startdato) setStartdatoError(true);
         if (!erPågående && !sluttdato) setSluttdatoError(true);
 
-        if (rolle && startdato && (sluttdato || erPågående)) {
+        if (
+            rolle &&
+            startdato &&
+            (sluttdato || erPågående) &&
+            !startdatoIsAfterError &&
+            !startdatoIsValidDateError &&
+            !sluttdatoIsAfterError &&
+            !sluttdatoIsValidDateError
+        ) {
             lagreElement({
                 ...gjeldendeElement,
                 role: rolle,
@@ -85,20 +104,42 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
                 <Datovelger
                     valgtDato={startdato}
                     oppdaterDato={setStartdato}
-                    label="Fra dato"
+                    label={
+                        <VStack>
+                            <BodyShort weight="semibold">Fra dato</BodyShort>
+                            <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
+                        </VStack>
+                    }
                     obligatorisk
-                    error={startdatoError}
-                    setError={setStartdatoError}
+                    isEmptyError={startdatoError}
+                    setIsEmptyError={setStartdatoError}
+                    isAfterError={startdatoIsAfterError}
+                    setIsAfterError={setStartdatoIsAfterError}
+                    isValidDateError={startdatoIsValidDateError}
+                    setIsValidDateError={setStartdatoIsValidDateError}
+                    isLagre={isLagreStartdato}
+                    setIsLagre={setIsLagreStartdato}
                 />
 
                 {!pågår.includes("true") && (
                     <Datovelger
                         valgtDato={sluttdato}
                         oppdaterDato={setSluttdato}
-                        label="Til dato"
+                        label={
+                            <VStack>
+                                <BodyShort weight="semibold">Til dato</BodyShort>
+                                <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
+                            </VStack>
+                        }
                         obligatorisk
-                        error={sluttdatoError}
-                        setError={setSluttdatoError}
+                        isEmptyError={sluttdatoError}
+                        setIsEmptyError={setSluttdatoError}
+                        isAfterError={sluttdatoIsAfterError}
+                        setIsAfterError={setSluttdatoIsAfterError}
+                        isValidDateError={sluttdatoIsValidDateError}
+                        setIsValidDateError={setSluttdatoIsValidDateError}
+                        isLagre={isLagreSluttdato}
+                        setIsLagre={setIsLagreSluttdato}
                     />
                 )}
             </HStack>
