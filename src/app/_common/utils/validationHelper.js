@@ -28,6 +28,10 @@ export const handleZodValidation = (params) => {
 };
 
 export const revalidate = (e, schema, errors, setErrors) => {
+    // Don`t revalidate single field if form is submitted
+    if (e.relatedTarget?.type === "submit") {
+        return;
+    }
     const formData = new FormData();
     formData.append(e.target.name, e.target.value);
     const data = Object.fromEntries(formData);
