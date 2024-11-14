@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { HStack, TextField, VStack } from "@navikt/ds-react";
 import { PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
@@ -16,14 +16,6 @@ export default function PersonaliaModal({
     laster,
     feilet,
 }) {
-    const [fornavn, setFornavn] = useState("");
-    const [etternavn, setEtternavn] = useState("");
-    const [epost, setEpost] = useState("");
-    const [telefon, setTelefon] = useState("");
-    const [adresse, setAdresse] = useState("");
-    const [postnummer, setPostnummer] = useState("");
-    const [sted, setSted] = useState("");
-    const [fødselsdato, setFødselsdato] = useState("");
     const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
     const [errors, setErrors] = useState({});
 
@@ -37,21 +29,6 @@ export default function PersonaliaModal({
         adresse: z.string().optional(),
     });
 
-    useEffect(() => {
-        const oppdaterPersonalia = (personaliaVerdi) => {
-            setFornavn(personaliaVerdi?.fornavn || "");
-            setEtternavn(personaliaVerdi?.etternavn || "");
-            setEpost(personaliaVerdi?.epost || "");
-            setTelefon(personaliaVerdi?.telefonnummer || "");
-            setAdresse(personaliaVerdi?.adresse || "");
-            setPostnummer(personaliaVerdi?.postnummer || "");
-            setSted(personaliaVerdi?.poststed || "");
-            setFødselsdato(personaliaVerdi?.foedselsdato || "");
-        };
-
-        oppdaterPersonalia(personalia);
-    }, [personalia]);
-
     const lagre = (e) => {
         const data = Object.fromEntries(new FormData(e.currentTarget));
         setShouldAutoFocusErrors(true);
@@ -59,15 +36,15 @@ export default function PersonaliaModal({
         handleZodValidation({
             onError: setErrors,
             data: data,
-            onSuccess: () => {
+            onSuccess: (res) => {
                 lagrePersonalia({
-                    fornavn: fornavn,
-                    etternavn: etternavn,
-                    epost: epost,
-                    telefonnummer: telefon,
-                    adresse: adresse,
-                    postnummer: postnummer,
-                    poststed: sted,
+                    fornavn: res.fornavn,
+                    etternavn: res.etternavn,
+                    epost: res.epost,
+                    telefonnummer: res.telefonnummer,
+                    adresse: res.adresse,
+                    postnummer: res.postnummer,
+                    poststed: res.poststed,
                 });
             },
             schema: PersonaliaSchema,
@@ -92,10 +69,7 @@ export default function PersonaliaModal({
                         className={styles.mb6}
                         label="Fornavn"
                         description="Må fylles ut"
-                        value={fornavn}
-                        onChange={(e) => {
-                            setFornavn(e.target.value);
-                        }}
+                        defaultValue={personalia.fornavn}
                         onBlur={(e) => {
                             setShouldAutoFocusErrors(false);
                             revalidate(e, PersonaliaSchema, errors, setErrors);
@@ -110,10 +84,7 @@ export default function PersonaliaModal({
                         className={styles.mb6}
                         label="Etternavn"
                         description="Må fylles ut"
-                        value={etternavn}
-                        onChange={(e) => {
-                            setEtternavn(e.target.value);
-                        }}
+                        defaultValue={personalia.etternavn}
                         onBlur={(e) => {
                             setShouldAutoFocusErrors(false);
                             revalidate(e, PersonaliaSchema, errors, setErrors);
@@ -131,10 +102,7 @@ export default function PersonaliaModal({
                         type="email"
                         label="E-post"
                         description="Må fylles ut"
-                        value={epost}
-                        onChange={(e) => {
-                            setEpost(e.target.value);
-                        }}
+                        defaultValue={personalia.epost}
                         onBlur={(e) => {
                             setShouldAutoFocusErrors(false);
                             revalidate(e, PersonaliaSchema, errors, setErrors);
@@ -150,10 +118,7 @@ export default function PersonaliaModal({
                         type="tel"
                         label="Telefon"
                         description="Må fylles ut"
-                        value={telefon}
-                        onChange={(e) => {
-                            setTelefon(e.target.value);
-                        }}
+                        defaultValue={personalia.telefonnummer}
                         onBlur={(e) => {
                             setShouldAutoFocusErrors(false);
                             revalidate(e, PersonaliaSchema, errors, setErrors);
@@ -162,37 +127,24 @@ export default function PersonaliaModal({
                     />
                 </VStack>
             </HStack>
-            <TextField
-                name="adresse"
-                className={styles.mb6}
-                label="Gateadresse"
-                value={adresse}
-                onChange={(e) => setAdresse(e.target.value)}
-            />
+            <TextField name="adresse" className={styles.mb6} label="Gateadresse" defaultValue={personalia.adresse} />
             <HStack justify="space-between">
                 <VStack className={styles.element}>
                     <TextField
                         name="postnummer"
                         className={styles.mb6}
                         label="Postnummer"
-                        value={postnummer}
-                        onChange={(e) => setPostnummer(e.target.value)}
+                        defaultValue={personalia.postnummer}
                     />
                 </VStack>
                 <VStack className={styles.element}>
-                    <TextField
-                        name="poststed"
-                        className={styles.mb6}
-                        label="Sted"
-                        value={sted}
-                        onChange={(e) => setSted(e.target.value)}
-                    />
+                    <TextField name="poststed" className={styles.mb6} label="Sted" defaultValue={personalia.poststed} />
                 </VStack>
             </HStack>
             <TextField
                 label="Fødselsdato"
                 description="Kan ikke endres"
-                value={fødselsdato ? formatterFullDatoMedFallback(fødselsdato) : ""}
+                value={personalia.foedselsdato ? formatterFullDatoMedFallback(personalia.foedselsdato) : ""}
                 readOnly
             />
             <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
