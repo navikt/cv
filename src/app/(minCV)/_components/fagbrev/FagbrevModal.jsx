@@ -34,7 +34,7 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
             modalÅpen={modalÅpen}
             tittel="Legg til fagbrev"
             feilet={feilet}
-            hand={laster}
+            laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
