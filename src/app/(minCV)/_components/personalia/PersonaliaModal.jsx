@@ -24,6 +24,7 @@ export default function PersonaliaModal({
     const [postnummer, setPostnummer] = useState("");
     const [sted, setSted] = useState("");
     const [fødselsdato, setFødselsdato] = useState("");
+    const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
     const [errors, setErrors] = useState({});
 
     const PersonaliaSchema = z.object({
@@ -53,6 +54,7 @@ export default function PersonaliaModal({
 
     const lagre = (e) => {
         const data = Object.fromEntries(new FormData(e.currentTarget));
+        setShouldAutoFocusErrors(true);
 
         handleZodValidation({
             onError: setErrors,
@@ -95,6 +97,7 @@ export default function PersonaliaModal({
                             setFornavn(e.target.value);
                         }}
                         onBlur={(e) => {
+                            setShouldAutoFocusErrors(false);
                             revalidate(e, PersonaliaSchema, errors, setErrors);
                         }}
                         error={errors?.fornavn}
@@ -112,6 +115,7 @@ export default function PersonaliaModal({
                             setEtternavn(e.target.value);
                         }}
                         onBlur={(e) => {
+                            setShouldAutoFocusErrors(false);
                             revalidate(e, PersonaliaSchema, errors, setErrors);
                         }}
                         error={errors?.etternavn}
@@ -132,6 +136,7 @@ export default function PersonaliaModal({
                             setEpost(e.target.value);
                         }}
                         onBlur={(e) => {
+                            setShouldAutoFocusErrors(false);
                             revalidate(e, PersonaliaSchema, errors, setErrors);
                         }}
                         error={errors?.epost}
@@ -150,6 +155,7 @@ export default function PersonaliaModal({
                             setTelefon(e.target.value);
                         }}
                         onBlur={(e) => {
+                            setShouldAutoFocusErrors(false);
                             revalidate(e, PersonaliaSchema, errors, setErrors);
                         }}
                         error={errors?.telefon}
@@ -189,7 +195,7 @@ export default function PersonaliaModal({
                 value={fødselsdato ? formatterFullDatoMedFallback(fødselsdato) : ""}
                 readOnly
             />
-            <ValidationErrors validationErrors={errors} />
+            <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
         </CvModalForm>
     );
 }
