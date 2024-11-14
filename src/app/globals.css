@@ -35,3 +35,7 @@ dl dd,
 dl dt {
     margin: 0;
 }
+
+.scroll-margin {
+    scroll-margin: var(--a-spacing-18);
+}

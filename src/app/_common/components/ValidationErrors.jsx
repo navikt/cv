@@ -22,7 +22,18 @@ export function ValidationErrors({
     return (
         <ErrorSummary ref={errorSummaryRef} heading={heading} headingTag={headingTag} className={styles.mt6}>
             {Object.entries(validationErrors).map(([key, val]) => (
-                <ErrorSummary.Item key={key} href={`#${key}`}>
+                <ErrorSummary.Item
+                    key={key}
+                    href={`#${key}`}
+                    onClick={(e) => {
+                        e.preventDefault();
+
+                        const ref = document.getElementById(key);
+                        ref.classList.add("scroll-margin");
+                        ref.scrollIntoView({ behavior: "smooth" });
+                        ref.focus({ preventScroll: true });
+                    }}
+                >
                     {val}
                 </ErrorSummary.Item>
             ))}
