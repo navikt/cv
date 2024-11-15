@@ -16,12 +16,8 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
     const [kreverDato, setKreverDato] = useState(!!gjeldendeElement?.acquiredDate);
     const [valgtForerkortError, setValgtForerkortError] = useState(false);
     const [gyldigFraError, setGyldigFraError] = useState(false);
-    const [gyldigFraIsAfterError, setGyldigFraIsAfterError] = useState(false);
-    const [gyldigFraIsValidDateError, setGyldigFraIsValidDateError] = useState(false);
     const [gyldigTilError, setGyldigTilError] = useState(false);
-    const [gyldigTilIsAfterError, setGyldigTilIsAfterError] = useState(false);
-    const [gyldigTilIsValidDateError, setGyldigTilIsValidDateError] = useState(false);
-    const [isLagre, setIsLagre] = useState(false);
+    const [skalViseDatofeilmelding, setSkalviseDatofeilmelding] = useState(false);
 
     const { gyldigeFørerkort } = førerkortData;
 
@@ -38,19 +34,9 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
     };
 
     const lagre = async () => {
-        setIsLagre(true);
+        setSkalviseDatofeilmelding(true);
         if (!valgtFørerkort || valgtFørerkort.length === 0) setValgtForerkortError(true);
-        if (kreverDato && !gyldigFra) setGyldigFraError(true);
-        if (kreverDato && !gyldigTil) setGyldigTilError(true);
-
-        const datoFeil =
-            gyldigFraIsAfterError ||
-            gyldigFraIsValidDateError ||
-            gyldigTilError ||
-            gyldigTilIsAfterError ||
-            gyldigTilIsValidDateError;
-
-        if (kreverDato && datoFeil) return;
+        if (kreverDato && (gyldigTilError || gyldigFraError)) return;
 
         if (valgtFørerkort && valgtFørerkort.length !== 0 && (kreverDato ? gyldigFra && gyldigTil : true)) {
             lagreElement({
@@ -95,14 +81,9 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
                             oppdaterDato={setGyldigFra}
                             label="Gyldig fra"
                             obligatorisk
-                            isEmptyError={gyldigFraError}
-                            setIsEmptyError={setGyldigFraError}
-                            isAfterError={gyldigFraIsAfterError}
-                            setIsAfterError={setGyldigFraIsAfterError}
-                            isValidDateError={gyldigFraIsValidDateError}
-                            setIsValidDateError={setGyldigFraIsValidDateError}
-                            isLagre={isLagre}
-                            setIsLagre={setIsLagre}
+                            setError={setGyldigFraError}
+                            skalViseFeilmelding={skalViseDatofeilmelding}
+                            setSkalViseFeilmelding={setSkalviseDatofeilmelding}
                         />
                         <Datovelger
                             valgtDato={gyldigTil}
@@ -110,14 +91,9 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
                             label="Gyldig til"
                             obligatorisk
                             fremtid
-                            isEmptyError={gyldigTilError}
-                            setIsEmptyError={setGyldigTilError}
-                            isAfterError={gyldigTilIsAfterError}
-                            setIsAfterError={setGyldigTilIsAfterError}
-                            isValidDateError={gyldigTilIsValidDateError}
-                            setIsValidDateError={setGyldigTilIsValidDateError}
-                            isLagre={isLagre}
-                            setIsLagre={setIsLagre}
+                            setError={setGyldigTilError}
+                            skalViseFeilmelding={skalViseDatofeilmelding}
+                            setSkalViseFeilmelding={setSkalviseDatofeilmelding}
                         />
                     </HStack>
                 )}

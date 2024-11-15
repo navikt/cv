@@ -16,14 +16,8 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
 
     const [utdanningsnivaError, setUtdanningsnivaError] = useState(false);
     const [startdatoError, setStartdatoError] = useState(false);
-    const [startdatoIsAfterError, setStartdatoIsAfterError] = useState(false);
-    const [startdatoIsValidDateError, setStartdatoIsValidDateError] = useState(false);
     const [sluttdatoError, setSluttdatoError] = useState(false);
-    const [sluttdatoIsAfterError, setSluttdatoIsAfterError] = useState(false);
-    const [sluttdatoIsValidDateError, setSluttdatoIsValidDateError] = useState(false);
-
-    const [isLagreStartdato, setIsLagreStartdato] = useState(false);
-    const [isLagreSluttdato, setIsLagreSluttdato] = useState(false);
+    const [skalViseDatofeilmelding, setSkalviseDatofeilmelding] = useState(false);
 
     useEffect(() => {
         const oppdaterUtdanning = (utdanning) => {
@@ -40,24 +34,14 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
     }, [gjeldendeElement]);
 
     const lagre = () => {
-        setIsLagreStartdato(true);
-        setIsLagreSluttdato(true);
+        setSkalviseDatofeilmelding(true);
 
         const erPågående = pågår.includes("true");
 
         if (!utdanningsnivå) setUtdanningsnivaError(true);
-        if (!startdato) setStartdatoError(true);
-        if (!erPågående && !sluttdato) setSluttdatoError(true);
+        if (startdatoError || (!erPågående && sluttdatoError)) return;
 
-        if (
-            utdanningsnivå &&
-            startdato &&
-            (sluttdato || erPågående) &&
-            !startdatoIsAfterError &&
-            !startdatoIsValidDateError &&
-            !sluttdatoIsAfterError &&
-            !sluttdatoIsValidDateError
-        ) {
+        if (utdanningsnivå && startdato && (sluttdato || erPågående)) {
             lagreElement({
                 ...gjeldendeElement,
                 nuskode: utdanningsnivå,
@@ -140,14 +124,9 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                         </VStack>
                     }
                     obligatorisk
-                    isEmptyError={startdatoError}
-                    setIsEmptyError={setStartdatoError}
-                    isAfterError={startdatoIsAfterError}
-                    setIsAfterError={setStartdatoIsAfterError}
-                    isValidDateError={startdatoIsValidDateError}
-                    setIsValidDateError={setStartdatoIsValidDateError}
-                    isLagre={isLagreStartdato}
-                    setIsLagre={setIsLagreStartdato}
+                    setError={setStartdatoError}
+                    skalViseFeilmelding={skalViseDatofeilmelding}
+                    setSkalViseFeilmelding={setSkalviseDatofeilmelding}
                 />
 
                 {!pågår.includes("true") && (
@@ -161,14 +140,9 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                             </VStack>
                         }
                         obligatorisk
-                        isEmptyError={sluttdatoError}
-                        setIsEmptyError={setSluttdatoError}
-                        isAfterError={sluttdatoIsAfterError}
-                        setIsAfterError={setSluttdatoIsAfterError}
-                        isValidDateError={sluttdatoIsValidDateError}
-                        setIsValidDateError={setSluttdatoIsValidDateError}
-                        isLagre={isLagreSluttdato}
-                        setIsLagre={setIsLagreSluttdato}
+                        setError={setSluttdatoError}
+                        skalViseFeilmelding={skalViseDatofeilmelding}
+                        setSkalViseFeilmelding={setSkalviseDatofeilmelding}
                     />
                 )}
             </HStack>
