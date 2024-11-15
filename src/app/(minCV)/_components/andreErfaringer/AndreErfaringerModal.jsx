@@ -13,14 +13,8 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
 
     const [rolleError, setRolleError] = useState(false);
     const [startdatoError, setStartdatoError] = useState(false);
-    const [startdatoIsAfterError, setStartdatoIsAfterError] = useState(false);
-    const [startdatoIsValidDateError, setStartdatoIsValidDateError] = useState(false);
     const [sluttdatoError, setSluttdatoError] = useState(false);
-    const [sluttdatoIsAfterError, setSluttdatoIsAfterError] = useState(false);
-    const [sluttdatoIsValidDateError, setSluttdatoIsValidDateError] = useState(false);
-
-    const [isLagreStartdato, setIsLagreStartdato] = useState(false);
-    const [isLagreSluttdato, setIsLagreSluttdato] = useState(false);
+    const [skalViseDatofeilmelding, setSkalviseDatofeilmelding] = useState(false);
 
     useEffect(() => {
         const oppdaterErfaring = (erfaring) => {
@@ -35,24 +29,14 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
     }, [gjeldendeElement]);
 
     const lagre = () => {
-        setIsLagreStartdato(true);
-        setIsLagreSluttdato(true);
+        setSkalviseDatofeilmelding(true);
 
         const erPågående = pågår.includes("true");
 
         if (!rolle) setRolleError(true);
-        if (!startdato) setStartdatoError(true);
-        if (!erPågående && !sluttdato) setSluttdatoError(true);
+        if (startdatoError || (!erPågående && sluttdatoError)) return;
 
-        if (
-            rolle &&
-            startdato &&
-            (sluttdato || erPågående) &&
-            !startdatoIsAfterError &&
-            !startdatoIsValidDateError &&
-            !sluttdatoIsAfterError &&
-            !sluttdatoIsValidDateError
-        ) {
+        if (rolle && startdato && (sluttdato || erPågående)) {
             lagreElement({
                 ...gjeldendeElement,
                 role: rolle,
@@ -111,14 +95,9 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
                         </VStack>
                     }
                     obligatorisk
-                    isEmptyError={startdatoError}
-                    setIsEmptyError={setStartdatoError}
-                    isAfterError={startdatoIsAfterError}
-                    setIsAfterError={setStartdatoIsAfterError}
-                    isValidDateError={startdatoIsValidDateError}
-                    setIsValidDateError={setStartdatoIsValidDateError}
-                    isLagre={isLagreStartdato}
-                    setIsLagre={setIsLagreStartdato}
+                    setError={setStartdatoError}
+                    skalViseFeilmelding={skalViseDatofeilmelding}
+                    setSkalViseFeilmelding={setSkalviseDatofeilmelding}
                 />
 
                 {!pågår.includes("true") && (
@@ -132,14 +111,9 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
                             </VStack>
                         }
                         obligatorisk
-                        isEmptyError={sluttdatoError}
-                        setIsEmptyError={setSluttdatoError}
-                        isAfterError={sluttdatoIsAfterError}
-                        setIsAfterError={setSluttdatoIsAfterError}
-                        isValidDateError={sluttdatoIsValidDateError}
-                        setIsValidDateError={setSluttdatoIsValidDateError}
-                        isLagre={isLagreSluttdato}
-                        setIsLagre={setIsLagreSluttdato}
+                        setError={setSluttdatoError}
+                        skalViseFeilmelding={skalViseDatofeilmelding}
+                        setSkalViseFeilmelding={setSkalviseDatofeilmelding}
                     />
                 )}
             </HStack>
