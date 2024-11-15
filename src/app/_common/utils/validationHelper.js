@@ -47,3 +47,18 @@ export const revalidate = (e, schema, errors, setErrors) => {
         schema: oneValueSchema,
     });
 };
+
+export const revalidateExplicitValue = (name, value, schema, errors, setErrors) => {
+    const data = { [name]: value };
+    const oneValueSchema = z.object({ [name]: schema.shape[name] });
+
+    handleZodValidation({
+        onError: () => {},
+        data: data,
+        onSuccess: () => {
+            const { [name]: remove, ...rest } = errors;
+            setErrors(rest);
+        },
+        schema: oneValueSchema,
+    });
+};
