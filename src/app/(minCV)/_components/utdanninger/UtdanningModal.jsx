@@ -1,7 +1,7 @@
 import { BodyShort, Checkbox, CheckboxGroup, HStack, Select, Textarea, TextField, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DatovelgerWithoutValidation } from "@/app/(minCV)/_components/datovelger/DatovelgerWithoutValidation";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
@@ -10,9 +10,10 @@ import z from "zod";
 
 export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [pågår, setPågår] = useState([]);
-
     const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
     const [errors, setErrors] = useState({});
+    const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
+    const modalFormRef = useRef();
 
     useEffect(() => {
         const oppdaterUtdanning = (utdanning) => {
@@ -39,9 +40,8 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
         message: "Til dato må være etter fra dato",
     });
 
-    const lagre = (e) => {
-        setShouldAutoFocusErrors(true);
-        const formData = new FormData(e.currentTarget);
+    const getFormData = (target) => {
+        const formData = new FormData(target);
 
         const data = {
             ...Object.fromEntries(formData),
@@ -49,6 +49,14 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
             endDate: formData.get("endDate"),
             ongoing: formData.get("ongoing") === "true",
         };
+
+        return data;
+    };
+
+    const lagre = (e) => {
+        setShouldAutoFocusErrors(true);
+        setHasTriedSubmit(true);
+        const data = getFormData(e.currentTarget);
 
         handleZodValidation({
             onError: setErrors,
@@ -70,6 +78,23 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
         });
     };
 
+    const revalidate = () => {
+        if (hasTriedSubmit) {
+            setShouldAutoFocusErrors(false);
+            const data = getFormData(modalFormRef.current);
+
+            handleZodValidation({
+                onError: setErrors,
+                data: data,
+                onSuccess: () => {
+                    setErrors({});
+                },
+                // Validate with end date if not ongoing
+                schema: data.ongoing ? UtdanningSchema : UtdanningSchemaWithEndDate,
+            });
+        }
+    };
+
     return (
         <CvModalForm
             modalÅpen={modalÅpen}
@@ -78,6 +103,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
+            ref={modalFormRef}
         >
             <Select
                 id="nuskode"
@@ -91,6 +117,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                 description="Hvilken type utdanning har du gått?"
                 className={styles.mb6}
                 error={errors?.nuskode}
+                onBlur={revalidate}
             >
                 <option value="">Velg</option>
                 {Object.keys(UtdanningsnivåEnum).map((nuskode) => (
@@ -147,6 +174,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                     }
                     defaultSelected={gjeldendeElement?.startDate}
                     error={errors?.startDate}
+                    onBlur={revalidate}
                 />
                 {!pågår.includes("true") && (
                     <DatovelgerWithoutValidation
@@ -160,6 +188,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                         }
                         defaultSelected={gjeldendeElement?.endDate}
                         error={errors?.endDate}
+                        onBlur={revalidate}
                     />
                 )}
             </HStack>

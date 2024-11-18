@@ -9,6 +9,7 @@ export function DatovelgerWithoutValidation({
     defaultSelected = undefined,
     className,
     error = undefined,
+    onBlur = undefined,
 }) {
     useEffect(() => {
         if (defaultSelected) {
@@ -38,6 +39,7 @@ export function DatovelgerWithoutValidation({
                         label={label}
                         placeholder="dd.mm.yyyy"
                         error={error}
+                        onBlur={onBlur}
                     />
                 </DatePicker>
             </HStack>
