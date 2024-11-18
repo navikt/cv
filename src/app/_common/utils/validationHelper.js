@@ -1,29 +1,28 @@
 import z from "zod";
 
-const handleOneLevelZodError = ({ issues }) => {
-    const formData = {};
-    if (issues.length === 1 && issues[0].path.length < 1) return issues[0].message;
+const handleOneLevelZodError = (zodError) => {
+    const errorMap = {};
 
-    issues.forEach(({ path, message }) => {
-        formData[path.join("-")] = message;
+    zodError.errors.forEach((error) => {
+        const path = error.path.join("."); // Join path segments to create a single key
+        if (!errorMap[path]) {
+            errorMap[path] = error.message; // Store only the first error for each path
+        }
     });
 
-    return formData;
+    return errorMap;
 };
 
 export const handleZodValidation = (params) => {
     const { data, onError, onSuccess, schema } = params;
 
-    try {
-        const res = schema.parse(data);
-        onSuccess(res);
-    } catch (error) {
-        if (error) {
-            const formattedErr = handleOneLevelZodError(error);
-            onError(formattedErr);
-        } else {
-            throw new Error(error);
-        }
+    const result = schema.safeParse(data);
+
+    if (result.success) {
+        onSuccess(result.data);
+    } else {
+        const formattedErr = handleOneLevelZodError(result.error);
+        onError(formattedErr);
     }
 };
 
@@ -62,3 +61,33 @@ export const revalidateExplicitValue = (name, value, schema, errors, setErrors) 
         schema: oneValueSchema,
     });
 };
+
+export const dateStringSchema = z
+    .string({
+        required_error: "Dato må fylles ut",
+        invalid_type_error: "Dato er ikke gyldig",
+    })
+    .refine(
+        (dateStr) => {
+            const dateRegex = /^\d{2}\.\d{2}\.\d{4}$/;
+            return dateRegex.test(dateStr);
+        },
+        {
+            message: "Dato er ikke gyldig",
+        },
+    )
+    .transform((dateStr) => {
+        const [day, month, year] = dateStr.split(".").map(Number);
+
+        if (year < 1000 || year > 9999) {
+            throw new Error("Dato er ikke gyldig");
+        }
+
+        const date = new Date(year, month - 1, day);
+
+        if (date.getDate() !== day || date.getMonth() + 1 !== month || date.getFullYear() !== year) {
+            throw new Error("Dato er ikke gyldig");
+        }
+
+        return date;
+    });
