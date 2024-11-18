@@ -1,18 +1,22 @@
+import { forwardRef } from "react";
 import { BodyLong, Button, Heading, HStack, Modal } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 
-export function CvModalForm({
-    children,
-    tittel,
-    icon = null,
-    modalÅpen,
-    toggleModal,
-    laster,
-    feilet,
-    overflowVisible = false,
-    handleFormSubmit,
-}) {
-    return (
+export const CvModalForm = forwardRef(
+    (
+        {
+            children,
+            tittel,
+            icon = null,
+            modalÅpen,
+            toggleModal,
+            laster,
+            feilet,
+            overflowVisible = false,
+            handleFormSubmit,
+        },
+        ref,
+    ) => (
         <Modal
             open={modalÅpen}
             aria-label={tittel}
@@ -25,6 +29,7 @@ export function CvModalForm({
                     e.preventDefault();
                     handleFormSubmit(e);
                 }}
+                ref={ref}
             >
                 <Modal.Header closeButton>
                     <Heading align="start" level="3" size="medium">
@@ -60,5 +65,7 @@ export function CvModalForm({
                 </Modal.Footer>
             </form>
         </Modal>
-    );
-}
+    ),
+);
+
+CvModalForm.displayName = "CvModalForm";

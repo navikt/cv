@@ -1,56 +1,96 @@
 import { BodyShort, Checkbox, CheckboxGroup, HStack, Select, Textarea, TextField, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
-import { useEffect, useState } from "react";
-import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
+import { useEffect, useRef, useState } from "react";
+import { DatovelgerWithoutValidation } from "@/app/(minCV)/_components/datovelger/DatovelgerWithoutValidation";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
+import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
+import { dateStringSchema, handleZodValidation } from "@/app/_common/utils/validationHelper";
+import z from "zod";
 
 export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
-    const [utdanningsnivå, setUtdanningsnivå] = useState("");
-    const [gradOgRetning, setGradOgRetning] = useState("");
-    const [institusjon, setInstitusjon] = useState("");
-    const [beskrivelse, setBeskrivelse] = useState("");
-    const [startdato, setStartdato] = useState(null);
-    const [sluttdato, setSluttdato] = useState(null);
     const [pågår, setPågår] = useState([]);
-
-    const [utdanningsnivaError, setUtdanningsnivaError] = useState(false);
-    const [startdatoError, setStartdatoError] = useState(false);
-    const [sluttdatoError, setSluttdatoError] = useState(false);
-    const [skalViseDatofeilmelding, setSkalviseDatofeilmelding] = useState(false);
+    const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
+    const modalFormRef = useRef();
 
     useEffect(() => {
         const oppdaterUtdanning = (utdanning) => {
-            setUtdanningsnivå(utdanning?.nuskode || "");
-            setGradOgRetning(utdanning?.field || "");
-            setInstitusjon(utdanning?.institution || "");
-            setBeskrivelse(utdanning?.description || "");
-            setStartdato(utdanning ? new Date(utdanning.startDate) : null);
-            setSluttdato(utdanning && utdanning?.endDate ? new Date(utdanning.endDate) : null);
             setPågår(utdanning && utdanning.ongoing ? ["true"] : []);
         };
 
         oppdaterUtdanning(gjeldendeElement);
     }, [gjeldendeElement]);
 
-    const lagre = () => {
-        setSkalviseDatofeilmelding(true);
+    const UtdanningSchema = z.object({
+        institution: z.string().optional(),
+        field: z.string().optional(),
+        nuskode: z.string().min(1, "Utdanningsnivå mangler"),
+        hasAuthorization: z.string().optional(),
+        startDate: dateStringSchema.refine((data) => data <= new Date(), { message: "Dato kan ikke være frem i tid" }),
+        ongoing: z.boolean().optional(),
+        description: z.string().optional(),
+    });
 
-        const erPågående = pågår.includes("true");
+    const UtdanningSchemaWithEndDate = UtdanningSchema.extend({
+        endDate: dateStringSchema,
+    }).refine((data) => data.endDate >= data.startDate, {
+        path: ["endDate"],
+        message: "Til dato må være etter fra dato",
+    });
 
-        if (!utdanningsnivå) setUtdanningsnivaError(true);
-        if (startdatoError || (!erPågående && sluttdatoError)) return;
+    const getFormData = (target) => {
+        const formData = new FormData(target);
 
-        if (utdanningsnivå && startdato && (sluttdato || erPågående)) {
-            lagreElement({
-                ...gjeldendeElement,
-                nuskode: utdanningsnivå,
-                field: gradOgRetning,
-                institution: institusjon,
-                description: beskrivelse,
-                startDate: startdato,
-                endDate: erPågående ? null : sluttdato,
-                ongoing: erPågående,
+        const data = {
+            ...Object.fromEntries(formData),
+            startDate: formData.get("startDate"),
+            endDate: formData.get("endDate"),
+            ongoing: formData.get("ongoing") === "true",
+        };
+
+        return data;
+    };
+
+    const lagre = (e) => {
+        setShouldAutoFocusErrors(true);
+        setHasTriedSubmit(true);
+        const data = getFormData(e.currentTarget);
+
+        handleZodValidation({
+            onError: setErrors,
+            data: data,
+            onSuccess: (res) => {
+                lagreElement({
+                    ...gjeldendeElement,
+                    nuskode: res.nuskode,
+                    field: res.field,
+                    institution: res.institution,
+                    description: res.description,
+                    startDate: res.startDate,
+                    endDate: res.endDate,
+                    ongoing: res.ongoing,
+                });
+            },
+            // Validate with end date if not ongoing
+            schema: data.ongoing ? UtdanningSchema : UtdanningSchemaWithEndDate,
+        });
+    };
+
+    const revalidate = () => {
+        if (hasTriedSubmit) {
+            setShouldAutoFocusErrors(false);
+            const data = getFormData(modalFormRef.current);
+
+            handleZodValidation({
+                onError: setErrors,
+                data: data,
+                onSuccess: () => {
+                    setErrors({});
+                },
+                // Validate with end date if not ongoing
+                schema: data.ongoing ? UtdanningSchema : UtdanningSchemaWithEndDate,
             });
         }
     };
@@ -63,9 +103,11 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
+            ref={modalFormRef}
         >
             <Select
-                id="utdanningsnivå"
+                id="nuskode"
+                name="nuskode"
                 label={
                     <HStack gap="2">
                         <BodyShort weight="semibold">Utdanningsnivå</BodyShort>
@@ -74,78 +116,83 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                 }
                 description="Hvilken type utdanning har du gått?"
                 className={styles.mb6}
-                value={utdanningsnivå}
-                onChange={(e) => {
-                    setUtdanningsnivå(e.target.value);
-                    setUtdanningsnivaError(false);
-                }}
-                error={utdanningsnivaError && "Utdanningsnivå mangler"}
+                error={errors?.nuskode}
+                onBlur={revalidate}
             >
                 <option value="">Velg</option>
                 {Object.keys(UtdanningsnivåEnum).map((nuskode) => (
-                    <option key={nuskode} value={nuskode}>
+                    <option key={nuskode} value={nuskode} selected={nuskode === gjeldendeElement?.nuskode}>
                         {UtdanningsnivåEnum[nuskode]}
                     </option>
                 ))}
             </Select>
             <TextField
                 label="Grad og utdanningsretning"
+                id="field"
+                name="field"
                 description="Eksempel: elektrofag, bachelor i historie"
                 className={styles.mb6}
-                value={gradOgRetning}
-                onChange={(e) => setGradOgRetning(e.target.value)}
+                defaultValue={gjeldendeElement?.field}
             />
             <TextField
+                id="institution"
+                name="institution"
                 label="Skole/studiested"
                 description="Eksempel: Drammen videregående, Universitetet i Tromsø"
                 className={styles.mb6}
-                value={institusjon}
-                onChange={(e) => setInstitusjon(e.target.value)}
+                defaultValue={gjeldendeElement?.institution}
             />
             <Textarea
+                id="description"
+                name="description"
                 label="Beskriv utdanningen"
                 description="Eksempel: Studieretning eller fag du har fordypet deg i"
                 className={styles.mb6}
-                value={beskrivelse}
-                onChange={(e) => setBeskrivelse(e.target.value)}
+                defaultValue={gjeldendeElement?.description}
             />
-            <CheckboxGroup legend="Utdanning jeg tar nå" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value="true">Utdanning jeg tar nå</Checkbox>
+            <CheckboxGroup
+                id="ongoing"
+                legend="Utdanning jeg tar nå"
+                className={styles.mb6}
+                value={pågår}
+                onChange={setPågår}
+            >
+                <Checkbox name="ongoing" value="true">
+                    Utdanning jeg tar nå
+                </Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">
-                <Datovelger
-                    valgtDato={startdato}
-                    oppdaterDato={setStartdato}
+                <DatovelgerWithoutValidation
+                    id="startDate"
+                    name="startDate"
                     label={
                         <VStack>
                             <BodyShort weight="semibold">Fra dato</BodyShort>
                             <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                         </VStack>
                     }
-                    obligatorisk
-                    setError={setStartdatoError}
-                    skalViseFeilmelding={skalViseDatofeilmelding}
-                    setSkalViseFeilmelding={setSkalviseDatofeilmelding}
+                    defaultSelected={gjeldendeElement?.startDate}
+                    error={errors?.startDate}
+                    onBlur={revalidate}
                 />
-
                 {!pågår.includes("true") && (
-                    <Datovelger
-                        valgtDato={sluttdato}
-                        oppdaterDato={setSluttdato}
+                    <DatovelgerWithoutValidation
+                        id="endDate"
+                        name="endDate"
                         label={
                             <VStack>
                                 <BodyShort weight="semibold">Til dato</BodyShort>
                                 <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                             </VStack>
                         }
-                        obligatorisk
-                        setError={setSluttdatoError}
-                        skalViseFeilmelding={skalViseDatofeilmelding}
-                        setSkalViseFeilmelding={setSkalviseDatofeilmelding}
+                        defaultSelected={gjeldendeElement?.endDate}
+                        error={errors?.endDate}
+                        onBlur={revalidate}
                     />
                 )}
             </HStack>
+            <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
         </CvModalForm>
     );
 }
