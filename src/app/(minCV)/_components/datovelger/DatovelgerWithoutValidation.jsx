@@ -1,5 +1,6 @@
 import { DatePicker, HStack, useDatepicker, VStack } from "@navikt/ds-react";
 import { useEffect } from "react";
+import { hentDatoMedÅrsforskjell } from "@/app/_common/utils/validationHelper";
 
 export function DatovelgerWithoutValidation({
     id,
@@ -21,14 +22,8 @@ export function DatovelgerWithoutValidation({
         }
     }, [defaultSelected]);
 
-    const hentDatoMedÅrsforskjell = (deltaÅr) => {
-        const dato = new Date();
-        dato.setFullYear(dato.getFullYear() + deltaÅr);
-        return dato;
-    };
-
     const { datepickerProps, inputProps, setSelected } = useDatepicker({
-        fromDate: hentDatoMedÅrsforskjell(-50),
+        fromDate: hentDatoMedÅrsforskjell(-70),
         toDate: hentDatoMedÅrsforskjell(fremtid ? 25 : 0),
     });
 

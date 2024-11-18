@@ -1,5 +1,11 @@
 import z from "zod";
 
+export const hentDatoMedÅrsforskjell = (deltaÅr) => {
+    const dato = new Date();
+    dato.setFullYear(dato.getFullYear() + deltaÅr);
+    return dato;
+};
+
 const handleOneLevelZodError = (zodError) => {
     const errorMap = {};
 
@@ -90,4 +96,14 @@ export const dateStringSchema = z
         }
 
         return date;
-    });
+    })
+    .refine(
+        (date) => {
+            const firstValid = hentDatoMedÅrsforskjell(-70);
+            firstValid.setHours(0, 0, 0, 0);
+            return date >= firstValid;
+        },
+        {
+            message: `Velg dato etter: ${hentDatoMedÅrsforskjell(-70).getDate().toString().padStart(2, "0")}.${(hentDatoMedÅrsforskjell(-70).getMonth() + 1).toString().padStart(2, "0")}.${hentDatoMedÅrsforskjell(-70).getFullYear()}`,
+        },
+    );
