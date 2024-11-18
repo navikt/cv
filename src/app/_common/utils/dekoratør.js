@@ -2,7 +2,7 @@ import { fetchDecoratorReact } from "@navikt/nav-dekoratoren-moduler/ssr";
 import Script from "next/script";
 
 const dekoratørProps = {
-    env: "prod",
+    env: "dev",
     params: {
         utilsBackground: "white",
         context: "privatperson",
