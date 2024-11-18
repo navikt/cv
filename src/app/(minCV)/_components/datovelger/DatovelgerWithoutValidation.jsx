@@ -13,7 +13,11 @@ export function DatovelgerWithoutValidation({
 }) {
     useEffect(() => {
         if (defaultSelected) {
-            setSelected(new Date(defaultSelected));
+            try {
+                setSelected(new Date(defaultSelected));
+            } catch (err) {
+                setSelected(undefined);
+            }
         }
     }, [defaultSelected]);
 
