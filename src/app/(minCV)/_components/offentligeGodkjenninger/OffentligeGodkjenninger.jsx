@@ -77,10 +77,12 @@ export default function OffentligeGodkjenninger() {
                                             </FormSummary.Heading>
                                         </FormSummary.Header>
                                         <FormSummary.Answers aria-labelledby={summaryHeadingId}>
-                                            <FormSummary.Answer>
-                                                <FormSummary.Label>Utsteder</FormSummary.Label>
-                                                <FormSummary.Value>{godkjenning.issuer}</FormSummary.Value>
-                                            </FormSummary.Answer>
+                                            {godkjenning.issuer && (
+                                                <FormSummary.Answer>
+                                                    <FormSummary.Label>Utsteder</FormSummary.Label>
+                                                    <FormSummary.Value>{godkjenning.issuer}</FormSummary.Value>
+                                                </FormSummary.Answer>
+                                            )}
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>{`Gyldig${godkjenning.toDate ? "" : " fra"}`}</FormSummary.Label>
                                                 <FormSummary.Value>

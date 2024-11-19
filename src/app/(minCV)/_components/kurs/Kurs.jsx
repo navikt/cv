@@ -78,18 +78,18 @@ export default function Kurs() {
                                             </FormSummary.Heading>
                                         </FormSummary.Header>
                                         <FormSummary.Answers aria-labelledby={summaryHeadingId}>
-                                            {k.issuer && (
+                                            <FormSummary.Answer>
+                                                <FormSummary.Label>Utsteder</FormSummary.Label>
+                                                <FormSummary.Value>{k.issuer || "Ikke oppgitt"}</FormSummary.Value>
+                                            </FormSummary.Answer>
+                                            {k.date && (
                                                 <FormSummary.Answer>
-                                                    <FormSummary.Label>Utsteder</FormSummary.Label>
-                                                    <FormSummary.Value>{k.issuer}</FormSummary.Value>
+                                                    <FormSummary.Label>Fullført</FormSummary.Label>
+                                                    <FormSummary.Value>
+                                                        {formatterFullDatoMedFallback(k.date)}
+                                                    </FormSummary.Value>
                                                 </FormSummary.Answer>
                                             )}
-                                            <FormSummary.Answer>
-                                                <FormSummary.Label>Fullført</FormSummary.Label>
-                                                <FormSummary.Value>
-                                                    {formatterFullDatoMedFallback(k.date)}
-                                                </FormSummary.Value>
-                                            </FormSummary.Answer>
                                             {k.durationUnit !== "UKJENT" && (
                                                 <FormSummary.Answer>
                                                     <FormSummary.Label>Kursvarighet</FormSummary.Label>

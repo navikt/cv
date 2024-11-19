@@ -76,15 +76,19 @@ export default function Utdanninger() {
                                         </FormSummary.Header>
 
                                         <FormSummary.Answers aria-labelledby={summaryHeadingId}>
-                                            <FormSummary.Answer>
-                                                <FormSummary.Label>Grad og utdanningsretning</FormSummary.Label>
-                                                <FormSummary.Value>{utdanning.field}</FormSummary.Value>
-                                            </FormSummary.Answer>
+                                            {utdanning.field && (
+                                                <FormSummary.Answer>
+                                                    <FormSummary.Label>Grad og utdanningsretning</FormSummary.Label>
+                                                    <FormSummary.Value>{utdanning.field}</FormSummary.Value>
+                                                </FormSummary.Answer>
+                                            )}
 
-                                            <FormSummary.Answer>
-                                                <FormSummary.Label>Skole/studiested</FormSummary.Label>
-                                                <FormSummary.Value>{utdanning.institution}</FormSummary.Value>
-                                            </FormSummary.Answer>
+                                            {utdanning.institution && (
+                                                <FormSummary.Answer>
+                                                    <FormSummary.Label>Skole/studiested</FormSummary.Label>
+                                                    <FormSummary.Value>{utdanning.institution}</FormSummary.Value>
+                                                </FormSummary.Answer>
+                                            )}
 
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>Start- og sluttdato</FormSummary.Label>
@@ -94,13 +98,14 @@ export default function Utdanninger() {
                                                 </FormSummary.Value>
                                             </FormSummary.Answer>
 
-                                            <FormSummary.Answer>
-                                                <FormSummary.Label>Beskrivelse</FormSummary.Label>
-                                                <FormSummary.Value>
-                                                    {utdanning.description &&
-                                                        parse(utdanning.description.replace(/\n/g, "<br>"))}
-                                                </FormSummary.Value>
-                                            </FormSummary.Answer>
+                                            {utdanning.description && (
+                                                <FormSummary.Answer>
+                                                    <FormSummary.Label>Beskrivelse</FormSummary.Label>
+                                                    <FormSummary.Value>
+                                                        {parse(utdanning.description.replace(/\n/g, "<br>"))}
+                                                    </FormSummary.Value>
+                                                </FormSummary.Answer>
+                                            )}
                                         </FormSummary.Answers>
                                     </FormSummary>
                                     <HStack justify="space-between" className={styles.mb12}>

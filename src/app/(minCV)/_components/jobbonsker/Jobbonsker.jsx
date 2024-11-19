@@ -113,30 +113,44 @@ export default function Jobbonsker() {
                                         {formatterListeAvObjekterTilTekst(jobbønsker.locations, "location")}
                                     </BodyLong>
                                 </dd>
-                                <dt>
-                                    <BodyLong weight="semibold">Heltid eller deltid</BodyLong>
-                                </dt>
-                                <dd>
-                                    <BodyLong spacing>
-                                        {jobbønsker.workLoadTypes.map((e) => OmfangEnum[e]).join(", ")}
-                                    </BodyLong>
-                                </dd>
-                                <dt>
-                                    <BodyLong weight="semibold">Arbeidstider</BodyLong>
-                                </dt>
-                                <dd>
-                                    <BodyLong spacing>
-                                        {jobbønsker.workScheduleTypes.map((e) => ArbeidstidEnum[e]).join(", ")}
-                                    </BodyLong>
-                                </dd>
-                                <dt>
-                                    <BodyLong weight="semibold">Ansettelsesform</BodyLong>
-                                </dt>
-                                <dd>
-                                    <BodyLong spacing>
-                                        {jobbønsker.occupationTypes.map((e) => AnsettelsesformEnum[e]).join(", ")}
-                                    </BodyLong>
-                                </dd>
+                                {jobbønsker.workLoadTypes && jobbønsker.workLoadTypes.length > 0 && (
+                                    <>
+                                        <dt>
+                                            <BodyLong weight="semibold">Heltid eller deltid</BodyLong>
+                                        </dt>
+                                        <dd>
+                                            <BodyLong spacing>
+                                                {jobbønsker.workLoadTypes.map((e) => OmfangEnum[e]).join(", ")}
+                                            </BodyLong>
+                                        </dd>
+                                    </>
+                                )}
+                                {jobbønsker.workScheduleTypes && jobbønsker.workScheduleTypes.length > 0 && (
+                                    <>
+                                        <dt>
+                                            <BodyLong weight="semibold">Arbeidstider</BodyLong>
+                                        </dt>
+                                        <dd>
+                                            <BodyLong spacing>
+                                                {jobbønsker.workScheduleTypes.map((e) => ArbeidstidEnum[e]).join(", ")}
+                                            </BodyLong>
+                                        </dd>
+                                    </>
+                                )}
+                                {jobbønsker.occupationTypes && jobbønsker.occupationTypes.length > 0 && (
+                                    <>
+                                        <dt>
+                                            <BodyLong weight="semibold">Ansettelsesform</BodyLong>
+                                        </dt>
+                                        <dd>
+                                            <BodyLong spacing>
+                                                {jobbønsker.occupationTypes
+                                                    .map((e) => AnsettelsesformEnum[e])
+                                                    .join(", ")}
+                                            </BodyLong>
+                                        </dd>
+                                    </>
+                                )}
                                 <dt>
                                     <BodyLong weight="semibold">Oppstart</BodyLong>
                                 </dt>
