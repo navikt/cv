@@ -54,8 +54,6 @@ export const revalidate = (e, schema, errors, setErrors) => {
 };
 
 export const revalidateExplicitValue = (name, value, schema, errors, setErrors) => {
-    console.log("NAME", schema);
-    console.log("VALUE", value);
     const data = { [name]: value };
     const oneValueSchema = z.object({ [name]: schema.shape[name] });
 
