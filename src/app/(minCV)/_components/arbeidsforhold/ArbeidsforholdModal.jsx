@@ -1,70 +1,109 @@
 import { BodyShort, Checkbox, CheckboxGroup, HStack, Textarea, TextField, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
-import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
+import { DatovelgerWithoutValidation } from "@/app/(minCV)/_components/datovelger/DatovelgerWithoutValidation";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
+import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
+import { dateStringSchema, handleZodValidation, revalidateExplicitValue } from "@/app/_common/utils/validationHelper";
+import z from "zod";
 
 export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
-    const [arbeidsgiver, setArbeidsgiver] = useState("");
-    const [alternativTittel, setAlternativTittel] = useState("");
-    const [arbeidssted, setArbeidssted] = useState("");
-    const [arbeidsoppgaver, setArbeidsoppgaver] = useState("");
-
-    const [startdato, setStartdato] = useState(null);
-    const [sluttdato, setSluttdato] = useState(null);
     const [pågår, setPågår] = useState([]);
-
     const [stillingstittel, setStillingstittel] = useState(gjeldendeElement?.jobTitle || "");
     const [konseptId, setKonseptId] = useState("");
     const [styrk, setStyrk] = useState("");
-
-    const [stillingstittelError, setStillingstittelError] = useState(false);
-    const [startdatoError, setStartdatoError] = useState(false);
-    const [sluttdatoError, setSluttdatoError] = useState(false);
-    const [skalViseDatofeilmelding, setSkalviseDatofeilmelding] = useState(false);
+    const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
+    const modalFormRef = useRef();
 
     useEffect(() => {
         const oppdaterArbeidsforhold = (arbeidsforhold) => {
-            setArbeidsgiver(arbeidsforhold?.employer || "");
-            setAlternativTittel(arbeidsforhold?.alternativeJobTitle || "");
-            setArbeidssted(arbeidsforhold?.location || "");
-            setArbeidsoppgaver(arbeidsforhold?.description || "");
-
             setStillingstittel(arbeidsforhold?.jobTitle || "");
             setKonseptId(arbeidsforhold?.conceptId || "");
             setStyrk(arbeidsforhold?.styrkkode || "");
-
-            setStartdato(arbeidsforhold ? new Date(arbeidsforhold.fromDate) : null);
-            setSluttdato(arbeidsforhold && arbeidsforhold?.toDate ? new Date(arbeidsforhold.toDate) : null);
-            setPågår(arbeidsforhold && arbeidsforhold.ongoing ? ["true"] : []);
+            setPågår(arbeidsforhold?.ongoing ? ["true"] : []);
         };
 
         oppdaterArbeidsforhold(gjeldendeElement);
     }, [gjeldendeElement]);
 
-    const lagre = async () => {
-        setSkalviseDatofeilmelding(true);
+    const ArbeidsforholdSchema = z.object({
+        employer: z.string().optional(),
+        jobTitle: z.string().min(1, "Stilling/yrke må fylles ut"),
+        conceptId: z.coerce.string().optional(),
+        styrkkode: z.coerce.string().optional(),
+        alternativeJobTitle: z.string().optional(),
+        location: z.string().optional(),
+        description: z.string().optional(),
+        fromDate: dateStringSchema.refine((data) => data <= new Date(), { message: "Dato kan ikke være frem i tid" }),
+        ongoing: z.boolean().optional(),
+    });
 
-        const erPågående = pågår.includes("true");
+    const ArbeidsforholdSchemaWithEndDate = ArbeidsforholdSchema.extend({
+        toDate: dateStringSchema,
+    }).refine((data) => data.toDate >= data.fromDate, {
+        path: ["toDate"],
+        message: "Til dato må være etter fra dato",
+    });
 
-        if (!stillingstittel) setStillingstittelError(true);
-        if (startdatoError || (!erPågående && sluttdatoError)) return;
+    const getFormData = (target) => {
+        const formData = new FormData(target);
 
-        if (stillingstittel && startdato && (sluttdato || erPågående)) {
-            await lagreElement({
-                ...gjeldendeElement,
-                employer: arbeidsgiver,
-                jobTitle: stillingstittel,
-                conceptId: konseptId,
-                styrkkode: styrk,
-                alternativeJobTitle: alternativTittel,
-                location: arbeidssted,
-                description: arbeidsoppgaver,
-                fromDate: startdato,
-                toDate: erPågående ? null : sluttdato,
-                ongoing: erPågående,
+        const data = {
+            ...Object.fromEntries(formData),
+            fromDate: formData.get("fromDate"),
+            toDate: formData.get("toDate"),
+            ongoing: formData.get("ongoing") === "true",
+            jobTitle: stillingstittel,
+            conceptId: konseptId,
+            styrkkode: styrk,
+        };
+
+        return data;
+    };
+
+    const lagre = (e) => {
+        setShouldAutoFocusErrors(true);
+        setHasTriedSubmit(true);
+        const data = getFormData(e.currentTarget);
+
+        handleZodValidation({
+            onError: setErrors,
+            data: data,
+            onSuccess: (res) => {
+                lagreElement({
+                    ...gjeldendeElement,
+                    employer: res.employer,
+                    jobTitle: res.jobTitle,
+                    conceptId: res.conceptId,
+                    styrkkode: res.styrkkode,
+                    alternativeJobTitle: res.alternativeJobTitle,
+                    location: res.location,
+                    description: res.description,
+                    fromDate: res.fromDate,
+                    toDate: res.toDate,
+                    ongoing: res.ongoing,
+                });
+            },
+            schema: data.ongoing ? ArbeidsforholdSchema : ArbeidsforholdSchemaWithEndDate,
+        });
+    };
+
+    const revalidate = () => {
+        if (hasTriedSubmit) {
+            setShouldAutoFocusErrors(false);
+            const data = getFormData(modalFormRef.current);
+
+            handleZodValidation({
+                onError: setErrors,
+                data: data,
+                onSuccess: () => {
+                    setErrors({});
+                },
+                schema: data.ongoing ? ArbeidsforholdSchema : ArbeidsforholdSchemaWithEndDate,
             });
         }
     };
@@ -73,7 +112,9 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
         setStillingstittel(erValgt ? stilling.label : "");
         setKonseptId(erValgt ? stilling.konseptId : "");
         setStyrk(erValgt ? stilling.styrk08 : "");
-        setStillingstittelError(false);
+        if (hasTriedSubmit) {
+            revalidateExplicitValue("jobTitle", stilling?.label, ArbeidsforholdSchema, errors, setErrors);
+        }
     };
 
     return (
@@ -84,89 +125,92 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
+            ref={modalFormRef}
         >
-            <HStack justify="space-between">
-                <VStack className={styles.fullWidth}>
-                    <Typeahead
-                        className={styles.mb6}
-                        label="Stilling/yrke"
-                        description="Må fylles ut"
-                        type={TypeaheadEnum.STILLING}
-                        oppdaterValg={setStillingTypeahead}
-                        valgtVerdi={stillingstittel}
-                        error={stillingstittelError && "Du må velge stilling/yrke"}
-                    />
-                    <TextField
-                        className={styles.mb6}
-                        label="Alternativ tittel"
-                        description="Dersom ditt yrke ikke står i listen"
-                        value={alternativTittel}
-                        onChange={(e) => setAlternativTittel(e.target.value)}
-                    />
-                </VStack>
-            </HStack>
-            <HStack justify="space-between">
-                <VStack className={styles.element}>
-                    <TextField
-                        className={styles.mb6}
-                        label="Bedrift"
-                        value={arbeidsgiver}
-                        onChange={(e) => setArbeidsgiver(e.target.value)}
-                    />
-                </VStack>
-                <VStack className={styles.element}>
-                    <TextField
-                        className={styles.mb6}
-                        label="Sted"
-                        value={arbeidssted}
-                        onChange={(e) => setArbeidssted(e.target.value)}
-                    />
-                </VStack>
-            </HStack>
+            <Typeahead
+                id="jobTitle"
+                name="jobTitle"
+                className={styles.mb6}
+                label="Stilling/yrke"
+                description="Må fylles ut"
+                type={TypeaheadEnum.STILLING}
+                oppdaterValg={setStillingTypeahead}
+                valgtVerdi={stillingstittel}
+                error={errors?.jobTitle}
+            />
+            <TextField
+                id="alternativeJobTitle"
+                name="alternativeJobTitle"
+                label="Alternativ tittel"
+                description="Dersom ditt yrke ikke står i listen"
+                className={styles.mb6}
+                defaultValue={gjeldendeElement?.alternativeJobTitle}
+            />
+            <TextField
+                id="employer"
+                name="employer"
+                label="Bedrift"
+                className={styles.mb6}
+                defaultValue={gjeldendeElement?.employer}
+            />
+            <TextField
+                id="location"
+                name="location"
+                label="Sted"
+                className={styles.mb6}
+                defaultValue={gjeldendeElement?.location}
+            />
             <Textarea
+                id="description"
+                name="description"
                 label="Arbeidsoppgaver"
                 description="Skriv litt om rollen din og de viktigste oppgavene dine"
                 className={styles.mb6}
-                value={arbeidsoppgaver}
-                onChange={(e) => setArbeidsoppgaver(e.target.value)}
+                defaultValue={gjeldendeElement?.description}
             />
-            <CheckboxGroup legend="Jobb jeg har nå" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value="true">Jobb jeg har nå</Checkbox>
+            <CheckboxGroup
+                id="ongoing"
+                legend="Jobb jeg har nå"
+                className={styles.mb6}
+                value={pågår}
+                onChange={setPågår}
+            >
+                <Checkbox name="ongoing" value="true">
+                    Jobb jeg har nå
+                </Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">
-                <Datovelger
-                    valgtDato={startdato}
-                    oppdaterDato={setStartdato}
+                <DatovelgerWithoutValidation
+                    id="fromDate"
+                    name="fromDate"
                     label={
                         <VStack>
                             <BodyShort weight="semibold">Fra dato</BodyShort>
                             <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                         </VStack>
                     }
-                    obligatorisk
-                    setError={setStartdatoError}
-                    skalViseFeilmelding={skalViseDatofeilmelding}
-                    setSkalViseFeilmelding={setSkalviseDatofeilmelding}
+                    defaultSelected={gjeldendeElement?.fromDate}
+                    error={errors?.fromDate}
+                    onBlur={revalidate}
                 />
-
                 {!pågår.includes("true") && (
-                    <Datovelger
-                        valgtDato={sluttdato}
-                        oppdaterDato={setSluttdato}
+                    <DatovelgerWithoutValidation
+                        id="toDate"
+                        name="toDate"
                         label={
                             <VStack>
                                 <BodyShort weight="semibold">Til dato</BodyShort>
                                 <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                             </VStack>
                         }
-                        obligatorisk
-                        setError={setSluttdatoError}
-                        skalViseFeilmelding={skalViseDatofeilmelding}
-                        setSkalViseFeilmelding={setSkalviseDatofeilmelding}
+                        defaultSelected={gjeldendeElement?.toDate}
+                        error={errors?.toDate}
+                        onBlur={revalidate}
                     />
                 )}
             </HStack>
+            <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
         </CvModalForm>
     );
 }
