@@ -18,7 +18,6 @@ export default function AndreGodkjenningerModal({
     feilet,
 }) {
     const [valgtGodkjenning, setValgtGodkjenning] = useState(gjeldendeElement || null);
-    const [utsteder, setUtsteder] = useState(gjeldendeElement?.issuer || "");
     const [errors, setErrors] = useState({});
     const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
     const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
@@ -26,15 +25,14 @@ export default function AndreGodkjenningerModal({
 
     useEffect(() => {
         if (gjeldendeElement) {
-            console.log("GJEL", gjeldendeElement);
             setValgtGodkjenning(gjeldendeElement);
-            setUtsteder(gjeldendeElement.issuer || "");
         }
     }, [gjeldendeElement]);
 
     // Validation schema
     const GodkjenningSchema = z.object({
-        title: z.string().min(1, "Du må velge en godkjenning"),
+        certificateName: z.string().min(1, "Du må velge en godkjenning"),
+        conceptId: z.coerce.string().optional(),
         issuer: z.string().optional(),
         fromDate: dateStringSchema.refine((data) => data <= new Date(), { message: "Dato kan ikke være frem i tid" }),
     });
@@ -57,8 +55,9 @@ export default function AndreGodkjenningerModal({
     const getFormData = (target) => {
         const formData = new FormData(target);
         return {
-            title: valgtGodkjenning?.title || "",
-            issuer: utsteder,
+            certificateName: valgtGodkjenning?.title || valgtGodkjenning?.certificateName || "",
+            conceptId: valgtGodkjenning?.conceptId,
+            issuer: formData.get("issuer"),
             fromDate: formData.get("fromDate"),
             toDate: formData.get("toDate") || undefined,
         };
@@ -87,7 +86,8 @@ export default function AndreGodkjenningerModal({
     const revalidate = () => {
         if (hasTriedSubmit) {
             setShouldAutoFocusErrors(false);
-            const data = getFormData();
+            const data = getFormData(modalFormRef.current);
+
             handleZodValidation({
                 onError: setErrors,
                 data: data,
@@ -102,7 +102,13 @@ export default function AndreGodkjenningerModal({
         if (hasTriedSubmit) {
             setShouldAutoFocusErrors(false);
             // Don't validate with end date schema
-            revalidateExplicitValue("title", verdi?.label, GodkjenningSchema, errors, setErrors);
+            revalidateExplicitValue(
+                "certificateName",
+                verdi?.title || verdi?.certificateName,
+                GodkjenningSchema,
+                errors,
+                setErrors,
+            );
         }
     };
 
@@ -118,8 +124,8 @@ export default function AndreGodkjenningerModal({
             overflowVisible
         >
             <Typeahead
-                id="title"
-                name="title"
+                id="certificateName"
+                name="certificateName"
                 className={styles.mb6}
                 label={
                     <HStack gap="2">
@@ -130,8 +136,8 @@ export default function AndreGodkjenningerModal({
                 description="Yrkessertifikater, attester, bevis o.l."
                 type={TypeaheadEnum.ANDRE_GODKJENNINGER}
                 oppdaterValg={oppdaterValgtGodkjenning}
-                valgtVerdi={valgtGodkjenning?.title}
-                error={errors?.title}
+                valgtVerdi={valgtGodkjenning?.certificateName || valgtGodkjenning?.title}
+                error={errors?.certificateName}
             />
             <TextField
                 id="issuer"
@@ -139,7 +145,7 @@ export default function AndreGodkjenningerModal({
                 className={styles.mb6}
                 label="Utsteder"
                 description="Organisasjon, forening, opplæringssted"
-                value={gjeldendeElement?.issuer}
+                defaultValue={gjeldendeElement?.issuer}
                 error={errors?.issuer}
             />
             <HStack gap="8">
