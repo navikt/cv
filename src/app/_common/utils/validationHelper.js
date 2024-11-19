@@ -82,17 +82,23 @@ export const dateStringSchema = z
             message: "Dato er ikke gyldig",
         },
     )
-    .transform((dateStr) => {
+    .transform((dateStr, ctx) => {
         const [day, month, year] = dateStr.split(".").map(Number);
 
         if (year < 1000 || year > 9999) {
-            throw new Error("Dato er ikke gyldig");
+            ctx.addIssue({
+                message: "Dato er ikke gyldig",
+            });
+            return z.NEVER;
         }
 
         const date = new Date(year, month - 1, day);
 
         if (date.getDate() !== day || date.getMonth() + 1 !== month || date.getFullYear() !== year) {
-            throw new Error("Dato er ikke gyldig");
+            ctx.addIssue({
+                message: "Dato er ikke gyldig",
+            });
+            return z.NEVER;
         }
 
         return date;
