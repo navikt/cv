@@ -26,12 +26,20 @@ export default function OffentligeGodkjenninger() {
         >
             {cvLaster ? (
                 <SeksjonSkeleton
-                    icon={<HStack className={[styles.iconOffentligeGodkjenningerBig, styles.sectionIcon]} />}
+                    icon={
+                        <HStack
+                            className={[styles.iconOffentligeGodkjenningerBig, styles.sectionIcon]}
+                            aria-hidden="true"
+                        />
+                    }
                 />
             ) : (
                 <Box background="surface-default" padding="10" className={styles.box}>
                     <HStack justify="center">
-                        <HStack className={[styles.iconOffentligeGodkjenningerBig, styles.sectionIcon]} />
+                        <HStack
+                            className={[styles.iconOffentligeGodkjenningerBig, styles.sectionIcon]}
+                            aria-hidden="true"
+                        />
                     </HStack>
                     <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Offentlige godkjenninger

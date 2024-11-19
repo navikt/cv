@@ -20,11 +20,13 @@ export default function Personalia() {
     return (
         <section aria-labelledby={personLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.PERSONALIA}>
             {personLaster ? (
-                <SeksjonSkeleton icon={<HStack className={[styles.iconPersonaliaBig, styles.sectionIcon]} />} />
+                <SeksjonSkeleton
+                    icon={<HStack className={[styles.iconPersonaliaBig, styles.sectionIcon]} aria-hidden="true" />}
+                />
             ) : (
                 <Box background="surface-default" padding="10" className={styles.box}>
                     <HStack justify="center">
-                        <HStack className={[styles.iconPersonaliaBig, styles.sectionIcon]} />
+                        <HStack className={[styles.iconPersonaliaBig, styles.sectionIcon]} aria-hidden="true" />
                     </HStack>
                     <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Personalia

@@ -25,11 +25,15 @@ export default function AndreGodkjenninger() {
             id={SeksjonsIdEnum.ANDRE_GODKJENNINGER}
         >
             {cvLaster ? (
-                <SeksjonSkeleton icon={<HStack className={[styles.iconAndreGodkjenningerBig, styles.sectionIcon]} />} />
+                <SeksjonSkeleton
+                    icon={
+                        <HStack className={[styles.iconAndreGodkjenningerBig, styles.sectionIcon]} aria-hidden="true" />
+                    }
+                />
             ) : (
                 <Box background="surface-default" padding="10" className={styles.box}>
                     <HStack justify="center">
-                        <HStack className={[styles.iconAndreGodkjenningerBig, styles.sectionIcon]} />
+                        <HStack className={[styles.iconAndreGodkjenningerBig, styles.sectionIcon]} aria-hidden="true" />
                     </HStack>
                     <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Andre godkjenninger

@@ -33,7 +33,9 @@ export default function Arbeidsforhold() {
     if (cvLaster) {
         return (
             <section data-section id={SeksjonsIdEnum.ARBEIDSFORHOLD}>
-                <SeksjonSkeleton icon={<HStack className={[styles.iconArbeidsforholdBig, styles.sectionIcon]} />} />
+                <SeksjonSkeleton
+                    icon={<HStack className={[styles.iconArbeidsforholdBig, styles.sectionIcon]} aria-hidden="true" />}
+                />
             </section>
         );
     }
@@ -42,7 +44,7 @@ export default function Arbeidsforhold() {
         return (
             <section data-section id={SeksjonsIdEnum.ARBEIDSFORHOLD}>
                 <HentArbeidsforholdSkeleton
-                    icon={<HStack className={[styles.iconArbeidsforholdBig, styles.sectionIcon]} />}
+                    icon={<HStack className={[styles.iconArbeidsforholdBig, styles.sectionIcon]} aria-hidden="true" />}
                 />
             </section>
         );
@@ -56,7 +58,7 @@ export default function Arbeidsforhold() {
         >
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
-                    <HStack className={[styles.iconArbeidsforholdBig, styles.sectionIcon]} />
+                    <HStack className={[styles.iconArbeidsforholdBig, styles.sectionIcon]} aria-hidden="true" />
                 </HStack>
                 <Heading id={headingId} level="2" size="large" align="start" spacing>
                     Arbeidsforhold

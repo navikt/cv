@@ -21,11 +21,13 @@ export default function Kurs() {
     return (
         <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.KURS}>
             {cvLaster ? (
-                <SeksjonSkeleton icon={<HStack className={[styles.iconKursBig, styles.sectionIcon]} />} />
+                <SeksjonSkeleton
+                    icon={<HStack className={[styles.iconKursBig, styles.sectionIcon]} aria-hidden="true" />}
+                />
             ) : (
                 <Box background="surface-default" padding="10" className={styles.box}>
                     <HStack justify="center">
-                        <HStack className={[styles.iconKursBig, styles.sectionIcon]} />
+                        <HStack className={[styles.iconKursBig, styles.sectionIcon]} aria-hidden="true" />
                     </HStack>
                     <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Kurs

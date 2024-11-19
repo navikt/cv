@@ -22,11 +22,13 @@ export default function AndreErfaringer() {
     return (
         <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.ANDRE_ERFARINGER}>
             {cvLaster ? (
-                <SeksjonSkeleton icon={<HStack className={[styles.iconAndreErfaringerBig, styles.sectionIcon]} />} />
+                <SeksjonSkeleton
+                    icon={<HStack className={[styles.iconAndreErfaringerBig, styles.sectionIcon]} aria-hidden="true" />}
+                />
             ) : (
                 <Box background="surface-default" padding="10" className={styles.box}>
                     <HStack justify="center">
-                        <HStack className={[styles.iconAndreErfaringerBig, styles.sectionIcon]} />
+                        <HStack className={[styles.iconAndreErfaringerBig, styles.sectionIcon]} aria-hidden="true" />
                     </HStack>
                     <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Andre erfaringer

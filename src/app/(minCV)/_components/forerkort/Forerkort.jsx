@@ -20,11 +20,13 @@ export default function Forerkort() {
     return (
         <div aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.FØRERKORT}>
             {cvLaster ? (
-                <SeksjonSkeleton icon={<HStack className={[styles.iconForerkortBig, styles.sectionIcon]} />} />
+                <SeksjonSkeleton
+                    icon={<HStack className={[styles.iconForerkortBig, styles.sectionIcon]} aria-hidden="true" />}
+                />
             ) : (
                 <Box background="surface-default" padding="10" className={styles.box}>
                     <HStack justify="center">
-                        <HStack className={[styles.iconForerkortBig, styles.sectionIcon]} />
+                        <HStack className={[styles.iconForerkortBig, styles.sectionIcon]} aria-hidden="true" />
                     </HStack>
                     <Heading id={headingId} className={styles.mb6} level="2" size="large" align="start" spacing>
                         Førerkort
