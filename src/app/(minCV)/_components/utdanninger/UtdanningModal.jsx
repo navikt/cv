@@ -9,6 +9,7 @@ import { dateStringSchema, handleZodValidation } from "@/app/_common/utils/valid
 import z from "zod";
 
 export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const [nusKode, setNusKode] = useState("");
     const [pågår, setPågår] = useState([]);
     const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
     const [errors, setErrors] = useState({});
@@ -16,11 +17,10 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
     const modalFormRef = useRef();
 
     useEffect(() => {
-        const oppdaterUtdanning = (utdanning) => {
-            setPågår(utdanning && utdanning.ongoing ? ["true"] : []);
-        };
-
-        oppdaterUtdanning(gjeldendeElement);
+        if (gjeldendeElement) {
+            setPågår(gjeldendeElement.ongoing ? ["true"] : []);
+            setNusKode(gjeldendeElement.nuskode);
+        }
     }, [gjeldendeElement]);
 
     const UtdanningSchema = z.object({
@@ -114,14 +114,18 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                         <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                     </HStack>
                 }
+                value={nusKode}
                 description="Hvilken type utdanning har du gått?"
                 className={styles.mb6}
                 error={errors?.nuskode}
+                onChange={(e) => {
+                    nusKode(e.target.value);
+                }}
                 onBlur={revalidate}
             >
                 <option value="">Velg</option>
                 {Object.keys(UtdanningsnivåEnum).map((nuskode) => (
-                    <option key={nuskode} value={nuskode} selected={nuskode === gjeldendeElement?.nuskode}>
+                    <option key={nuskode} value={nuskode}>
                         {UtdanningsnivåEnum[nuskode]}
                     </option>
                 ))}
