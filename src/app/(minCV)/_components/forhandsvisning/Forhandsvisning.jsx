@@ -12,6 +12,7 @@ import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import parse from "html-react-parser";
+import { datosorterElementer } from "@/app/_common/utils/dateUtils";
 
 export default function Forhandsvisning({ setVisHovedinnhold }) {
     const { person } = usePerson();
@@ -95,7 +96,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             Utdanning
                         </Heading>
 
-                        {cv.utdanning.map((utdanning, index) => (
+                        {datosorterElementer(cv.utdanning, "startDate", "endDate").map((utdanning, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>
@@ -139,7 +140,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         <Heading id="heading-preview-arbeidsforhold" level="2" size="xsmall" className={styles.mb3}>
                             Arbeidsforhold
                         </Heading>
-                        {cv.arbeidserfaring.map((erfaring, index) => (
+                        {datosorterElementer(cv.arbeidserfaring).map((erfaring, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>
@@ -169,7 +170,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         <Heading id="heading-preview-annen-erfaring" level="2" size="xsmall" className={styles.mb3}>
                             Annen erfaring
                         </Heading>
-                        {cv.annenErfaring.map((erfaring, index) => (
+                        {datosorterElementer(cv.annenErfaring).map((erfaring, index) => (
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>

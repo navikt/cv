@@ -10,6 +10,7 @@ import parse from "html-react-parser";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useId } from "react";
+import { datosorterElementer } from "@/app/_common/utils/dateUtils";
 
 export default function Utdanninger() {
     const { utdanninger, cvLaster } = useCv();
@@ -43,7 +44,7 @@ export default function Utdanninger() {
                         </div>
                     ) : (
                         <div>
-                            {utdanninger.map((utdanning, index) => (
+                            {datosorterElementer(utdanninger, "startDate", "endDate").map((utdanning, index) => (
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "2rem" }}>
                                         <FormSummary.Header>

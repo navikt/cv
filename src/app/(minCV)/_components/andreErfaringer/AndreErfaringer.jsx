@@ -9,6 +9,7 @@ import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useId } from "react";
+import { datosorterElementer } from "@/app/_common/utils/dateUtils";
 
 export default function AndreErfaringer() {
     const { andreErfaringer, cvLaster } = useCv();
@@ -42,7 +43,7 @@ export default function AndreErfaringer() {
                             </div>
                         ) : (
                             <div className={styles.mb6}>
-                                {andreErfaringer.map((erfaring, index) => (
+                                {datosorterElementer(andreErfaringer).map((erfaring, index) => (
                                     <div key={index}>
                                         <FormSummary style={{ marginBottom: "1rem" }}>
                                             <FormSummary.Header>
