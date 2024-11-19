@@ -6,7 +6,7 @@ import metrics from "@/app/_common/observability/prometheus";
 export async function GET(request) {
     const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
     const cvApiBaseUrl = serverConfig?.urls?.cvApi;
-    const fullUrl = `${cvApiBaseUrl}/v2/person`;
+    const fullUrl = `${cvApiBaseUrl}/v2/person?medTesttilgang=true`;
 
     const requestHeaders = new Headers(request.headers);
     const callId = requestHeaders.get("nav-callid");
