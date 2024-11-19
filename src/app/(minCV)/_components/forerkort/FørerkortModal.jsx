@@ -1,45 +1,39 @@
-import { HStack, Select, VStack } from "@navikt/ds-react";
-import { useEffect, useState } from "react";
+import { BodyShort, HStack, Select, VStack } from "@navikt/ds-react";
+import { useEffect, useRef, useState } from "react";
 import styles from "@/app/page.module.css";
 import førerkortData from "@/app/_common/data/førerkort.json";
 import { DatovelgerWithoutValidation } from "@/app/(minCV)/_components/datovelger/DatovelgerWithoutValidation";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
-import { dateStringSchema, handleZodValidation, revalidateExplicitValue } from "@/app/_common/utils/validationHelper";
+import { dateStringSchema, handleZodValidation } from "@/app/_common/utils/validationHelper";
 import z from "zod";
 
 export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [errors, setErrors] = useState({});
     const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
     const [valgtFørerkort, setValgtFørerkort] = useState(gjeldendeElement || null);
-    const [gyldigFra, setGyldigFra] = useState(
-        gjeldendeElement?.acquiredDate ? new Date(gjeldendeElement.acquiredDate) : null,
-    );
-    const [gyldigTil, setGyldigTil] = useState(
-        gjeldendeElement?.expiryDate ? new Date(gjeldendeElement.expiryDate) : null,
-    );
     const [kreverDato, setKreverDato] = useState(!!gjeldendeElement?.acquiredDate);
-    const [valgtForerkortError, setValgtForerkortError] = useState(false);
-    const [gyldigFraError, setGyldigFraError] = useState(false);
-    const [gyldigTilError, setGyldigTilError] = useState(false);
-    const [skalViseDatofeilmelding, setSkalviseDatofeilmelding] = useState(false);
+    const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
+    const modalFormRef = useRef();
 
     const { gyldigeFørerkort } = førerkortData;
 
     useEffect(() => {
-        const oppdaterFørerkort = (førerkort) => setValgtFørerkort(førerkort);
-        oppdaterFørerkort(gjeldendeElement || []);
+        if (gjeldendeElement) {
+            setValgtFørerkort(gjeldendeElement);
+            const funnetFørerkort = gyldigeFørerkort.find((e) => e.type === gjeldendeElement.type);
+            setKreverDato(funnetFørerkort?.kreverDato || false);
+        }
     }, [gjeldendeElement]);
 
     const velgFørerkort = (verdi) => {
         const funnetFørerkort = gyldigeFørerkort.find((e) => e.type === verdi);
         setValgtFørerkort(funnetFørerkort);
         setKreverDato(funnetFørerkort?.kreverDato || false);
-        setValgtForerkortError(false);
     };
 
     const driverLicenseSchema = z.object({
-        type: z.string().min(1, "Stilling/yrke må fylles ut"),
+        type: z.string().min(1, "Du må velge førerkort"),
     });
 
     const driverLicenseSchemaWithDates = driverLicenseSchema
@@ -49,21 +43,54 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
             }),
             expiryDate: dateStringSchema,
         })
-        .refine((data) => data.toDate >= data.expiryDate, {
-            path: ["toDate"],
+        .refine((data) => data.expiryDate >= data.acquiredDate, {
+            path: ["expiryDate"],
             message: "Til dato må være etter fra dato",
         });
 
-    const lagre = async () => {
-        setSkalviseDatofeilmelding(true);
-        if (!valgtFørerkort || valgtFørerkort.length === 0) setErrors({ type: "Du må velge førerkort" });
-        if (kreverDato && (gyldigTilError || gyldigFraError)) return;
+    const getFormData = (target) => {
+        const formData = new FormData(target);
 
-        if (valgtFørerkort && valgtFørerkort.length !== 0 && (kreverDato ? gyldigFra && gyldigTil : true)) {
-            lagreElement({
-                type: valgtFørerkort.label || valgtFørerkort.type,
-                acquiredDate: gyldigFra,
-                expiryDate: gyldigTil,
+        const data = {
+            type: valgtFørerkort?.label || valgtFørerkort?.type || "",
+            acquiredDate: kreverDato ? formData.get("acquiredDate") : undefined,
+            expiryDate: kreverDato ? formData.get("expiryDate") : undefined,
+        };
+
+        return data;
+    };
+
+    const lagre = (e) => {
+        setShouldAutoFocusErrors(true);
+        setHasTriedSubmit(true);
+        const data = getFormData(e.currentTarget);
+        console.log("data", data);
+
+        handleZodValidation({
+            onError: setErrors,
+            data: data,
+            onSuccess: (res) => {
+                lagreElement({
+                    ...gjeldendeElement,
+                    ...res,
+                });
+            },
+            schema: kreverDato ? driverLicenseSchemaWithDates : driverLicenseSchema,
+        });
+    };
+
+    const revalidate = () => {
+        if (hasTriedSubmit) {
+            setShouldAutoFocusErrors(false);
+            const data = getFormData(modalFormRef.current);
+
+            handleZodValidation({
+                onError: setErrors,
+                data: data,
+                onSuccess: () => {
+                    setErrors({});
+                },
+                schema: kreverDato ? driverLicenseSchemaWithDates : driverLicenseSchema,
             });
         }
     };
@@ -77,6 +104,7 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
+            ref={modalFormRef}
         >
             <VStack>
                 <Select
@@ -87,6 +115,7 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
                     className={styles.mb6}
                     value={valgtFørerkort?.type || ""}
                     onChange={(e) => velgFørerkort(e.target.value)}
+                    onBlur={revalidate}
                     error={errors?.type}
                 >
                     <option value={null}>Velg</option>
@@ -102,25 +131,29 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
                             <DatovelgerWithoutValidation
                                 id="acquiredDate"
                                 name="acquiredDate"
-                                valgtDato={gyldigFra}
-                                oppdaterDato={setGyldigFra}
-                                label="Gyldig fra"
-                                obligatorisk
-                                setError={setGyldigFraError}
-                                skalViseFeilmelding={skalViseDatofeilmelding}
-                                setSkalViseFeilmelding={setSkalviseDatofeilmelding}
+                                defaultSelected={gjeldendeElement?.acquiredDate}
+                                label={
+                                    <VStack>
+                                        <BodyShort weight="semibold">Gyldig fra</BodyShort>
+                                        <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
+                                    </VStack>
+                                }
+                                onBlur={revalidate}
+                                error={errors?.acquiredDate}
                             />
                             <DatovelgerWithoutValidation
                                 id="expiryDate"
                                 name="expiryDate"
-                                valgtDato={gyldigTil}
-                                oppdaterDato={setGyldigTil}
-                                label="Gyldig til"
-                                obligatorisk
+                                defaultSelected={gjeldendeElement?.expiryDate}
+                                label={
+                                    <VStack>
+                                        <BodyShort weight="semibold">Gyldig til</BodyShort>
+                                        <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
+                                    </VStack>
+                                }
                                 fremtid
-                                setError={setGyldigTilError}
-                                skalViseFeilmelding={skalViseDatofeilmelding}
-                                setSkalViseFeilmelding={setSkalviseDatofeilmelding}
+                                onBlur={revalidate}
+                                error={errors?.expiryDate}
                             />
                         </HStack>
                         <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
