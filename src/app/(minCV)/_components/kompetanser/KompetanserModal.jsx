@@ -35,6 +35,7 @@ export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeEle
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til kompetanse"
+            icon={<HStack className={[styles.iconKompetanserBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}

@@ -99,6 +99,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til utdanning"
+            icon={<HStack className={[styles.iconUtdanningerBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}

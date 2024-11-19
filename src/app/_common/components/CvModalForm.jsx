@@ -32,15 +32,19 @@ export const CvModalForm = forwardRef(
                 ref={ref}
             >
                 <Modal.Header closeButton>
-                    <Heading align="start" level="3" size="medium">
+                    <Heading align="start" level="3" size="medium" className={[styles.mt1, styles.mb3]}>
+                        <HStack justify="center">{icon}</HStack>
                         <HStack gap="1" align="center">
-                            {icon}
                             {tittel}
                         </HStack>
                     </Heading>
                 </Modal.Header>
                 <Modal.Body
-                    className={[styles[`modalBody${laster ? "--loading" : ""}`], overflowVisible && "overflow-visible"]}
+                    className={[
+                        styles[`modalBody${laster ? "--loading" : ""}`],
+                        overflowVisible && "overflow-visible",
+                        styles.modalScroll,
+                    ]}
                 >
                     <fieldset className={styles.modalFormFieldset}>
                         <legend className={styles.visuallyhidden}>{tittel}</legend>

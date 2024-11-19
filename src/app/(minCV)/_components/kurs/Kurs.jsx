@@ -10,34 +10,6 @@ import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdater
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useId } from "react";
 
-function KursIcon() {
-    return (
-        <svg
-            aria-hidden="true"
-            style={{ marginTop: "-4.5rem", marginBottom: "4rem" }}
-            width="64"
-            height="64"
-            viewBox="0 0 64 64"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <rect width="64" height="64" rx="32" fill="#7CDAF8" />
-            <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M27 24C27 23.4477 27.4477 23 28 23H36C36.5523 23 37 23.4477 37 24V28C37 28.5523 36.5523 29 36 29H28C27.4477 29 27 28.5523 27 28V24ZM29 25V27H35V25H29Z"
-                fill="#23262A"
-            />
-            <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M25.3333 19C23.3083 19 21.6667 20.6416 21.6667 22.6667V41.3333C21.6667 43.3584 23.3083 45 25.3333 45H41.3333C41.6799 45 42.0018 44.8205 42.184 44.5257C42.3662 44.2309 42.3828 43.8628 42.2278 43.5528L42.087 43.2713C41.477 42.0513 41.477 40.6154 42.087 39.3954L42.2278 39.1139C42.2981 38.9733 42.3331 38.8207 42.3333 38.6684V38.5333V20.6667C42.3333 19.7462 41.5871 19 40.6667 19H25.3333ZM40.3333 21H25.3333C24.4129 21 23.6667 21.7462 23.6667 22.6667V38.0665C24.1667 37.8109 24.7332 37.6667 25.3333 37.6667H40.3333V21ZM39.8527 43C39.5551 41.9092 39.5551 40.7575 39.8527 39.6667H25.3333C24.4129 39.6667 23.6667 40.4129 23.6667 41.3333C23.6667 42.2538 24.4129 43 25.3333 43H39.8527Z"
-                fill="#23262A"
-            />
-        </svg>
-    );
-}
-
 export default function Kurs() {
     const { kurs, cvLaster } = useCv();
     const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.KURS);
@@ -49,11 +21,11 @@ export default function Kurs() {
     return (
         <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.KURS}>
             {cvLaster ? (
-                <SeksjonSkeleton icon={<KursIcon />} />
+                <SeksjonSkeleton icon={<HStack className={[styles.iconKursBig, styles.sectionIcon]} />} />
             ) : (
                 <Box background="surface-default" padding="10" className={styles.box}>
                     <HStack justify="center">
-                        <KursIcon />
+                        <HStack className={[styles.iconKursBig, styles.sectionIcon]} />
                     </HStack>
                     <Heading id={headingId} level="2" size="large" align="start" spacing>
                         Kurs
