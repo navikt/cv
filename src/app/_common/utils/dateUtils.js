@@ -7,24 +7,30 @@ const compareDates = (firstDate, secondDate, startDate = "fromDate", endDate = "
     if (secondDate[endDate] > firstDate[endDate]) {
         return 1;
     }
+
     if (secondDate[ongoing] && firstDate[ongoing]) {
         if (secondDate[startDate] > firstDate[startDate]) {
             return 1;
         }
         return -1;
     }
+
     if (secondDate[ongoing]) {
         return 1;
     }
+
     if (firstDate[ongoing]) {
         return -1;
     }
+
     if (firstDate[endDate] === secondDate[endDate]) {
         if (secondDate[startDate] > firstDate[startDate]) {
             return 1;
         }
+
         return -1;
     }
+
     return -1;
 };
 
@@ -32,5 +38,5 @@ const compareDates = (firstDate, secondDate, startDate = "fromDate", endDate = "
 // eslint-disable-next-line no-unused-vars
 export const datosorterElementer = (elementer, startDate = "fromDate", endDate = "toDate", ongoing = "ongoing") => {
     if (!elementer) return elementer;
-    return elementer.sort((a, b) => compareDates(a, b, startDate, endDate));
+    return elementer.sort((a, b) => compareDates(a, b, startDate, endDate, ongoing));
 };
