@@ -1,49 +1,89 @@
 import { BodyShort, Checkbox, CheckboxGroup, HStack, TextField, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { useEffect, useState } from "react";
-import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
+import { useEffect, useRef, useState } from "react";
+import { DatovelgerWithoutValidation } from "@/app/(minCV)/_components/datovelger/DatovelgerWithoutValidation";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
+import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
+import { dateStringSchema, handleZodValidation } from "@/app/_common/utils/validationHelper";
+import z from "zod";
 
 export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
-    const [beskrivelse, setBeskrivelse] = useState("");
-    const [rolle, setRolle] = useState("");
     const [pågår, setPågår] = useState([]);
-    const [startdato, setStartdato] = useState(null);
-    const [sluttdato, setSluttdato] = useState(null);
-
-    const [rolleError, setRolleError] = useState(false);
-    const [startdatoError, setStartdatoError] = useState(false);
-    const [sluttdatoError, setSluttdatoError] = useState(false);
-    const [skalViseDatofeilmelding, setSkalviseDatofeilmelding] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
+    const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
+    const modalFormRef = useRef();
 
     useEffect(() => {
-        const oppdaterErfaring = (erfaring) => {
-            setRolle(erfaring?.role || "");
-            setBeskrivelse(erfaring?.description || "");
-            setStartdato(erfaring ? new Date(erfaring.fromDate) : null);
-            setSluttdato(erfaring && erfaring?.toDate ? new Date(erfaring.toDate) : null);
-            setPågår(erfaring && erfaring.ongoing ? ["true"] : []);
-        };
-
-        oppdaterErfaring(gjeldendeElement);
+        if (gjeldendeElement) {
+            setPågår(gjeldendeElement.ongoing ? ["true"] : []);
+        }
     }, [gjeldendeElement]);
 
-    const lagre = () => {
-        setSkalviseDatofeilmelding(true);
+    const ErfaringSchema = z.object({
+        role: z.string().min(1, "Rolle må fylles ut"),
+        description: z.string().optional(),
+        fromDate: dateStringSchema.refine((data) => data <= new Date(), { message: "Dato kan ikke være frem i tid" }),
+        ongoing: z.boolean().optional(),
+    });
 
-        const erPågående = pågår.includes("true");
+    const ErfaringSchemaWithEndDate = ErfaringSchema.extend({
+        toDate: dateStringSchema,
+    }).refine((data) => data.toDate >= data.fromDate, {
+        path: ["toDate"],
+        message: "Til dato må være etter fra dato",
+    });
 
-        if (!rolle) setRolleError(true);
-        if (startdatoError || (!erPågående && sluttdatoError)) return;
+    const getFormData = (target) => {
+        const formData = new FormData(target);
 
-        if (rolle && startdato && (sluttdato || erPågående)) {
-            lagreElement({
-                ...gjeldendeElement,
-                role: rolle,
-                description: beskrivelse,
-                fromDate: startdato,
-                toDate: erPågående ? null : sluttdato,
-                ongoing: erPågående,
+        const data = {
+            ...Object.fromEntries(formData),
+            fromDate: formData.get("fromDate"),
+            toDate: formData.get("toDate"),
+            ongoing: formData.get("ongoing") === "true",
+        };
+
+        return data;
+    };
+
+    const lagre = (e) => {
+        e.preventDefault();
+        setShouldAutoFocusErrors(true);
+        setHasTriedSubmit(true);
+
+        const data = getFormData(e.currentTarget);
+
+        handleZodValidation({
+            onError: setErrors,
+            data: data,
+            onSuccess: (res) => {
+                lagreElement({
+                    ...gjeldendeElement,
+                    role: res.role,
+                    description: res.description,
+                    fromDate: res.fromDate,
+                    toDate: res.ongoing ? null : res.toDate,
+                    ongoing: res.ongoing,
+                });
+            },
+            schema: data.ongoing ? ErfaringSchema : ErfaringSchemaWithEndDate,
+        });
+    };
+
+    const revalidate = () => {
+        if (hasTriedSubmit) {
+            setShouldAutoFocusErrors(false);
+
+            const data = getFormData(modalFormRef.current);
+
+            handleZodValidation({
+                onError: setErrors,
+                data: data,
+                onSuccess: () => {
+                    setErrors({});
+                },
+                schema: data.ongoing ? ErfaringSchema : ErfaringSchemaWithEndDate,
             });
         }
     };
@@ -56,8 +96,11 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
+            ref={modalFormRef}
         >
             <TextField
+                id="role"
+                name="role"
                 label={
                     <HStack gap="2">
                         <BodyShort weight="semibold">Rolle</BodyShort>
@@ -66,57 +109,55 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
                 }
                 description="Eksempel: militærtjeneste, styreverv eller fotballtrener"
                 className={styles.mb6}
-                value={rolle}
-                onChange={(e) => {
-                    setRolle(e.target.value);
-                    setRolleError(false);
-                }}
-                error={rolleError && "Du må skrive inn rolle"}
+                defaultValue={gjeldendeElement?.role}
+                error={errors?.role}
+                onBlur={revalidate}
             />
             <TextField
+                id="description"
+                name="description"
                 label="Beskrivelse"
                 description="Eksempel: 5 års erfaring som fotballtrener for guttelag i Oslo"
                 className={styles.mb6}
-                value={beskrivelse}
-                onChange={(e) => setBeskrivelse(e.target.value)}
+                defaultValue={gjeldendeElement?.description}
             />
-            <CheckboxGroup legend="" className={styles.mb6} value={pågår} onChange={setPågår}>
-                <Checkbox value="true">Pågår</Checkbox>
+            <CheckboxGroup id="ongoing" legend="" className={styles.mb6} value={pågår} onChange={setPågår}>
+                <Checkbox name="ongoing" value="true">
+                    Pågår
+                </Checkbox>
             </CheckboxGroup>
 
             <HStack gap="8">
-                <Datovelger
-                    valgtDato={startdato}
-                    oppdaterDato={setStartdato}
+                <DatovelgerWithoutValidation
+                    id="fromDate"
+                    name="fromDate"
                     label={
                         <VStack>
                             <BodyShort weight="semibold">Fra dato</BodyShort>
                             <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                         </VStack>
                     }
-                    obligatorisk
-                    setError={setStartdatoError}
-                    skalViseFeilmelding={skalViseDatofeilmelding}
-                    setSkalViseFeilmelding={setSkalviseDatofeilmelding}
+                    defaultSelected={gjeldendeElement?.fromDate}
+                    error={errors?.fromDate}
+                    onBlur={revalidate}
                 />
-
                 {!pågår.includes("true") && (
-                    <Datovelger
-                        valgtDato={sluttdato}
-                        oppdaterDato={setSluttdato}
+                    <DatovelgerWithoutValidation
+                        id="toDate"
+                        name="toDate"
                         label={
                             <VStack>
                                 <BodyShort weight="semibold">Til dato</BodyShort>
                                 <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                             </VStack>
                         }
-                        obligatorisk
-                        setError={setSluttdatoError}
-                        skalViseFeilmelding={skalViseDatofeilmelding}
-                        setSkalViseFeilmelding={setSkalviseDatofeilmelding}
+                        defaultSelected={gjeldendeElement?.toDate}
+                        error={errors?.toDate}
+                        onBlur={revalidate}
                     />
                 )}
             </HStack>
+            <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
         </CvModalForm>
     );
 }
