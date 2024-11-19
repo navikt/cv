@@ -12,6 +12,7 @@ import { HentArbeidsforholdSkeleton } from "@/app/(minCV)/_components/arbeidsfor
 import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useId } from "react";
+import { datosorterElementer } from "@/app/_common/utils/dateUtils";
 
 function ArbeidsforholdIcon() {
     return (
@@ -116,7 +117,7 @@ export default function Arbeidsforhold() {
                     </>
                 ) : (
                     <>
-                        {arbeidsforhold.map((erfaring, index) => (
+                        {datosorterElementer(arbeidsforhold).map((erfaring, index) => (
                             <div key={index}>
                                 <FormSummary className={styles.mb3}>
                                     <FormSummary.Header>
