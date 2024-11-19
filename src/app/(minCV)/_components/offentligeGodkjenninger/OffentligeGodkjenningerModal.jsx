@@ -25,22 +25,32 @@ export default function OffentligeGodkjenningerModal({
 
     useEffect(() => {
         if (gjeldendeElement) {
-            setValgtGodkjenning(godkjenning);
+            setValgtGodkjenning(gjeldendeElement);
         }
     }, [gjeldendeElement]);
 
-    const GodkjenningSchema = z
-        .object({
-            title: z.string().min(1, "Du må velge en godkjenning"),
-            conceptId: z.coerce.string().optional(),
-            issuer: z.string().optional(),
-            fromDate: dateStringSchema,
-            toDate: dateStringSchema.optional(),
-        })
-        .refine((data) => !data.toDate || data.toDate >= data.fromDate, {
+    const GodkjenningSchema = z.object({
+        title: z.string().min(1, "Du må velge en godkjenning"),
+        conceptId: z.coerce.string().optional(),
+        issuer: z.string().optional(),
+        fromDate: dateStringSchema.refine((data) => data <= new Date(), { message: "Dato kan ikke være frem i tid" }),
+    });
+
+    const GodkjenningSchemaWithEndDate = GodkjenningSchema.extend({
+        toDate: dateStringSchema.optional(),
+    }).refine(
+        (data) => {
+            if (data.toDate) {
+                return new Date(data.toDate) >= new Date(data.fromDate);
+            }
+            // If no toDate  skip this validation
+            return true;
+        },
+        {
             path: ["toDate"],
-            message: "Utløpsdato må være etter fullføringsdato",
-        });
+            message: "Til dato må være etter fra dato",
+        },
+    );
 
     const getFormData = (target) => {
         const formData = new FormData(target);
@@ -50,7 +60,7 @@ export default function OffentligeGodkjenningerModal({
             conceptId: valgtGodkjenning?.conceptId || "",
             issuer: formData.get("issuer"),
             fromDate: formData.get("fromDate"),
-            toDate: formData.get("toDate"),
+            toDate: formData.get("toDate") || undefined,
         };
     };
 
@@ -70,7 +80,7 @@ export default function OffentligeGodkjenningerModal({
                     ...res,
                 });
             },
-            schema: GodkjenningSchema,
+            schema: GodkjenningSchemaWithEndDate,
         });
     };
 
@@ -86,7 +96,7 @@ export default function OffentligeGodkjenningerModal({
                 onSuccess: () => {
                     setErrors({});
                 },
-                schema: GodkjenningSchema,
+                schema: GodkjenningSchemaWithEndDate,
             });
         }
     };
@@ -94,7 +104,9 @@ export default function OffentligeGodkjenningerModal({
     const oppdaterValgtGodkjenning = (verdi, erValgt) => {
         setValgtGodkjenning(erValgt ? verdi : null);
         if (hasTriedSubmit) {
-            revalidateExplicitValue("title", "fdsf", GodkjenningSchema, errors, setErrors);
+            setShouldAutoFocusErrors(false);
+            // Don`t validate with end date schema
+            revalidateExplicitValue("title", verdi?.label, GodkjenningSchema, errors, setErrors);
         }
     };
 
@@ -151,6 +163,7 @@ export default function OffentligeGodkjenningerModal({
                     id="toDate"
                     name="toDate"
                     label="Utløper"
+                    fremtid
                     defaultSelected={gjeldendeElement?.toDate}
                     error={errors?.toDate}
                     onBlur={revalidate}
