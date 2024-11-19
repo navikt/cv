@@ -146,20 +146,27 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
                 className={styles.mb6}
                 defaultValue={gjeldendeElement?.alternativeJobTitle}
             />
-            <TextField
-                id="employer"
-                name="employer"
-                label="Bedrift"
-                className={styles.mb6}
-                defaultValue={gjeldendeElement?.employer}
-            />
-            <TextField
-                id="location"
-                name="location"
-                label="Sted"
-                className={styles.mb6}
-                defaultValue={gjeldendeElement?.location}
-            />
+
+            <HStack justify="space-between">
+                <div className={styles.element}>
+                    <TextField
+                        id="employer"
+                        name="employer"
+                        label="Bedrift"
+                        className={styles.mb6}
+                        defaultValue={gjeldendeElement?.employer}
+                    />
+                </div>
+                <div className={styles.element}>
+                    <TextField
+                        id="location"
+                        name="location"
+                        label="Sted"
+                        className={styles.mb6}
+                        defaultValue={gjeldendeElement?.location}
+                    />
+                </div>
+            </HStack>
             <Textarea
                 id="description"
                 name="description"
