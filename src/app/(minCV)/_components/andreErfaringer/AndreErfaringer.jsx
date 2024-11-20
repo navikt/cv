@@ -60,10 +60,12 @@ export default function AndreErfaringer() {
                                                     <FormSummary.Value>{`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}</FormSummary.Value>
                                                 </FormSummary.Answer>
 
-                                                <FormSummary.Answer>
-                                                    <FormSummary.Label>Beskrivelse</FormSummary.Label>
-                                                    <FormSummary.Value>{erfaring.description}</FormSummary.Value>
-                                                </FormSummary.Answer>
+                                                {erfaring.description && (
+                                                    <FormSummary.Answer>
+                                                        <FormSummary.Label>Beskrivelse</FormSummary.Label>
+                                                        <FormSummary.Value>{erfaring.description}</FormSummary.Value>
+                                                    </FormSummary.Answer>
+                                                )}
                                             </FormSummary.Answers>
                                         </FormSummary>
                                         <HStack justify="space-between" className={styles.mb6}>

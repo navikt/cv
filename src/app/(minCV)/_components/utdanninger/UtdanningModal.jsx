@@ -120,7 +120,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                 className={styles.mb6}
                 error={errors?.nuskode}
                 onChange={(e) => {
-                    nusKode(e.target.value);
+                    setNusKode(e.target.value);
                 }}
                 onBlur={revalidate}
             >
