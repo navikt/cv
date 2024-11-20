@@ -53,8 +53,8 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
 
         const data = {
             type: valgtFørerkort?.label || valgtFørerkort?.type || "",
-            acquiredDate: kreverDato ? formData.get("acquiredDate") : undefined,
-            expiryDate: kreverDato ? formData.get("expiryDate") : undefined,
+            acquiredDate: kreverDato ? formData.get("acquiredDate") : null,
+            expiryDate: kreverDato ? formData.get("expiryDate") : null,
         };
 
         return data;
@@ -64,14 +64,12 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
         setShouldAutoFocusErrors(true);
         setHasTriedSubmit(true);
         const data = getFormData(e.currentTarget);
-        console.log("data", data);
 
         handleZodValidation({
             onError: setErrors,
             data: data,
             onSuccess: (res) => {
                 lagreElement({
-                    ...gjeldendeElement,
                     ...res,
                 });
             },
