@@ -56,7 +56,6 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
-            overflowVisible
         >
             <VStack>
                 <Select

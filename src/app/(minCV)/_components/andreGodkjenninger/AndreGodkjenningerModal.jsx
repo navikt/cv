@@ -122,7 +122,6 @@ export default function AndreGodkjenningerModal({
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
             ref={modalFormRef}
-            overflowVisible
         >
             <Typeahead
                 id="certificateName"

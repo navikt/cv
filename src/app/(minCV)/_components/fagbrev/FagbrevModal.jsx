@@ -40,7 +40,6 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
-            overflowVisible
         >
             <Typeahead
                 label="Fagdokumentasjon"

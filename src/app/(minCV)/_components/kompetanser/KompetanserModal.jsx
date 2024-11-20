@@ -40,7 +40,6 @@ export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeEle
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
-            overflowVisible
         >
             <Typeahead
                 label={

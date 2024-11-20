@@ -49,7 +49,6 @@ export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement,
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
-            overflowVisible
         >
             <Typeahead
                 id="language"

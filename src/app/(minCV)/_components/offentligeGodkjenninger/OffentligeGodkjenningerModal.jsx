@@ -120,7 +120,6 @@ export default function OffentligeGodkjenningerModal({
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
             ref={modalFormRef}
-            overflowVisible
         >
             <Typeahead
                 id="title"

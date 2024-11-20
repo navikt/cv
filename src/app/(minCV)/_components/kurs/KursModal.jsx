@@ -54,7 +54,6 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
-            overflowVisible
         >
             <TextField
                 className={styles.mb6}
