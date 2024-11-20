@@ -22,14 +22,6 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
         }
     }, [gjeldendeElement]);
 
-    // {
-    //     "title": "safd",
-    //     "issuer": "kursholder",
-    //     "date": "2024-11-04T23:00:00.000Z",
-    //     "durationUnit": "UKE",
-    //     "duration": 1
-    //   }
-    // Validation schema
     const KursSchema = z
         .object({
             title: z.string().min(1, "Du må skrive inn kursnavn"),
@@ -41,7 +33,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
             duration: z
                 .string()
                 .optional()
-                .refine((val) => !isNaN(val) && parseInt(val) > 0, {
+                .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
                     message: "Varighet må være et positivt tall",
                 })
                 .optional(),
@@ -56,6 +48,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
 
         const data = {
             ...Object.fromEntries(formData),
+            durationUnit: formData.get("durationUnit") || undefined,
         };
 
         return data;
@@ -69,13 +62,9 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
         const data = getFormData(e.currentTarget);
 
         handleZodValidation({
-            onError: (e) => {
-                console.log("ERROS", e);
-                setErrors(e);
-            },
+            onError: setErrors,
             data,
             onSuccess: (res) => {
-                console.log("RES", res);
                 lagreElement({
                     ...res,
                 });
@@ -86,6 +75,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
 
     const revalidate = () => {
         if (hasTriedSubmit) {
+            setShouldAutoFocusErrors(false);
             const data = getFormData(modalFormRef.current);
             handleZodValidation({
                 onError: setErrors,
@@ -105,6 +95,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
+            ref={modalFormRef}
         >
             <TextField
                 id="title"
@@ -114,6 +105,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                 description="Må fylles ut"
                 defaultValue={gjeldendeElement?.title}
                 error={errors?.title}
+                onBlur={revalidate}
             />
             <TextField
                 id="issuer"
@@ -171,6 +163,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                             min="1"
                             defaultValue={gjeldendeElement?.duration}
                             error={errors?.duration}
+                            onBlur={revalidate}
                         />
                     </VStack>
                 )}
