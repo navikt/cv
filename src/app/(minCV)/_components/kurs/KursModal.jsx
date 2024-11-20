@@ -1,46 +1,87 @@
 import { BodyShort, HStack, Select, TextField, VStack } from "@navikt/ds-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "@/app/page.module.css";
-import { Datovelger } from "@/app/(minCV)/_components/datovelger/Datovelger";
+import { DatovelgerWithoutValidation } from "@/app/(minCV)/_components/datovelger/DatovelgerWithoutValidation";
 import { TidsenhetEnum } from "@/app/_common/enums/cvEnums";
 import { formatterTidsenhet, storForbokstav } from "@/app/_common/utils/stringUtils";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
+import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
+import { handleZodValidation, dateStringSchema } from "@/app/_common/utils/validationHelper";
+import z from "zod";
 
 export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
-    const [kursnavn, setKursnavn] = useState(gjeldendeElement?.title || "");
-    const [utsteder, setUtsteder] = useState(gjeldendeElement?.issuer || "");
-    const [kursDato, setKursDato] = useState(gjeldendeElement?.date ? new Date(gjeldendeElement?.date) : null);
+    const [errors, setErrors] = useState({});
+    const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
+    const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
     const [tidsenhet, setTidsenhet] = useState(gjeldendeElement?.durationUnit || "");
-    const [lengde, setLengde] = useState(gjeldendeElement?.duration || "");
-    const [kursnavnError, setKursnavnError] = useState(false);
-    const [kursDatoError, setKursDatoError] = useState(false);
-    const [lengdeError, setLengdeError] = useState(false);
-    const [skalViseDatofeilmelding, setSkalviseDatofeilmelding] = useState(false);
+    const modalFormRef = useRef();
 
     useEffect(() => {
-        const oppdaterKurs = (kurs) => {
-            setKursnavn(kurs?.title || "");
-            setUtsteder(kurs?.issuer || "");
-            setTidsenhet(kurs?.durationUnit || "");
-            setLengde(kurs?.duration || "");
-            setKursDato(kurs?.date ? new Date(kurs.date) : null);
-        };
-        oppdaterKurs(gjeldendeElement);
+        if (gjeldendeElement) {
+            setTidsenhet(gjeldendeElement?.durationUnit || "");
+        }
     }, [gjeldendeElement]);
 
-    const lagre = async () => {
-        setSkalviseDatofeilmelding(true);
-        if (!kursnavn) setKursnavnError(true);
-        if (tidsenhet && tidsenhet !== "UKJENT" && !lengde) setLengdeError(true);
-        if (kursDatoError) return;
+    const KursSchema = z
+        .object({
+            title: z.string().min(1, "Du må skrive inn kursnavn"),
+            issuer: z.string().optional(),
+            date: dateStringSchema
+                .optional()
+                .refine((date) => date <= new Date(), { message: "Dato kan ikke være frem i tid" }),
+            durationUnit: z.enum([...Object.keys(TidsenhetEnum), ""]).optional(),
+            duration: z
+                .string()
+                .optional()
+                .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
+                    message: "Varighet må være et positivt tall",
+                })
+                .optional(),
+        })
+        .refine((data) => !(data.durationUnit && data.durationUnit !== "UKJENT" && !data.duration), {
+            path: ["duration"],
+            message: "Du må fylle ut varighet hvis tidsenhet er valgt",
+        });
 
-        if (kursnavn && !kursDatoError && (tidsenhet && tidsenhet !== "UKJENT" ? lengde : true)) {
-            await lagreElement({
-                title: kursnavn,
-                issuer: utsteder,
-                date: kursDato,
-                durationUnit: tidsenhet || null,
-                duration: lengde || null,
+    const getFormData = (target) => {
+        const formData = new FormData(target);
+
+        const data = {
+            ...Object.fromEntries(formData),
+            durationUnit: formData.get("durationUnit") || undefined,
+        };
+
+        return data;
+    };
+
+    const lagre = (e) => {
+        e.preventDefault();
+        setShouldAutoFocusErrors(true);
+        setHasTriedSubmit(true);
+
+        const data = getFormData(e.currentTarget);
+
+        handleZodValidation({
+            onError: setErrors,
+            data,
+            onSuccess: (res) => {
+                lagreElement({
+                    ...res,
+                });
+            },
+            schema: KursSchema,
+        });
+    };
+
+    const revalidate = () => {
+        if (hasTriedSubmit) {
+            setShouldAutoFocusErrors(false);
+            const data = getFormData(modalFormRef.current);
+            handleZodValidation({
+                onError: setErrors,
+                data,
+                onSuccess: () => setErrors({}),
+                schema: KursSchema,
             });
         }
     };
@@ -54,44 +95,48 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
             overflowVisible
+            ref={modalFormRef}
         >
             <TextField
+                id="title"
+                name="title"
                 className={styles.mb6}
                 label="Kursnavn"
                 description="Må fylles ut"
-                value={kursnavn}
-                onChange={(e) => {
-                    setKursnavn(e.target.value);
-                    setKursnavnError(false);
-                }}
-                error={kursnavnError && "Du må skrive inn kursnavn"}
+                defaultValue={gjeldendeElement?.title}
+                error={errors?.title}
+                onBlur={revalidate}
             />
             <TextField
+                id="issuer"
+                name="issuer"
                 className={styles.mb6}
                 label="Kursholder"
                 description=""
-                value={utsteder}
-                onChange={(e) => setUtsteder(e.target.value)}
+                defaultValue={gjeldendeElement?.issuer}
+                error={errors?.issuer}
             />
-            <Datovelger
-                valgtDato={kursDato}
-                oppdaterDato={setKursDato}
+            <DatovelgerWithoutValidation
+                id="date"
+                name="date"
+                defaultSelected={gjeldendeElement?.date}
                 label="Fullført"
                 className={styles.mb6}
-                setError={setKursDatoError}
-                skalViseFeilmelding={skalViseDatofeilmelding}
-                setSkalViseFeilmelding={setSkalviseDatofeilmelding}
+                error={errors?.date}
+                onBlur={revalidate}
             />
             <HStack gap="8">
                 <VStack>
                     <Select
+                        id="durationUnit"
+                        name="durationUnit"
                         label="Kurslengde"
                         className={styles.mb6}
                         value={tidsenhet}
                         onChange={(e) => {
                             setTidsenhet(e.target.value);
-                            setLengdeError(false);
                         }}
+                        error={errors?.durationUnit}
                     >
                         <option value="">Velg</option>
                         {Object.keys(TidsenhetEnum).map((enhet) => (
@@ -104,6 +149,8 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                 {tidsenhet && tidsenhet !== "UKJENT" && (
                     <VStack>
                         <TextField
+                            id="duration"
+                            name="duration"
                             className={styles.mb6}
                             label={
                                 <HStack gap="2">
@@ -114,17 +161,14 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                             inputMode="numeric"
                             type="number"
                             min="1"
-                            description=""
-                            value={lengde}
-                            onChange={(e) => {
-                                setLengde(e.target.value);
-                                setLengdeError(false);
-                            }}
-                            error={lengdeError && "Du må fylle ut varighet"}
+                            defaultValue={gjeldendeElement?.duration}
+                            error={errors?.duration}
+                            onBlur={revalidate}
                         />
                     </VStack>
                 )}
             </HStack>
+            <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
         </CvModalForm>
     );
 }
