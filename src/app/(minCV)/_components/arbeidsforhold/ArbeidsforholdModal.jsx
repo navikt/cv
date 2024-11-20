@@ -121,6 +121,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til arbeidsforhold"
+            icon={<HStack className={[styles.iconArbeidsforholdBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}

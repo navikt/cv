@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, BodyLong, Heading, Textarea, VStack } from "@navikt/ds-react";
+import { Alert, BodyLong, Heading, HStack, Textarea, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
@@ -20,6 +20,7 @@ export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElem
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til sammendrag"
+            icon={<HStack className={[styles.iconSammendragBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}

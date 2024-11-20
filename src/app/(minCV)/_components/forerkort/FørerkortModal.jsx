@@ -98,10 +98,10 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
             modalÅpen={modalÅpen}
             tittel="Legg til førerkort"
             feilet={feilet}
+            icon={<HStack className={[styles.iconForerkortBig, styles.modalIcon]} aria-hidden="true" />}
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
-            overflowVisible
             ref={modalFormRef}
         >
             <VStack>

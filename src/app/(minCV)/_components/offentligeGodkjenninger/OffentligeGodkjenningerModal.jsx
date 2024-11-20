@@ -114,12 +114,12 @@ export default function OffentligeGodkjenningerModal({
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til offentlig godkjenning"
+            icon={<HStack className={[styles.iconOffentligeGodkjenningerBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
             ref={modalFormRef}
-            overflowVisible
         >
             <Typeahead
                 id="title"

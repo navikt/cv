@@ -90,11 +90,11 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til kurs"
+            icon={<HStack className={[styles.iconKursBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
-            overflowVisible
             ref={modalFormRef}
         >
             <TextField
