@@ -39,8 +39,3 @@ dl dt {
 .scroll-margin {
     scroll-margin: var(--a-spacing-18);
 }
-
-.navds-combobox__wrapper .navds-combobox__list {
-    position: relative;
-    top: 0;
-}

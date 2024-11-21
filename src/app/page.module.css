@@ -541,6 +541,7 @@
 }
 
 .modalBody {
+    min-height: 400px;
     padding: 1rem 2.8rem 2.5rem 2.8rem !important;
 }
 
