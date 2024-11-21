@@ -55,7 +55,6 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
     };
 
     const lagre = (e) => {
-        e.preventDefault();
         setShouldAutoFocusErrors(true);
         setHasTriedSubmit(true);
 
