@@ -13,15 +13,17 @@ export const CvModalForm = forwardRef(
                 onClose={() => toggleModal(false)}
                 width="medium"
                 className="overflow-visible"
+                header={{
+                    heading: (
+                        <Heading align="start" level="3" size="medium" className={[styles.mt1, styles.mb3]}>
+                            <HStack justify="center">{icon}</HStack>
+                            <HStack gap="1" align="center">
+                                {tittel}
+                            </HStack>
+                        </Heading>
+                    ),
+                }}
             >
-                <Modal.Header closeButton>
-                    <Heading align="start" level="3" size="medium" className={[styles.mt1, styles.mb3]}>
-                        <HStack justify="center">{icon}</HStack>
-                        <HStack gap="1" align="center">
-                            {tittel}
-                        </HStack>
-                    </Heading>
-                </Modal.Header>
                 <Modal.Body className={[styles[`modalBody${laster ? "--loading" : ""}`], styles.modalScroll]}>
                     <form
                         id={formId}
