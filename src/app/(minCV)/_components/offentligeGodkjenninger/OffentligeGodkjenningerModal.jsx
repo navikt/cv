@@ -65,7 +65,6 @@ export default function OffentligeGodkjenningerModal({
     };
 
     const lagre = (e) => {
-        e.preventDefault();
         setShouldAutoFocusErrors(true);
         setHasTriedSubmit(true);
 
@@ -76,7 +75,6 @@ export default function OffentligeGodkjenningerModal({
             data: data,
             onSuccess: (res) => {
                 lagreElement({
-                    ...gjeldendeElement,
                     ...res,
                 });
             },
