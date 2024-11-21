@@ -48,7 +48,6 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
     };
 
     const lagre = (e) => {
-        e.preventDefault();
         setShouldAutoFocusErrors(true);
         setHasTriedSubmit(true);
 
