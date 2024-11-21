@@ -63,14 +63,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
             data: data,
             onSuccess: (res) => {
                 lagreElement({
-                    ...gjeldendeElement,
-                    nuskode: res.nuskode,
-                    field: res.field,
-                    institution: res.institution,
-                    description: res.description,
-                    startDate: res.startDate,
-                    endDate: res.endDate,
-                    ongoing: res.ongoing,
+                    ...res,
                 });
             },
             // Validate with end date if not ongoing

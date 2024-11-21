@@ -76,7 +76,6 @@ export default function OffentligeGodkjenningerModal({
             data: data,
             onSuccess: (res) => {
                 lagreElement({
-                    ...gjeldendeElement,
                     ...res,
                 });
             },

@@ -75,7 +75,6 @@ export default function AndreGodkjenningerModal({
             data: data,
             onSuccess: (res) => {
                 lagreElement({
-                    ...gjeldendeElement,
                     ...res,
                 });
             },

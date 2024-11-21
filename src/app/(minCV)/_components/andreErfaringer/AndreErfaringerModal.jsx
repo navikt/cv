@@ -40,7 +40,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
         const data = {
             ...Object.fromEntries(formData),
             fromDate: formData.get("fromDate"),
-            toDate: formData.get("toDate"),
+            toDate: formData.get("toDate") || undefined,
             ongoing: formData.get("ongoing") === "true",
         };
 
@@ -59,12 +59,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
             data: data,
             onSuccess: (res) => {
                 lagreElement({
-                    ...gjeldendeElement,
-                    role: res.role,
-                    description: res.description,
-                    fromDate: res.fromDate,
-                    toDate: res.ongoing ? null : res.toDate,
-                    ongoing: res.ongoing,
+                    ...res,
                 });
             },
             schema: data.ongoing ? ErfaringSchema : ErfaringSchemaWithEndDate,

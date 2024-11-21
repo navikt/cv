@@ -52,12 +52,7 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
             data: data,
             onSuccess: (res) => {
                 lagreElement({
-                    occupations: res.occupations,
-                    locations: res.locations,
-                    workLoadTypes: res.workLoadTypes,
-                    occupationTypes: res.occupationTypes,
-                    workScheduleTypes: res.workScheduleTypes,
-                    startOption: res.startOption,
+                    ...res,
                 });
             },
             schema: JobbonskerSchema,

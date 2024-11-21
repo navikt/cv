@@ -37,13 +37,7 @@ export default function PersonaliaModal({
             data: data,
             onSuccess: (res) => {
                 lagrePersonalia({
-                    fornavn: res.fornavn,
-                    etternavn: res.etternavn,
-                    epost: res.epost,
-                    telefonnummer: res.telefonnummer,
-                    adresse: res.adresse,
-                    postnummer: res.postnummer,
-                    poststed: res.poststed,
+                    ...res,
                 });
             },
             schema: PersonaliaSchema,
