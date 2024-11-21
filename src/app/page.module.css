@@ -137,6 +137,18 @@
         bottom: var(--a-spacing-12);
         right: var(--a-spacing-12);
     }
+
+    .previewPersonalInfo {
+        width: 700px;
+    }
+
+    .previewItemLeft {
+        width: 280px;
+    }
+
+    .previewItemRight {
+        width: 470px;
+    }
 }
 
 .divider {
@@ -486,17 +498,11 @@
 .previewPersonalInfo {
     display: flex;
     flex-wrap: wrap;
-    width: 700px;
-}
-
-.previewItemLeft {
-    width: 280px;
 }
 
 .previewItemRight {
     border-left: 2px solid rgba(203, 207, 213, 1);
     padding-left: 1rem;
-    width: 470px;
 }
 
 .notifikasjon {
