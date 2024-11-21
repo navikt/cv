@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { HStack, TextField } from "@navikt/ds-react";
-import { PersonCircleIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
@@ -38,13 +37,7 @@ export default function PersonaliaModal({
             data: data,
             onSuccess: (res) => {
                 lagrePersonalia({
-                    fornavn: res.fornavn,
-                    etternavn: res.etternavn,
-                    epost: res.epost,
-                    telefonnummer: res.telefonnummer,
-                    adresse: res.adresse,
-                    postnummer: res.postnummer,
-                    poststed: res.poststed,
+                    ...res,
                 });
             },
             schema: PersonaliaSchema,
@@ -55,7 +48,7 @@ export default function PersonaliaModal({
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til personalia"
-            icon={<PersonCircleIcon aria-hidden="true" fontSize="1.5rem" />}
+            icon={<HStack className={[styles.iconPersonaliaBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             toggleModal={toggleModal}

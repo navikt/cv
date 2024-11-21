@@ -75,17 +75,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
             data: data,
             onSuccess: (res) => {
                 lagreElement({
-                    ...gjeldendeElement,
-                    employer: res.employer,
-                    jobTitle: res.jobTitle,
-                    conceptId: res.conceptId,
-                    styrkkode: res.styrkkode,
-                    alternativeJobTitle: res.alternativeJobTitle,
-                    location: res.location,
-                    description: res.description,
-                    fromDate: res.fromDate,
-                    toDate: res.toDate,
-                    ongoing: res.ongoing,
+                    ...res,
                 });
             },
             schema: data.ongoing ? ArbeidsforholdSchema : ArbeidsforholdSchemaWithEndDate,
@@ -121,6 +111,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til arbeidsforhold"
+            icon={<HStack className={[styles.iconArbeidsforholdBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}

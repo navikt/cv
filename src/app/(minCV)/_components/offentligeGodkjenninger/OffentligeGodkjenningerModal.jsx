@@ -65,7 +65,6 @@ export default function OffentligeGodkjenningerModal({
     };
 
     const lagre = (e) => {
-        e.preventDefault();
         setShouldAutoFocusErrors(true);
         setHasTriedSubmit(true);
 
@@ -76,7 +75,6 @@ export default function OffentligeGodkjenningerModal({
             data: data,
             onSuccess: (res) => {
                 lagreElement({
-                    ...gjeldendeElement,
                     ...res,
                 });
             },
@@ -114,12 +112,12 @@ export default function OffentligeGodkjenningerModal({
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til offentlig godkjenning"
+            icon={<HStack className={[styles.iconOffentligeGodkjenningerBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
             ref={modalFormRef}
-            overflowVisible
         >
             <Typeahead
                 id="title"

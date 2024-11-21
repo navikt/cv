@@ -75,7 +75,6 @@ export default function AndreGodkjenningerModal({
             data: data,
             onSuccess: (res) => {
                 lagreElement({
-                    ...gjeldendeElement,
                     ...res,
                 });
             },
@@ -116,12 +115,12 @@ export default function AndreGodkjenningerModal({
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til annen godkjenning"
+            icon={<HStack className={[styles.iconAndreGodkjenningerBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
             ref={modalFormRef}
-            overflowVisible
         >
             <Typeahead
                 id="certificateName"

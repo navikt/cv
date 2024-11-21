@@ -63,14 +63,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
             data: data,
             onSuccess: (res) => {
                 lagreElement({
-                    ...gjeldendeElement,
-                    nuskode: res.nuskode,
-                    field: res.field,
-                    institution: res.institution,
-                    description: res.description,
-                    startDate: res.startDate,
-                    endDate: res.endDate,
-                    ongoing: res.ongoing,
+                    ...res,
                 });
             },
             // Validate with end date if not ongoing
@@ -99,6 +92,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til utdanning"
+            icon={<HStack className={[styles.iconUtdanningerBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}
@@ -119,7 +113,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                 className={styles.mb6}
                 error={errors?.nuskode}
                 onChange={(e) => {
-                    nusKode(e.target.value);
+                    setNusKode(e.target.value);
                 }}
                 onBlur={revalidate}
             >
