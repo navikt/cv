@@ -1,5 +1,5 @@
 import { forwardRef, useId } from "react";
-import { BodyLong, Button, Heading, HStack, Modal } from "@navikt/ds-react";
+import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 
 export const CvModalForm = forwardRef(
@@ -15,13 +15,14 @@ export const CvModalForm = forwardRef(
                 className="overflow-visible"
                 header={{
                     heading: (
-                        <Heading align="start" level="3" size="medium" className={[styles.mt1, styles.mb3]}>
-                            <HStack justify="center">{icon}</HStack>
-                            <HStack gap="1" align="center">
-                                {tittel}
+                        <span className={[styles.mt1, styles.mb3]}>
+                            <HStack as="span" justify="center">
+                                {icon}
                             </HStack>
-                        </Heading>
+                            {tittel}
+                        </span>
                     ),
+                    size: "medium",
                 }}
             >
                 <Modal.Body className={[styles[`modalBody${laster ? "--loading" : ""}`], styles.modalScroll]}>
