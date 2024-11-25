@@ -24,6 +24,7 @@ import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 import Forhandsvisning from "@/app/(minCV)/_components/forhandsvisning/Forhandsvisning";
 import ApplicationProvider from "@/app/_common/contexts/ApplicationContext";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
+import { HotjarWrapper } from "@/app/_common/components/HotjarWrapper";
 import styles from "../../page.module.css";
 
 export default function MinCVPage() {
@@ -58,6 +59,7 @@ export default function MinCVPage() {
                                             <Kurs />
                                             <Sammendrag />
                                             <DelingAvCV />
+                                            <HotjarWrapper />
                                         </VStack>
                                     </HStack>
                                 </Box>
@@ -92,6 +94,7 @@ export default function MinCVPage() {
                         <Kurs />
                         <Sammendrag />
                         <DelingAvCV />
+                        <HotjarWrapper />
                         <HStack justify="center" style={{ padding: "4rem 0 4rem 0" }}>
                             <VStack gap="4">
                                 <Button
