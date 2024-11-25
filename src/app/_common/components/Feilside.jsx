@@ -1,8 +1,8 @@
-import { BodyLong, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
+import { BodyLong, Box, Button, Heading, HStack, Link, VStack } from "@navikt/ds-react";
 import NextLink from "next/link";
 import styles from "@/app/page.module.css";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
-import { navBaseUrl } from "@/app/_common/utils/urlUtils";
+import { arbeidsplassenBaseUrl, navBaseUrl } from "@/app/_common/utils/urlUtils";
 
 export function Feilside({ årsak }) {
     return (
@@ -14,8 +14,11 @@ export function Feilside({ årsak }) {
                         <Heading level="1" size="xlarge" className="text-center" spacing>
                             {årsak.tittel}
                         </Heading>
-                        <BodyLong className={["text-center", styles.mb12]}>{årsak.tekst}</BodyLong>
-
+                        {årsak.body ? (
+                            årsak.body
+                        ) : (
+                            <BodyLong className={["text-center", styles.mb12]}>{årsak.tekst}</BodyLong>
+                        )}
                         <HStack gap="4" className={[styles.mb3]}>
                             <NextLink href={`${navBaseUrl}/person/kontakt-oss/nb`} passHref legacyBehavior>
                                 <Button variant="primary" as="a" role="link">
@@ -37,8 +40,21 @@ export function Feilside({ årsak }) {
 
 export const FeilsideÅrsak = Object.freeze({
     IKKE_UNDER_OPPFØLGING: {
-        tittel: "CV er ikke tilgjengelig",
-        tekst: "Du er ikke under arbeidsrettet oppfølging og har derfor ikke tilgang til din CV. Ønsker du å se CV-en din kan du ta kontakt med oss.",
+        tittel: "Din CV er ikke tilgjengelig",
+        body: (
+            <HStack gap="4" className={styles.mb12}>
+                <BodyLong className="text-center">
+                    Du er ikke under oppfølging av NAV og har ikke tilgang til din CV her.
+                </BodyLong>
+                <BodyLong className="text-center">
+                    For å se og endre din CV, gå til{" "}
+                    <Link rel="noopener noreferrer" href={`${arbeidsplassenBaseUrl}/cv`} inlineText>
+                        arbeidsplassen.no/cv
+                    </Link>
+                    .
+                </BodyLong>
+            </HStack>
+        ),
     },
     FETCH_ERROR: {
         tittel: "CV er ikke tilgjengelig",
