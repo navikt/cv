@@ -130,13 +130,11 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
                 defaultValue={gjeldendeElement.workLoadTypes}
                 legend="Vil du jobbe heltid eller deltid?"
             >
-                <HStack gap="4">
-                    {Object.keys(OmfangEnum).map((key) => (
-                        <Checkbox name="workLoadTypes" value={key} key={key}>
-                            {OmfangEnum[key]}
-                        </Checkbox>
-                    ))}
-                </HStack>
+                {Object.keys(OmfangEnum).map((key) => (
+                    <Checkbox name="workLoadTypes" value={key} key={key}>
+                        {OmfangEnum[key]}
+                    </Checkbox>
+                ))}
             </CheckboxGroup>
             <CheckboxGroup
                 id="workScheduleTypes"
@@ -144,13 +142,11 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
                 defaultValue={gjeldendeElement.workScheduleTypes}
                 legend="Når kan du jobbe?"
             >
-                <HStack>
-                    {Object.keys(ArbeidstidEnum).map((verdi) => (
-                        <Checkbox name="workScheduleTypes" className={styles.checkbox} key={verdi} value={verdi}>
-                            {ArbeidstidEnum[verdi]}
-                        </Checkbox>
-                    ))}
-                </HStack>
+                {Object.keys(ArbeidstidEnum).map((verdi) => (
+                    <Checkbox name="workScheduleTypes" className={styles.checkbox} key={verdi} value={verdi}>
+                        {ArbeidstidEnum[verdi]}
+                    </Checkbox>
+                ))}
             </CheckboxGroup>
             <CheckboxGroup
                 id="occupationTypes"
@@ -158,13 +154,11 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
                 defaultValue={gjeldendeElement.occupationTypes}
                 legend="Hva slags ansettelse ønsker du?"
             >
-                <HStack>
-                    {Object.keys(AnsettelsesformEnum).map((verdi) => (
-                        <Checkbox name="occupationTypes" className={styles.checkbox} key={verdi} value={verdi}>
-                            {AnsettelsesformEnum[verdi]}
-                        </Checkbox>
-                    ))}
-                </HStack>
+                {Object.keys(AnsettelsesformEnum).map((verdi) => (
+                    <Checkbox name="occupationTypes" className={styles.checkbox} key={verdi} value={verdi}>
+                        {AnsettelsesformEnum[verdi]}
+                    </Checkbox>
+                ))}
             </CheckboxGroup>
             <RadioGroup
                 id="startOption"
@@ -172,13 +166,11 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
                 legend="Når kan du begynne i ny jobb?"
                 defaultValue={gjeldendeElement.startOption || "ETTER_TRE_MND"}
             >
-                <HStack>
-                    {Object.keys(StarttidspunktEnum).map((verdi) => (
-                        <Radio className={styles.checkbox} key={verdi} value={verdi}>
-                            {StarttidspunktEnum[verdi]}
-                        </Radio>
-                    ))}
-                </HStack>
+                {Object.keys(StarttidspunktEnum).map((verdi) => (
+                    <Radio className={styles.checkbox} key={verdi} value={verdi}>
+                        {StarttidspunktEnum[verdi]}
+                    </Radio>
+                ))}
             </RadioGroup>
             <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
         </CvModalForm>
