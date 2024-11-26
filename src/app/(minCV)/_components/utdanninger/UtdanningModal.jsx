@@ -172,7 +172,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                     }
                     defaultSelected={gjeldendeElement?.startDate}
                     error={errors?.startDate}
-                    onBlur={revalidate}
+                    revalidate={revalidate}
                 />
                 {!pågår.includes("true") && (
                     <DatovelgerWithoutValidation
@@ -186,7 +186,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                         }
                         defaultSelected={gjeldendeElement?.endDate}
                         error={errors?.endDate}
-                        onBlur={revalidate}
+                        revalidate={revalidate}
                     />
                 )}
             </HStack>

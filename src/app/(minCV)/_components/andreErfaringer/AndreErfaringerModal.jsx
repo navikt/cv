@@ -134,7 +134,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
                     }
                     defaultSelected={gjeldendeElement?.fromDate}
                     error={errors?.fromDate}
-                    onBlur={revalidate}
+                    revalidate={revalidate}
                 />
                 {!pågår.includes("true") && (
                     <DatovelgerWithoutValidation
@@ -148,7 +148,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
                         }
                         defaultSelected={gjeldendeElement?.toDate}
                         error={errors?.toDate}
-                        onBlur={revalidate}
+                        revalidate={revalidate}
                     />
                 )}
             </HStack>
