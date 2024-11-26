@@ -35,7 +35,7 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til fagbrev"
-            icon={<HStack className={[styles.iconFagbrevBig, styles.modalIcon]} aria-hidden="true" />}
+            icon={<HStack as="span" className={[styles.iconFagbrevBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}

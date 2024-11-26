@@ -89,7 +89,7 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til jobbønsker"
-            icon={<HStack className={[styles.iconJobbonskerBig, styles.modalIcon]} aria-hidden="true" />}
+            icon={<HStack as="span" className={[styles.iconJobbonskerBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}

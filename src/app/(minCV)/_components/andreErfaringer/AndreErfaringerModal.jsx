@@ -86,7 +86,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til annen erfaring"
-            icon={<HStack className={[styles.iconAndreErfaringerBig, styles.modalIcon]} aria-hidden="true" />}
+            icon={<HStack as="span" className={[styles.iconAndreErfaringerBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}

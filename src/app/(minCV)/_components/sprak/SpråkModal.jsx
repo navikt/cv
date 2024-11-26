@@ -44,7 +44,7 @@ export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement,
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til språk"
-            icon={<HStack className={[styles.iconSprakBig, styles.modalIcon]} aria-hidden="true" />}
+            icon={<HStack as="span" className={[styles.iconSprakBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}
