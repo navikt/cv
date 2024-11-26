@@ -51,7 +51,7 @@ function HeaderPanel({ title = "Min CV", visTag = true }) {
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"
                                     >
-                                        <circle id="Ellipse 16" cx="2" cy="2" r="2" fill="#B5F1FF" />
+                                        <circle id="Ellipse_16" cx="2" cy="2" r="2" fill="#B5F1FF" />
                                     </svg>
                                     {sistEndretKomponent}
                                 </HStack>
