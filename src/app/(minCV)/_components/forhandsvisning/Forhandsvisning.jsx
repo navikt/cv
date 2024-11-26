@@ -100,9 +100,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>
-                                        <div>
-                                            {formatterDato(utdanning.startDate)} - {formatterDato(utdanning.endDate)}
-                                        </div>
+                                        {formatterDato(utdanning.startDate)} - {formatterDato(utdanning.endDate)}
                                     </div>
                                     <dl className={styles.previewItemRight}>
                                         <dt>
