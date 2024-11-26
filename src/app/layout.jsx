@@ -5,7 +5,7 @@ import "./page.module.css";
 import { hentDekoratør } from "@/app/_common/utils/dekoratør";
 
 export const dynamic = "force-dynamic";
-const sourceSansPro = Source_Sans_3({ subsets: ["latin"] });
+const sourceSansPro = Source_Sans_3({ subsets: ["latin"], adjustFontFallback: false });
 
 async function RootLayout({ children }) {
     if (process.env.NODE_ENV === "development") {
