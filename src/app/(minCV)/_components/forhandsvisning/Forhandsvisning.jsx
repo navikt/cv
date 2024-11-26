@@ -108,23 +108,15 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                                 {UtdanningsnivåEnum[utdanning.nuskode]}
                                             </BodyLong>
                                         </dt>
-                                        {utdanning.institution && (
-                                            <dd>
-                                                <BodyLong>{utdanning.institution}</BodyLong>
-                                            </dd>
-                                        )}
-                                        {utdanning.field && (
-                                            <dd>
-                                                <BodyLong>{utdanning.field}</BodyLong>
-                                            </dd>
-                                        )}
-                                        {utdanning.description && (
-                                            <dd>
+                                        <dd>
+                                            {utdanning.institution && <BodyLong>{utdanning.institution}</BodyLong>}
+                                            {utdanning.field && <BodyLong>{utdanning.field}</BodyLong>}
+                                            {utdanning.description && (
                                                 <BodyLong className={styles.mb3}>
                                                     {parse(utdanning.description.replace(/\n/g, "<br>"))}
                                                 </BodyLong>
-                                            </dd>
-                                        )}
+                                            )}
+                                        </dd>
                                     </dl>
                                 </div>
                             </div>
@@ -173,14 +165,12 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                                 {erfaring.employer !== "" && erfaring.location !== "" ? ", " : ""}
                                                 {erfaring.location}
                                             </BodyLong>
-                                        </dd>
-                                        {erfaring.description && (
-                                            <dd>
+                                            {erfaring.description && (
                                                 <BodyLong className={styles.mb3}>
                                                     {parse(erfaring.description.replace(/\n/g, "<br>"))}
                                                 </BodyLong>
-                                            </dd>
-                                        )}
+                                            )}
+                                        </dd>
                                     </dl>
                                 </div>
                             </div>
@@ -249,18 +239,14 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                         <dt>
                                             <BodyLong weight="semibold">{kurs.title}</BodyLong>
                                         </dt>
-                                        {kurs.issuer && (
-                                            <dd>
-                                                <BodyLong>{kurs.issuer}</BodyLong>
-                                            </dd>
-                                        )}
-                                        {kurs.durationUnit && kurs.duration && (
-                                            <dd>
+                                        <dd>
+                                            <BodyLong>{kurs.issuer}</BodyLong>
+                                            {kurs.durationUnit && kurs.duration && (
                                                 <BodyLong className={styles.mb3}>
                                                     {`${kurs.duration} ${formatterTidsenhet(kurs.durationUnit, kurs.duration)}`}
                                                 </BodyLong>
-                                            </dd>
-                                        )}
+                                            )}
+                                        </dd>
                                     </dl>
                                 </div>
                             </div>
@@ -288,11 +274,9 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                         <dt>
                                             <BodyLong weight="semibold">{godkjenning.title}</BodyLong>
                                         </dt>
-                                        {godkjenning.issuer && (
-                                            <dd>
-                                                <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
-                                            </dd>
-                                        )}
+                                        <dd>
+                                            <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
+                                        </dd>
                                     </dl>
                                 </div>
                             </div>
@@ -320,11 +304,9 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                         <dt>
                                             <BodyLong weight="semibold">{godkjenning.certificateName}</BodyLong>
                                         </dt>
-                                        {godkjenning.issuer && (
-                                            <dd>
-                                                <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
-                                            </dd>
-                                        )}
+                                        <dd>
+                                            <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
+                                        </dd>
                                     </dl>
                                 </div>
                             </div>
@@ -347,8 +329,6 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                         </dt>
                                         <dd>
                                             <BodyLong>Muntlig: {SpråkEnum[spraak.oralProficiency]}</BodyLong>
-                                        </dd>
-                                        <dd>
                                             <BodyLong className={styles.mb3}>
                                                 Skriftlig: {SpråkEnum[spraak.writtenProficiency]}
                                             </BodyLong>
