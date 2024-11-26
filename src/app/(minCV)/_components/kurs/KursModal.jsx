@@ -122,7 +122,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                 label="Fullført"
                 className={styles.mb6}
                 error={errors?.date}
-                onBlur={revalidate}
+                revalidate={revalidate}
             />
             <HStack gap="8">
                 <VStack>

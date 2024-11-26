@@ -159,7 +159,7 @@ export default function AndreGodkjenningerModal({
                     }
                     defaultSelected={gjeldendeElement?.fromDate}
                     error={errors?.fromDate}
-                    onBlur={revalidate}
+                    revalidate={revalidate}
                 />
                 <DatovelgerWithoutValidation
                     id="toDate"
@@ -168,7 +168,7 @@ export default function AndreGodkjenningerModal({
                     fremtid
                     defaultSelected={gjeldendeElement?.toDate}
                     error={errors?.toDate}
-                    onBlur={revalidate}
+                    revalidate={revalidate}
                 />
             </HStack>
 

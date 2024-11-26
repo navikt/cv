@@ -136,7 +136,7 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
                                         <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                                     </VStack>
                                 }
-                                onBlur={revalidate}
+                                revalidate={revalidate}
                                 error={errors?.acquiredDate}
                             />
                             <DatovelgerWithoutValidation
@@ -150,7 +150,7 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
                                     </VStack>
                                 }
                                 fremtid
-                                onBlur={revalidate}
+                                revalidate={revalidate}
                                 error={errors?.expiryDate}
                             />
                         </HStack>
