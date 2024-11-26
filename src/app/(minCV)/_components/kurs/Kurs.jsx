@@ -47,7 +47,7 @@ export default function Kurs() {
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "1rem" }}>
                                         <FormSummary.Header>
-                                            <FormSummary.Heading id={summaryHeadingId} level="2">
+                                            <FormSummary.Heading id={summaryHeadingId} level="3">
                                                 {k.title}
                                             </FormSummary.Heading>
                                         </FormSummary.Header>

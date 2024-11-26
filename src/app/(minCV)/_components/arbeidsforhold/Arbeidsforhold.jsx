@@ -104,7 +104,7 @@ export default function Arbeidsforhold() {
                             <div key={index}>
                                 <FormSummary className={styles.mb3}>
                                     <FormSummary.Header>
-                                        <FormSummary.Heading id={summaryHeadingId} level="2">
+                                        <FormSummary.Heading id={summaryHeadingId} level="3">
                                             {erfaring.jobTitle || erfaring.alternativeJobTitle}
                                         </FormSummary.Heading>
                                     </FormSummary.Header>

@@ -49,7 +49,7 @@ export default function AndreErfaringer() {
                                     <div key={index}>
                                         <FormSummary style={{ marginBottom: "1rem" }}>
                                             <FormSummary.Header>
-                                                <FormSummary.Heading id={summaryHeadingId} level="2">
+                                                <FormSummary.Heading id={summaryHeadingId} level="3">
                                                     {erfaring.role}
                                                 </FormSummary.Heading>
                                             </FormSummary.Header>
