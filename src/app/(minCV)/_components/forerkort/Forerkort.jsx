@@ -18,7 +18,7 @@ export default function Forerkort() {
     const headingId = useId();
 
     return (
-        <div aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.FØRERKORT}>
+        <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.FØRERKORT}>
             {cvLaster ? (
                 <SeksjonSkeleton
                     icon={<HStack className={[styles.iconForerkortBig, styles.sectionIcon]} aria-hidden="true" />}
@@ -87,6 +87,6 @@ export default function Forerkort() {
                 </Box>
             )}
             {modalÅpen && <FørerkortModal {...modalProps} />}
-        </div>
+        </section>
     );
 }

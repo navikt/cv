@@ -36,66 +36,36 @@ export default function MinCVPage() {
             {visHovedinnhold ? (
                 <>
                     <HeaderPanel />
-                    <Hide below="lg">
-                        <HStack className={styles.pageContainer}>
-                            <div className={styles.sidepanel}>
-                                <Hovedmeny />
-                            </div>
-                            <div>
-                                <Box className={styles.main}>
-                                    <HStack gap="4">
-                                        <VStack>
-                                            <Personalia />
-                                            <Jobbonsker />
-                                            <Utdanninger />
-                                            <Fagbrev />
-                                            <Arbeidsforhold />
-                                            <AndreErfaringer />
-                                            <Kompetanser />
-                                            <OffentligeGodkjenninger />
-                                            <AndreGodkjenninger />
-                                            <Sprak />
-                                            <Forerkort />
-                                            <Kurs />
-                                            <Sammendrag />
-                                            <DelingAvCV />
-                                            <HotjarWrapper />
-                                        </VStack>
-                                    </HStack>
-                                </Box>
-                            </div>
-                            <div className={styles.sidepanel2}>
-                                <VStack gap="4">
-                                    <Button
-                                        icon={<EyeIcon aria-hidden />}
-                                        variant="primary"
-                                        onClick={() => setVisHovedinnhold(false)}
-                                        disabled={cvLaster}
-                                    >
-                                        Forhåndsvis CV
-                                    </Button>
-                                    <LastNedCv />
-                                </VStack>
-                            </div>
-                        </HStack>
-                    </Hide>
-                    <Show below="lg">
-                        <Personalia />
-                        <Jobbonsker />
-                        <Utdanninger />
-                        <Fagbrev />
-                        <Arbeidsforhold />
-                        <AndreErfaringer />
-                        <Kompetanser />
-                        <OffentligeGodkjenninger />
-                        <AndreGodkjenninger />
-                        <Sprak />
-                        <Forerkort />
-                        <Kurs />
-                        <Sammendrag />
-                        <DelingAvCV />
-                        <HotjarWrapper />
-                        <HStack justify="center" style={{ padding: "4rem 0 4rem 0" }}>
+
+                    <HStack className={styles.pageContainer}>
+                        <Hide below="lg" className={styles.sidepanel}>
+                            <Hovedmeny />
+                        </Hide>
+
+                        <div>
+                            <Box className={styles.main}>
+                                <HStack gap="4">
+                                    <VStack>
+                                        <Personalia />
+                                        <Jobbonsker />
+                                        <Utdanninger />
+                                        <Fagbrev />
+                                        <Arbeidsforhold />
+                                        <AndreErfaringer />
+                                        <Kompetanser />
+                                        <OffentligeGodkjenninger />
+                                        <AndreGodkjenninger />
+                                        <Sprak />
+                                        <Forerkort />
+                                        <Kurs />
+                                        <Sammendrag />
+                                        <DelingAvCV />
+                                        <HotjarWrapper />
+                                    </VStack>
+                                </HStack>
+                            </Box>
+                        </div>
+                        <Hide below="lg" className={styles.sidepanel2}>
                             <VStack gap="4">
                                 <Button
                                     icon={<EyeIcon aria-hidden />}
@@ -107,8 +77,23 @@ export default function MinCVPage() {
                                 </Button>
                                 <LastNedCv />
                             </VStack>
-                        </HStack>
-                    </Show>
+                        </Hide>
+                        <Show below="lg">
+                            <HStack justify="center" style={{ padding: "4rem 0 2rem 0" }}>
+                                <VStack gap="4">
+                                    <Button
+                                        icon={<EyeIcon aria-hidden />}
+                                        variant="primary"
+                                        onClick={() => setVisHovedinnhold(false)}
+                                        disabled={cvLaster}
+                                    >
+                                        Forhåndsvis CV
+                                    </Button>
+                                    <LastNedCv />
+                                </VStack>
+                            </HStack>
+                        </Show>
+                    </HStack>
                 </>
             ) : (
                 <>
