@@ -102,15 +102,22 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                     <div className={styles.previewItemLeft}>
                                         {formatterDato(utdanning.startDate)} - {formatterDato(utdanning.endDate)}
                                     </div>
-                                    <div className={styles.previewItemRight}>
-                                        <BodyLong weight="semibold">{UtdanningsnivåEnum[utdanning.nuskode]}</BodyLong>
-                                        <BodyLong>{utdanning.institution}</BodyLong>
-                                        <BodyLong>{utdanning.field}</BodyLong>
-                                        <BodyLong className={styles.mb3}>
-                                            {utdanning.description &&
-                                                parse(utdanning.description.replace(/\n/g, "<br>"))}
-                                        </BodyLong>
-                                    </div>
+                                    <dl className={styles.previewItemRight}>
+                                        <dt>
+                                            <BodyLong weight="semibold">
+                                                {UtdanningsnivåEnum[utdanning.nuskode]}
+                                            </BodyLong>
+                                        </dt>
+                                        <dd>
+                                            {utdanning.institution && <BodyLong>{utdanning.institution}</BodyLong>}
+                                            {utdanning.field && <BodyLong>{utdanning.field}</BodyLong>}
+                                            {utdanning.description && (
+                                                <BodyLong className={styles.mb3}>
+                                                    {parse(utdanning.description.replace(/\n/g, "<br>"))}
+                                                </BodyLong>
+                                            )}
+                                        </dd>
+                                    </dl>
                                 </div>
                             </div>
                         ))}
@@ -146,19 +153,25 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                     <div className={styles.previewItemLeft}>
                                         {`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}
                                     </div>
-                                    <div className={styles.previewItemRight}>
-                                        <BodyLong weight="semibold">
-                                            {erfaring.jobTitle || erfaring.alternativeJobTitle}
-                                        </BodyLong>
-                                        <BodyLong>
-                                            {erfaring.employer}
-                                            {erfaring.employer !== "" && erfaring.location !== "" ? ", " : ""}
-                                            {erfaring.location}
-                                        </BodyLong>
-                                        <BodyLong className={styles.mb3}>
-                                            {erfaring.description && parse(erfaring.description.replace(/\n/g, "<br>"))}
-                                        </BodyLong>
-                                    </div>
+                                    <dl className={styles.previewItemRight}>
+                                        <dt>
+                                            <BodyLong weight="semibold">
+                                                {erfaring.jobTitle || erfaring.alternativeJobTitle}
+                                            </BodyLong>
+                                        </dt>
+                                        <dd>
+                                            <BodyLong>
+                                                {erfaring.employer}
+                                                {erfaring.employer !== "" && erfaring.location !== "" ? ", " : ""}
+                                                {erfaring.location}
+                                            </BodyLong>
+                                            {erfaring.description && (
+                                                <BodyLong className={styles.mb3}>
+                                                    {parse(erfaring.description.replace(/\n/g, "<br>"))}
+                                                </BodyLong>
+                                            )}
+                                        </dd>
+                                    </dl>
                                 </div>
                             </div>
                         ))}
@@ -176,10 +189,14 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                     <div className={styles.previewItemLeft}>
                                         {`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}
                                     </div>
-                                    <div className={styles.previewItemRight}>
-                                        <BodyLong weight="semibold">{erfaring.role}</BodyLong>
-                                        <BodyLong className={styles.mb3}>{erfaring.description}</BodyLong>
-                                    </div>
+                                    <dl className={styles.previewItemRight}>
+                                        <dt>
+                                            <BodyLong weight="semibold">{erfaring.role}</BodyLong>
+                                        </dt>
+                                        <dd>
+                                            <BodyLong className={styles.mb3}>{erfaring.description}</BodyLong>
+                                        </dd>
+                                    </dl>
                                 </div>
                             </div>
                         ))}
@@ -218,15 +235,19 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>{formatterFullDato(kurs.date) || ""}</div>
-                                    <div className={styles.previewItemRight}>
-                                        <BodyLong weight="semibold">{kurs.title}</BodyLong>
-                                        <BodyLong>{kurs.issuer}</BodyLong>
-                                        {kurs.durationUnit && kurs.duration && (
-                                            <BodyLong
-                                                className={styles.mb3}
-                                            >{`${kurs.duration} ${formatterTidsenhet(kurs.durationUnit, kurs.duration)}`}</BodyLong>
-                                        )}
-                                    </div>
+                                    <dl className={styles.previewItemRight}>
+                                        <dt>
+                                            <BodyLong weight="semibold">{kurs.title}</BodyLong>
+                                        </dt>
+                                        <dd>
+                                            <BodyLong>{kurs.issuer}</BodyLong>
+                                            {kurs.durationUnit && kurs.duration && (
+                                                <BodyLong className={styles.mb3}>
+                                                    {`${kurs.duration} ${formatterTidsenhet(kurs.durationUnit, kurs.duration)}`}
+                                                </BodyLong>
+                                            )}
+                                        </dd>
+                                    </dl>
                                 </div>
                             </div>
                         ))}
@@ -249,10 +270,14 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                     <div className={styles.previewItemLeft}>
                                         {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
                                     </div>
-                                    <div className={styles.previewItemRight}>
-                                        <BodyLong weight="semibold">{godkjenning.title}</BodyLong>
-                                        <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
-                                    </div>
+                                    <dl className={styles.previewItemRight}>
+                                        <dt>
+                                            <BodyLong weight="semibold">{godkjenning.title}</BodyLong>
+                                        </dt>
+                                        <dd>
+                                            <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
+                                        </dd>
+                                    </dl>
                                 </div>
                             </div>
                         ))}
@@ -275,10 +300,14 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                     <div className={styles.previewItemLeft}>
                                         {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
                                     </div>
-                                    <div className={styles.previewItemRight}>
-                                        <BodyLong weight="semibold">{godkjenning.certificateName}</BodyLong>
-                                        <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
-                                    </div>
+                                    <dl className={styles.previewItemRight}>
+                                        <dt>
+                                            <BodyLong weight="semibold">{godkjenning.certificateName}</BodyLong>
+                                        </dt>
+                                        <dd>
+                                            <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
+                                        </dd>
+                                    </dl>
                                 </div>
                             </div>
                         ))}
@@ -294,13 +323,17 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft} />
-                                    <div className={styles.previewItemRight}>
-                                        <BodyLong weight="semibold">{spraak.language}</BodyLong>
-                                        <BodyLong>Muntlig: {SpråkEnum[spraak.oralProficiency]}</BodyLong>
-                                        <BodyLong className={styles.mb3}>
-                                            Skriftlig: {SpråkEnum[spraak.writtenProficiency]}
-                                        </BodyLong>
-                                    </div>
+                                    <dl className={styles.previewItemRight}>
+                                        <dt>
+                                            <BodyLong weight="semibold">{spraak.language}</BodyLong>
+                                        </dt>
+                                        <dd>
+                                            <BodyLong>Muntlig: {SpråkEnum[spraak.oralProficiency]}</BodyLong>
+                                            <BodyLong className={styles.mb3}>
+                                                Skriftlig: {SpråkEnum[spraak.writtenProficiency]}
+                                            </BodyLong>
+                                        </dd>
+                                    </dl>
                                 </div>
                             </div>
                         ))}
