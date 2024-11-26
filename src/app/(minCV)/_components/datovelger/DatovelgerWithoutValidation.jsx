@@ -10,7 +10,7 @@ export function DatovelgerWithoutValidation({
     defaultSelected = undefined,
     className,
     error = undefined,
-    revalidate = undefined,
+    revalidate = () => {},
 }) {
     const inputRef = useRef();
     useEffect(() => {
