@@ -28,7 +28,7 @@ export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElem
         >
             <VStack>
                 <Alert variant="warning" className={styles.mb12}>
-                    <Heading spacing size="xsmall" level="3">
+                    <Heading spacing size="xsmall" level="2">
                         Viktig informasjon om personopplysninger
                     </Heading>
                     <BodyLong size="small">
