@@ -50,7 +50,7 @@ export default function Utdanninger() {
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "2rem" }}>
                                         <FormSummary.Header>
-                                            <FormSummary.Heading id={summaryHeadingId} level="2">
+                                            <FormSummary.Heading id={summaryHeadingId} level="3">
                                                 {UtdanningsnivåEnum[utdanning.nuskode]}
                                             </FormSummary.Heading>
                                         </FormSummary.Header>
