@@ -20,7 +20,7 @@ export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElem
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til sammendrag"
-            icon={<HStack className={[styles.iconSammendragBig, styles.modalIcon]} aria-hidden="true" />}
+            icon={<HStack as="span" className={[styles.iconSammendragBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             handleFormSubmit={lagre}

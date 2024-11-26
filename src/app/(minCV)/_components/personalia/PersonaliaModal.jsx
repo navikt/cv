@@ -48,7 +48,7 @@ export default function PersonaliaModal({
         <CvModalForm
             modalÅpen={modalÅpen}
             tittel="Legg til personalia"
-            icon={<HStack className={[styles.iconPersonaliaBig, styles.modalIcon]} aria-hidden="true" />}
+            icon={<HStack as="span" className={[styles.iconPersonaliaBig, styles.modalIcon]} aria-hidden="true" />}
             feilet={feilet}
             laster={laster}
             toggleModal={toggleModal}
