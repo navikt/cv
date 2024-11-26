@@ -20,7 +20,12 @@ export function ValidationErrors({
     }
 
     return (
-        <ErrorSummary ref={errorSummaryRef} heading={heading} headingTag={headingTag} className={styles.mt6}>
+        <ErrorSummary
+            ref={errorSummaryRef}
+            heading={heading}
+            headingTag={headingTag}
+            className={[styles.mt6, styles.errorSummary]}
+        >
             {Object.entries(validationErrors).map(([key, val]) => (
                 <ErrorSummary.Item
                     key={key}

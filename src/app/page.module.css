@@ -660,3 +660,9 @@
     margin-top: var(--a-spacing-16) !important;
     text-align: center;
 }
+
+.errorSummary:focus {
+    box-shadow:
+        0 0 0 1px var(--a-border-on-inverted),
+        0 0 0 4px var(--a-border-focus);
+}
