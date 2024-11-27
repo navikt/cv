@@ -64,22 +64,24 @@ export default function MinCVPage() {
                                     </VStack>
                                 </HStack>
                             </Box>
+                            <Show below="xl">
+                                <HStack justify="center" style={{ padding: "4rem 0 2rem 0" }}>
+                                    <VStack gap="4">
+                                        <Button
+                                            icon={<EyeIcon aria-hidden />}
+                                            variant="primary"
+                                            onClick={() => setVisHovedinnhold(false)}
+                                            disabled={cvLaster}
+                                        >
+                                            Forhåndsvis CV
+                                        </Button>
+                                        <LastNedCv />
+                                    </VStack>
+                                </HStack>
+                            </Show>
                         </div>
-                        <Hide below="lg" className={styles.sidepanel2}>
-                            <VStack gap="4">
-                                <Button
-                                    icon={<EyeIcon aria-hidden />}
-                                    variant="primary"
-                                    onClick={() => setVisHovedinnhold(false)}
-                                    disabled={cvLaster}
-                                >
-                                    Forhåndsvis CV
-                                </Button>
-                                <LastNedCv />
-                            </VStack>
-                        </Hide>
-                        <Show below="lg">
-                            <HStack justify="center" style={{ padding: "4rem 0 2rem 0" }}>
+                        <Hide below="xl" className={styles.sidepanel2}>
+                            <HStack align="center" justify="center">
                                 <VStack gap="4">
                                     <Button
                                         icon={<EyeIcon aria-hidden />}
@@ -92,7 +94,7 @@ export default function MinCVPage() {
                                     <LastNedCv />
                                 </VStack>
                             </HStack>
-                        </Show>
+                        </Hide>
                     </HStack>
                 </>
             ) : (
