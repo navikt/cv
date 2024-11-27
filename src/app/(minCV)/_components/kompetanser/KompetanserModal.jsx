@@ -1,34 +1,40 @@
-import { BodyShort, HStack } from "@navikt/ds-react";
+import { HStack } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import styles from "@/app/page.module.css";
 
-export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
-    const [valgtKompetanse, setValgtKompetanse] = useState(gjeldendeElement || null);
-    const [valgtKompetanseError, setValgtKompetanseError] = useState(false);
+export default function KompetanserModal({ alleredeValgte, lagreKompetanser, modalÅpen, toggleModal, laster, feilet }) {
+    const [valgteKompetanser, setValgteKompetanser] = useState(alleredeValgte || []);
 
     useEffect(() => {
-        const oppdaterKompetanse = (kompetanse) => setValgtKompetanse(kompetanse);
-        oppdaterKompetanse(gjeldendeElement || []);
-    }, [gjeldendeElement]);
+        const oppdaterKompetanse = (kompetanse) => setValgteKompetanser(kompetanse);
+        oppdaterKompetanse(alleredeValgte || []);
+    }, [alleredeValgte]);
 
     const lagre = () => {
-        if (!valgtKompetanse || valgtKompetanse.length === 0) setValgtKompetanseError(true);
+        const kompetanserTilLagring = valgteKompetanser || [];
 
-        if (valgtKompetanse && valgtKompetanse.length !== 0) {
-            lagreElement({
-                title: valgtKompetanse.label || valgtKompetanse.title,
-                type: valgtKompetanse.type,
-                conceptId: valgtKompetanse.conceptId,
-            });
-        }
+        lagreKompetanser(
+            kompetanserTilLagring.map((e) => ({
+                title: e.label || e.title,
+                conceptId: e.conceptId,
+            })),
+        );
     };
 
-    const oppdaterValgtKompetanse = (verdi, erValgt) => {
-        setValgtKompetanse(erValgt ? verdi : null);
-        setValgtKompetanseError(false);
+    const oppdaterValgteKompetanser = (kompetanse, erValgt) => {
+        const oppdaterteKompetanser = [...valgteKompetanser];
+
+        if (erValgt) {
+            oppdaterteKompetanser.push(kompetanse);
+        } else {
+            const eksisterendeIndex = oppdaterteKompetanser.findIndex((e) => e.title === kompetanse.title);
+            oppdaterteKompetanser.splice(eksisterendeIndex, 1);
+        }
+
+        setValgteKompetanser(oppdaterteKompetanser);
     };
 
     return (
@@ -42,17 +48,13 @@ export default function KompetanserModal({ modalÅpen, toggleModal, gjeldendeEle
             toggleModal={toggleModal}
         >
             <Typeahead
-                label={
-                    <HStack gap="2">
-                        <BodyShort weight="semibold">Hva er du flink til?</BodyShort>
-                        <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
-                    </HStack>
-                }
+                label="Hva er du flink til?"
                 description="Legg til kompetanser, ferdigheter, verktøy o.l."
                 type={TypeaheadEnum.KOMPETANSE}
-                oppdaterValg={oppdaterValgtKompetanse}
-                valgtVerdi={valgtKompetanse?.title}
-                error={valgtKompetanseError && "Du må velge en eller flere kompetanser"}
+                oppdaterValg={oppdaterValgteKompetanser}
+                valgtVerdi={valgteKompetanser}
+                multiselect
+                multiselectText="Kompetanser"
             />
         </CvModalForm>
     );
