@@ -9,12 +9,16 @@ import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdater
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import SammendragModal from "@/app/(minCV)/_components/sammendrag/SammendragModal";
 import { useId } from "react";
+import { useBekreftModal } from "@/app/_common/hooks/useBekreftSlettModal";
+import { BekreftSlettModal } from "@/app/_common/components/BekreftSlettModal";
 
 export default function Sammendrag() {
     const { sammendrag, cvLaster } = useCv();
     const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.SAMMENDRAG);
     const modalProps = useCvModal(sammendrag, oppdateringprops);
     const { modalÅpen, toggleModal, laster } = modalProps;
+    const bekreftModalProps = useBekreftModal("sammendrag");
+    const { bekreftModalÅpen, toggleBekreftModal } = bekreftModalProps;
     const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
@@ -73,7 +77,7 @@ export default function Sammendrag() {
                                     aria-label="Fjern sammendrag"
                                     icon={<TrashIcon aria-hidden />}
                                     variant="tertiary"
-                                    onClick={() => triggerOppdatering("")}
+                                    onClick={() => toggleBekreftModal(true, () => triggerOppdatering(""))}
                                     loading={laster}
                                 >
                                     Fjern
@@ -87,6 +91,7 @@ export default function Sammendrag() {
             {modalÅpen && (
                 <SammendragModal {...modalProps} lagreElement={triggerOppdatering} gjeldendeElement={sammendrag} />
             )}
+            {bekreftModalÅpen && <BekreftSlettModal {...bekreftModalProps} />}
         </section>
     );
 }
