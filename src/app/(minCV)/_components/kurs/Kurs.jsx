@@ -47,11 +47,11 @@ export default function Kurs() {
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "1rem" }}>
                                         <FormSummary.Header>
-                                            <FormSummary.Heading id={summaryHeadingId} level="3">
+                                            <FormSummary.Heading id={`${summaryHeadingId}-${index}`} level="3">
                                                 {k.title}
                                             </FormSummary.Heading>
                                         </FormSummary.Header>
-                                        <FormSummary.Answers aria-labelledby={summaryHeadingId}>
+                                        <FormSummary.Answers aria-labelledby={`${summaryHeadingId}-${index}`}>
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>Utsteder</FormSummary.Label>
                                                 <FormSummary.Value>{k.issuer || "Ikke oppgitt"}</FormSummary.Value>

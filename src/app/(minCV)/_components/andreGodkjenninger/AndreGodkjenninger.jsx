@@ -53,11 +53,11 @@ export default function AndreGodkjenninger() {
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "1rem" }}>
                                         <FormSummary.Header>
-                                            <FormSummary.Heading id={summaryHeadingId} level="3">
+                                            <FormSummary.Heading id={`${summaryHeadingId}-${index}`} level="3">
                                                 {godkjenning.certificateName}
                                             </FormSummary.Heading>
                                         </FormSummary.Header>
-                                        <FormSummary.Answers aria-labelledby={summaryHeadingId}>
+                                        <FormSummary.Answers aria-labelledby={`${summaryHeadingId}-${index}`}>
                                             {godkjenning.issuer && (
                                                 <FormSummary.Answer>
                                                     <FormSummary.Label>Utsteder</FormSummary.Label>
