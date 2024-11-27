@@ -47,11 +47,11 @@ export default function Sprak() {
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "1rem" }}>
                                         <FormSummary.Header>
-                                            <FormSummary.Heading id={summaryHeadingId} level="3">
+                                            <FormSummary.Heading id={`${summaryHeadingId}-${index}`} level="3">
                                                 {sp.language}
                                             </FormSummary.Heading>
                                         </FormSummary.Header>
-                                        <FormSummary.Answers aria-labelledby={summaryHeadingId}>
+                                        <FormSummary.Answers aria-labelledby={`${summaryHeadingId}-${index}`}>
                                             <FormSummary.Answer>
                                                 <FormSummary.Label>Muntlig</FormSummary.Label>
                                                 <FormSummary.Value>{SpråkEnum[sp.oralProficiency]}</FormSummary.Value>

@@ -50,12 +50,12 @@ export default function Utdanninger() {
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "2rem" }}>
                                         <FormSummary.Header>
-                                            <FormSummary.Heading id={summaryHeadingId} level="3">
+                                            <FormSummary.Heading id={`${summaryHeadingId}-${index}`} level="3">
                                                 {UtdanningsnivåEnum[utdanning.nuskode]}
                                             </FormSummary.Heading>
                                         </FormSummary.Header>
 
-                                        <FormSummary.Answers aria-labelledby={summaryHeadingId}>
+                                        <FormSummary.Answers aria-labelledby={`${summaryHeadingId}-${index}`}>
                                             {utdanning.field && (
                                                 <FormSummary.Answer>
                                                     <FormSummary.Label>Grad og utdanningsretning</FormSummary.Label>

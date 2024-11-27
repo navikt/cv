@@ -104,11 +104,11 @@ export default function Arbeidsforhold() {
                             <div key={index}>
                                 <FormSummary className={styles.mb3}>
                                     <FormSummary.Header>
-                                        <FormSummary.Heading id={summaryHeadingId} level="3">
+                                        <FormSummary.Heading id={`${summaryHeadingId}-${index}`} level="3">
                                             {erfaring.jobTitle || erfaring.alternativeJobTitle}
                                         </FormSummary.Heading>
                                     </FormSummary.Header>
-                                    <FormSummary.Answers aria-labelledby={summaryHeadingId}>
+                                    <FormSummary.Answers aria-labelledby={`${summaryHeadingId}-${index}`}>
                                         <FormSummary.Answer>
                                             <FormSummary.Label>Bedrift</FormSummary.Label>
                                             <FormSummary.Value>{erfaring.employer}</FormSummary.Value>
