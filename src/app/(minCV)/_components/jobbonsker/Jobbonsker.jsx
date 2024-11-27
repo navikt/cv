@@ -16,12 +16,16 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
+import { useBekreftModal } from "@/app/_common/hooks/useBekreftSlettModal";
+import { BekreftSlettModal } from "@/app/_common/components/BekreftSlettModal";
 
 export default function Jobbonsker() {
     const { jobbønsker, cvLaster } = useCv();
     const oppdateringprops = useOppdaterCvSeksjonNoCache(CvSeksjonEnum.JOBBØNSKER);
     const modalProps = useCvModal(jobbønsker, oppdateringprops);
     const { modalÅpen, toggleModal, laster } = modalProps;
+    const bekreftModalProps = useBekreftModal("alle jobbønsker");
+    const { bekreftModalÅpen, toggleBekreftModal } = bekreftModalProps;
     const { triggerOppdatering } = oppdateringprops;
     const headingId = useId();
 
@@ -154,7 +158,7 @@ export default function Jobbonsker() {
                                     aria-label="Fjern jobbønsker"
                                     icon={<TrashIcon aria-hidden />}
                                     variant="secondary"
-                                    onClick={() => slettJobbønsker()}
+                                    onClick={() => toggleBekreftModal(true, () => slettJobbønsker())}
                                     loading={laster}
                                 >
                                     Fjern
@@ -167,6 +171,7 @@ export default function Jobbonsker() {
             {modalÅpen && (
                 <JobbonskerModal {...modalProps} lagreElement={triggerOppdatering} gjeldendeElement={jobbønsker} />
             )}
+            {bekreftModalÅpen && <BekreftSlettModal {...bekreftModalProps} />}
         </section>
     );
 }
