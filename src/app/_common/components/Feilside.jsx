@@ -42,7 +42,7 @@ export const FeilsideÅrsak = Object.freeze({
     IKKE_UNDER_OPPFØLGING: {
         tittel: "Din CV er ikke tilgjengelig",
         body: (
-            <HStack gap="4" className={styles.mb12}>
+            <VStack gap="4" className={styles.mb12}>
                 <BodyLong className="text-center">
                     Du er ikke under oppfølging av NAV og har ikke tilgang til din CV her.
                 </BodyLong>
@@ -53,7 +53,7 @@ export const FeilsideÅrsak = Object.freeze({
                     </Link>
                     .
                 </BodyLong>
-            </HStack>
+            </VStack>
         ),
     },
     FETCH_ERROR: {
