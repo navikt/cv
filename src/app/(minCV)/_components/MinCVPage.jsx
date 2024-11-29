@@ -2,7 +2,7 @@
 
 import "@navikt/ds-css";
 import { useState } from "react";
-import { Box, HStack, VStack, Hide, Show, Button } from "@navikt/ds-react";
+import { Box, HStack, VStack, Hide, Show, Button, Link } from "@navikt/ds-react";
 import { EyeIcon } from "@navikt/aksel-icons";
 import DelingAvCV from "@/app/(minCV)/_components/delingAvCV/DelingAvCV";
 import Personalia from "@/app/(minCV)/_components/personalia/Personalia";
@@ -76,24 +76,29 @@ export default function MinCVPage() {
                                             Forhåndsvis CV
                                         </Button>
                                         <LastNedCv />
+                                        <Link inlineText href="/min-cv/personvern">
+                                            Personvernserklæring for Min CV
+                                        </Link>
                                     </VStack>
                                 </HStack>
                             </Show>
                         </div>
-                        <Hide below="xl" className={styles.sidepanel2}>
-                            <HStack align="center" justify="center">
-                                <VStack gap="4">
-                                    <Button
-                                        icon={<EyeIcon aria-hidden />}
-                                        variant="primary"
-                                        onClick={() => setVisHovedinnhold(false)}
-                                        disabled={cvLaster}
-                                    >
-                                        Forhåndsvis CV
-                                    </Button>
-                                    <LastNedCv />
-                                </VStack>
-                            </HStack>
+                        <Hide below="xl">
+                            <VStack gap="4" className={styles.sidepanel2}>
+                                <Button
+                                    icon={<EyeIcon aria-hidden />}
+                                    variant="primary"
+                                    onClick={() => setVisHovedinnhold(false)}
+                                    disabled={cvLaster}
+                                >
+                                    Forhåndsvis CV
+                                </Button>
+                                <LastNedCv />
+
+                                <Link inlineText href="/min-cv/personvern">
+                                    Personvernserklæring for Min CV
+                                </Link>
+                            </VStack>
                         </Hide>
                     </HStack>
                 </>

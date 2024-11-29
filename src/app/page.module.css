@@ -112,6 +112,10 @@
         width: 48%;
     }
 
+    .mainPanelElement {
+        width: 600px;
+    }
+
     .box {
         width: 600px;
         margin-top: 5.5rem;
@@ -571,7 +575,7 @@
     padding-bottom: 4rem;
 }
 
-.notFoundHeader {
+.staticHeaderContainer {
     background-color: white;
     padding-block: 6px 6px;
     padding-inline: 4px;
@@ -579,7 +583,7 @@
     border-width: 0 0 4px 0;
 }
 
-.notFoundHeaderContainer {
+.staticHeaderContent {
     display: flex;
     gap: 1.5rem;
     justify-content: center;
@@ -665,4 +669,13 @@
     box-shadow:
         0 0 0 1px var(--a-border-on-inverted),
         0 0 0 4px var(--a-border-focus);
+}
+
+.italic {
+    font-style: italic;
+}
+
+.personvernLink {
+    text-align: center;
+    margin-top: var(--a-spacing-10) !important;
 }
