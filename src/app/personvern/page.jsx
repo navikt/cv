@@ -40,7 +40,7 @@ async function Page() {
                             arbeidssøker hos Nav.
                         </BodyLong>
 
-                        <List title="Innhold:" headingTag="h3" className={styles.mb6} aria-label="Innhold">
+                        <List title="Innhold:" headingTag="h3" className={styles.mb6}>
                             <ListItem>
                                 <Link href="#informasjon">Hvilke personopplysninger samler vi inn?</Link>
                             </ListItem>
