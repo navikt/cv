@@ -6,8 +6,8 @@ import { Pictogram } from "@/app/_common/components/HeaderPanel";
 export default function NotFound() {
     return (
         <VStack>
-            <Box as="header" className={styles.notFoundHeader}>
-                <HStack className={styles.notFoundHeaderContainer}>
+            <Box as="header" className={styles.staticHeaderContainer}>
+                <HStack className={styles.staticHeaderContent}>
                     <Pictogram />
                     <Heading level="1" size="large">
                         Min CV
