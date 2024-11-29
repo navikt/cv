@@ -2,27 +2,28 @@
 
 import useSWR from "swr";
 import { simpleApiRequest } from "@/app/_common/utils/fetchUtils";
-import { useContext, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { debounce } from "@navikt/ds-react";
-import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 export const useTypeahead = (type, visningsfelt, forhåndshentet, alleredeValgte, oppdaterValg) => {
-    const { errorNotifikasjon } = useContext(ApplicationContext);
     const [typeaheadverdi, setTypeaheadverdi] = useState("");
     const [typeaheadforslag, setTypeaheadforslag] = useState([]);
     const [typeaheaddataFraBackend, setTypeaheaddataFraBackend] = useState([]);
     const debouncedSetTypeaheadverdi = useMemo(() => debounce(setTypeaheadverdi, 200), []);
+    const [harHattFeil, setHarHattFeil] = useState(false);
 
     const fetcher = async (url) => {
         const response = await simpleApiRequest(url, "GET", null, false);
 
         if (!response.ok) {
-            errorNotifikasjon("Det skjedde en feil ved henting av typeahead-data");
             const error = Error(`Det skjedde en feil ved henting av typeahead ${type}`);
             error.status = response.status;
+            setHarHattFeil(true);
             throw error;
         }
+
+        setHarHattFeil(false);
 
         const data = await response.json();
 
@@ -70,7 +71,7 @@ export const useTypeahead = (type, visningsfelt, forhåndshentet, alleredeValgte
     return {
         typeaheadforslag,
         typeaheadLaster: isLoading,
-        typeaheadHarFeil: error,
+        typeaheadHarFeil: error || (harHattFeil && isLoading),
         oppdaterTypeahead,
         velgVerdi,
     };
