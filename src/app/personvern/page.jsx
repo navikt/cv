@@ -17,10 +17,12 @@ async function Page() {
                 </HStack>
             </Box>
             <VStack gap="4" align="center" className={styles.mb6}>
-                <Link href="/min-cv" className={[styles.mainPanelElement, styles.mt6]}>
-                    <ArrowUndoIcon title="a11y-title" fontSize="1.5rem" />
-                    Tilbake til Min CV
-                </Link>
+                <HStack className={[styles.mainPanelElement, styles.mt6]}>
+                    <Link href="/min-cv">
+                        <ArrowUndoIcon aria-hidden />
+                        Tilbake til Min CV
+                    </Link>
+                </HStack>
                 <Box background="surface-default" padding="10" className={[styles.box, styles.mt3]}>
                     <VStack className={styles.mt3}>
                         <Heading size="large" level="2" spacing>
@@ -38,7 +40,7 @@ async function Page() {
                             arbeidssøker hos Nav.
                         </BodyLong>
 
-                        <List title="Innhold:" headingTag="h3" className={styles.mb6}>
+                        <List title="Innhold:" headingTag="h3" className={styles.mb6} aria-label="Innhold">
                             <ListItem>
                                 <Link href="#informasjon">Hvilke personopplysninger samler vi inn?</Link>
                             </ListItem>
@@ -71,7 +73,7 @@ async function Page() {
                             Når du tar i bruk innloggede tjenester på arbeidsplassen.no, innhenter vi grunnleggende
                             personalia fra folkeregisteret:
                         </BodyLong>
-                        <List className={styles.mb3}>
+                        <List className={styles.mb3} aria-label="Personalia">
                             <ListItem>Navn</ListItem>
                             <ListItem>Telefonnummer</ListItem>
                             <ListItem>E-postadresse</ListItem>
@@ -88,7 +90,7 @@ async function Page() {
                             Dersom du velger å ta i bruk øvrige tjenester på innloggede sider, vil vi lagre de
                             nødvendige opplysningene for å bruke tjenesten i din profil. Dette kan for eksempel være:
                         </BodyLong>
-                        <List className={styles.mb3}>
+                        <List className={styles.mb3} aria-label="Øvrige tjenester">
                             <ListItem>Favoritter – stillinger</ListItem>
                             <ListItem>Lagrede søk – stillinger</ListItem>
                         </List>
@@ -102,7 +104,7 @@ async function Page() {
                             CV-opplysninger
                         </Heading>
                         <BodyLong>Du kan registrere følgende CV-opplysninger i vår CV-tjeneste:</BodyLong>
-                        <List className={styles.mb3}>
+                        <List className={styles.mb3} aria-label="CV-opplysninger">
                             <ListItem>Sammendrag</ListItem>
                             <ListItem>Jobbønsker</ListItem>
                             <ListItem>Utdanninger</ListItem>
@@ -283,10 +285,12 @@ async function Page() {
                     </VStack>
                 </Box>
 
-                <Link href="/min-cv" className={[styles.mainPanelElement, styles.mt3]}>
-                    <ArrowUndoIcon title="a11y-title" fontSize="1.5rem" />
-                    Tilbake til Min CV
-                </Link>
+                <HStack className={[styles.mainPanelElement, styles.mt6]}>
+                    <Link href="/min-cv">
+                        <ArrowUndoIcon aria-hidden />
+                        Tilbake til Min CV
+                    </Link>
+                </HStack>
             </VStack>
         </VStack>
     );
