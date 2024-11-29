@@ -73,7 +73,11 @@ async function Page() {
                             Når du tar i bruk innloggede tjenester på arbeidsplassen.no, innhenter vi grunnleggende
                             personalia fra folkeregisteret:
                         </BodyLong>
-                        <List className={styles.mb3} aria-label="Personalia">
+                        <List
+                            className={styles.mb3}
+                            title={<span className={styles.visuallyhidden}>Personalia</span>}
+                            headingTag="span"
+                        >
                             <ListItem>Navn</ListItem>
                             <ListItem>Telefonnummer</ListItem>
                             <ListItem>E-postadresse</ListItem>
@@ -90,7 +94,11 @@ async function Page() {
                             Dersom du velger å ta i bruk øvrige tjenester på innloggede sider, vil vi lagre de
                             nødvendige opplysningene for å bruke tjenesten i din profil. Dette kan for eksempel være:
                         </BodyLong>
-                        <List className={styles.mb3} aria-label="Øvrige tjenester">
+                        <List
+                            className={styles.mb3}
+                            title={<span className={styles.visuallyhidden}>Øvrige tjenester</span>}
+                            headingTag="span"
+                        >
                             <ListItem>Favoritter – stillinger</ListItem>
                             <ListItem>Lagrede søk – stillinger</ListItem>
                         </List>
@@ -104,7 +112,11 @@ async function Page() {
                             CV-opplysninger
                         </Heading>
                         <BodyLong>Du kan registrere følgende CV-opplysninger i vår CV-tjeneste:</BodyLong>
-                        <List className={styles.mb3} aria-label="CV-opplysninger">
+                        <List
+                            className={styles.mb3}
+                            title={<span className={styles.visuallyhidden}>CV-opplysninger</span>}
+                            headingTag="span"
+                        >
                             <ListItem>Sammendrag</ListItem>
                             <ListItem>Jobbønsker</ListItem>
                             <ListItem>Utdanninger</ListItem>
