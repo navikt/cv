@@ -290,7 +290,7 @@ export default function DelingAvCV() {
         <div data-section id={SeksjonsIdEnum.DELING_AV_CV}>
             <Box background="surface-default" padding="10" className={styles.box}>
                 <HStack justify="center">
-                    <HStack className={[styles.iconDelingAvCVBig, styles.sectionIcon]} aria-hidden="true" />
+                    <HStack className={[styles.iconDelingAvCVBig, styles.sectionIcon]} />
                 </HStack>
                 <Heading level="2" size="large" align="start" className={styles.mb12}>
                     Deling av CV
