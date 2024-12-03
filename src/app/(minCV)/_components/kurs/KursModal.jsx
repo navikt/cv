@@ -119,7 +119,11 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                 id="date"
                 name="date"
                 defaultSelected={gjeldendeElement?.date}
-                label="Fullført"
+                label={
+                    <>
+                        Fullført<span className={styles.visuallyhidden}> dato</span>
+                    </>
+                }
                 className={styles.mb6}
                 error={errors?.date}
                 revalidate={revalidate}

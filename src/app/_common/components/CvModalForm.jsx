@@ -12,7 +12,7 @@ export const CvModalForm = forwardRef(
                 aria-label={tittel}
                 onClose={() => toggleModal(false)}
                 width="medium"
-                className="overflow-visible"
+                className={[styles.pt3, "overflow-visible"]}
                 header={{
                     heading: (
                         <span className={[styles.mt1, styles.mb3]}>
