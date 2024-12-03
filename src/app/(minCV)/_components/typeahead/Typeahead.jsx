@@ -1,3 +1,4 @@
+import { useState } from "react";
 // eslint-disable-next-line camelcase
 import { Alert, BodyLong, Chips, UNSAFE_Combobox, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
@@ -18,6 +19,7 @@ export function Typeahead({
     multiselectText,
     error,
 }) {
+    const [screenReaderText, setScreenReaderText] = useState("");
     let alleredeValgte;
 
     if (multiselect) {
@@ -35,6 +37,14 @@ export function Typeahead({
         alleredeValgte,
         oppdaterValg,
     );
+
+    const addScreenReaderInfo = (verdi, isSelected) => {
+        if (isSelected) {
+            setScreenReaderText(`${verdi} er lagt til.`);
+        } else {
+            setScreenReaderText(`${verdi} er fjernet.`);
+        }
+    };
 
     return (
         <VStack className={className}>
@@ -54,32 +64,48 @@ export function Typeahead({
                 selectedOptions={alleredeValgte}
                 shouldShowSelectedOptions={!multiselect}
                 onChange={(verdi) => oppdaterTypeahead(verdi || "")}
-                onToggleSelected={(verdi, isSelected) => velgVerdi(verdi, isSelected)}
+                onToggleSelected={(verdi, isSelected) => {
+                    if (multiselect) {
+                        addScreenReaderInfo(verdi, isSelected);
+                    }
+                    velgVerdi(verdi, isSelected);
+                }}
                 placeholder={placeholder || "Søk og velg et alternativ"}
                 isLoading={typeaheadLaster}
                 error={error}
             />
             {multiselect && (
-                <VStack className={styles.mt6}>
-                    {alleredeValgte.length === 0 ? (
-                        <BodyLong weight="regular" size="small" className={styles.mb3}>
-                            {`Du har ikke lagt til noen ${multiselectText.toLowerCase()}`}
-                        </BodyLong>
-                    ) : (
-                        <VStack>
+                <>
+                    <span aria-live="polite" role="alert" className={styles.visuallyhidden}>
+                        {screenReaderText}
+                    </span>
+                    <VStack className={styles.mt6}>
+                        {alleredeValgte.length === 0 ? (
                             <BodyLong weight="regular" size="small" className={styles.mb3}>
-                                {`${multiselectText} du har lagt til:`}
+                                {`Du har ikke lagt til noen ${multiselectText.toLowerCase()}`}
                             </BodyLong>
-                            <Chips>
-                                {alleredeValgte.map((valg) => (
-                                    <Chips.Removable key={valg} onClick={() => velgVerdi(valg, false)}>
-                                        {valg}
-                                    </Chips.Removable>
-                                ))}
-                            </Chips>
-                        </VStack>
-                    )}
-                </VStack>
+                        ) : (
+                            <VStack>
+                                <BodyLong weight="regular" size="small" className={styles.mb3}>
+                                    {`${multiselectText} du har lagt til:`}
+                                </BodyLong>
+                                <Chips>
+                                    {alleredeValgte.map((valg) => (
+                                        <Chips.Removable
+                                            key={valg}
+                                            onClick={() => {
+                                                addScreenReaderInfo(valg, false);
+                                                velgVerdi(valg, false);
+                                            }}
+                                        >
+                                            {valg}
+                                        </Chips.Removable>
+                                    ))}
+                                </Chips>
+                            </VStack>
+                        )}
+                    </VStack>
+                </>
             )}
         </VStack>
     );
