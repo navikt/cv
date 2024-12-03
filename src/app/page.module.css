@@ -49,6 +49,10 @@
     margin-top: var(--a-spacing-16) !important;
 }
 
+.pt3 {
+    padding-top: var(--a-spacing-3) !important;
+}
+
 .sidepanel {
     position: sticky;
     top: 0;

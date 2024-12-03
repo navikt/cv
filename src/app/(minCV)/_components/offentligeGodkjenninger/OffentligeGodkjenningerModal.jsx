@@ -155,7 +155,9 @@ export default function OffentligeGodkjenningerModal({
                     name="fromDate"
                     label={
                         <HStack gap="2">
-                            <BodyShort weight="semibold">Fullført</BodyShort>
+                            <BodyShort weight="semibold">
+                                Fullført<span className={styles.visuallyhidden}> dato</span>
+                            </BodyShort>
                             <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                         </HStack>
                     }
@@ -166,7 +168,11 @@ export default function OffentligeGodkjenningerModal({
                 <DatovelgerWithoutValidation
                     id="toDate"
                     name="toDate"
-                    label="Utløper"
+                    label={
+                        <>
+                            Utløper<span className={styles.visuallyhidden}> dato</span>
+                        </>
+                    }
                     fremtid
                     defaultSelected={gjeldendeElement?.toDate}
                     error={errors?.toDate}
