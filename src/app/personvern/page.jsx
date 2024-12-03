@@ -8,8 +8,8 @@ import { ArrowUndoIcon } from "@navikt/aksel-icons";
 async function Page() {
     return (
         <VStack>
-            <Box as="header" className={styles.staticHeaderContainer}>
-                <HStack className={styles.staticHeaderContent}>
+            <Box as="header" borderWidth="0 0 4 0" borderColor="surface-info" background="surface-default">
+                <HStack gap="3" justify="center" align="center" className={styles.mb9}>
                     <Pictogram />
                     <Heading level="1" size="large">
                         Min CV - Personvernserklæring

@@ -19,7 +19,7 @@ export function Feilside({ årsak }) {
                         ) : (
                             <BodyLong className={["text-center", styles.mb12]}>{årsak.tekst}</BodyLong>
                         )}
-                        <HStack gap="4" className={[styles.mb3]}>
+                        <HStack gap="4" className={styles.mb3}>
                             <NextLink href={`${navBaseUrl}/person/kontakt-oss/nb`} passHref legacyBehavior>
                                 <Button variant="primary" as="a" role="link">
                                     Kontakt oss
