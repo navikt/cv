@@ -83,8 +83,8 @@ export default function MinCVPage() {
                                 </HStack>
                             </Show>
                         </div>
-                        <Hide below="xl">
-                            <VStack gap="4" className={styles.sidepanel2}>
+                        <Hide below="xl" className={styles.sidepanel2}>
+                            <VStack gap="4">
                                 <Button
                                     icon={<EyeIcon aria-hidden />}
                                     variant="primary"
@@ -94,7 +94,6 @@ export default function MinCVPage() {
                                     Forhåndsvis CV
                                 </Button>
                                 <LastNedCv />
-
                                 <Link inlineText href="/min-cv/personvern">
                                     Personvernserklæring for Min CV
                                 </Link>
