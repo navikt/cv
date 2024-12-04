@@ -26,13 +26,10 @@ async function Page() {
                 <Box background="surface-default" padding="10" className={[styles.box, styles.mt3]}>
                     <VStack className={styles.mt3}>
                         <Heading size="large" level="2" spacing>
-                            Personvernerklæring for deg som er under arbeidsrettet oppfølging fra Nav
+                            Personvernerklæring for CV for deg som er under oppfølging fra Nav
                         </Heading>
 
-                        <BodyShort size="small">Publisert 1. februar 2022.</BodyShort>
-                        <BodyShort size="small" spacing>
-                            Oppdatert 29. juni 2022.
-                        </BodyShort>
+                        <BodyShort size="small">Publisert 9. desember 2024 </BodyShort>
 
                         <BodyLong spacing className={styles.mt3}>
                             <span className={styles.italic}>Oppfølging</span> betyr veiledning og hjelp fra Nav til å
@@ -40,7 +37,7 @@ async function Page() {
                             arbeidssøker hos Nav.
                         </BodyLong>
 
-                        <List title="Innhold:" headingTag="h3" className={styles.mb6}>
+                        <List title="Innhold" headingTag="h3" className={styles.mb6}>
                             <ListItem>
                                 <Link href="#informasjon">Hvilke personopplysninger samler vi inn?</Link>
                             </ListItem>
@@ -56,10 +53,13 @@ async function Page() {
                                 </Link>
                             </ListItem>
                             <ListItem>
-                                <Link href="#deling">Hvem deles opplysningene med?</Link>
+                                <Link href="#eures">CV-deling med den Europeiske Jobbmobilitetsportalen</Link>
                             </ListItem>
                             <ListItem>
                                 <Link href="#rettigheter">Hvilke rettigheter har du?</Link>
+                            </ListItem>
+                            <ListItem>
+                                <Link href="#kontakt">Ta kontakt med Nav</Link>
                             </ListItem>
                         </List>
 
@@ -67,11 +67,10 @@ async function Page() {
                             Hvilke personopplysninger samler vi inn?
                         </Heading>
                         <Heading size="small" level="4" spacing>
-                            Profil
+                            Personalia
                         </Heading>
                         <BodyLong>
-                            Når du tar i bruk innloggede tjenester på arbeidsplassen.no, innhenter vi grunnleggende
-                            personalia fra folkeregisteret:
+                            Når du tar i bruk CV på nav.no, innhenter vi grunnleggende personalia fra folkeregisteret:
                         </BodyLong>
                         <List
                             className={styles.mb3}
@@ -85,24 +84,11 @@ async function Page() {
                         </List>
 
                         <BodyLong spacing>
-                            Disse opplysningene er nødvendige for at vi skal kunne opprette en profil for deg. Dersom du
-                            ikke ønsker at vi behandler disse opplysningene, vil vi ikke kunne opprette en profil. Du
-                            kan redigere opplysningene vi har om deg, men det vil ikke påvirke dine registrerte data i
+                            Disse opplysningene er nødvendige for at vi skal kunne opprette en CV for deg. Dersom du
+                            ikke ønsker at vi behandler disse opplysningene, vil vi ikke kunne opprette en CV. Du kan
+                            redigere opplysningene vi har om deg, men det vil ikke påvirke dine registrerte data i
                             folkeregisteret.
                         </BodyLong>
-                        <BodyLong>
-                            Dersom du velger å ta i bruk øvrige tjenester på innloggede sider, vil vi lagre de
-                            nødvendige opplysningene for å bruke tjenesten i din profil. Dette kan for eksempel være:
-                        </BodyLong>
-                        <List
-                            className={styles.mb3}
-                            title={<span className={styles.visuallyhidden}>Øvrige tjenester</span>}
-                            headingTag="span"
-                        >
-                            <ListItem>Favoritter – stillinger</ListItem>
-                            <ListItem>Lagrede søk – stillinger</ListItem>
-                        </List>
-                        <BodyLong spacing>Du kan slette disse opplysningene når du selv ønsker.</BodyLong>
                         <BodyLong spacing>
                             Mens du er innlogget vil innloggingsinformasjon du avgir oppbevares i en informasjonskapsel,
                             som gjør at du forblir innlogget hele tiden mens du er inne på våre sider.
@@ -114,23 +100,28 @@ async function Page() {
                         <BodyLong>Du kan registrere følgende CV-opplysninger i vår CV-tjeneste:</BodyLong>
                         <List
                             className={styles.mb3}
-                            title={<span className={styles.visuallyhidden}>CV-opplysninger</span>}
+                            title={
+                                <span className={styles.visuallyhidden}>
+                                    Opplysninger du kan registrere i CV-tjenesten
+                                </span>
+                            }
                             headingTag="span"
                         >
-                            <ListItem>Sammendrag</ListItem>
                             <ListItem>Jobbønsker</ListItem>
                             <ListItem>Utdanninger</ListItem>
                             <ListItem>Fagbrev</ListItem>
-                            <ListItem>Språk</ListItem>
-                            <ListItem>Kompetanser</ListItem>
-                            <ListItem>Arbeidserfaringer</ListItem>
+                            <ListItem>Arbeidsforhold</ListItem>
                             <ListItem>Andre erfaringer</ListItem>
-                            <ListItem>Offentlge godkjenninger</ListItem>
+                            <ListItem>Kompetanser</ListItem>
+                            <ListItem>Offentlige godkjenninger</ListItem>
                             <ListItem>Andre godkjenninger</ListItem>
+                            <ListItem>Språk</ListItem>
                             <ListItem>Førerkort</ListItem>
                             <ListItem>Kurs</ListItem>
+                            <ListItem>Sammendrag</ListItem>
                         </List>
-                        <BodyLong spacing>Du kan når som helst endre eller slette opplysningene i din CV. </BodyLong>
+
+                        <BodyLong spacing>Du kan når som helst endre eller slette opplysningene i din CV.</BodyLong>
 
                         <Heading size="medium" level="3" spacing id="formaal">
                             Hvilke formål brukes personopplysningene til?
@@ -140,7 +131,7 @@ async function Page() {
                             Velfungerende arbeidsmarked
                         </Heading>
                         <BodyLong spacing>
-                            Arbeidsplassen.no skal bidra et velfungerende arbeidsmarked gjennom en åpen plattform for
+                            Nav skal bidra til et velfungerende arbeidsmarked gjennom en åpen plattform for
                             arbeidsmarkedet. Vi lagrer og behandler personopplysninger for å gjøre det enklere for
                             jobbsøkere å finne jobb og for arbeidsgivere å skaffe arbeidskraft. Dette er i tråd med Navs
                             samfunnsoppdrag om å få flere i arbeid.
@@ -150,79 +141,46 @@ async function Page() {
                             Statistikk og kunnskap om arbeidsmarkedet
                         </Heading>
                         <BodyLong spacing>
-                            Nav benytter opplysningene fra arbeidsplassen.no til å utvikle statistikk og kunnskap om
-                            arbeidsmarkedet. Les mer i{" "}
-                            <Link
-                                inlineText
-                                rel="noopener noreferrer"
-                                href="https://www.nav.no/personvernerklaering#chapter-3"
-                            >
-                                Navs personvernerklæring
-                            </Link>
-                            .
+                            Nav benytter opplysningene fra CV til å utvikle statistikk og kunnskap om arbeidsmarkedet.
                         </BodyLong>
 
                         <Heading size="small" level="4" spacing>
                             Arbeidsrettet oppfølging fra Nav
                         </Heading>
                         <BodyLong spacing>
-                            Nav behandler personopplysningene til deg som er under arbeidsrettet oppfølging fra Nav, for
-                            å kunne hjelpe deg å komme i arbeid raskere. Dette er i tråd med de lovpålagte oppgavene vi
-                            har. Opplysningene du oppgir i din CV kan brukes som en del av envurdering av dine
-                            rettigheter til tjenester og ytelser fra Nav, Dette omfatter arbeidsformidling, vurdering av
-                            ditt bistandsbehov, arbeidsevne og rett til dagpenger. Les mer i{" "}
-                            <Link
-                                inlineText
-                                rel="noopener noreferrer"
-                                href="https://www.nav.no/personvernerklaering#chapter-3"
-                            >
-                                Navs personvernerklæring
-                            </Link>
-                            .
+                            Nav behandler personopplysningene til deg som er under oppfølging fra Nav, for å kunne
+                            hjelpe deg å raskere komme i arbeid. Dette er i tråd med de lovpålagte oppgavene vi har.
+                            Opplysningene du oppgir i din CV, kan brukes som en del av en vurdering av dine rettigheter
+                            til tjenester og ytelser fra Nav. Dette omfatter arbeidsformidling, vurdering av ditt
+                            bistandsbehov, arbeidsevne og rett til dagpenger.
                         </BodyLong>
 
                         <Heading size="medium" level="3" spacing id="lagring">
                             Hvor lenge lagres opplysningene?
                         </Heading>
                         <BodyLong spacing>
-                            Opplysningene oppbevares og behandles så lenge du er under oppfølging av Nav.
-                            CV-opplysningene du har oppgitt kan brukes som et grunnlag for vurdering av dine rettigheter
-                            til tjenester og ytelser fra Nav. Se{" "}
-                            <Link
-                                inlineText
-                                rel="noopener noreferrer"
-                                href="https://www.nav.no/personvernerklaering#chapter-3"
-                            >
-                                Navs personvernerklæring
-                            </Link>{" "}
-                            for informasjon om slik behandling. Nav har en lovpålagt plikt til å oppbevare opplysningene
-                            i CV også etter at saksbehandlingen er avsluttet jf. Arkivloven § 6.
+                            Opplysningene oppbevares og behandles så lenge du er under oppfølging av Nav. Nav har en
+                            lovpålagt plikt til å oppbevare opplysningene i CV også etter at oppfølgingen, eller
+                            saksbehandlingen, er avsluttet jf. Arkivloven § 6.
                         </BodyLong>
 
                         <Heading size="medium" level="3" spacing id="rettslig">
                             Hva er det rettslige grunnlaget for behandlingen av personopplysninger?
                         </Heading>
                         <BodyLong spacing>
-                            Utøvelse av offentlig myndighet, jf. Nav-loven § 4 og arbeidsmarkedsloven § 10 Nav behandler
-                            personopplysninger for å utøve offentlig myndighet som følger av bestemmelser i Nav-loven og
-                            arbeidsmarkedsloven om arbeidsrettet oppfølging
+                            Utøvelse av offentlig myndighet, jf. Nav-loven § 4 og arbeidsmarkedsloven § 10. Nav
+                            behandler personopplysninger for å utøve offentlig myndighet som følger av bestemmelser i
+                            Nav-loven og arbeidsmarkedsloven om arbeidsrettet oppfølging.
                         </BodyLong>
-
-                        <Heading size="medium" level="3" spacing id="deling">
-                            Hvem deles opplysningene med?
-                        </Heading>
-
-                        <Heading size="small" level="4" spacing>
-                            Arbeidsgivere på arbeidsplassen.no
-                        </Heading>
                         <BodyLong spacing>
                             Dersom Nav-medarbeidere finner en relevant stilling for deg, kan de spørre deg om de kan
                             dele din CV med denne arbeidsgiveren. Personopplysningene deles ikke med arbeidsgiveren før
                             du godtar dette, og du kan kontakte Nav når som helst for å be om at opplysningene ikke
-                            lenger deles med arbeidsgiveren.
+                            lenger deles med arbeidsgiveren. CV gjøres utilgjengelig for arbeidsgiver 6 måneder etter at
+                            CV deles med arbeidsgiveren.
                         </BodyLong>
 
-                        <Heading size="small" level="4" spacing>
+                        <Heading size="medium" level="3" spacing id="eures">
                             CV-deling med den Europeiske Jobbmobilitetsportalen
                         </Heading>
                         <BodyLong spacing>
@@ -239,17 +197,9 @@ async function Page() {
                             Våre databehandlere
                         </Heading>
                         <BodyLong spacing>
-                            For å kunne tilby våre tjenester på arbeidsplassen.no benytter vi databehandlere, som
-                            innebærer at vi deler dine personopplysninger med disse. Dette gjelder for eksempel
-                            IT-leverandører som har avtaler med Nav. For å lese mer om dette, se{" "}
-                            <Link
-                                inlineText
-                                rel="noopener noreferrer"
-                                href="https://www.nav.no/personvernerklaering#chapter-4"
-                            >
-                                Navs generelle personvernerklæring
-                            </Link>
-                            .
+                            For å kunne tilby våre tjenester benytter vi databehandlere, som innebærer at vi deler dine
+                            personopplysninger med disse. Dette gjelder for eksempel IT-leverandører som har avtaler med
+                            Nav.
                         </BodyLong>
 
                         <Heading size="medium" level="3" spacing id="rettigheter">
@@ -261,9 +211,8 @@ async function Page() {
                         </Heading>
                         <BodyLong spacing>
                             Du har rett til å få vite hvilke personopplysninger vi har om deg og be om retting av
-                            uriktige opplysninger. Du kan logge deg inn på Min side på arbeidsplassen.no for å se mange
-                            av opplysningene vi har registrert om deg. For innsyn i personopplysninger ut over dette, må
-                            du{" "}
+                            uriktige opplysninger. Du kan logge deg inn på nav.no/min-cv for å se mange av opplysningene
+                            vi har registrert om deg. For innsyn i personopplysninger ut over dette, må du{" "}
                             <Link inlineText rel="noopener noreferrer" href="https://www.nav.no/kontaktoss">
                                 ta kontakt med oss på nav.no
                             </Link>
@@ -274,10 +223,9 @@ async function Page() {
                             Rett til å protestere og rett til sletting
                         </Heading>
                         <BodyLong spacing>
-                            Du har rett til å protestere mot at opplysningene dine behandles på arbeidsplassen.no. For å
-                            protestere, tar du kontakt med Nav. Nav vil da slutte å behandle opplysningene dine og
-                            eventuelt slette dem, med mindre det er tungtveiende grunner til at Nav likevel må behandle
-                            dem.
+                            Du har rett til å protestere mot behandlingen av dine personopplysninger. For å protestere,
+                            tar du kontakt med Nav. Nav vil da slutte å behandle opplysningene dine og eventuelt slette
+                            dem, med mindre det er tungtveiende grunner til at Nav likevel må behandle dem.
                         </BodyLong>
                         <BodyLong spacing>
                             I helt spesielle tilfeller vil du kunne ha rett til å få slettet opplysninger om deg. For at
@@ -288,11 +236,28 @@ async function Page() {
                         <Heading size="small" level="4" spacing>
                             Rett til begrensning av behandlingen
                         </Heading>
-                        <BodyLong>
+                        <BodyLong spacing>
                             Du har rett til å be om at Nav midlertidig stopper behandlingen av dine opplysninger, dersom
-                            du mener at opplysningene vi har om deg er feil eller du mener at vår behandling av
+                            du mener at opplysningene vi har om deg er feil, eller du mener at vår behandling av
                             opplysningene er ulovlig. Det samme gjelder dersom du mener at vi ikke trenger
                             opplysningene.
+                        </BodyLong>
+
+                        <Heading size="medium" level="3" spacing id="kontakt">
+                            Ta kontakt med Nav
+                        </Heading>
+
+                        <BodyLong spacing>
+                            Dersom du har spørsmål om rettighetene dine eller har flere spørsmål om personvern, kan du
+                            lese{" "}
+                            <Link inlineText rel="noopener noreferrer" href="https://www.nav.no/personvernerklaering">
+                                Personvernerklæring for Nav
+                            </Link>{" "}
+                            eller{" "}
+                            <Link inlineText rel="noopener noreferrer" href="https://www.nav.no/kontaktoss">
+                                ta kontakt med oss på nav.no
+                            </Link>
+                            .
                         </BodyLong>
                     </VStack>
                 </Box>
