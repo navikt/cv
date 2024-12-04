@@ -1,11 +1,9 @@
 import { BodyLong, BodyShort, Box, Button, Heading, HStack, Link, Loader, Tag } from "@navikt/ds-react";
-import { useContext, useState } from "react";
 import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
 import { CheckmarkIcon, XMarkIcon } from "@navikt/aksel-icons";
 import { useHentEuresSamtykke } from "@/app/_common/hooks/swr/useHentEuresSamtykke";
 import { useBekreftTidligereCv } from "@/app/_common/hooks/swr/useBekreftTidligereCv";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
-import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 import { arbeidsplassenBaseUrl } from "@/app/_common/utils/urlUtils";
 import styles from "../../../page.module.css";
 
@@ -273,14 +271,9 @@ function DelingTag({ erDelt, deltMed, laster = false, error = false }) {
 }
 
 export default function DelingAvCV() {
-    const { person } = usePerson();
-    const [måBekrefteTidligereCv, setMåBekrefteTidligereCv] = useState(person ? person.maaBekrefteTidligereCv : false);
-
-    const { setVisHjemmelside } = useContext(ApplicationContext);
+    const { måBekrefteTidligereCv, personLaster } = usePerson();
     const { delerEures, euresIsLoading, euresIsError } = useHentEuresSamtykke();
-    const { bekreftSuksess, bekreftLaster, bekreftHarFeil, setBekreft } = useBekreftTidligereCv();
-
-    if (bekreftSuksess === true) setMåBekrefteTidligereCv(false);
+    const { bekreftLaster, bekreftHarFeil, setBekreft } = useBekreftTidligereCv();
 
     const bekreftTidligereCv = () => {
         if (måBekrefteTidligereCv) setBekreft(true);
@@ -303,7 +296,7 @@ export default function DelingAvCV() {
                 </HStack>
                 <BodyLong spacing>
                     Alle opplysninger i din CV og jobbønsker deles med Nav så lenge du er registrert hos Nav.{" "}
-                    <Link rel="noopener noreferrer" href="#" onClick={() => setVisHjemmelside(true)} inlineText>
+                    <Link rel="noopener noreferrer" href="/min-cv/slik-bruker-nav-cv-opplysningene" inlineText>
                         Les mer her
                     </Link>
                     .
@@ -311,7 +304,7 @@ export default function DelingAvCV() {
                 <DelingTag
                     deltMed="Nav"
                     erDelt={!måBekrefteTidligereCv}
-                    laster={bekreftLaster}
+                    laster={bekreftLaster || personLaster}
                     error={bekreftHarFeil}
                 />
                 {måBekrefteTidligereCv && (
