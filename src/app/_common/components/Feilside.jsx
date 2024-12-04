@@ -58,11 +58,11 @@ export const FeilsideÅrsak = Object.freeze({
     },
     FETCH_ERROR: {
         tittel: "CV er ikke tilgjengelig",
-        tekst: "Det har skjedd en feil under lasting av CVen din. Vennligst prøv igjen eller kom tilbake senere.",
+        tekst: "Vi klarte dessverre ikke å hente din CV akkurat nå. Vennligst prøv igjen eller kom tilbake senere.",
     },
     IKKE_LOGGET_INN: {
         tittel: "Du er ikke logget inn",
-        tekst: "Du er ikke logget inn. Min CV er en innlogget tjeneste. Vennligst logg inn, eller gå tilbake til Nav.no.",
+        tekst: 'Du er ikke logget inn. "Min CV" er en innlogget tjeneste. Vennligst logg inn, eller gå tilbake til Nav.no.',
     },
     LOGGET_UT: {
         tittel: "Du har blitt logget ut",
