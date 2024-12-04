@@ -1,6 +1,5 @@
 import { BodyLong, Box, Heading, HStack, Link, List } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { navBaseUrl } from "@/app/_common/utils/urlUtils";
 import { ListItem } from "@navikt/ds-react/List";
 
 function HjemmelIcon() {
@@ -114,43 +113,6 @@ export default function Hjemmelstekst() {
                 <ListItem className={styles.mb3}>
                     Du kan risikere å miste økonomisk støtte fra Nav, for eksempel dagpenger (
                     <Link rel="noopener noreferrer" inlineText href="https://lovdata.no/lov/1997-02-28-19/%C2%A74-5">
-                        Folketrygdloven
-                    </Link>
-                    ).
-                </ListItem>
-            </List>
-
-            <BodyLong spacing>
-                Du kan oppdatere og endre CV-en din når du vil.{" "}
-                <Link rel="noopener noreferrer" href="https://lovdata.no/dokument/NL/lov/1992-12-04-126">
-                    Arkivloven
-                </Link>{" "}
-                pålegger oss å arkivere alle opplysninger du legger inn. Les mer om{" "}
-                <Link
-                    rel="noopener noreferrer"
-                    href={`${navBaseUrl}/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten`}
-                >
-                    behandling av personopplysninger.
-                </Link>
-            </BodyLong>
-
-            <Heading size="small" spacing level="2">
-                Hva kan arbeidsgivere se?
-            </Heading>
-            <BodyLong spacing>
-                Hvis Nav har sendt CV-en din til en arbeidsgiver, kan arbeidsgiveren se CV-opplysningene dine.
-            </BodyLong>
-
-            <List title="Hva skjer hvis du ikke registrerer en CV?" headingTag="h2" className={styles.mb6}>
-                <ListItem className={styles.mb3}>
-                    Du kan risikere at Nav ikke har mulighet til å gi deg oppfølgingen du trenger.
-                </ListItem>
-                <ListItem className={styles.mb3}>
-                    Du kan gå glipp av jobbmuligheter, fordi Nav ikke kan vurdere kompetansen din mot ledige stillinger.
-                </ListItem>
-                <ListItem className={styles.mb3}>
-                    Du kan risikere å miste økonomisk støtte fra Nav, for eksempel dagpenger (
-                    <Link rel="noopener noreferrer" href="https://lovdata.no/lov/1997-02-28-19/§4-5">
                         Folketrygdloven
                     </Link>
                     ).
