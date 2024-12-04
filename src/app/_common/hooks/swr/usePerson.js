@@ -14,5 +14,8 @@ export const usePerson = () => {
         personLaster: isLoading || (!data && !error),
         personHarFeil: error,
         personalia: data?.personalia || null,
+        harIkkeSettHjemmel: data ? !data.harSettHjemmelEllerSamtykket : null,
+        måBekrefteTidligereCv: data ? data.maaBekrefteTidligereCv : null,
+        erUnderOppfølging: data ? data.erUnderOppfoelging : null,
     };
 };

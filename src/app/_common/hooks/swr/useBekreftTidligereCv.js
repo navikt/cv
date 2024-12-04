@@ -1,9 +1,10 @@
 "use client";
 
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { simpleApiRequest } from "@/app/_common/utils/fetchUtils";
 import { useContext, useState } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
+import { PERSON_KEY } from "@/app/_common/hooks/swr/usePerson";
 
 export const useBekreftTidligereCv = () => {
     const { suksessNotifikasjon, errorNotifikasjon } = useContext(ApplicationContext);
@@ -16,6 +17,7 @@ export const useBekreftTidligereCv = () => {
             return false;
         }
 
+        await mutate(PERSON_KEY);
         suksessNotifikasjon("CV-en din ble delt med Nav");
         return true;
     };

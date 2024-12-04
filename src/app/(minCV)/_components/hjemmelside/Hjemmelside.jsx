@@ -2,16 +2,14 @@ import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import NextLink from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useOppdaterSettHjemmel } from "@/app/_common/hooks/swr/useOppdaterSettHjemmel";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
-import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 import { navBaseUrl } from "@/app/_common/utils/urlUtils";
 import Hjemmelstekst from "@/app/_common/components/Hjemmelstekst";
 
-export default function Hjemmelside({ måBekrefte }) {
-    const { person } = usePerson();
-    const { setVisHjemmelside } = useContext(ApplicationContext);
+export function Hjemmelside() {
+    const { harIkkeSettHjemmel, måBekrefteTidligereCv } = usePerson();
 
     const [sendBekreftelse, setSendBekreftelse] = useState(false);
     const { settHjemmelSuksess, settHjemmelLaster } = useOppdaterSettHjemmel(sendBekreftelse);
@@ -27,7 +25,7 @@ export default function Hjemmelside({ måBekrefte }) {
                 <Box background="surface-default" padding="10" className={styles.box}>
                     <Hjemmelstekst />
 
-                    {person.maaBekrefteTidligereCv && (
+                    {måBekrefteTidligereCv && (
                         <>
                             <Heading size="small" spacing level="2">
                                 Du har allerede en CV på arbeidsplassen.no
@@ -48,18 +46,16 @@ export default function Hjemmelside({ måBekrefte }) {
                     <HStack gap="4" className={styles.mb3}>
                         <Button
                             variant="primary"
-                            loading={måBekrefte ? settHjemmelLaster : false}
-                            onClick={() => (måBekrefte ? setSendBekreftelse(true) : setVisHjemmelside(false))}
+                            loading={harIkkeSettHjemmel ? settHjemmelLaster : false}
+                            onClick={() => setSendBekreftelse(true)}
                         >
-                            {måBekrefte ? "Gå til tjenesten" : "Gå tilbake til tjenesten"}
+                            Gå til tjenesten
                         </Button>
-                        {måBekrefte && (
-                            <NextLink href={`${navBaseUrl}/minside`} passHref legacyBehavior>
-                                <Button variant="secondary" as="a" role="link">
-                                    Tilbake til Min side
-                                </Button>
-                            </NextLink>
-                        )}
+                        <NextLink href={`${navBaseUrl}/minside`} passHref legacyBehavior>
+                            <Button variant="secondary" as="a" role="link">
+                                Tilbake til Min side
+                            </Button>
+                        </NextLink>
                     </HStack>
                 </Box>
             </Box>
