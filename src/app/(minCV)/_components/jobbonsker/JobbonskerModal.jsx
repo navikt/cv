@@ -75,7 +75,8 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
     const oppdaterLokasjoner = (lokasjon, erValgt) => {
         const oppdaterteLokasjoner = [...lokasjoner];
         if (erValgt) {
-            oppdaterteLokasjoner.push(lokasjon);
+            // Add styrk08 to code
+            oppdaterteLokasjoner.push({ ...lokasjon, code: lokasjon.styrk08 });
         } else {
             const eksisterendeIndex = oppdaterteLokasjoner.findIndex((e) => e.location === lokasjon.location);
             oppdaterteLokasjoner.splice(eksisterendeIndex, 1);
