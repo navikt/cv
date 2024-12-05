@@ -116,7 +116,7 @@ export default function PersonaliaModal({
                             setShouldAutoFocusErrors(false);
                             revalidate(e, PersonaliaSchema, errors, setErrors);
                         }}
-                        error={errors?.telefon}
+                        error={errors?.telefonnummer}
                     />
                 </div>
             </HStack>
