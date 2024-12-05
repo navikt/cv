@@ -1,12 +1,14 @@
 import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Skeleton, Tag, VStack } from "@navikt/ds-react";
 import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
+import { useCv } from "@/app/_common/hooks/swr/useCv";
 
 function HeaderPanel({ title = "Min CV", visTag = true }) {
     const { personalia } = usePerson();
+    const { cv } = useCv();
 
     const navn = personalia ? `${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase() : null;
-    const sistEndret = personalia ? new Date(personalia.sistEndret) : null;
+    const sistEndret = cv ? new Date(cv.sistEndret) : null;
 
     const navnKomponent = !navn ? (
         <BodyShort as={Skeleton} size="small">
