@@ -25,8 +25,8 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
     }, []);
 
     const JobbonskerSchema = z.object({
-        occupations: z.object({}).passthrough().array().min(1, "Du må legge til jobbønsker"),
-        locations: z.object({}).passthrough().array().min(1, "Du må legge til steder"),
+        occupations: z.object({}).passthrough().array().min(1, "Du må legge til jobber/yrker du ønsker å jobbe med"),
+        locations: z.object({}).passthrough().array().min(1, "Du må legge til steder du kan jobbe"),
         workLoadTypes: z.string().array().optional(),
         occupationTypes: z.string().array().optional(),
         workScheduleTypes: z.string().array().optional(),

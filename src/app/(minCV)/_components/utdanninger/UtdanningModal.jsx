@@ -26,7 +26,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
     const UtdanningSchema = z.object({
         institution: z.string().optional(),
         field: z.string().optional(),
-        nuskode: z.string().min(1, "Utdanningsnivå mangler"),
+        nuskode: z.string().min(1, "Du må velge utdanningsnivå"),
         hasAuthorization: z.string().optional(),
         startDate: dateStringSchema.refine((data) => data <= new Date(), { message: "Dato kan ikke være frem i tid" }),
         ongoing: z.boolean().optional(),
