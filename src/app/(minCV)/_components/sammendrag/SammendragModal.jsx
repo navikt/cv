@@ -5,15 +5,13 @@ import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [sammendragEndring, setSammendragEndring] = useState(gjeldendeElement || "");
-    const [sammendragError, setSammendragError] = useState(false);
 
     useEffect(() => {
         setSammendragEndring(gjeldendeElement || "");
     }, [gjeldendeElement]);
 
     const lagre = () => {
-        if (!sammendragEndring) setSammendragError(true);
-        if (sammendragEndring) lagreElement(sammendragEndring);
+        lagreElement(sammendragEndring);
     };
 
     return (
@@ -44,9 +42,7 @@ export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElem
                     value={sammendragEndring}
                     onChange={(e) => {
                         setSammendragEndring(e.target.value);
-                        setSammendragError(false);
                     }}
-                    error={sammendragError && "Du må skrive inn sammendrag"}
                 />
             </VStack>
         </CvModalForm>
