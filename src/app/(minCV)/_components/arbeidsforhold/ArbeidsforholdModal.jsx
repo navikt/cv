@@ -32,7 +32,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
 
     const ArbeidsforholdSchema = z.object({
         employer: z.string().optional(),
-        jobTitle: z.string().min(1, "Stilling/yrke må fylles ut"),
+        jobTitle: z.string().min(1, "Stilling eller yrke må fylles ut"),
         conceptId: z.coerce.string().optional(),
         styrkkode: z.coerce.string().optional(),
         alternativeJobTitle: z.string().optional(),
@@ -122,7 +122,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
                 id="jobTitle"
                 name="jobTitle"
                 className={styles.mb6}
-                label="Stilling/yrke"
+                label="Stilling eller yrke"
                 description="Må fylles ut"
                 type={TypeaheadEnum.STILLING}
                 oppdaterValg={setStillingTypeahead}
