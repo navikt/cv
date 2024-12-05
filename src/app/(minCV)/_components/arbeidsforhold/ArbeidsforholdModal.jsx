@@ -168,13 +168,13 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
             />
             <CheckboxGroup
                 id="ongoing"
-                legend="Jobb jeg har nå"
+                legend="Jeg har denne jobben nå"
                 className={styles.mb6}
                 value={pågår}
                 onChange={setPågår}
             >
                 <Checkbox name="ongoing" value="true">
-                    Jobb jeg har nå
+                    Jeg har denne jobben nå
                 </Checkbox>
             </CheckboxGroup>
 
