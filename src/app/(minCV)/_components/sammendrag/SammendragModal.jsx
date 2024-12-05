@@ -5,15 +5,13 @@ import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [sammendragEndring, setSammendragEndring] = useState(gjeldendeElement || "");
-    const [sammendragError, setSammendragError] = useState(false);
 
     useEffect(() => {
         setSammendragEndring(gjeldendeElement || "");
     }, [gjeldendeElement]);
 
     const lagre = () => {
-        if (!sammendragEndring) setSammendragError(true);
-        if (sammendragEndring) lagreElement(sammendragEndring);
+        lagreElement(sammendragEndring);
     };
 
     return (
@@ -38,15 +36,12 @@ export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElem
                 </Alert>
                 <Textarea
                     label="Gi en kort oppsummering av deg selv"
-                    description="Må fylles ut"
                     placeholder="En kort oppsummering av din kompetanse og dine personlige egenskaper."
                     className={styles.mb6}
                     value={sammendragEndring}
                     onChange={(e) => {
                         setSammendragEndring(e.target.value);
-                        setSammendragError(false);
                     }}
-                    error={sammendragError && "Du må skrive inn sammendrag"}
                 />
             </VStack>
         </CvModalForm>
