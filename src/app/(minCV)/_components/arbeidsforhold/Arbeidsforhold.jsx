@@ -111,11 +111,11 @@ export default function Arbeidsforhold() {
                                     <FormSummary.Answers aria-labelledby={`${summaryHeadingId}-${index}`}>
                                         <FormSummary.Answer>
                                             <FormSummary.Label>Bedrift</FormSummary.Label>
-                                            <FormSummary.Value>{erfaring.employer}</FormSummary.Value>
+                                            <FormSummary.Value>{erfaring.employer || "Ikke utfylt"}</FormSummary.Value>
                                         </FormSummary.Answer>
                                         <FormSummary.Answer>
                                             <FormSummary.Label>Sted</FormSummary.Label>
-                                            <FormSummary.Value>{erfaring.location}</FormSummary.Value>
+                                            <FormSummary.Value>{erfaring.location || "Ikke utfylt"}</FormSummary.Value>
                                         </FormSummary.Answer>
                                         <FormSummary.Answer>
                                             <FormSummary.Label>Start- og sluttdato</FormSummary.Label>
