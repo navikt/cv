@@ -102,7 +102,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                     <div className={styles.previewItemLeft}>
                                         {formatterDato(utdanning.startDate)} - {formatterDato(utdanning.endDate)}
                                     </div>
-                                    <dl className={styles.previewItemRight}>
+                                    <dl aria-label="Utdanning" className={styles.previewItemRight}>
                                         <dt>
                                             <BodyLong weight="semibold">
                                                 {UtdanningsnivåEnum[utdanning.nuskode]}
@@ -153,7 +153,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                     <div className={styles.previewItemLeft}>
                                         {`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}
                                     </div>
-                                    <dl className={styles.previewItemRight}>
+                                    <dl aria-label="Arbeidsforhold" className={styles.previewItemRight}>
                                         <dt>
                                             <BodyLong weight="semibold">
                                                 {erfaring.jobTitle || erfaring.alternativeJobTitle}
@@ -189,7 +189,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                     <div className={styles.previewItemLeft}>
                                         {`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}
                                     </div>
-                                    <dl className={styles.previewItemRight}>
+                                    <dl aria-label="Annen erfaring" className={styles.previewItemRight}>
                                         <dt>
                                             <BodyLong weight="semibold">{erfaring.role}</BodyLong>
                                         </dt>
@@ -235,7 +235,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft}>{formatterFullDato(kurs.date) || ""}</div>
-                                    <dl className={styles.previewItemRight}>
+                                    <dl aria-label="Kurs" className={styles.previewItemRight}>
                                         <dt>
                                             <BodyLong weight="semibold">{kurs.title}</BodyLong>
                                         </dt>
@@ -270,7 +270,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                     <div className={styles.previewItemLeft}>
                                         {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
                                     </div>
-                                    <dl className={styles.previewItemRight}>
+                                    <dl aria-label="Offentlige godkjenninger" className={styles.previewItemRight}>
                                         <dt>
                                             <BodyLong weight="semibold">{godkjenning.title}</BodyLong>
                                         </dt>
@@ -300,7 +300,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                     <div className={styles.previewItemLeft}>
                                         {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
                                     </div>
-                                    <dl className={styles.previewItemRight}>
+                                    <dl aria-label="Andre godkjenninger" className={styles.previewItemRight}>
                                         <dt>
                                             <BodyLong weight="semibold">{godkjenning.certificateName}</BodyLong>
                                         </dt>
@@ -323,7 +323,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             <div key={index}>
                                 <div className={styles.previewItem}>
                                     <div className={styles.previewItemLeft} />
-                                    <dl className={styles.previewItemRight}>
+                                    <dl aria-label="Språk" className={styles.previewItemRight}>
                                         <dt>
                                             <BodyLong weight="semibold">{spraak.language}</BodyLong>
                                         </dt>
