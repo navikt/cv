@@ -28,7 +28,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
     }, [ref]);
 
     return (
-        <HStack className={`${styles.preview} ${styles.mt16}`}>
+        <HStack className={`${styles.preview} ${styles.mt16} ${styles.wrapText}`}>
             <Box>
                 <HStack align="start" gap="4" className={styles.mb9}>
                     <Button ref={ref} variant="primary" onClick={() => setVisHovedinnhold(true)}>
