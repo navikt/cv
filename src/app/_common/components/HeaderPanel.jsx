@@ -2,6 +2,7 @@ import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Skeleton, VStack }
 import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
+import styles from "@/app/page.module.css";
 
 function HeaderPanel({ title = "Min CV" }) {
     const { personalia } = usePerson();
@@ -15,7 +16,9 @@ function HeaderPanel({ title = "Min CV" }) {
             OLA NORDMANN
         </BodyShort>
     ) : (
-        <BodyShort size="small">{navn}</BodyShort>
+        <BodyShort size="small" className={styles.wrapText}>
+            {navn}
+        </BodyShort>
     );
 
     const sistEndretKomponent = !sistEndret ? (
