@@ -28,5 +28,6 @@ export const useCv = () => {
         offentligeGodkjenninger: data?.offentligeGodkjenninger || [],
         språk: data?.spraak || [],
         sammendrag: data?.sammendrag || "",
+        sistEndret: data?.sistEndret || null,
     };
 };

@@ -5,10 +5,9 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 
 function HeaderPanel({ title = "Min CV" }) {
     const { personalia } = usePerson();
-    const { cv } = useCv();
+    const { sistEndret } = useCv();
 
     const navn = personalia ? `${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase() : null;
-    const sistEndret = cv ? new Date(cv.sistEndret) : null;
 
     const navnKomponent = !navn ? (
         <BodyShort as={Skeleton} size="small">
