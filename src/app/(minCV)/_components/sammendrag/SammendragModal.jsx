@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Alert, BodyLong, Heading, HStack, Textarea, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 
 export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [sammendragEndring, setSammendragEndring] = useState(gjeldendeElement || "");
+    const modalFormRef = useRef();
 
     useEffect(() => {
         setSammendragEndring(gjeldendeElement || "");
@@ -23,6 +24,7 @@ export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElem
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
+            ref={modalFormRef}
         >
             <VStack>
                 <Alert variant="warning" className={styles.mb12}>

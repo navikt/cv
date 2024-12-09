@@ -1,7 +1,7 @@
 import { Checkbox, CheckboxGroup, HStack, Radio, RadioGroup, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { AnsettelsesformEnum, ArbeidstidEnum, OmfangEnum, StarttidspunktEnum } from "@/app/_common/enums/cvEnums";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
@@ -14,6 +14,7 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
     const [errors, setErrors] = useState({});
     const [yrker, setYrker] = useState([]);
     const [lokasjoner, setLokasjoner] = useState([]);
+    const modalFormRef = useRef();
 
     useEffect(() => {
         const oppdaterJobbønsker = (jobbønsker) => {
@@ -95,6 +96,7 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
+            ref={modalFormRef}
         >
             <VStack justify="space-between">
                 <Typeahead

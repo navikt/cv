@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
@@ -8,6 +8,7 @@ import styles from "@/app/page.module.css";
 export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
     const [valgtFagbrev, setValgtFagbrev] = useState(gjeldendeElement || null);
     const [valgtFagbrevError, setValgtFagbrevError] = useState(false);
+    const modalFormRef = useRef();
 
     useEffect(() => {
         const oppdaterFagbrev = (fagbrev) => setValgtFagbrev(fagbrev);
@@ -40,6 +41,7 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
+            ref={modalFormRef}
         >
             <Typeahead
                 label="Fagdokumentasjon"

@@ -1,5 +1,5 @@
 import { HStack } from "@navikt/ds-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
@@ -7,6 +7,7 @@ import styles from "@/app/page.module.css";
 
 export default function KompetanserModal({ alleredeValgte, lagreKompetanser, modalÅpen, toggleModal, laster, feilet }) {
     const [valgteKompetanser, setValgteKompetanser] = useState(alleredeValgte || []);
+    const modalFormRef = useRef();
 
     useEffect(() => {
         const oppdaterKompetanse = (kompetanse) => setValgteKompetanser(kompetanse);
@@ -46,6 +47,7 @@ export default function KompetanserModal({ alleredeValgte, lagreKompetanser, mod
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
+            ref={modalFormRef}
         >
             <Typeahead
                 label="Hva er du flink til?"
