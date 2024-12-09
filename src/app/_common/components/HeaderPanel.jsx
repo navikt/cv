@@ -1,10 +1,10 @@
-import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Skeleton, Tag, VStack } from "@navikt/ds-react";
+import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Skeleton, VStack } from "@navikt/ds-react";
 import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 
-function HeaderPanel({ title = "Min CV", visTag = true }) {
-    const { personalia, personLaster } = usePerson();
+function HeaderPanel({ title = "Min CV" }) {
+    const { personalia } = usePerson();
     const { cv } = useCv();
 
     const navn = personalia ? `${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase() : null;
@@ -37,11 +37,6 @@ function HeaderPanel({ title = "Min CV", visTag = true }) {
                                 <Heading level="1" size="large">
                                     {title}
                                 </Heading>
-                                {visTag && personLaster && (
-                                    <Tag size="small" variant="info-filled">
-                                        Laster...
-                                    </Tag>
-                                )}
                             </HStack>
                             <Hide below="md">
                                 <HStack gap="4" align="center">
