@@ -147,6 +147,13 @@ export default function Arbeidsforhold() {
                                         icon={<TrashIcon aria-hidden />}
                                         variant="tertiary"
                                         onClick={() => slettElement(index)}
+                                        onKeyUp={(e) => {
+                                            // Prevent Firefox double action with spacebar
+                                            if (e.code === "Space") {
+                                                e.preventDefault();
+                                                slettElement(index);
+                                            }
+                                        }}
                                         loading={lastendeIndex === index}
                                     >
                                         Fjern
