@@ -27,7 +27,7 @@ export async function GET(request) {
 
     const data = await response.json();
 
-    if (data?.erUnderOppfoelging === "false") {
+    if (data?.erUnderOppfoelging === false) {
         metrics.ikkeUnderOppfølgingCounter.inc();
     }
 
