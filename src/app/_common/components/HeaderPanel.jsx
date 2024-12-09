@@ -4,7 +4,7 @@ import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 
 function HeaderPanel({ title = "Min CV", visTag = true }) {
-    const { personalia } = usePerson();
+    const { personalia, personLaster } = usePerson();
     const { cv } = useCv();
 
     const navn = personalia ? `${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase() : null;
@@ -37,9 +37,9 @@ function HeaderPanel({ title = "Min CV", visTag = true }) {
                                 <Heading level="1" size="large">
                                     {title}
                                 </Heading>
-                                {visTag && (
+                                {visTag && personLaster && (
                                     <Tag size="small" variant="info-filled">
-                                        {personalia ? "Påbegynt" : "Laster..."}
+                                        Laster...
                                     </Tag>
                                 )}
                             </HStack>
