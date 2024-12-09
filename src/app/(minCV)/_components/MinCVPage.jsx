@@ -103,7 +103,7 @@ export default function MinCVPage() {
                 </>
             ) : (
                 <>
-                    <HeaderPanel title="Forhåndsvis CV" visTag />
+                    <HeaderPanel title="Forhåndsvis CV" />
                     <Forhandsvisning setVisHovedinnhold={setVisHovedinnhold} />
                 </>
             )}

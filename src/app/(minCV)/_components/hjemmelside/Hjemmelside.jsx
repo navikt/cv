@@ -20,7 +20,7 @@ export function Hjemmelside() {
 
     return (
         <div>
-            <HeaderPanel title="Slik bruker Nav CV-opplysningene" visTag={false} />
+            <HeaderPanel title="Slik bruker Nav CV-opplysningene" />
             <Box className={[styles.main, styles.mb16]}>
                 <Box background="surface-default" padding="10" className={styles.box}>
                     <Hjemmelstekst />

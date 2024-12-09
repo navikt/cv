@@ -7,7 +7,7 @@ import { arbeidsplassenBaseUrl, navBaseUrl } from "@/app/_common/utils/urlUtils"
 export function Feilside({ årsak }) {
     return (
         <>
-            <HeaderPanel visTag={false} />
+            <HeaderPanel />
             <HStack className={styles.pageContainer}>
                 <Box padding="10" className={[styles.box, styles.mt3]}>
                     <VStack>
