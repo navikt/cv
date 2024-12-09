@@ -51,7 +51,21 @@ export const CvModalForm = forwardRef(
                             Avbryt
                         </Button>
 
-                        <Button form={formId} loading={laster} variant="primary" type="submit" disabled={laster}>
+                        <Button
+                            form={formId}
+                            loading={laster}
+                            variant="primary"
+                            type="submit"
+                            onKeyUp={(e) => {
+                                // Firefox double submits when using space, manually trigger submit when hitting "Space" to avoid this
+                                if (e.code === "Space") {
+                                    e.preventDefault();
+                                    const formRef = { ...ref, currentTarget: ref.current };
+                                    handleFormSubmit(formRef);
+                                }
+                            }}
+                            disabled={laster}
+                        >
                             Lagre
                         </Button>
                     </HStack>

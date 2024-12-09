@@ -1,5 +1,5 @@
 import { HStack, Select } from "@navikt/ds-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { SpråkEnum } from "@/app/_common/enums/cvEnums";
 import styles from "@/app/page.module.css";
@@ -12,6 +12,7 @@ export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement,
     const [valgtSpråk, setValgtSpråk] = useState(gjeldendeElement || null);
     const [muntligEvne, setMuntligEvne] = useState("IKKE_OPPGITT");
     const [skriftligEvne, setSkriftligEvne] = useState("IKKE_OPPGITT");
+    const modalFormRef = useRef();
 
     useEffect(() => {
         const oppdaterSpråk = (språk) => {
@@ -49,6 +50,7 @@ export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement,
             laster={laster}
             handleFormSubmit={lagre}
             toggleModal={toggleModal}
+            ref={modalFormRef}
         >
             <Typeahead
                 id="language"

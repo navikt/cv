@@ -1,5 +1,5 @@
 import { BodyShort, HStack, TextField } from "@navikt/ds-react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import styles from "@/app/page.module.css";
 import { DatovelgerWithoutValidation } from "@/app/(minCV)/_components/datovelger/DatovelgerWithoutValidation";
@@ -64,7 +64,6 @@ export default function AndreGodkjenningerModal({
     };
 
     const lagre = (e) => {
-        e.preventDefault();
         setShouldAutoFocusErrors(true);
         setHasTriedSubmit(true);
 

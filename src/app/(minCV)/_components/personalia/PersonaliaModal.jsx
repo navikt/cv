@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { HStack, TextField } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
@@ -17,6 +17,7 @@ export default function PersonaliaModal({
 }) {
     const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
     const [errors, setErrors] = useState({});
+    const modalFormRef = useRef();
 
     const PersonaliaSchema = z.object({
         fornavn: z.string().min(1, "Fornavn må fylles ut"),
@@ -53,6 +54,7 @@ export default function PersonaliaModal({
             laster={laster}
             toggleModal={toggleModal}
             handleFormSubmit={lagre}
+            ref={modalFormRef}
         >
             <HStack justify="space-between">
                 <div className={styles.element}>
