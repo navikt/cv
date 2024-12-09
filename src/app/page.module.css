@@ -571,6 +571,16 @@
     opacity: 0.3;
 }
 
+.box h1,
+.box h2,
+.box h3,
+.box h4,
+.box p,
+.box dd,
+.wrapText {
+    overflow-wrap: anywhere;
+}
+
 .borderunder dd:not(:last-child) {
     border-bottom: 1px solid #bbb;
 }
