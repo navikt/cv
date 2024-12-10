@@ -641,11 +641,6 @@
     margin-top: var(--a-spacing-24) !important;
 }
 
-.navds-guide-panel__content {
-    border-width: 0 !important;
-    border-radius: var(--a-border-radius-medium) !important;
-}
-
 .errorSummary:focus {
     box-shadow:
         0 0 0 1px var(--a-border-on-inverted),

@@ -9,7 +9,7 @@ export function HotjarWrapper() {
                     Noe som mangler?
                 </Heading>
 
-                <BodyLong>
+                <BodyLong className={styles.mb3}>
                     Denne siden er en tidlig versjon som fortsatt er under arbeid. Opplever du feil eller fant du ikke
                     det du ville registrere i CV-en?
                 </BodyLong>
