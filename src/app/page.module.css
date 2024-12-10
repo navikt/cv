@@ -638,8 +638,12 @@
 .hotjarWrapper {
     padding-bottom: 0;
     padding-top: 0;
-    margin-top: var(--a-spacing-16) !important;
-    text-align: center;
+    margin-top: var(--a-spacing-24) !important;
+}
+
+.navds-guide-panel__content {
+    border-width: 0 !important;
+    border-radius: var(--a-border-radius-medium) !important;
 }
 
 .errorSummary:focus {
