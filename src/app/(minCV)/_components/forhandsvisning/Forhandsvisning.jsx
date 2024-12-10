@@ -47,7 +47,9 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             <BodyLong size="small">Fødselsdato:</BodyLong>
                         </dt>
                         <dd className={styles.PersonalInfoValue}>
-                            <BodyLong size="small">{personalia ? personalia.foedselsdato : ""}</BodyLong>
+                            <BodyLong size="small">
+                                {personalia ? formatterFullDatoMedFallback(personalia.foedselsdato, "") : ""}
+                            </BodyLong>
                         </dd>
                     </div>
                     <div className={styles.previewPersonalInfo}>
@@ -96,31 +98,29 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             Utdanning
                         </Heading>
 
-                        {datosorterElementer(cv.utdanning, "startDate", "endDate").map((utdanning, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>
+                        <dl aria-label="Utdanninger">
+                            {datosorterElementer(cv.utdanning, "startDate", "endDate").map((utdanning, index) => (
+                                <div key={index} className={styles.previewItem}>
+                                    <dt className={styles.previewItemLeft}>
                                         {formatterDato(utdanning.startDate)} - {formatterDato(utdanning.endDate)}
-                                    </div>
-                                    <dl aria-label="Utdanning" className={styles.previewItemRight}>
-                                        <dt>
-                                            <BodyLong weight="semibold">
-                                                {UtdanningsnivåEnum[utdanning.nuskode]}
+                                    </dt>
+
+                                    <dd className={styles.previewItemRight}>
+                                        <Heading level="3" size="xsmall">
+                                            {UtdanningsnivåEnum[utdanning.nuskode]}
+                                        </Heading>
+
+                                        {utdanning.institution && <BodyLong>{utdanning.institution}</BodyLong>}
+                                        {utdanning.field && <BodyLong>{utdanning.field}</BodyLong>}
+                                        {utdanning.description && (
+                                            <BodyLong className={styles.mb3}>
+                                                {parse(utdanning.description.replace(/\n/g, "<br>"))}
                                             </BodyLong>
-                                        </dt>
-                                        <dd>
-                                            {utdanning.institution && <BodyLong>{utdanning.institution}</BodyLong>}
-                                            {utdanning.field && <BodyLong>{utdanning.field}</BodyLong>}
-                                            {utdanning.description && (
-                                                <BodyLong className={styles.mb3}>
-                                                    {parse(utdanning.description.replace(/\n/g, "<br>"))}
-                                                </BodyLong>
-                                            )}
-                                        </dd>
-                                    </dl>
+                                        )}
+                                    </dd>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </dl>
                     </section>
                 )}
 
@@ -130,12 +130,10 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             Fagbrev, svennebrev og mesterbrev
                         </Heading>
                         {cv.fagbrev.map((fagbrev, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft} />
-                                    <div className={styles.previewItemRight}>
-                                        <BodyLong className={styles.mb3}>{fagbrev.title}</BodyLong>
-                                    </div>
+                            <div key={index} className={styles.previewItem}>
+                                <div className={styles.previewItemLeft} />
+                                <div className={styles.previewItemRight}>
+                                    <BodyLong className={styles.mb3}>{fagbrev.title}</BodyLong>
                                 </div>
                             </div>
                         ))}
@@ -147,34 +145,31 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         <Heading id="heading-preview-arbeidsforhold" level="2" size="xsmall" className={styles.mb3}>
                             Arbeidsforhold
                         </Heading>
-                        {datosorterElementer(cv.arbeidserfaring).map((erfaring, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>
+                        <dl aria-label="Arbeidsforhold">
+                            {datosorterElementer(cv.arbeidserfaring).map((erfaring, index) => (
+                                <div key={index} className={styles.previewItem}>
+                                    <dt className={styles.previewItemLeft}>
                                         {`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}
-                                    </div>
-                                    <dl aria-label="Arbeidsforhold" className={styles.previewItemRight}>
-                                        <dt>
-                                            <BodyLong weight="semibold">
-                                                {erfaring.jobTitle || erfaring.alternativeJobTitle}
+                                    </dt>
+
+                                    <dd className={styles.previewItemRight}>
+                                        <Heading level="3" size="xsmall">
+                                            {`${erfaring.jobTitle}${erfaring.alternativeJobTitle ? ` (${erfaring.alternativeJobTitle})` : ""}`}
+                                        </Heading>
+                                        <BodyLong>
+                                            {erfaring.employer}
+                                            {erfaring.employer !== "" && erfaring.location !== "" ? ", " : ""}
+                                            {erfaring.location}
+                                        </BodyLong>
+                                        {erfaring.description && (
+                                            <BodyLong className={styles.mb3}>
+                                                {parse(erfaring.description.replace(/\n/g, "<br>"))}
                                             </BodyLong>
-                                        </dt>
-                                        <dd>
-                                            <BodyLong>
-                                                {erfaring.employer}
-                                                {erfaring.employer !== "" && erfaring.location !== "" ? ", " : ""}
-                                                {erfaring.location}
-                                            </BodyLong>
-                                            {erfaring.description && (
-                                                <BodyLong className={styles.mb3}>
-                                                    {parse(erfaring.description.replace(/\n/g, "<br>"))}
-                                                </BodyLong>
-                                            )}
-                                        </dd>
-                                    </dl>
+                                        )}
+                                    </dd>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </dl>
                     </section>
                 )}
 
@@ -183,23 +178,23 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         <Heading id="heading-preview-annen-erfaring" level="2" size="xsmall" className={styles.mb3}>
                             Annen erfaring
                         </Heading>
-                        {datosorterElementer(cv.annenErfaring).map((erfaring, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>
+                        <dl aria-label="Andre erfaringer">
+                            {datosorterElementer(cv.annenErfaring).map((erfaring, index) => (
+                                <div key={index} className={styles.previewItem}>
+                                    <dt className={styles.previewItemLeft}>
                                         {`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}
-                                    </div>
-                                    <dl aria-label="Annen erfaring" className={styles.previewItemRight}>
-                                        <dt>
-                                            <BodyLong weight="semibold">{erfaring.role}</BodyLong>
-                                        </dt>
-                                        <dd>
-                                            <BodyLong className={styles.mb3}>{erfaring.description}</BodyLong>
-                                        </dd>
-                                    </dl>
+                                    </dt>
+
+                                    <dd className={styles.previewItemRight}>
+                                        <Heading level="3" size="xsmall">
+                                            {erfaring.role}
+                                        </Heading>
+
+                                        <BodyLong className={styles.mb3}>{erfaring.description}</BodyLong>
+                                    </dd>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </dl>
                     </section>
                 )}
 
@@ -209,17 +204,15 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             Førerkort
                         </Heading>
                         {cv.foererkort.map((foererkort, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>
-                                        {foererkort.acquiredDate &&
-                                            `${formatterDato(foererkort.acquiredDate)} - ${formatterDato(foererkort.expiryDate)}`}
-                                    </div>
-                                    <div className={styles.previewItemRight}>
-                                        <BodyLong weight="semibold" className={styles.mb3}>
-                                            {foererkort.type}
-                                        </BodyLong>
-                                    </div>
+                            <div key={index} className={styles.previewItem}>
+                                <div className={styles.previewItemLeft}>
+                                    {foererkort.acquiredDate &&
+                                        `${formatterDato(foererkort.acquiredDate)} - ${formatterDato(foererkort.expiryDate)}`}
+                                </div>
+                                <div className={styles.previewItemRight}>
+                                    <BodyLong weight="semibold" className={styles.mb3}>
+                                        {foererkort.type}
+                                    </BodyLong>
                                 </div>
                             </div>
                         ))}
@@ -231,31 +224,31 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         <Heading id="heading-preview-kurs" level="2" size="xsmall" className={styles.mb3}>
                             Kurs
                         </Heading>
-                        {cv.kurs.map((kurs, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>{formatterFullDato(kurs.date) || ""}</div>
-                                    <dl aria-label="Kurs" className={styles.previewItemRight}>
-                                        <dt>
-                                            <BodyLong weight="semibold">{kurs.title}</BodyLong>
-                                        </dt>
-                                        <dd>
-                                            <BodyLong>{kurs.issuer}</BodyLong>
-                                            {kurs.durationUnit && kurs.duration && (
-                                                <BodyLong className={styles.mb3}>
-                                                    {`${kurs.duration} ${formatterTidsenhet(kurs.durationUnit, kurs.duration)}`}
-                                                </BodyLong>
-                                            )}
-                                        </dd>
-                                    </dl>
+                        <dl aria-label="Kurs">
+                            {cv.kurs.map((kurs, index) => (
+                                <div key={index} className={styles.previewItem}>
+                                    <dt className={styles.previewItemLeft}>{formatterFullDato(kurs.date) || ""}</dt>
+
+                                    <dd className={styles.previewItemRight}>
+                                        <Heading level="3" size="xsmall">
+                                            {kurs.title}
+                                        </Heading>
+
+                                        <BodyLong>{kurs.issuer}</BodyLong>
+                                        {kurs.durationUnit && kurs.duration && (
+                                            <BodyLong className={styles.mb3}>
+                                                {`${kurs.duration} ${formatterTidsenhet(kurs.durationUnit, kurs.duration)}`}
+                                            </BodyLong>
+                                        )}
+                                    </dd>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </dl>
                     </section>
                 )}
 
                 {cv.offentligeGodkjenninger && cv.offentligeGodkjenninger.length !== 0 && (
-                    <div aria-labelledby="heading-preview-offentlige-godkjenninger" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-offentlige-godkjenninger" className={styles.mb6}>
                         <Heading
                             id="heading-preview-offentlige-godkjenninger"
                             level="2"
@@ -264,24 +257,24 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         >
                             Offentlige godkjenninger
                         </Heading>
-                        {cv.offentligeGodkjenninger.map((godkjenning, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>
+                        <dl aria-label="Offentlige godkjenninger">
+                            {cv.offentligeGodkjenninger.map((godkjenning, index) => (
+                                <div key={index} className={styles.previewItem}>
+                                    <dt className={styles.previewItemLeft}>
                                         {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
-                                    </div>
-                                    <dl aria-label="Offentlige godkjenninger" className={styles.previewItemRight}>
-                                        <dt>
-                                            <BodyLong weight="semibold">{godkjenning.title}</BodyLong>
-                                        </dt>
-                                        <dd>
-                                            <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
-                                        </dd>
-                                    </dl>
+                                    </dt>
+
+                                    <dd className={styles.previewItemRight}>
+                                        <Heading level="3" size="xsmall">
+                                            {godkjenning.title}
+                                        </Heading>
+
+                                        <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
+                                    </dd>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </dl>
+                    </section>
                 )}
 
                 {cv.andreGodkjenninger && cv.andreGodkjenninger.length !== 0 && (
@@ -294,23 +287,23 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         >
                             Andre godkjenninger
                         </Heading>
-                        {cv.andreGodkjenninger.map((godkjenning, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>
+                        <dl aria-label="Andre godkjenninger">
+                            {cv.andreGodkjenninger.map((godkjenning, index) => (
+                                <div key={index} className={styles.previewItem}>
+                                    <dt className={styles.previewItemLeft}>
                                         {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
-                                    </div>
-                                    <dl aria-label="Andre godkjenninger" className={styles.previewItemRight}>
-                                        <dt>
-                                            <BodyLong weight="semibold">{godkjenning.certificateName}</BodyLong>
-                                        </dt>
-                                        <dd>
-                                            <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
-                                        </dd>
-                                    </dl>
+                                    </dt>
+
+                                    <dd className={styles.previewItemRight}>
+                                        <Heading level="3" size="xsmall">
+                                            {godkjenning.certificateName}
+                                        </Heading>
+
+                                        <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
+                                    </dd>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </dl>
                     </section>
                 )}
 
@@ -319,13 +312,16 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         <Heading id="heading-preview-sprak" level="2" size="xsmall" className={styles.mb3}>
                             Språk
                         </Heading>
-                        {cv.spraak.map((spraak, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
+                        <dl aria-label="Språk">
+                            {cv.spraak.map((spraak, index) => (
+                                <div key={index} className={styles.previewItem}>
                                     <div className={styles.previewItemLeft} />
-                                    <dl aria-label="Språk" className={styles.previewItemRight}>
+
+                                    <div className={styles.previewItemRight}>
                                         <dt>
-                                            <BodyLong weight="semibold">{spraak.language}</BodyLong>
+                                            <Heading level="3" size="xsmall">
+                                                {spraak.language}
+                                            </Heading>
                                         </dt>
                                         <dd>
                                             <BodyLong>Muntlig: {SpråkEnum[spraak.oralProficiency]}</BodyLong>
@@ -333,10 +329,10 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                                 Skriftlig: {SpråkEnum[spraak.writtenProficiency]}
                                             </BodyLong>
                                         </dd>
-                                    </dl>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </dl>
                     </section>
                 )}
 
@@ -345,16 +341,18 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         <Heading id="heading-preview-kompetanser" level="2" size="xsmall" className={styles.mb3}>
                             Kompetanser
                         </Heading>
-                        {cv.kompetanser.map((kompetanse, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
+                        <ul aria-label="Kompetanser" className={styles.noMarginList}>
+                            {cv.kompetanser.map((kompetanse, index) => (
+                                <div key={index} className={styles.previewItem}>
                                     <div className={styles.previewItemLeft} />
                                     <div className={styles.previewItemRight}>
-                                        <BodyLong className={styles.mb3}>{kompetanse.title}</BodyLong>
+                                        <li>
+                                            <BodyLong className={styles.mb3}>{kompetanse.title}</BodyLong>
+                                        </li>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </ul>
                     </section>
                 )}
             </Box>
