@@ -135,7 +135,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
             <TextField
                 id="institution"
                 name="institution"
-                label="Skole/studiested"
+                label="Skole eller studiested"
                 description="Eksempel: Drammen videregående, Universitetet i Tromsø"
                 className={styles.mb6}
                 defaultValue={gjeldendeElement?.institution}
