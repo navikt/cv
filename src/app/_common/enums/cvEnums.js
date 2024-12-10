@@ -36,7 +36,7 @@ export const ArbeidstidEnum = Object.freeze({
 export const UtdanningsnivåEnum = Object.freeze({
     2: "Grunnskole",
     3: "Folkehøgskole",
-    4: "Videregående/yrkesskole",
+    4: "Videregående eller yrkesskole",
     5: "Fagskole",
     6: "Høyere utdanning, 1-4 år",
     7: "Høyere utdanning, 4+ år",
