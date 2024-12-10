@@ -65,7 +65,7 @@ export default function Utdanninger() {
 
                                             {utdanning.institution && (
                                                 <FormSummary.Answer>
-                                                    <FormSummary.Label>Skole/studiested</FormSummary.Label>
+                                                    <FormSummary.Label>Skole eller studiested</FormSummary.Label>
                                                     <FormSummary.Value>{utdanning.institution}</FormSummary.Value>
                                                 </FormSummary.Answer>
                                             )}
