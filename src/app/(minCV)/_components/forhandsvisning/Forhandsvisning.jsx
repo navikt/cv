@@ -3,6 +3,7 @@ import styles from "@/app/page.module.css";
 import { useEffect, useRef } from "react";
 import { SpråkEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import {
+    formatterAdresse,
     formatterDato,
     formatterFullDato,
     formatterFullDatoMedFallback,
@@ -57,7 +58,11 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             <BodyLong size="small">Adresse:</BodyLong>
                         </dt>
                         <dd className={styles.PersonalInfoValue}>
-                            <BodyLong size="small">{personalia ? personalia.adresse : ""}</BodyLong>
+                            <BodyLong size="small">
+                                {personalia
+                                    ? formatterAdresse(personalia.adresse, personalia.postnummer, personalia.poststed)
+                                    : ""}
+                            </BodyLong>
                         </dd>
                     </div>
                     <div className={styles.previewPersonalInfo}>
