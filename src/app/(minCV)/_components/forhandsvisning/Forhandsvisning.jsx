@@ -84,7 +84,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 </dl>
 
                 {cv.sammendrag && (
-                    <section aria-labelledby="heading-preview-sammendrag" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-sammendrag" className={styles.previewSection}>
                         <Heading id="heading-preview-sammendrag" level="2" size="xsmall" className={styles.mb3}>
                             Sammendrag
                         </Heading>
@@ -100,7 +100,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 )}
 
                 {cv.utdanning && cv.utdanning.length !== 0 && (
-                    <section aria-labelledby="heading-preview-utdanning" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-utdanning" className={styles.previewSection}>
                         <Heading id="heading-preview-utdanning" level="2" size="xsmall" className={styles.mb3}>
                             Utdanning
                         </Heading>
@@ -130,7 +130,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 )}
 
                 {cv.fagbrev && cv.fagbrev.length !== 0 && (
-                    <section aria-labelledby="heading-preview-fagbrev" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-fagbrev" className={styles.previewSection}>
                         <Heading id="heading-preview-fagbrev" level="2" size="xsmall">
                             Fagbrev, svennebrev og mesterbrev
                         </Heading>
@@ -146,7 +146,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 )}
 
                 {cv.arbeidserfaring && cv.arbeidserfaring.length !== 0 && (
-                    <section aria-labelledby="heading-preview-arbeidsforhold" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-arbeidsforhold" className={styles.previewSection}>
                         <Heading id="heading-preview-arbeidsforhold" level="2" size="xsmall" className={styles.mb3}>
                             Arbeidsforhold
                         </Heading>
@@ -177,7 +177,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 )}
 
                 {cv.annenErfaring && cv.annenErfaring.length !== 0 && (
-                    <section aria-labelledby="heading-preview-annen-erfaring" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-annen-erfaring" className={styles.previewSection}>
                         <Heading id="heading-preview-annen-erfaring" level="2" size="xsmall" className={styles.mb3}>
                             Annen erfaring
                         </Heading>
@@ -200,7 +200,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 )}
 
                 {cv.foererkort && cv.foererkort.length !== 0 && (
-                    <section aria-labelledby="heading-preview-forerkort" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-forerkort" className={styles.previewSection}>
                         <Heading id="heading-preview-forerkort" level="2" size="xsmall">
                             Førerkort
                         </Heading>
@@ -223,7 +223,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 )}
 
                 {cv.kurs && cv.kurs.length !== 0 && (
-                    <section aria-labelledby="heading-preview-kurs" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-kurs" className={styles.previewSection}>
                         <Heading id="heading-preview-kurs" level="2" size="xsmall" className={styles.mb3}>
                             Kurs
                         </Heading>
@@ -251,7 +251,10 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 )}
 
                 {cv.offentligeGodkjenninger && cv.offentligeGodkjenninger.length !== 0 && (
-                    <section aria-labelledby="heading-preview-offentlige-godkjenninger" className={styles.mb6}>
+                    <section
+                        aria-labelledby="heading-preview-offentlige-godkjenninger"
+                        className={styles.previewSection}
+                    >
                         <Heading
                             id="heading-preview-offentlige-godkjenninger"
                             level="2"
@@ -281,7 +284,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 )}
 
                 {cv.andreGodkjenninger && cv.andreGodkjenninger.length !== 0 && (
-                    <section aria-labelledby="heading-preview-andre-godkjenninger" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-andre-godkjenninger" className={styles.previewSection}>
                         <Heading
                             id="heading-preview-andre-godkjenninger"
                             level="2"
@@ -311,7 +314,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 )}
 
                 {cv.spraak && cv.spraak.length !== 0 && (
-                    <section aria-labelledby="heading-preview-sprak" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-sprak" className={styles.previewSection}>
                         <Heading id="heading-preview-sprak" level="2" size="xsmall" className={styles.mb3}>
                             Språk
                         </Heading>
