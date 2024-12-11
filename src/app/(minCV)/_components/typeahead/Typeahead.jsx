@@ -57,8 +57,8 @@ export function Typeahead({
                 id={id}
                 label={label}
                 description={description}
-                options={typeaheadforslag}
-                filteredOptions={typeaheadforslag}
+                options={typeaheadLaster ? [] : typeaheadforslag}
+                filteredOptions={typeaheadLaster ? [] : typeaheadforslag}
                 shouldAutocomplete={false}
                 isMultiSelect={false}
                 selectedOptions={alleredeValgte}
