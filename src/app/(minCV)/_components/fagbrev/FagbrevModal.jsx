@@ -9,6 +9,7 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
     const [valgtFagbrev, setValgtFagbrev] = useState(gjeldendeElement || null);
     const [valgtFagbrevError, setValgtFagbrevError] = useState(false);
     const modalFormRef = useRef();
+    const comboboxRef = useRef();
 
     useEffect(() => {
         const oppdaterFagbrev = (fagbrev) => setValgtFagbrev(fagbrev);
@@ -16,7 +17,10 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
     }, [gjeldendeElement]);
 
     const lagre = () => {
-        if (!valgtFagbrev || valgtFagbrev.length === 0) setValgtFagbrevError(true);
+        if (!valgtFagbrev || valgtFagbrev.length === 0) {
+            comboboxRef.current.focus();
+            setValgtFagbrevError(true);
+        }
 
         if (valgtFagbrev && valgtFagbrev.length !== 0) {
             lagreElement({
@@ -44,6 +48,7 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
             ref={modalFormRef}
         >
             <Typeahead
+                ref={comboboxRef}
                 label="Fagdokumentasjon"
                 description="Må fylles ut"
                 type={TypeaheadEnum.FAGBREV}

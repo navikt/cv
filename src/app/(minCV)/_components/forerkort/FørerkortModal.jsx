@@ -15,6 +15,7 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
     const [kreverDato, setKreverDato] = useState(!!gjeldendeElement?.acquiredDate);
     const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
     const modalFormRef = useRef();
+    const selectRef = useRef();
 
     const { gyldigeFørerkort } = førerkortData;
 
@@ -66,7 +67,13 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
         const data = getFormData(e.currentTarget);
 
         handleZodValidation({
-            onError: setErrors,
+            onError: (err) => {
+                //  If no date needed for drivers license, set focus to <select> on error
+                if (!kreverDato) {
+                    selectRef.current.focus();
+                }
+                setErrors(err);
+            },
             data: data,
             onSuccess: (res) => {
                 lagreElement({
@@ -115,6 +122,7 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
                     onChange={(e) => velgFørerkort(e.target.value)}
                     onBlur={revalidate}
                     error={errors?.type}
+                    ref={selectRef}
                 >
                     <option value={null}>Velg</option>
                     {gyldigeFørerkort.map((e) => (
