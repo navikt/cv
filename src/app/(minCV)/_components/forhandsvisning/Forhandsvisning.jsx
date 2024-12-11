@@ -3,6 +3,7 @@ import styles from "@/app/page.module.css";
 import { useEffect, useRef } from "react";
 import { SpråkEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import {
+    formatterAdresse,
     formatterDato,
     formatterFullDato,
     formatterFullDatoMedFallback,
@@ -47,7 +48,9 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             <BodyLong size="small">Fødselsdato:</BodyLong>
                         </dt>
                         <dd className={styles.PersonalInfoValue}>
-                            <BodyLong size="small">{personalia ? personalia.foedselsdato : ""}</BodyLong>
+                            <BodyLong size="small">
+                                {personalia ? formatterFullDatoMedFallback(personalia.foedselsdato, "") : ""}
+                            </BodyLong>
                         </dd>
                     </div>
                     <div className={styles.previewPersonalInfo}>
@@ -55,7 +58,11 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                             <BodyLong size="small">Adresse:</BodyLong>
                         </dt>
                         <dd className={styles.PersonalInfoValue}>
-                            <BodyLong size="small">{personalia ? personalia.adresse : ""}</BodyLong>
+                            <BodyLong size="small">
+                                {personalia
+                                    ? formatterAdresse(personalia.adresse, personalia.postnummer, personalia.poststed)
+                                    : ""}
+                            </BodyLong>
                         </dd>
                     </div>
                     <div className={styles.previewPersonalInfo}>
@@ -77,65 +84,61 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 </dl>
 
                 {cv.sammendrag && (
-                    <section aria-labelledby="heading-preview-sammendrag" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-sammendrag" className={styles.previewSection}>
                         <Heading id="heading-preview-sammendrag" level="2" size="xsmall" className={styles.mb3}>
                             Sammendrag
                         </Heading>
-                        <div className={styles.previewItem}>
-                            <div className={styles.previewItemLeft} />
-                            <div className={styles.previewItemRight}>
-                                <BodyLong>{parse(cv.sammendrag.replace(/\n/g, "<br>"))}</BodyLong>
+                        <div className={styles.previewBox}>
+                            <div />
+                            <div className={styles.previewBoxRight}>
+                                <div>
+                                    <BodyLong>{parse(cv.sammendrag.replace(/\n/g, "<br>"))}</BodyLong>
+                                </div>
                             </div>
                         </div>
                     </section>
                 )}
 
                 {cv.utdanning && cv.utdanning.length !== 0 && (
-                    <section aria-labelledby="heading-preview-utdanning" className={styles.mb6}>
-                        <Heading id="heading-preview-utdannding" level="2" size="xsmall" className={styles.mb3}>
+                    <section aria-labelledby="heading-preview-utdanning" className={styles.previewSection}>
+                        <Heading id="heading-preview-utdanning" level="2" size="xsmall" className={styles.mb3}>
                             Utdanning
                         </Heading>
 
-                        {datosorterElementer(cv.utdanning, "startDate", "endDate").map((utdanning, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>
+                        <dl aria-label="Utdanninger" className={[styles.previewBox]}>
+                            {datosorterElementer(cv.utdanning, "startDate", "endDate").map((utdanning) => (
+                                <>
+                                    <dt>
                                         {formatterDato(utdanning.startDate)} - {formatterDato(utdanning.endDate)}
-                                    </div>
-                                    <dl aria-label="Utdanning" className={styles.previewItemRight}>
-                                        <dt>
-                                            <BodyLong weight="semibold">
-                                                {UtdanningsnivåEnum[utdanning.nuskode]}
-                                            </BodyLong>
-                                        </dt>
-                                        <dd>
-                                            {utdanning.institution && <BodyLong>{utdanning.institution}</BodyLong>}
-                                            {utdanning.field && <BodyLong>{utdanning.field}</BodyLong>}
-                                            {utdanning.description && (
-                                                <BodyLong className={styles.mb3}>
-                                                    {parse(utdanning.description.replace(/\n/g, "<br>"))}
-                                                </BodyLong>
-                                            )}
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        ))}
+                                    </dt>
+
+                                    <dd className={styles.previewBoxRight}>
+                                        <Heading level="3" size="xsmall">
+                                            {UtdanningsnivåEnum[utdanning.nuskode]}
+                                        </Heading>
+
+                                        {utdanning.institution && <BodyLong>{utdanning.institution}</BodyLong>}
+                                        {utdanning.field && <BodyLong>{utdanning.field}</BodyLong>}
+                                        {utdanning.description && (
+                                            <BodyLong>{parse(utdanning.description.replace(/\n/g, "<br>"))}</BodyLong>
+                                        )}
+                                    </dd>
+                                </>
+                            ))}
+                        </dl>
                     </section>
                 )}
 
                 {cv.fagbrev && cv.fagbrev.length !== 0 && (
-                    <section aria-labelledby="heading-preview-fagbrev" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-fagbrev" className={styles.previewSection}>
                         <Heading id="heading-preview-fagbrev" level="2" size="xsmall">
                             Fagbrev, svennebrev og mesterbrev
                         </Heading>
                         {cv.fagbrev.map((fagbrev, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft} />
-                                    <div className={styles.previewItemRight}>
-                                        <BodyLong className={styles.mb3}>{fagbrev.title}</BodyLong>
-                                    </div>
+                            <div key={index} className={styles.previewBox}>
+                                <div />
+                                <div className={styles.previewBoxRight}>
+                                    <BodyLong className={styles.mb3}>{fagbrev.title}</BodyLong>
                                 </div>
                             </div>
                         ))}
@@ -143,119 +146,115 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                 )}
 
                 {cv.arbeidserfaring && cv.arbeidserfaring.length !== 0 && (
-                    <section aria-labelledby="heading-preview-arbeidsforhold" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-arbeidsforhold" className={styles.previewSection}>
                         <Heading id="heading-preview-arbeidsforhold" level="2" size="xsmall" className={styles.mb3}>
                             Arbeidsforhold
                         </Heading>
-                        {datosorterElementer(cv.arbeidserfaring).map((erfaring, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>
-                                        {`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}
-                                    </div>
-                                    <dl aria-label="Arbeidsforhold" className={styles.previewItemRight}>
-                                        <dt>
-                                            <BodyLong weight="semibold">
-                                                {erfaring.jobTitle || erfaring.alternativeJobTitle}
+                        <dl aria-label="Arbeidsforhold" className={[styles.previewBox]}>
+                            {datosorterElementer(cv.arbeidserfaring).map((erfaring) => (
+                                <>
+                                    <dt>{`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}</dt>
+
+                                    <dd className={styles.previewBoxRight}>
+                                        <Heading level="3" size="xsmall">
+                                            {`${erfaring.jobTitle}${erfaring.alternativeJobTitle ? ` (${erfaring.alternativeJobTitle})` : ""}`}
+                                        </Heading>
+                                        <BodyLong>
+                                            {erfaring.employer}
+                                            {erfaring.employer !== "" && erfaring.location !== "" ? ", " : ""}
+                                            {erfaring.location}
+                                        </BodyLong>
+                                        {erfaring.description && (
+                                            <BodyLong className={styles.mb3}>
+                                                {parse(erfaring.description.replace(/\n/g, "<br>"))}
                                             </BodyLong>
-                                        </dt>
-                                        <dd>
-                                            <BodyLong>
-                                                {erfaring.employer}
-                                                {erfaring.employer !== "" && erfaring.location !== "" ? ", " : ""}
-                                                {erfaring.location}
-                                            </BodyLong>
-                                            {erfaring.description && (
-                                                <BodyLong className={styles.mb3}>
-                                                    {parse(erfaring.description.replace(/\n/g, "<br>"))}
-                                                </BodyLong>
-                                            )}
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        ))}
+                                        )}
+                                    </dd>
+                                </>
+                            ))}
+                        </dl>
                     </section>
                 )}
 
                 {cv.annenErfaring && cv.annenErfaring.length !== 0 && (
-                    <section aria-labelledby="heading-preview-annen-erfaring" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-annen-erfaring" className={styles.previewSection}>
                         <Heading id="heading-preview-annen-erfaring" level="2" size="xsmall" className={styles.mb3}>
                             Annen erfaring
                         </Heading>
-                        {datosorterElementer(cv.annenErfaring).map((erfaring, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>
-                                        {`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}
-                                    </div>
-                                    <dl aria-label="Annen erfaring" className={styles.previewItemRight}>
-                                        <dt>
-                                            <BodyLong weight="semibold">{erfaring.role}</BodyLong>
-                                        </dt>
-                                        <dd>
-                                            <BodyLong className={styles.mb3}>{erfaring.description}</BodyLong>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        ))}
+                        <dl aria-label="Andre erfaringer" className={[styles.previewBox]}>
+                            {datosorterElementer(cv.annenErfaring).map((erfaring) => (
+                                <>
+                                    <dt>{`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}</dt>
+
+                                    <dd className={styles.previewBoxRight}>
+                                        <Heading level="3" size="xsmall">
+                                            {erfaring.role}
+                                        </Heading>
+
+                                        <BodyLong className={styles.mb3}>{erfaring.description}</BodyLong>
+                                    </dd>
+                                </>
+                            ))}
+                        </dl>
                     </section>
                 )}
 
                 {cv.foererkort && cv.foererkort.length !== 0 && (
-                    <section aria-labelledby="heading-preview-forerkort" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-forerkort" className={styles.previewSection}>
                         <Heading id="heading-preview-forerkort" level="2" size="xsmall">
                             Førerkort
                         </Heading>
-                        {cv.foererkort.map((foererkort, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>
+                        <div className={[styles.previewBox]}>
+                            {cv.foererkort.map((foererkort) => (
+                                <>
+                                    <div>
                                         {foererkort.acquiredDate &&
                                             `${formatterDato(foererkort.acquiredDate)} - ${formatterDato(foererkort.expiryDate)}`}
                                     </div>
-                                    <div className={styles.previewItemRight}>
+                                    <div className={styles.previewBoxRight}>
                                         <BodyLong weight="semibold" className={styles.mb3}>
                                             {foererkort.type}
                                         </BodyLong>
                                     </div>
-                                </div>
-                            </div>
-                        ))}
+                                </>
+                            ))}
+                        </div>
                     </section>
                 )}
 
                 {cv.kurs && cv.kurs.length !== 0 && (
-                    <section aria-labelledby="heading-preview-kurs" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-kurs" className={styles.previewSection}>
                         <Heading id="heading-preview-kurs" level="2" size="xsmall" className={styles.mb3}>
                             Kurs
                         </Heading>
-                        {cv.kurs.map((kurs, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>{formatterFullDato(kurs.date) || ""}</div>
-                                    <dl aria-label="Kurs" className={styles.previewItemRight}>
-                                        <dt>
-                                            <BodyLong weight="semibold">{kurs.title}</BodyLong>
-                                        </dt>
-                                        <dd>
-                                            <BodyLong>{kurs.issuer}</BodyLong>
-                                            {kurs.durationUnit && kurs.duration && (
-                                                <BodyLong className={styles.mb3}>
-                                                    {`${kurs.duration} ${formatterTidsenhet(kurs.durationUnit, kurs.duration)}`}
-                                                </BodyLong>
-                                            )}
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        ))}
+                        <dl aria-label="Kurs" className={[styles.previewBox]}>
+                            {cv.kurs.map((kurs) => (
+                                <>
+                                    <dt>{formatterFullDato(kurs.date) || ""}</dt>
+
+                                    <dd className={styles.previewBoxRight}>
+                                        <Heading level="3" size="xsmall">
+                                            {kurs.title}
+                                        </Heading>
+
+                                        <BodyLong>{kurs.issuer}</BodyLong>
+                                        {kurs.durationUnit && kurs.duration && (
+                                            <BodyLong className={styles.mb3}>
+                                                {`${kurs.duration} ${formatterTidsenhet(kurs.durationUnit, kurs.duration)}`}
+                                            </BodyLong>
+                                        )}
+                                    </dd>
+                                </>
+                            ))}
+                        </dl>
                     </section>
                 )}
 
                 {cv.offentligeGodkjenninger && cv.offentligeGodkjenninger.length !== 0 && (
-                    <div aria-labelledby="heading-preview-offentlige-godkjenninger" className={styles.mb6}>
+                    <section
+                        aria-labelledby="heading-preview-offentlige-godkjenninger"
+                        className={styles.previewSection}
+                    >
                         <Heading
                             id="heading-preview-offentlige-godkjenninger"
                             level="2"
@@ -264,28 +263,28 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         >
                             Offentlige godkjenninger
                         </Heading>
-                        {cv.offentligeGodkjenninger.map((godkjenning, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>
+                        <dl aria-label="Offentlige godkjenninger" className={[styles.previewBox]}>
+                            {cv.offentligeGodkjenninger.map((godkjenning) => (
+                                <>
+                                    <dt>
                                         {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
-                                    </div>
-                                    <dl aria-label="Offentlige godkjenninger" className={styles.previewItemRight}>
-                                        <dt>
-                                            <BodyLong weight="semibold">{godkjenning.title}</BodyLong>
-                                        </dt>
-                                        <dd>
-                                            <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                                    </dt>
+
+                                    <dd className={styles.previewBoxRight}>
+                                        <Heading level="3" size="xsmall">
+                                            {godkjenning.title}
+                                        </Heading>
+
+                                        <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
+                                    </dd>
+                                </>
+                            ))}
+                        </dl>
+                    </section>
                 )}
 
                 {cv.andreGodkjenninger && cv.andreGodkjenninger.length !== 0 && (
-                    <section aria-labelledby="heading-preview-andre-godkjenninger" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-andre-godkjenninger" className={styles.previewSection}>
                         <Heading
                             id="heading-preview-andre-godkjenninger"
                             level="2"
@@ -294,36 +293,37 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         >
                             Andre godkjenninger
                         </Heading>
-                        {cv.andreGodkjenninger.map((godkjenning, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft}>
+                        <dl aria-label="Andre godkjenninger" className={[styles.previewBox]}>
+                            {cv.andreGodkjenninger.map((godkjenning) => (
+                                <>
+                                    <dt>
                                         {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
-                                    </div>
-                                    <dl aria-label="Andre godkjenninger" className={styles.previewItemRight}>
-                                        <dt>
-                                            <BodyLong weight="semibold">{godkjenning.certificateName}</BodyLong>
-                                        </dt>
-                                        <dd>
-                                            <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        ))}
+                                    </dt>
+
+                                    <dd className={styles.previewBoxRight}>
+                                        <Heading level="3" size="xsmall">
+                                            {godkjenning.certificateName}
+                                        </Heading>
+
+                                        <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
+                                    </dd>
+                                </>
+                            ))}
+                        </dl>
                     </section>
                 )}
 
                 {cv.spraak && cv.spraak.length !== 0 && (
-                    <section aria-labelledby="heading-preview-sprak" className={styles.mb6}>
+                    <section aria-labelledby="heading-preview-sprak" className={styles.previewSection}>
                         <Heading id="heading-preview-sprak" level="2" size="xsmall" className={styles.mb3}>
                             Språk
                         </Heading>
-                        {cv.spraak.map((spraak, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft} />
-                                    <dl aria-label="Språk" className={styles.previewItemRight}>
+                        <div className={[styles.previewBox]}>
+                            {cv.spraak.map((spraak) => (
+                                <>
+                                    <div />
+
+                                    <dl aria-label="Språk" className={styles.previewBoxRight}>
                                         <dt>
                                             <BodyLong weight="semibold">{spraak.language}</BodyLong>
                                         </dt>
@@ -334,9 +334,9 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                                             </BodyLong>
                                         </dd>
                                     </dl>
-                                </div>
-                            </div>
-                        ))}
+                                </>
+                            ))}
+                        </div>
                     </section>
                 )}
 
@@ -345,16 +345,16 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                         <Heading id="heading-preview-kompetanser" level="2" size="xsmall" className={styles.mb3}>
                             Kompetanser
                         </Heading>
-                        {cv.kompetanser.map((kompetanse, index) => (
-                            <div key={index}>
-                                <div className={styles.previewItem}>
-                                    <div className={styles.previewItemLeft} />
-                                    <div className={styles.previewItemRight}>
+                        <div className={[styles.previewBox]}>
+                            <div />
+                            <ul aria-label="Kompetanser" className={styles.noMarginList}>
+                                {cv.kompetanser.map((kompetanse, index) => (
+                                    <li key={index} className={styles.previewBoxRight}>
                                         <BodyLong className={styles.mb3}>{kompetanse.title}</BodyLong>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </section>
                 )}
             </Box>
