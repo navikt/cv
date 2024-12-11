@@ -94,10 +94,6 @@
         margin-bottom: 12px;
     }
 
-    .previewItem {
-        flex-direction: column;
-    }
-
     .preview {
         justify-content: space-around;
         padding: 0 1rem 2rem 1rem;
@@ -134,11 +130,6 @@
         width: 75%;
     }
 
-    .previewItem {
-        display: flex;
-        flex-direction: row;
-    }
-
     .notifikasjonContainer {
         width: 400px;
         position: fixed;
@@ -148,14 +139,6 @@
 
     .previewPersonalInfo {
         width: 700px;
-    }
-
-    .previewItemLeft {
-        width: 280px;
-    }
-
-    .previewItemRight {
-        width: 470px;
     }
 }
 
@@ -515,11 +498,6 @@
     flex-wrap: wrap;
 }
 
-.previewItemRight {
-    border-left: 2px solid rgba(203, 207, 213, 1);
-    padding-left: 1rem;
-}
-
 .notifikasjon {
     position: relative;
     animation:
@@ -660,4 +638,29 @@
     margin: 0;
     padding: 0;
     list-style: none;
+}
+
+.previewBox {
+    display: grid;
+    grid-template: auto / 18rem 1fr;
+    margin-bottom: var(--a-spacing-3);
+}
+
+.previewBoxRight {
+    border-left: 2px solid rgba(203, 207, 213, 1);
+    padding-left: 1rem;
+    width: 470px;
+}
+
+@media (max-width: 1023px) {
+    .previewBox {
+        display: block;
+        grid-template: unset;
+    }
+
+    .previewBoxRight {
+        border-left: none;
+        padding-left: 0;
+        margin-bottom: var(--a-spacing-3);
+    }
 }
