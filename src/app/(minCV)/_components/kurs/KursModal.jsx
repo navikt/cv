@@ -34,7 +34,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                 .string()
                 .optional()
                 .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
-                    message: "Varighet må være et positivt tall",
+                    message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
                 })
                 .optional(),
         })
@@ -75,7 +75,15 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
     const revalidate = () => {
         if (hasTriedSubmit) {
             setShouldAutoFocusErrors(false);
-            const data = getFormData(modalFormRef.current);
+            const formData = getFormData(modalFormRef.current);
+            // Handle duration value based on selected duration unit for revalidation
+            const data = {
+                ...formData,
+                duration:
+                    formData.durationUnit && formData.durationUnit !== "UKJENT"
+                        ? formData.duration || gjeldendeElement?.duration?.toString()
+                        : undefined,
+            };
             handleZodValidation({
                 onError: setErrors,
                 data,
@@ -138,6 +146,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                         value={tidsenhet}
                         onChange={(e) => {
                             setTidsenhet(e.target.value);
+                            revalidate();
                         }}
                         error={errors?.durationUnit}
                     >
@@ -156,7 +165,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                             name="duration"
                             className={styles.mb6}
                             label={
-                                <HStack gap="2">
+                                <HStack gap="2" key={tidsenhet}>
                                     <BodyShort weight="semibold">Antall {formatterTidsenhet(tidsenhet, 2)}</BodyShort>
                                     <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                                 </HStack>
