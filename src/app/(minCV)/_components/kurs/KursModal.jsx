@@ -165,7 +165,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                             name="duration"
                             className={styles.mb6}
                             label={
-                                <HStack gap="2">
+                                <HStack gap="2" key={tidsenhet}>
                                     <BodyShort weight="semibold">Antall {formatterTidsenhet(tidsenhet, 2)}</BodyShort>
                                     <BodyShort className={styles.mandatoryColor}>Må fylles ut</BodyShort>
                                 </HStack>
