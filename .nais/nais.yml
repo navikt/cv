@@ -56,6 +56,10 @@ spec:
       value: "8095"
     - name: NEXT_PUBLIC_ENVIRONMENT
       value: {{ next_public_environment }}
+    - name: BASE_URL
+      value: {{ base_url }}
+    - name: LOGIN_URL
+      value: {{ login_url }}
     - name: PAM_CV_API_BASEURL
       value: http://pam-cv-api-gcp/pam-cv-api/rest
     - name: PAM_CV_API_AUDIENCE
