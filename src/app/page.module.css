@@ -672,3 +672,9 @@
         padding-bottom: var(--a-spacing-3);
     }
 }
+
+@media (max-height: 630px) {
+    .modalBody {
+        min-height: 0;
+    }
+}
