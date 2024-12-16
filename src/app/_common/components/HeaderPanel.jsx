@@ -44,6 +44,7 @@ function HeaderPanel({ title = "Min CV" }) {
                                 <HStack gap="4" align="center">
                                     {navnKomponent}
                                     <svg
+                                        aria-hidden="true"
                                         width="4"
                                         height="4"
                                         viewBox="0 0 4 4"
@@ -71,7 +72,14 @@ function HeaderPanel({ title = "Min CV" }) {
 
 export function Pictogram() {
     return (
-        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            aria-hidden="true"
+            width="72"
+            height="72"
+            viewBox="0 0 72 72"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
             <rect width="72" height="72" rx="36" fill="#B5F1FF" />
             <g clipPath="url(#clip0_2035_24190)">
                 <rect
