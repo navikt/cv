@@ -50,6 +50,8 @@ export default function Arbeidsforhold() {
         );
     }
 
+    const visAaregManglerDataAlert = aaregManglerData === true && arbeidsforhold.length === 0;
+
     return (
         <section
             aria-labelledby={cvLaster || aaregLaster ? undefined : headingId}
@@ -63,9 +65,9 @@ export default function Arbeidsforhold() {
                 <Heading id={headingId} level="2" size="large" align="start" spacing>
                     Arbeidsforhold
                 </Heading>
-                {((aaregManglerData === true && arbeidsforhold.length === 0) || manglerFelter) && (
-                    <Alert variant={aaregManglerData ? "info" : "warning"} className={styles.mb6}>
-                        {aaregManglerData
+                {(visAaregManglerDataAlert || manglerFelter) && (
+                    <Alert variant={visAaregManglerDataAlert ? "info" : "warning"} className={styles.mb6}>
+                        {visAaregManglerDataAlert
                             ? "Vi kunne ikke se at du er registert i Arbeidsgiver- og arbeidstakerregisteret med noen arbeidsforhold. Hvis dette ikke er riktig, bør du kontakte AA-registeret slik at informasjonen rettes."
                             : "Noen av feltene i arbeidsforhold er ikke utfylt. Vi anbefaler å se over og endre feltene som er tomme."}
                     </Alert>
