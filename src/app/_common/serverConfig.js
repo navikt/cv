@@ -7,6 +7,8 @@ const hentServerConfigMap = () => ({
         euresCvEksport: process.env.PAM_EURES_CV_EKSPORT_AUDIENCE,
     },
     urls: {
+        base: process.env.BASE_URL,
+        login: process.env.LOGIN_URL,
         cvApi: process.env.PAM_CV_API_BASEURL,
         pamOntologi: process.env.PAM_ONTOLOGI_BASEURL,
         euresCvEksport: process.env.PAM_EURES_CV_EKSPORT_BASEURL,
