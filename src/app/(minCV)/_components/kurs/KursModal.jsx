@@ -26,9 +26,27 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
         .object({
             title: z.string().min(1, "Du må skrive inn kursnavn"),
             issuer: z.string().optional(),
-            date: dateStringSchema
+            durationUnit: z.enum([...Object.keys(TidsenhetEnum), ""]).optional(),
+            duration: z
+                .string()
                 .optional()
-                .refine((date) => date <= new Date(), { message: "Dato kan ikke være frem i tid" }),
+                .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
+                    message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
+                })
+                .optional(),
+        })
+        .refine((data) => !(data.durationUnit && data.durationUnit !== "UKJENT" && !data.duration), {
+            path: ["duration"],
+            message: "Du må fylle ut varighet hvis tidsenhet er valgt",
+        });
+
+    const KursSchemaWithDate = z
+        .object({
+            title: z.string().min(1, "Du må skrive inn kursnavn"),
+            issuer: z.string().optional(),
+            date: dateStringSchema("Fullført")
+                .optional()
+                .refine((date) => date <= new Date(), { message: "Fullført kan ikke være frem i tid" }),
             durationUnit: z.enum([...Object.keys(TidsenhetEnum), ""]).optional(),
             duration: z
                 .string()
@@ -59,6 +77,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
         setHasTriedSubmit(true);
 
         const data = getFormData(e.currentTarget);
+        const hasDate = data.date !== "";
 
         handleZodValidation({
             onError: setErrors,
@@ -68,7 +87,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                     ...res,
                 });
             },
-            schema: KursSchema,
+            schema: hasDate ? KursSchemaWithDate : KursSchema,
         });
     };
 
