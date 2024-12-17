@@ -35,7 +35,7 @@ export default function AndreGodkjenningerModal({
         conceptId: z.coerce.string().optional(),
         issuer: z.string().optional(),
         fromDate: dateStringSchema("Fullført").refine((data) => data <= new Date(), {
-            message: "Dato kan ikke være frem i tid",
+            message: "Fullført kan ikke være frem i tid",
         }),
     });
 

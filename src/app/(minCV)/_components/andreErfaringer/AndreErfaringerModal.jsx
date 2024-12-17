@@ -24,7 +24,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
         role: z.string().min(1, "Rolle må fylles ut"),
         description: z.string().optional(),
         fromDate: dateStringSchema("Fra dato").refine((data) => data <= new Date(), {
-            message: "Dato kan ikke være frem i tid",
+            message: "Fra dato kan ikke være frem i tid",
         }),
         ongoing: z.boolean().optional(),
     });

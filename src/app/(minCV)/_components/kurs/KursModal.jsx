@@ -28,7 +28,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
             issuer: z.string().optional(),
             date: dateStringSchema("Fullført")
                 .optional()
-                .refine((date) => date <= new Date(), { message: "Dato kan ikke være frem i tid" }),
+                .refine((date) => date <= new Date(), { message: "Fullført kan ikke være frem i tid" }),
             durationUnit: z.enum([...Object.keys(TidsenhetEnum), ""]).optional(),
             duration: z
                 .string()

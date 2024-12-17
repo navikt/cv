@@ -40,7 +40,7 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
     const driverLicenseSchemaWithDates = driverLicenseSchema
         .extend({
             acquiredDate: dateStringSchema("Gyldig fra").refine((data) => data <= new Date(), {
-                message: "Dato kan ikke være frem i tid",
+                message: "Gyldig fra kan ikke være frem i tid",
             }),
             expiryDate: dateStringSchema("Gyldig til"),
         })
