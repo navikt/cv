@@ -27,7 +27,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
             title: z.string().min(1, "Du må skrive inn kursnavn"),
             issuer: z.string().optional(),
             durationUnit: z.enum([...Object.keys(TidsenhetEnum), ""]).optional(),
-            duration: z
+            duration: z.coerce
                 .string()
                 .optional()
                 .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
@@ -48,7 +48,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                 .optional()
                 .refine((date) => date <= new Date(), { message: "Fullført kan ikke være frem i tid" }),
             durationUnit: z.enum([...Object.keys(TidsenhetEnum), ""]).optional(),
-            duration: z
+            duration: z.coerce
                 .string()
                 .optional()
                 .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
@@ -66,6 +66,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
 
         const data = {
             ...Object.fromEntries(formData),
+            duration: formData.get("duration") ? parseInt(formData.get("duration").toString(), 10) : undefined,
             durationUnit: formData.get("durationUnit") || undefined,
         };
 
