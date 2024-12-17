@@ -62,10 +62,26 @@ export const FeilsideÅrsak = Object.freeze({
     },
     IKKE_LOGGET_INN: {
         tittel: "Du er ikke logget inn",
-        tekst: 'Du er ikke logget inn. "Min CV" er en innlogget tjeneste. Vennligst logg inn, eller gå tilbake til Nav.no.',
+        body: (
+            <BodyLong className={["text-center", styles.mb12]}>
+                Du er ikke logget inn. "Min CV" er en innlogget tjeneste. Vennligst{" "}
+                <Link rel="noopener noreferrer" href="/min-cv/api/login" inlineText>
+                    logg inn
+                </Link>
+                , eller gå tilbake til Nav.no.
+            </BodyLong>
+        ),
     },
     LOGGET_UT: {
         tittel: "Du har blitt logget ut",
-        tekst: "Du har blitt logget ut på grunn av inaktivitet. Vennligst logg inn igjen, eller gå tilbake til Nav.no.",
+        body: (
+            <BodyLong className={["text-center", styles.mb12]}>
+                Du har blitt logget ut på grunn av inaktivitet. Vennligst{" "}
+                <Link rel="noopener noreferrer" href="/min-cv/api/login" inlineText>
+                    logg inn
+                </Link>{" "}
+                igjen, eller gå tilbake til Nav.no.
+            </BodyLong>
+        ),
     },
 });
