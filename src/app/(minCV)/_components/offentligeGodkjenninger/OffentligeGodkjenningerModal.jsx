@@ -33,11 +33,13 @@ export default function OffentligeGodkjenningerModal({
         title: z.string().min(1, "Du må velge en godkjenning"),
         conceptId: z.coerce.string().optional(),
         issuer: z.string().optional(),
-        fromDate: dateStringSchema.refine((data) => data <= new Date(), { message: "Dato kan ikke være frem i tid" }),
+        fromDate: dateStringSchema("Fullført").refine((data) => data <= new Date(), {
+            message: "Fullført kan ikke være frem i tid",
+        }),
     });
 
     const GodkjenningSchemaWithEndDate = GodkjenningSchema.extend({
-        toDate: dateStringSchema.optional(),
+        toDate: dateStringSchema("Utløper").optional(),
     }).refine(
         (data) => {
             if (data.toDate) {
@@ -59,7 +61,7 @@ export default function OffentligeGodkjenningerModal({
             title: valgtGodkjenning?.title || "",
             conceptId: valgtGodkjenning?.conceptId || "",
             issuer: formData.get("issuer"),
-            fromDate: formData.get("fromDate"),
+            fromDate: formData.get("fromDate") || undefined,
             toDate: formData.get("toDate") || undefined,
         };
     };
@@ -149,7 +151,7 @@ export default function OffentligeGodkjenningerModal({
                 description="Organisasjonen som har utstedt godkjenningen"
                 defaultValue={gjeldendeElement?.issuer}
             />
-            <HStack gap="8">
+            <HStack gap="12">
                 <DatovelgerWithoutValidation
                     id="fromDate"
                     name="fromDate"

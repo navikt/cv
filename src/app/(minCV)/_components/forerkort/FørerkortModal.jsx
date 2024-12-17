@@ -39,10 +39,10 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
 
     const driverLicenseSchemaWithDates = driverLicenseSchema
         .extend({
-            acquiredDate: dateStringSchema.refine((data) => data <= new Date(), {
-                message: "Dato kan ikke være frem i tid",
+            acquiredDate: dateStringSchema("Gyldig fra").refine((data) => data <= new Date(), {
+                message: "Gyldig fra kan ikke være frem i tid",
             }),
-            expiryDate: dateStringSchema,
+            expiryDate: dateStringSchema("Gyldig til"),
         })
         .refine((data) => data.expiryDate >= data.acquiredDate, {
             path: ["expiryDate"],
@@ -54,8 +54,8 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
 
         const data = {
             type: valgtFørerkort?.label || valgtFørerkort?.type || "",
-            acquiredDate: kreverDato ? formData.get("acquiredDate") : null,
-            expiryDate: kreverDato ? formData.get("expiryDate") : null,
+            acquiredDate: kreverDato && formData.get("acquiredDate") ? formData.get("acquiredDate") : undefined,
+            expiryDate: kreverDato && formData.get("expiryDate") ? formData.get("expiryDate") : undefined,
         };
 
         return data;
@@ -133,7 +133,7 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
                 </Select>
                 {kreverDato && (
                     <>
-                        <HStack gap="8">
+                        <HStack gap="12">
                             <DatovelgerWithoutValidation
                                 id="acquiredDate"
                                 name="acquiredDate"
