@@ -27,8 +27,9 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
             title: z.string().min(1, "Du må skrive inn kursnavn"),
             issuer: z.string().optional(),
             durationUnit: z.enum([...Object.keys(TidsenhetEnum), ""]).optional(),
-            duration: z
-                .string()
+            duration: z.coerce
+                .number()
+                .int({ message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig` })
                 .optional()
                 .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
                     message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
@@ -37,7 +38,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
         })
         .refine((data) => !(data.durationUnit && data.durationUnit !== "UKJENT" && !data.duration), {
             path: ["duration"],
-            message: "Du må fylle ut varighet hvis tidsenhet er valgt",
+            message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
         });
 
     const KursSchemaWithDate = z
@@ -48,8 +49,9 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                 .optional()
                 .refine((date) => date <= new Date(), { message: "Fullført kan ikke være frem i tid" }),
             durationUnit: z.enum([...Object.keys(TidsenhetEnum), ""]).optional(),
-            duration: z
-                .string()
+            duration: z.coerce
+                .number()
+                .int({ message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig` })
                 .optional()
                 .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
                     message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
@@ -58,7 +60,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
         })
         .refine((data) => !(data.durationUnit && data.durationUnit !== "UKJENT" && !data.duration), {
             path: ["duration"],
-            message: "Du må fylle ut varighet hvis tidsenhet er valgt",
+            message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
         });
 
     const getFormData = (target) => {
@@ -191,7 +193,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                             }
                             inputMode="numeric"
                             type="number"
-                            min="1"
+                            step="any"
                             defaultValue={gjeldendeElement?.duration}
                             error={errors?.duration}
                             onBlur={revalidate}
