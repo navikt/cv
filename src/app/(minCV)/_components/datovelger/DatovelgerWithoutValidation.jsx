@@ -1,6 +1,7 @@
 import { DatePicker, HStack, useDatepicker, VStack } from "@navikt/ds-react";
 import { useEffect, useRef } from "react";
 import { hentDatoMedÅrsforskjell } from "@/app/_common/utils/validationHelper";
+import styles from "@/app/page.module.css";
 
 export function DatovelgerWithoutValidation({
     id,
@@ -45,7 +46,7 @@ export function DatovelgerWithoutValidation({
 
     return (
         <VStack className={className}>
-            <HStack gap="4">
+            <HStack gap="4" className={styles.datepicker}>
                 <DatePicker {...datepickerProps} dropdownCaption>
                     <DatePicker.Input
                         ref={inputRef}

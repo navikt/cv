@@ -23,12 +23,14 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
     const ErfaringSchema = z.object({
         role: z.string().min(1, "Rolle må fylles ut"),
         description: z.string().optional(),
-        fromDate: dateStringSchema.refine((data) => data <= new Date(), { message: "Dato kan ikke være frem i tid" }),
+        fromDate: dateStringSchema("Fra dato").refine((data) => data <= new Date(), {
+            message: "Dato kan ikke være frem i tid",
+        }),
         ongoing: z.boolean().optional(),
     });
 
     const ErfaringSchemaWithEndDate = ErfaringSchema.extend({
-        toDate: dateStringSchema,
+        toDate: dateStringSchema("Til dato"),
     }).refine((data) => data.toDate >= data.fromDate, {
         path: ["toDate"],
         message: "Til dato må være etter fra dato",
@@ -39,7 +41,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
 
         const data = {
             ...Object.fromEntries(formData),
-            fromDate: formData.get("fromDate"),
+            fromDate: formData.get("fromDate") || undefined,
             toDate: formData.get("toDate") || undefined,
             ongoing: formData.get("ongoing") === "true",
         };
@@ -122,7 +124,7 @@ export function AndreErfaringerModal({ modalÅpen, toggleModal, gjeldendeElement
                 </Checkbox>
             </CheckboxGroup>
 
-            <HStack gap="8">
+            <HStack gap="12">
                 <DatovelgerWithoutValidation
                     id="fromDate"
                     name="fromDate"

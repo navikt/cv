@@ -38,12 +38,14 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
         alternativeJobTitle: z.string().optional(),
         location: z.string().optional(),
         description: z.string().optional(),
-        fromDate: dateStringSchema.refine((data) => data <= new Date(), { message: "Dato kan ikke være frem i tid" }),
+        fromDate: dateStringSchema("Fra dato").refine((data) => data <= new Date(), {
+            message: "Dato kan ikke være frem i tid",
+        }),
         ongoing: z.boolean().optional(),
     });
 
     const ArbeidsforholdSchemaWithEndDate = ArbeidsforholdSchema.extend({
-        toDate: dateStringSchema,
+        toDate: dateStringSchema("Til dato"),
     }).refine((data) => data.toDate >= data.fromDate, {
         path: ["toDate"],
         message: "Til dato må være etter fra dato",
@@ -54,8 +56,8 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
 
         const data = {
             ...Object.fromEntries(formData),
-            fromDate: formData.get("fromDate"),
-            toDate: formData.get("toDate"),
+            fromDate: formData.get("fromDate") || undefined,
+            toDate: formData.get("toDate") || undefined,
             ongoing: formData.get("ongoing") === "true",
             jobTitle: stillingstittel,
             conceptId: konseptId,
@@ -178,7 +180,7 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
                 </Checkbox>
             </CheckboxGroup>
 
-            <HStack gap="8">
+            <HStack gap="12">
                 <DatovelgerWithoutValidation
                     id="fromDate"
                     name="fromDate"

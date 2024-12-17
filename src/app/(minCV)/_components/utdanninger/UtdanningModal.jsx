@@ -28,13 +28,15 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
         field: z.string().optional(),
         nuskode: z.string().min(1, "Du må velge utdanningsnivå"),
         hasAuthorization: z.string().optional(),
-        startDate: dateStringSchema.refine((data) => data <= new Date(), { message: "Dato kan ikke være frem i tid" }),
+        startDate: dateStringSchema("Fra dato").refine((data) => data <= new Date(), {
+            message: "Dato kan ikke være frem i tid",
+        }),
         ongoing: z.boolean().optional(),
         description: z.string().optional(),
     });
 
     const UtdanningSchemaWithEndDate = UtdanningSchema.extend({
-        endDate: dateStringSchema,
+        endDate: dateStringSchema("Til dato"),
     }).refine((data) => data.endDate >= data.startDate, {
         path: ["endDate"],
         message: "Til dato må være etter fra dato",
@@ -45,8 +47,8 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
 
         const data = {
             ...Object.fromEntries(formData),
-            startDate: formData.get("startDate"),
-            endDate: formData.get("endDate"),
+            startDate: formData.get("startDate") || undefined,
+            endDate: formData.get("endDate") || undefined,
             ongoing: formData.get("ongoing") === "true",
         };
 
@@ -160,7 +162,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                 </Checkbox>
             </CheckboxGroup>
 
-            <HStack gap="8">
+            <HStack gap="12">
                 <DatovelgerWithoutValidation
                     id="startDate"
                     name="startDate"
