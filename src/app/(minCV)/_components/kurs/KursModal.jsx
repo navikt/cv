@@ -28,7 +28,8 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
             issuer: z.string().optional(),
             durationUnit: z.enum([...Object.keys(TidsenhetEnum), ""]).optional(),
             duration: z.coerce
-                .string()
+                .number()
+                .int({ message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig` })
                 .optional()
                 .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
                     message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
@@ -49,7 +50,8 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                 .refine((date) => date <= new Date(), { message: "Fullført kan ikke være frem i tid" }),
             durationUnit: z.enum([...Object.keys(TidsenhetEnum), ""]).optional(),
             duration: z.coerce
-                .string()
+                .number()
+                .int({ message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig` })
                 .optional()
                 .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
                     message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
@@ -66,7 +68,6 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
 
         const data = {
             ...Object.fromEntries(formData),
-            duration: formData.get("duration") ? parseInt(formData.get("duration").toString(), 10) : undefined,
             durationUnit: formData.get("durationUnit") || undefined,
         };
 
@@ -192,7 +193,7 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                             }
                             inputMode="numeric"
                             type="number"
-                            min="1"
+                            step="any"
                             defaultValue={gjeldendeElement?.duration}
                             error={errors?.duration}
                             onBlur={revalidate}
