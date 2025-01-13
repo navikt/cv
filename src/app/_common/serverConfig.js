@@ -2,6 +2,7 @@ import "./envConfig";
 
 const hentServerConfigMap = () => ({
     nodeEnv: process.env.NODE_ENV,
+    naisCluster: process.env.NAIS_CLUSTER_NAME,
     audience: {
         cvApi: process.env.PAM_CV_API_AUDIENCE,
         euresCvEksport: process.env.PAM_EURES_CV_EKSPORT_AUDIENCE,
