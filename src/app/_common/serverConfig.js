@@ -23,6 +23,8 @@ const hentServerConfigMap = () => ({
         jwksUri: process.env.IDPORTEN_JWKS_URI,
         audience: process.env.IDPORTEN_AUDIENCE,
     },
+    erVeileder: process.env.ER_VEILEDER === "true",
+    erDemoApp: process.env.ER_DEMO_APP === "true",
 });
 
 export const serverConfig = hentServerConfigMap();

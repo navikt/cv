@@ -14,5 +14,6 @@ createServer({
         this.passthrough();
         this.passthrough("https://dekoratoren.ekstern.dev.nav.no/*");
         this.passthrough("https://www.nav.no/*");
+        this.passthrough("https://cdn.nav.no/*");
     },
 });
