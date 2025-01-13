@@ -5,6 +5,7 @@ import "./page.module.css";
 import { serverConfig } from "@/app/_common/serverConfig";
 import BorgerDekoratørWrapper from "@/app/_common/components/Dekoratør/BorgerDekoratørWrapper";
 import logger from "@/app/_common/utils/logger";
+import VeilederDekoratørWrapper from "@/app/_common/components/Dekoratør/VeilederDekoratørWrapper";
 
 export const dynamic = "force-dynamic";
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"], adjustFontFallback: false });
@@ -20,14 +21,7 @@ async function RootLayout({ children }) {
     logger.info(`Er veileder i layout: ${erVeileder}`);
 
     return erVeileder === true ? (
-        <html lang="no">
-            <head>
-                <title>Min CV - nav.no - Veileder</title>
-            </head>
-            <body className={sourceSansPro.className}>
-                <main id="maincontent">{children}</main>
-            </body>
-        </html>
+        <VeilederDekoratørWrapper />
     ) : (
         <BorgerDekoratørWrapper fontClassName={sourceSansPro.className}>{children}</BorgerDekoratørWrapper>
     );

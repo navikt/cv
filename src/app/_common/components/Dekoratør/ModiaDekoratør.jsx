@@ -11,7 +11,6 @@ export default function ModiaDekoratør() {
 
     return (
         <InternflateDecorator
-            proxy
             appName="cv-veileder"
             environment={miljø}
             showEnheter
