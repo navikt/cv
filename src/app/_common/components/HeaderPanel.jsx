@@ -1,10 +1,15 @@
+"use client";
+
 import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Skeleton, VStack } from "@navikt/ds-react";
 import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import styles from "@/app/page.module.css";
+import { useContext } from "react";
+import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 function HeaderPanel({ title = "Min CV" }) {
+    const { erVeileder } = useContext(ApplicationContext);
     const { personalia } = usePerson();
     const { sistEndret } = useCv();
 
@@ -37,7 +42,7 @@ function HeaderPanel({ title = "Min CV" }) {
                         <VStack gap={{ xs: "3", md: "3" }}>
                             <HStack gap="6" align="center">
                                 <Heading level="1" size="large">
-                                    {title}
+                                    {`${title}${erVeileder ? " - Veileder" : ""}`}
                                 </Heading>
                             </HStack>
                             <Hide below="md">

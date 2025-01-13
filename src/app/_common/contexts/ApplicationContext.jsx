@@ -7,10 +7,11 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useNotifikasjoner } from "@/app/_common/hooks/useNotifikasjoner";
 import { Notifikasjoner } from "@/app/_common/components/Notifikasjoner";
 import { Hjemmelside } from "@/app/(minCV)/_components/hjemmelside/Hjemmelside";
+import ModiaDekoratør from "@/app/_common/components/Dekoratør/ModiaDekoratør";
 
 export const ApplicationContext = React.createContext({});
 
-function ApplicationProvider({ children }) {
+function ApplicationProvider({ children, erVeileder, erDemoApp }) {
     const { erInnlogget, innloggingLaster, innloggingHarFeil, harBlittUtlogget } = useErInnlogget();
     const { harIkkeSettHjemmel, erUnderOppfølging, personHarFeil } = usePerson();
     const { cvHarFeil } = useCv();
@@ -38,7 +39,8 @@ function ApplicationProvider({ children }) {
     };
 
     return (
-        <ApplicationContext.Provider value={{ suksessNotifikasjon, errorNotifikasjon }}>
+        <ApplicationContext.Provider value={{ suksessNotifikasjon, errorNotifikasjon, erVeileder, erDemoApp }}>
+            {erVeileder === true && <ModiaDekoratør />}
             {hentSideinnhold()}
             <Notifikasjoner notifikasjoner={notifikasjoner} />
         </ApplicationContext.Provider>

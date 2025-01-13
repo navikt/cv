@@ -1,7 +1,7 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: cv-veileder
+  name: cv
   namespace: teampam
   labels:
     team: teampam
@@ -75,8 +75,8 @@ spec:
   accessPolicy:
     outbound:
       rules:
-        - application: modiacontextholder
-          namespace: personoversikt
+        - application: nav-dekoratoren
+          namespace: personbruker
         - application: pam-cv-api-gcp
         - application: pam-ontologi
         - application: pam-eures-cv-eksport
