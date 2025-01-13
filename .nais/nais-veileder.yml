@@ -52,6 +52,8 @@ spec:
         - id: loki
         - id: elastic
   env:
+    - name: ER_VEILEDER
+      value: "true"
     - name: PORT
       value: "8095"
     - name: NEXT_PUBLIC_ENVIRONMENT
@@ -75,8 +77,8 @@ spec:
   accessPolicy:
     outbound:
       rules:
-        - application: modiacontextholder
-          namespace: personoversikt
+        - application: nav-dekoratoren
+          namespace: personbruker
         - application: pam-cv-api-gcp
         - application: pam-ontologi
         - application: pam-eures-cv-eksport
