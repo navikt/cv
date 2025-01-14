@@ -39,6 +39,7 @@ spec:
           - NAVident
     sidecar:
       enabled: true
+      autoLogin: true
   tokenx:
     enabled: true
   prometheus:
