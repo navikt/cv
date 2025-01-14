@@ -7,12 +7,17 @@ const hentServerConfigMap = () => ({
         cvApi: process.env.PAM_CV_API_AUDIENCE,
         euresCvEksport: process.env.PAM_EURES_CV_EKSPORT_AUDIENCE,
     },
+    scope: {
+        modiaDekorator: process.env.ER_VEILEDER === "true" ? process.env.MODIA_DEKORATOR_SCOPE : null,
+        cvApi: process.env.ER_VEILEDER === "true" ? process.env.PAM_CV_API_GCP_SCOPE : null,
+    },
     urls: {
         base: process.env.BASE_URL,
         login: process.env.LOGIN_URL,
         cvApi: process.env.PAM_CV_API_BASEURL,
         pamOntologi: process.env.PAM_ONTOLOGI_BASEURL,
         euresCvEksport: process.env.PAM_EURES_CV_EKSPORT_BASEURL,
+        modiaDekorator: process.env.MODIA_DEKORATOR_BASEURL,
     },
     tokenx: {
         wellKnownUrl: process.env.TOKEN_X_WELL_KNOWN_URL,

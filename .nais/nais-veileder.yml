@@ -66,6 +66,12 @@ spec:
       value: http://pam-cv-api-gcp/pam-cv-api/rest
     - name: PAM_CV_API_AUDIENCE
       value: {{ pam_cv_api_audience }}
+    - name: PAM_CV_API_SCOPE
+      value: {{ pam_cv_api_scope }}
+    - name: MODIA_DEKORATOR_SCOPE
+      value: {{ modia_dekorator_scope }}
+    - name: MODIA_DEKORATOR_BASEURL
+      value: http://modiacontextholder.personoversikt
     - name: PAM_ONTOLOGI_BASEURL
       value: http://pam-ontologi/rest/typeahead
     - name: PAM_EURES_CV_EKSPORT_BASEURL
@@ -77,8 +83,8 @@ spec:
   accessPolicy:
     outbound:
       rules:
-        - application: nav-dekoratoren
-          namespace: personbruker
+        - application: modiacontextholder
+          namespace: personoversikt
         - application: pam-cv-api-gcp
         - application: pam-ontologi
         - application: pam-eures-cv-eksport
