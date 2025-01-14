@@ -29,11 +29,16 @@ spec:
       memory: 256Mi
   vault:
     enabled: false
-  idporten:
-    enabled: true
+  azure:
+    application:
+      enabled: true
+      tenant: {{ tenant }}
+      allowAllUsers: true
+      claims:
+        extra:
+          - NAVident
     sidecar:
       enabled: true
-      level: Level3
   tokenx:
     enabled: true
   prometheus:
