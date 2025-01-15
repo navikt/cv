@@ -11,5 +11,5 @@ export async function GET(request) {
         `Er i decorator/route.js med auth-header: ${request.headers.get("authorization")}. Alle headers: ${request.headers}`,
     );
 
-    return proxyWithOBO(`${urls.modiaDekorator}/decorator/v2`, "", scope.modiaDekorator, request);
+    await proxyWithOBO(`${urls.modiaDekorator}/decorator/v2`, "", scope.modiaDekorator, request);
 }

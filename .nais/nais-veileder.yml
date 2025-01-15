@@ -77,7 +77,7 @@ spec:
     - name: MODIA_DEKORATOR_SCOPE
       value: {{ modia_dekorator_scope }}
     - name: MODIA_DEKORATOR_BASEURL
-      value: http://modiacontextholder/api
+      value: http://modiacontextholder.personoversikt/api
     - name: PAM_ONTOLOGI_BASEURL
       value: http://pam-ontologi/rest/typeahead
     - name: PAM_EURES_CV_EKSPORT_BASEURL
