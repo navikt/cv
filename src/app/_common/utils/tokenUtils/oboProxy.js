@@ -36,6 +36,10 @@ export const proxyWithOBO = async (baseurl, path, scope, req, customRoute) => {
 
     const requestUrl = isLocal ? originalUrl : newUrl;
 
+    logger.info(
+        `Proxy urls - originalUrl: ${originalUrl} - fullPath: ${fullPath} - newUrl: ${newUrl} - requestUrl: ${requestUrl}`,
+    );
+
     try {
         const originalHeaders = new Headers(req.headers);
         originalHeaders.set("Authorization", `Bearer ${oboToken}`);
