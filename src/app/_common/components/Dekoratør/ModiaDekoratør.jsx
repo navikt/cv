@@ -21,8 +21,9 @@ export default function ModiaDekoratør() {
 
     return (
         <InternflateDecorator
+            includeCredentials
             proxy={proxyUrl}
-            appName="cv-veileder"
+            appName="Min CV - Veileder"
             environment={miljø}
             showEnheter
             showHotkeys={false}
