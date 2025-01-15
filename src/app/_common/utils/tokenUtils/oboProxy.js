@@ -16,17 +16,17 @@ export const proxyWithOBO = async (baseurl, path, scope, req, customRoute) => {
         return NextResponse.json({ beskrivelse: "Kunne ikke hente token" }, { status: 500 });
     }
 
-    let obo;
+    let oboToken;
 
     try {
-        obo = isLocal ? { ok: true, token: "DEV" } : await exchangeToken(req, scope);
+        oboToken = isLocal ? { ok: true, token: "DEV" } : await exchangeToken(req, scope);
     } catch (error) {
         logger.error(`Feil ved henting av OBO-token: ${error}`);
         return NextResponse.json({ beskrivelse: "Kunne ikke hente OBO-token" }, { status: 500 });
     }
 
-    if (!obo.ok || !obo.token) {
-        logger.error(`Ugyldig OBO-token mottatt: ${obo}`);
+    if (!oboToken) {
+        logger.error(`Ugyldig OBO-token mottatt`);
         return NextResponse.json({ beskrivelse: "Ugyldig OBO-token mottatt" }, { status: 500 });
     }
     const originalUrl = new URL(req.url);
@@ -38,7 +38,7 @@ export const proxyWithOBO = async (baseurl, path, scope, req, customRoute) => {
 
     try {
         const originalHeaders = new Headers(req.headers);
-        originalHeaders.set("Authorization", `Bearer ${obo.token}`);
+        originalHeaders.set("Authorization", `Bearer ${oboToken}`);
         originalHeaders.set("Content-Type", "application/json");
 
         // Filter out AMP_ cookies
