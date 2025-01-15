@@ -11,7 +11,7 @@ export const proxyWithOBO = async (baseurl, path, scope, req, customRoute) => {
         return NextResponse.json({ beskrivelse: "Ingen url oppgitt for proxy" }, { status: 500 });
     }
 
-    if (!isLocal && !!getToken(req)) {
+    if (!isLocal && !getToken(req)) {
         logger.warn("Kunne ikke hente token");
         return NextResponse.json({ beskrivelse: "Kunne ikke hente token" }, { status: 500 });
     }
