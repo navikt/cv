@@ -1,6 +1,6 @@
 import { serverConfig } from "@/app/_common/serverConfig";
 import { logger } from "@navikt/next-logger";
-import { proxyWithOBO } from "../../_common/utils/tokenUtils/oboProxy";
+import { fetchWithObo } from "../../_common/utils/tokenUtils/oboProxy";
 
 export async function GET(request) {
     const { erVeileder, urls, scope } = serverConfig;
@@ -11,5 +11,5 @@ export async function GET(request) {
         `Er i decorator/route.js med auth-header: ${request.headers.get("authorization")}. Alle headers: ${request.headers}`,
     );
 
-    await proxyWithOBO(`${urls.modiaDekorator}/decorator/v2`, "", scope.modiaDekorator, request);
+    await fetchWithObo(`${urls.modiaDekorator}/decorator/v2`, scope.modiaDekorator, request);
 }

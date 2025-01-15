@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 import { logger } from "@navikt/next-logger";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
 
-export const proxyWithOBO = async (baseurl, path, scope, req, customRoute) => {
+export const fetchWithObo = async (url, scope, req) => {
     const isLocal = process.env.NEXT_PUBLIC_ENVIRONMENT === "localhost";
 
-    if (!baseurl) {
+    if (!url) {
         return NextResponse.json({ beskrivelse: "Ingen url oppgitt for proxy" }, { status: 500 });
     }
 
@@ -29,16 +29,6 @@ export const proxyWithOBO = async (baseurl, path, scope, req, customRoute) => {
         logger.error(`Ugyldig OBO-token mottatt`);
         return NextResponse.json({ beskrivelse: "Ugyldig OBO-token mottatt" }, { status: 500 });
     }
-    const originalUrl = new URL(req.url);
-
-    const fullPath = baseurl + originalUrl.pathname.replace(path, "");
-    const newUrl = customRoute ? baseurl + customRoute : `${baseurl}${fullPath}${originalUrl.search}`;
-
-    const requestUrl = isLocal ? originalUrl : newUrl;
-
-    logger.info(
-        `Proxy urls - originalUrl: ${originalUrl} - fullPath: ${fullPath} - newUrl: ${newUrl} - requestUrl: ${requestUrl}`,
-    );
 
     try {
         const originalHeaders = new Headers(req.headers);
@@ -76,10 +66,10 @@ export const proxyWithOBO = async (baseurl, path, scope, req, customRoute) => {
             }
         }
 
-        const response = await fetch(requestUrl, fetchOptions);
+        const response = await fetch(url, fetchOptions);
 
         if (!response.ok) {
-            const { status, statusText, url, body, ok, headers } = response;
+            const { status, statusText, url: urlFraResponse, body, ok, headers } = response;
 
             logger.error(
                 {
@@ -87,8 +77,7 @@ export const proxyWithOBO = async (baseurl, path, scope, req, customRoute) => {
                     status,
                     statusText,
                     url,
-                    tilUrl: requestUrl,
-                    fraUrl: originalUrl,
+                    urlFraResponse,
                     body,
                     ok,
                 },
@@ -111,15 +100,9 @@ export const proxyWithOBO = async (baseurl, path, scope, req, customRoute) => {
         });
     } catch (error) {
         if (error instanceof Error) {
-            logger.error(error, `Feil ved proxying av forespørselen til url: ${requestUrl} fra url: ${originalUrl}`);
+            logger.error(error, `Feil ved fetch med obo til url: ${url}`);
         } else {
-            logger.error(
-                {
-                    msg: "Unknown error",
-                    error,
-                },
-                `Feil ved proxying av forespørselen til url: ${requestUrl} fra url: ${originalUrl}`,
-            );
+            logger.error({ msg: "Unknown error", error }, `Feil ved fetch med obo til url: ${url}`);
         }
         return NextResponse.json({ beskrivelse: error.message || "Feil i proxy" }, { status: error.status || 500 });
     }
