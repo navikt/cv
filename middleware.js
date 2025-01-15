@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { serverConfig } from "@/app/_common/serverConfig";
+import logger from "@/app/_common/utils/logger";
 
 export async function middleware(request) {
     const isLocal = process.env.NEXT_PUBLIC_ENVIRONMENT === "localhost";
     const { erVeileder } = serverConfig;
+
+    logger.info(`Er i middleware med erVeileder: ${erVeileder} og isLocal: ${isLocal}`);
 
     if (erVeileder) {
         const requestUrl = new URL(request.url);
