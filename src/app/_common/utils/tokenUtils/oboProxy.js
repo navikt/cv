@@ -21,12 +21,12 @@ export const proxyWithOBO = async (baseurl, path, scope, req, customRoute) => {
     try {
         obo = isLocal ? { ok: true, token: "DEV" } : await exchangeToken(req, scope);
     } catch (error) {
-        logger.error("Feil ved henting av OBO-token:", error);
+        logger.error(`Feil ved henting av OBO-token: ${error}`);
         return NextResponse.json({ beskrivelse: "Kunne ikke hente OBO-token" }, { status: 500 });
     }
 
     if (!obo.ok || !obo.token) {
-        logger.error("Ugyldig OBO-token mottatt:", obo);
+        logger.error(`Ugyldig OBO-token mottatt: ${obo}`);
         return NextResponse.json({ beskrivelse: "Ugyldig OBO-token mottatt" }, { status: 500 });
     }
     const originalUrl = new URL(req.url);

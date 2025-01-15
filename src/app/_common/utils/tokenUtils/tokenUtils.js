@@ -24,7 +24,7 @@ export const exchangeToken = async (request, audience) => {
         return oboResponse.token;
     }
 
-    logger.error(`Kunne ikke veksle inn token: ${oboResponse.error}`);
+    logger.error(`Kunne ikke veksle inn token for i path ${request.path}: ${oboResponse.error}`);
     return "";
 };
 
