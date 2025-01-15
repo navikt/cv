@@ -1,8 +1,8 @@
 import { headers } from "next/headers";
-import { createAuthorizationAndContentTypeHeaders, exchangeToken } from "@/app/_common/utils/tokenUtils";
 import { serverConfig } from "@/app/_common/serverConfig";
 import logger from "@/app/_common/utils/logger";
 import metrics from "@/app/_common/observability/prometheus";
+import { createAuthorizationAndContentTypeHeaders, exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
 
 export const putData = async (url, audience, request) => {
     const headerList = headers();

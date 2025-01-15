@@ -1,7 +1,7 @@
 import logger from "@/app/_common/utils/logger";
-import { exchangeToken } from "@/app/_common/utils/tokenUtils";
 import { serverConfig } from "@/app/_common/serverConfig";
 import metrics from "@/app/_common/observability/prometheus";
+import { exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
 
 export async function POST(request) {
     const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
