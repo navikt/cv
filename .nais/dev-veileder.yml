@@ -1,5 +1,6 @@
 ingress:
   - "https://cv-veileder.intern.dev.nav.no/min-cv"
+tenant: "trygdeetaten.no"
 next_public_environment: "dev"
 pam_cv_api_audience: "dev-gcp:teampam:pam-cv-api-gcp"
 pam_eures_cv_eksport_audience: "dev-gcp:teampam:pam-eures-cv-eksport"
