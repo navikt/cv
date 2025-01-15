@@ -21,7 +21,6 @@ export default function ModiaDekoratør() {
 
     return (
         <InternflateDecorator
-            includeCredentials
             proxy={proxyUrl}
             appName="Min CV - Veileder"
             environment={miljø}
