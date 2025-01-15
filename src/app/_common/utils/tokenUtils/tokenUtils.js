@@ -1,6 +1,7 @@
 import { serverConfig } from "@/app/_common/serverConfig";
 import { exchangeEntraIdToken, isEntraIdTokenValid } from "@/app/_common/utils/tokenUtils/entraIdTokenUtils";
 import { exchangeIdPortenToken, isIdPortenTokenValid } from "@/app/_common/utils/tokenUtils/idPortenTokenUtils";
+import logger from "@/app/_common/utils/logger";
 
 export const CSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
 
@@ -15,9 +16,16 @@ export async function isTokenValid(req) {
 export const exchangeToken = async (request, audience) => {
     const { erVeileder } = serverConfig;
 
-    if (erVeileder) return exchangeEntraIdToken(request, audience);
+    const oboResponse = erVeileder
+        ? await exchangeEntraIdToken(request, audience)
+        : await exchangeIdPortenToken(request, audience);
 
-    return exchangeIdPortenToken(request, audience);
+    if (oboResponse.ok) {
+        return oboResponse.token;
+    }
+
+    logger.error(`Kunne ikke veksle inn token: ${oboResponse.error}`);
+    return "";
 };
 
 export function createAuthorizationAndContentTypeHeaders(token, callId, csrf) {
