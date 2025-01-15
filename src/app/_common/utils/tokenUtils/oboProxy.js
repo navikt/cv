@@ -1,17 +1,17 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { getToken, requestOboToken } from "@navikt/oasis";
+import { getToken } from "@navikt/oasis";
 import { NextResponse } from "next/server";
 import { logger } from "@navikt/next-logger";
+import { exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
 
 export const proxyWithOBO = async (baseurl, path, scope, req, customRoute) => {
     const isLocal = process.env.NEXT_PUBLIC_ENVIRONMENT === "localhost";
 
-    const token = isLocal ? "DEV" : getToken(req.headers);
     if (!baseurl) {
         return NextResponse.json({ beskrivelse: "Ingen url oppgitt for proxy" }, { status: 500 });
     }
 
-    if (!token) {
+    if (!isLocal && !!getToken(req)) {
         logger.warn("Kunne ikke hente token");
         return NextResponse.json({ beskrivelse: "Kunne ikke hente token" }, { status: 500 });
     }
@@ -19,7 +19,7 @@ export const proxyWithOBO = async (baseurl, path, scope, req, customRoute) => {
     let obo;
 
     try {
-        obo = isLocal ? { ok: true, token: "DEV" } : await requestOboToken(token, scope);
+        obo = isLocal ? { ok: true, token: "DEV" } : await exchangeToken(req, scope);
     } catch (error) {
         logger.error("Feil ved henting av OBO-token:", error);
         return NextResponse.json({ beskrivelse: "Kunne ikke hente OBO-token" }, { status: 500 });
