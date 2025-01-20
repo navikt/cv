@@ -26,6 +26,7 @@ const hentServerConfigMap = () => ({
 export const serverConfig = hentServerConfigMap();
 
 export function hentCvApiAudScope() {
-    if (serverConfig.erVeileder) return serverConfig.scope.cvApi;
-    return serverConfig.audience.cvApi;
+    const config = hentServerConfigMap();
+    if (config.erVeileder) return config.scope.cvApi;
+    return config.audience.cvApi;
 }
