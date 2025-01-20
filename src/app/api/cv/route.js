@@ -2,6 +2,7 @@ import logger from "@/app/_common/utils/logger";
 import { hentCvApiAudScope, serverConfig } from "@/app/_common/serverConfig";
 import metrics from "@/app/_common/observability/prometheus";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
+import { leggTilVeilederHeaders } from "@/app/_common/utils/veilederUtils";
 
 export async function GET(request) {
     const token = await exchangeToken(request, hentCvApiAudScope());
@@ -13,6 +14,10 @@ export async function GET(request) {
     const callId = requestHeaders.get("nav-callid");
     requestHeaders.set("authorization", `Bearer ${token}`);
     requestHeaders.set("content-type", "application/json");
+
+    if (serverConfig.erVeileder) {
+        await leggTilVeilederHeaders(requestHeaders, request);
+    }
 
     logger.info(`Henter CV fra cv-api`);
 

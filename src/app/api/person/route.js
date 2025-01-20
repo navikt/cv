@@ -2,12 +2,11 @@ import logger from "@/app/_common/utils/logger";
 import { hentCvApiAudScope, serverConfig } from "@/app/_common/serverConfig";
 import metrics from "@/app/_common/observability/prometheus";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
+import { leggTilVeilederHeaders } from "@/app/_common/utils/veilederUtils";
 
 export async function GET(request) {
     const scopeEllerAudience = hentCvApiAudScope();
     const token = await exchangeToken(request, scopeEllerAudience);
-
-    logger.info(`Token etter exchange I DEV ALTSÅ ${token} - Brukte scope: ${scopeEllerAudience}`);
 
     const cvApiBaseUrl = serverConfig?.urls?.cvApi;
     const fullUrl = `${cvApiBaseUrl}/v2/person?medTesttilgang=true`;
@@ -16,6 +15,10 @@ export async function GET(request) {
     const callId = requestHeaders.get("nav-callid");
     requestHeaders.set("authorization", `Bearer ${token}`);
     requestHeaders.set("content-type", "application/json");
+
+    if (serverConfig.erVeileder) {
+        await leggTilVeilederHeaders(requestHeaders, request);
+    }
 
     logger.info(`Henter person fra CV`);
 
