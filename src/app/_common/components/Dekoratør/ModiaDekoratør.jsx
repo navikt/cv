@@ -26,7 +26,8 @@ export default function ModiaDekoratør() {
             environment={miljø}
             showEnheter={false}
             showHotkeys={false}
-            showSearchArea={false}
+            showSearchArea
+            fetchActiveUserOnMount
             urlFormat="NAV_NO"
         />
     );
