@@ -1,7 +1,7 @@
 import { serverConfig } from "@/app/_common/serverConfig";
 import { logger } from "@navikt/next-logger";
 import { NextResponse } from "next/server";
-import { fetchWithObo } from "../../_common/utils/tokenUtils/oboProxy";
+import { fetchWithObo } from "../../../_common/utils/tokenUtils/oboProxy";
 
 export async function GET(request) {
     const { erVeileder, urls, scope } = serverConfig;

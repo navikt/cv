@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 
 export default function ModiaDekoratør() {
     const miljø = getMiljø() === Miljø.PROD ? "prod" : "q0";
-    const proxyUrl = `https://cv-veileder.intern${getMiljø() === Miljø.PROD ? "" : ".dev"}.nav.no/min-cv`;
+    const proxyUrl = `https://cv-veileder.intern${getMiljø() === Miljø.PROD ? "" : ".dev"}.nav.no/min-cv/veileder`;
 
     const InternflateDecorator = dynamic(
         () => import("@navikt/navspa").then((NAVSPA) => NAVSPA.default.importer("internarbeidsflate-decorator-v3")),
@@ -24,10 +24,9 @@ export default function ModiaDekoratør() {
             proxy={proxyUrl}
             appName="Min CV - Veileder"
             environment={miljø}
-            showEnheter
+            showEnheter={false}
             showHotkeys={false}
             showSearchArea={false}
-            fetchActiveEnhetOnMount
             fetchActiveUserOnMount
             urlFormat="NAV_NO"
         />
