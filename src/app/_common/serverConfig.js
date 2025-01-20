@@ -9,7 +9,7 @@ const hentServerConfigMap = () => ({
     },
     scope: {
         modiaDekorator: process.env.ER_VEILEDER === "true" ? process.env.MODIA_DEKORATOR_SCOPE : null,
-        cvApi: process.env.ER_VEILEDER === "true" ? process.env.PAM_CV_API_GCP_SCOPE : null,
+        cvApi: process.env.ER_VEILEDER === "true" ? process.env.PAM_CV_API_SCOPE : null,
     },
     urls: {
         base: process.env.BASE_URL,
