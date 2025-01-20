@@ -38,5 +38,6 @@ export function createAuthorizationAndContentTypeHeaders(token, callId, csrf) {
         requestHeaders.set("cookie", `${CSRF_COOKIE_NAME}=${csrf}`);
         requestHeaders.set(`X-${CSRF_COOKIE_NAME}`, csrf);
     }
+
     return requestHeaders;
 }
