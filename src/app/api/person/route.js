@@ -5,6 +5,9 @@ import { exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
 
 export async function GET(request) {
     const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
+
+    logger.info("Token etter exchange I DEV ALTSÅ", token);
+
     const cvApiBaseUrl = serverConfig?.urls?.cvApi;
     const fullUrl = `${cvApiBaseUrl}/v2/person?medTesttilgang=true`;
 
