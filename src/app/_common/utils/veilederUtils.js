@@ -3,15 +3,11 @@ import { fetchWithObo } from "@/app/_common/utils/tokenUtils/oboProxy";
 import logger from "@/app/_common/utils/logger";
 
 export async function leggTilVeilederHeaders(headers, request) {
-    const { urls, scope, erVeileder } = serverConfig;
+    const { erVeileder } = serverConfig;
 
     if (!erVeileder) return headers;
 
-    const aktivBrukerResponse = await fetchWithObo(
-        `${urls.modiaDekorator}/context/v2/aktivbruker`,
-        scope.modiaDekorator,
-        request,
-    );
+    const aktivBrukerResponse = await fetchAktivBruker(request);
 
     if (!aktivBrukerResponse.ok) {
         logger.warn("Kunne ikke finne aktiv bruker");
@@ -23,3 +19,9 @@ export async function leggTilVeilederHeaders(headers, request) {
     headers.set("fnr", `${aktivBrukerResponseBody.aktivBruker}`);
     return headers;
 }
+
+export const fetchAktivBruker = async (request) => {
+    const { urls, scope } = serverConfig;
+
+    return fetchWithObo(`${urls.modiaDekorator}/context/v2/aktivbruker`, scope.modiaDekorator, request);
+};
