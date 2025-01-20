@@ -10,7 +10,7 @@ export const useAktivBruker = () => {
     const { erInnlogget } = useErInnlogget();
     const { data, error, isLoading } = useSWR(erInnlogget ? AKTIV_BRUKER_KEY : null, getAPI);
     return {
-        aktivBruker: data.aktivBruker,
+        aktivBruker: data?.aktivBruker,
         aktivBrukerLaster: isLoading || (!data && !error),
         aktivBrukerHarFeil: error,
     };
