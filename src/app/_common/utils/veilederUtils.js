@@ -18,6 +18,8 @@ export async function leggTilVeilederHeaders(headers, request) {
         throw Error("Kunne ikke finne aktiv bruker");
     }
 
-    headers.set("fnr", `${aktivBrukerResponse.aktivBruker}`);
+    const aktivBrukerResponseBody = await aktivBrukerResponse.json();
+
+    headers.set("fnr", `${aktivBrukerResponseBody.aktivBruker}`);
     return headers;
 }
