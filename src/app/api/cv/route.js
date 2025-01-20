@@ -1,12 +1,10 @@
 import logger from "@/app/_common/utils/logger";
-import { serverConfig } from "@/app/_common/serverConfig";
+import { hentCvApiAudScope, serverConfig } from "@/app/_common/serverConfig";
 import metrics from "@/app/_common/observability/prometheus";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
 
 export async function GET(request) {
-    const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
-
-    logger.info("Token etter exchange I DEV ALTSÅ", token);
+    const token = await exchangeToken(request, hentCvApiAudScope());
 
     const cvApiBaseUrl = serverConfig?.urls?.cvApi;
     const fullUrl = `${cvApiBaseUrl}/v2/cv`;
