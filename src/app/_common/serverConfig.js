@@ -23,9 +23,9 @@ const hentServerConfigMap = () => ({
     erDemoApp: process.env.ER_DEMO_APP === "true",
 });
 
+export const serverConfig = hentServerConfigMap();
+
 export function hentCvApiAudScope() {
     if (serverConfig.erVeileder) return serverConfig.scope.cvApi;
     return serverConfig.audience.cvApi;
 }
-
-export const serverConfig = hentServerConfigMap();
