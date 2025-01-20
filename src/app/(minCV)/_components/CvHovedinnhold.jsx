@@ -1,4 +1,4 @@
-import { BodyLong, Box, Button, HStack, Link, Show, VStack } from "@navikt/ds-react";
+import { Box, Button, HStack, Link, Show, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import Personalia from "@/app/(minCV)/_components/personalia/Personalia";
 import Jobbonsker from "@/app/(minCV)/_components/jobbonsker/Jobbonsker";
@@ -19,14 +19,14 @@ import { EyeIcon } from "@navikt/aksel-icons";
 import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 import { useContext } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
-import { getMiljø } from "@/app/_common/utils/miljøUtils";
+import VeilederBanner from "@/app/_common/components/VeilederBanner/VeilederBanner";
 
 export default function CvHovedinnhold({ cvLaster, setVisHovedinnhold }) {
     const { erVeileder } = useContext(ApplicationContext);
 
     return (
         <div>
-            {erVeileder && <BodyLong>Jeg er veileder i {getMiljø()}</BodyLong>}
+            {erVeileder && <VeilederBanner />}
             <Box className={styles.main}>
                 <HStack gap="4">
                     <VStack>
