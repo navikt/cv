@@ -2,17 +2,19 @@
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { getMiljø, Miljø } from "@/app/_common/utils/miljøUtils";
-import NAVSPA from "@navikt/navspa";
+import { dynamic } from "@/app/layout";
 
 export default function ModiaDekoratør() {
     const miljø = getMiljø() === Miljø.PROD ? "prod" : "q0";
     const proxyUrl = `https://cv-veileder.intern${getMiljø() === Miljø.PROD ? "" : ".dev"}.nav.no/min-cv/api/veileder`;
 
-    const InternflateDecorator = NAVSPA.importer("internarbeidsflate-decorator-v3");
-
-    const dekoratørErHentet = InternflateDecorator().props.navSpaApp.mount !== undefined;
-
-    if (!dekoratørErHentet) return <div>ModiaContextDekoratøren laster, vennligst vent...</div>;
+    const InternflateDecorator = dynamic(
+        () => import("@navikt/navspa").then((NAVSPA) => NAVSPA.default.importer("internarbeidsflate-decorator-v3")),
+        {
+            ssr: false,
+            loading: <div>Laster dekoratør...</div>,
+        },
+    );
 
     console.log(`Miljø: ${miljø}, proxyUrl: ${proxyUrl}`);
 

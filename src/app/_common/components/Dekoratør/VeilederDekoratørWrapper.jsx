@@ -1,6 +1,7 @@
 import Script from "next/script";
 import logger from "@/app/_common/utils/logger";
 import { serverConfig } from "@/app/_common/serverConfig";
+import ModiaDekoratør from "@/app/_common/components/Dekoratør/ModiaDekoratør";
 
 export default async function VeilederDekoratørWrapper({ children, fontClassName }) {
     const devBundle = "https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/bundle.js";
@@ -16,6 +17,7 @@ export default async function VeilederDekoratørWrapper({ children, fontClassNam
                 <Script src={bundle} strategy="afterInteractive" />
             </head>
             <body className={fontClassName}>
+                <ModiaDekoratør />
                 <main id="maincontent">{children}</main>
             </body>
         </html>

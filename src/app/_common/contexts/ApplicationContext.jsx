@@ -7,7 +7,6 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useNotifikasjoner } from "@/app/_common/hooks/useNotifikasjoner";
 import { Notifikasjoner } from "@/app/_common/components/Notifikasjoner";
 import { Hjemmelside } from "@/app/(minCV)/_components/hjemmelside/Hjemmelside";
-import ModiaDekoratør from "@/app/_common/components/Dekoratør/ModiaDekoratør";
 
 export const ApplicationContext = React.createContext({});
 
@@ -40,7 +39,6 @@ function ApplicationProvider({ children, erVeileder, erDemoApp }) {
 
     return (
         <ApplicationContext.Provider value={{ suksessNotifikasjon, errorNotifikasjon, erVeileder, erDemoApp }}>
-            {erVeileder === true && <ModiaDekoratør />}
             {hentSideinnhold()}
             <Notifikasjoner notifikasjoner={notifikasjoner} />
         </ApplicationContext.Provider>
