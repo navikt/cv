@@ -10,6 +10,10 @@ export default function ModiaDekoratør() {
 
     const InternflateDecorator = NAVSPA.importer("internarbeidsflate-decorator-v3");
 
+    const dekoratørErHentet = InternflateDecorator().props.navSpaApp.mount !== undefined;
+
+    if (!dekoratørErHentet) return <div>ModiaContextDekoratøren laster, vennligst vent...</div>;
+
     console.log(`Miljø: ${miljø}, proxyUrl: ${proxyUrl}`);
 
     return (
