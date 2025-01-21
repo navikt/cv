@@ -22,7 +22,7 @@ function ApplicationProvider({ children, erVeileder, erDemoApp }) {
             return <Feilside årsak={FeilsideÅrsak.FETCH_ERROR} />;
         }
 
-        if (!erInnlogget && !innloggingLaster) {
+        if (false && !erInnlogget && !innloggingLaster) {
             const årsak = harBlittUtlogget ? FeilsideÅrsak.LOGGET_UT : FeilsideÅrsak.IKKE_LOGGET_INN;
             return <Feilside årsak={årsak} />;
         }

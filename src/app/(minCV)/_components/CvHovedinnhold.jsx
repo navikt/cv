@@ -26,8 +26,8 @@ export default function CvHovedinnhold({ cvLaster, setVisHovedinnhold }) {
 
     return (
         <div>
-            {erVeileder && <VeilederBanner />}
             <Box className={styles.main}>
+                {erVeileder && <VeilederBanner />}
                 <HStack gap="4">
                     <VStack>
                         <Personalia />
