@@ -12,7 +12,8 @@ export default function ModiaDekoratør() {
         () => import("@navikt/navspa").then((NAVSPA) => NAVSPA.default.importer("internarbeidsflate-decorator-v3")),
         {
             ssr: false,
-            loading: <div>Laster dekoratør...</div>,
+            // eslint-disable-next-line react/no-unstable-nested-components
+            loading: () => <div>Laster dekoratør...</div>,
         },
     );
 
