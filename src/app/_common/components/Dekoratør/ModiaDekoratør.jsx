@@ -2,7 +2,7 @@
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { getMiljø, Miljø } from "@/app/_common/utils/miljøUtils";
-import * as NAVSPA from "@navikt/navspa";
+import NAVSPA from "@navikt/navspa";
 
 export default function ModiaDekoratør() {
     const miljø = getMiljø() === Miljø.PROD ? "prod" : "q0";
