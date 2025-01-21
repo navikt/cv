@@ -2,7 +2,7 @@
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { getMiljø, Miljø } from "@/app/_common/utils/miljøUtils";
-import { dynamic } from "@/app/layout";
+import dynamic from "next/dynamic";
 
 export default function ModiaDekoratør() {
     const miljø = getMiljø() === Miljø.PROD ? "prod" : "q0";
