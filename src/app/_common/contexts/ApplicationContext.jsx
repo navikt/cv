@@ -18,10 +18,11 @@ function ApplicationProvider({ children, erVeileder, erDemoApp }) {
 
     const hentSideinnhold = () => {
         if (innloggingHarFeil || personHarFeil || cvHarFeil) {
-            return <Feilside årsak={FeilsideÅrsak.FETCH_ERROR} />;
+            const årsak = erVeileder ? FeilsideÅrsak.FETCH_ERROR_VEILEDER : FeilsideÅrsak.FETCH_ERROR;
+            return <Feilside årsak={årsak} />;
         }
 
-        if (false && !erInnlogget && !innloggingLaster) {
+        if (!erInnlogget && !innloggingLaster) {
             const årsak = harBlittUtlogget ? FeilsideÅrsak.LOGGET_UT : FeilsideÅrsak.IKKE_LOGGET_INN;
             return <Feilside årsak={årsak} />;
         }
