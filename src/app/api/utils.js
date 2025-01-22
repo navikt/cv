@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { serverConfig } from "@/app/_common/serverConfig";
+import { hentCvApiAudScope, serverConfig } from "@/app/_common/serverConfig";
 import logger from "@/app/_common/utils/logger";
 import metrics from "@/app/_common/observability/prometheus";
 import { createAuthorizationAndContentTypeHeaders, exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
@@ -9,7 +9,7 @@ export const putData = async (url, audience, request) => {
     const headerList = headers();
     const callId = headerList.get("nav-callid");
 
-    const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
+    const token = await exchangeToken(request, hentCvApiAudScope());
     const requestHeaders = createAuthorizationAndContentTypeHeaders(token, callId);
 
     if (serverConfig.erVeileder) {
