@@ -93,4 +93,3 @@ spec:
           namespace: personoversikt
         - application: pam-cv-api-gcp
         - application: pam-ontologi
-        - application: pam-eures-cv-eksport

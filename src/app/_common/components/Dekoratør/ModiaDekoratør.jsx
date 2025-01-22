@@ -3,8 +3,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { getMiljø, Miljø } from "@/app/_common/utils/miljøUtils";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 
 export default function ModiaDekoratør() {
+    const router = useRouter();
     const miljø = getMiljø() === Miljø.PROD ? "prod" : "q0";
     const proxyUrl = `https://cv-veileder.intern${getMiljø() === Miljø.PROD ? "" : ".dev"}.nav.no/min-cv/api/veileder`;
 
@@ -16,6 +18,10 @@ export default function ModiaDekoratør() {
             loading: () => <div>Laster dekoratør...</div>,
         },
     );
+
+    const refreshVedEndretFnr = () => {
+        router.refresh();
+    };
 
     console.log(`Miljø: ${miljø}, proxyUrl: ${proxyUrl}`);
 
@@ -29,6 +35,7 @@ export default function ModiaDekoratør() {
             showSearchArea
             fetchActiveUserOnMount
             urlFormat="NAV_NO"
+            onFnrChanged={() => refreshVedEndretFnr()}
         />
     );
 }
