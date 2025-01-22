@@ -5,13 +5,18 @@ import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import styles from "@/app/page.module.css";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 function HeaderPanel({ title = "Min CV" }) {
     const { erVeileder } = useContext(ApplicationContext);
-    const { navn } = usePerson();
+    const { personalia } = usePerson();
     const { sistEndret } = useCv();
+    const { navn, setNavn } = useState(null);
+
+    useEffect(() => {
+        if (personalia) setNavn(`${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase());
+    }, [personalia]);
 
     const navnKomponent = !navn ? (
         <BodyShort as={Skeleton} size="small">
@@ -19,7 +24,7 @@ function HeaderPanel({ title = "Min CV" }) {
         </BodyShort>
     ) : (
         <BodyShort size="small" className={styles.wrapText}>
-            {navn.toUpperCase()}
+            {navn}
         </BodyShort>
     );
 
