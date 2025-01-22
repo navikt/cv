@@ -12,13 +12,10 @@ function HeaderPanel({ title = "Min CV" }) {
     const { erVeileder } = useContext(ApplicationContext);
     const { personalia } = usePerson();
     const { sistEndret } = useCv();
-    const { navn, setNavn } = useState(null);
+    const [navn, setNavn] = useState(null);
 
     useEffect(() => {
-        if (personalia) {
-            const nyttNavn = personalia ? `${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase() : null;
-            setNavn(nyttNavn);
-        }
+        if (personalia) setNavn(`${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase());
     }, [personalia]);
 
     const navnKomponent = !navn ? (
