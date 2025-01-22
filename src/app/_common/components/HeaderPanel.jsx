@@ -10,10 +10,10 @@ import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 function HeaderPanel({ title = "Min CV" }) {
     const { erVeileder } = useContext(ApplicationContext);
-    const { personalia } = usePerson();
+    const { fornavn, etternavn } = usePerson();
     const { sistEndret } = useCv();
 
-    const navn = personalia ? `${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase() : null;
+    const navn = fornavn && etternavn ? `${fornavn} ${etternavn}`.toUpperCase() : null;
 
     const navnKomponent = !navn ? (
         <BodyShort as={Skeleton} size="small">
