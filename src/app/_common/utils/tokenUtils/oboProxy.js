@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { logger } from "@navikt/next-logger";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
 
-export const fetchWithObo = async (url, scope, req) => {
+export const fetchWithObo = async (url, scope, req, method = "GET") => {
     const isLocal = process.env.NEXT_PUBLIC_ENVIRONMENT === "localhost";
 
     if (!url) {
@@ -50,7 +50,7 @@ export const fetchWithObo = async (url, scope, req) => {
         }
 
         const fetchOptions = {
-            method: req.method,
+            method: method,
             headers: originalHeaders,
         };
 

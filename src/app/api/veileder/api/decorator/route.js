@@ -6,6 +6,5 @@ export async function GET(request) {
     const { erVeileder, urls, scope } = serverConfig;
 
     if (!erVeileder) return NextResponse.json({ error: "Not Found" }, { status: 404 });
-
-    return fetchWithObo(`${urls.modiaDekorator}/decorator/v2`, scope.modiaDekorator, request);
+    return fetchWithObo(`${urls.modiaDekorator}/decorator/v2`, scope.modiaDekorator, request, "GET");
 }

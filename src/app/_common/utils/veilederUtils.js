@@ -23,5 +23,5 @@ export async function leggTilVeilederHeaders(headers, request) {
 export const fetchAktivBruker = async (request) => {
     const { urls, scope } = serverConfig;
 
-    return fetchWithObo(`${urls.modiaDekorator}/context/v2/aktivbruker`, scope.modiaDekorator, request);
+    return fetchWithObo(`${urls.modiaDekorator}/context/v2/aktivbruker`, scope.modiaDekorator, request, "GET");
 };
