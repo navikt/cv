@@ -3,10 +3,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { getMiljø, Miljø } from "@/app/_common/utils/miljøUtils";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
+import { PERSON_KEY } from "@/app/_common/hooks/swr/usePerson";
+import { mutate } from "swr";
+import { CV_KEY } from "@/app/_common/hooks/swr/useCv";
 
 export default function ModiaDekoratør() {
-    const router = useRouter();
     const miljø = getMiljø() === Miljø.PROD ? "prod" : "q0";
     const proxyUrl = `https://cv-veileder.intern${getMiljø() === Miljø.PROD ? "" : ".dev"}.nav.no/min-cv/api/veileder`;
 
@@ -20,7 +21,9 @@ export default function ModiaDekoratør() {
     );
 
     const refreshVedEndretFnr = () => {
-        router.refresh();
+        console.log("Fnr er endret!");
+        mutate(PERSON_KEY);
+        mutate(CV_KEY);
     };
 
     console.log(`Miljø: ${miljø}, proxyUrl: ${proxyUrl}`);
