@@ -17,6 +17,6 @@ export const usePerson = () => {
         harIkkeSettHjemmel: data ? !data.harSettHjemmelEllerSamtykket : null,
         måBekrefteTidligereCv: data ? data.maaBekrefteTidligereCv : null,
         erUnderOppfølging: data ? data.erUnderOppfoelging : null,
-        navn: data ? `${data.fornavn} ${data.etternavn}` : null,
+        navn: data?.personalia ? `${data.personalia.fornavn} ${data.personalia.etternavn}` : null,
     };
 };
