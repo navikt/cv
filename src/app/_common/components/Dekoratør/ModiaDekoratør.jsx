@@ -35,7 +35,7 @@ export default function ModiaDekoratør() {
             showSearchArea
             fetchActiveUserOnMount
             urlFormat="NAV_NO"
-            onFnrChanged={() => refreshVedEndretFnr()}
+            onFnrChanged={refreshVedEndretFnr}
         />
     );
 }
