@@ -5,9 +5,13 @@ import { exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
 import { leggTilVeilederHeaders } from "@/app/_common/utils/veilederUtils";
 
 export async function POST(request) {
+    const { erVeileder } = serverConfig;
     const token = await exchangeToken(request, hentCvApiAudScope());
     const cvApiBaseUrl = serverConfig?.urls?.cvApi;
-    const fullUrl = `${cvApiBaseUrl}/godta-hjemmel`;
+
+    const path = erVeileder ? "seHjemmelPaaVegneAvBruker" : "godta-hjemmel";
+
+    const fullUrl = `${cvApiBaseUrl}/${path}`;
 
     const requestHeaders = new Headers(request.headers);
     const callId = requestHeaders.get("nav-callid");
