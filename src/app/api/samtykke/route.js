@@ -2,6 +2,7 @@ import logger from "@/app/_common/utils/logger";
 import { serverConfig } from "@/app/_common/serverConfig";
 import metrics from "@/app/_common/observability/prometheus";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
+import { leggTilVeilederHeaders } from "@/app/_common/utils/veilederUtils";
 
 export async function POST(request) {
     const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
@@ -11,6 +12,10 @@ export async function POST(request) {
     const requestHeaders = new Headers(request.headers);
     const callId = requestHeaders.get("nav-callid");
     requestHeaders.set("authorization", `Bearer ${token}`);
+
+    if (serverConfig.erVeileder) {
+        await leggTilVeilederHeaders(requestHeaders, request);
+    }
 
     logger.info(`Godtar hjemmel mot cv-api`);
 

@@ -34,6 +34,7 @@ export function createAuthorizationAndContentTypeHeaders(token, callId, csrf) {
     requestHeaders.set("authorization", `Bearer ${token}`);
     requestHeaders.set("content-type", "application/json");
     requestHeaders.set("nav-callid", `${callId}`);
+
     if (csrf) {
         requestHeaders.set("cookie", `${CSRF_COOKIE_NAME}=${csrf}`);
         requestHeaders.set(`X-${CSRF_COOKIE_NAME}`, csrf);

@@ -7,6 +7,7 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useNotifikasjoner } from "@/app/_common/hooks/useNotifikasjoner";
 import { Notifikasjoner } from "@/app/_common/components/Notifikasjoner";
 import { Hjemmelside } from "@/app/(minCV)/_components/hjemmelside/Hjemmelside";
+import { HjemmelsideVeileder } from "@/app/(minCV)/_components/hjemmelside/HjemmelsideVeileder";
 
 export const ApplicationContext = React.createContext({});
 
@@ -32,6 +33,7 @@ function ApplicationProvider({ children, erVeileder, erDemoApp }) {
         }
 
         if (harIkkeSettHjemmel === true) {
+            if (erVeileder) return <HjemmelsideVeileder />;
             return <Hjemmelside />;
         }
 

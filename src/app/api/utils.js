@@ -3,6 +3,7 @@ import { serverConfig } from "@/app/_common/serverConfig";
 import logger from "@/app/_common/utils/logger";
 import metrics from "@/app/_common/observability/prometheus";
 import { createAuthorizationAndContentTypeHeaders, exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
+import { leggTilVeilederHeaders } from "@/app/_common/utils/veilederUtils";
 
 export const putData = async (url, audience, request) => {
     const headerList = headers();
@@ -10,6 +11,11 @@ export const putData = async (url, audience, request) => {
 
     const token = await exchangeToken(request, serverConfig?.audience?.cvApi);
     const requestHeaders = createAuthorizationAndContentTypeHeaders(token, callId);
+
+    if (serverConfig.erVeileder) {
+        await leggTilVeilederHeaders(requestHeaders, request);
+    }
+
     const requestBody = await request.json();
 
     logger.info(`Gjør PUT til ${url} med callId ${callId}`);

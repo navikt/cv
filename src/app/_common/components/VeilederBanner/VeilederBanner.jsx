@@ -5,16 +5,17 @@ import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import styles from "@/app/page.module.css";
 import { formatterAdresse, formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
 import { ListItem } from "@navikt/ds-react/List";
+import VeilederBekreftHjemmel from "@/app/_common/components/VeilederBanner/VeilederBekreftHjemmel";
 
-function VeilederBanner() {
-    const { personalia } = usePerson();
+function VeilederBanner({ className }) {
+    const { personalia, harIkkeSettHjemmel } = usePerson();
 
     const navn = personalia ? `${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase() : "";
     const fødselsdato = personalia?.foedselsdato ? formatterFullDatoMedFallback(personalia.foedselsdato) : "";
     const bosted = personalia ? formatterAdresse(personalia.adresse, personalia.postnummer, personalia.poststed) : "";
 
     return (
-        <Alert variant="info" size="medium" className={styles.box}>
+        <Alert variant="info" size="medium" className={className || styles.box}>
             <Heading spacing size="small" level="2">
                 Du bruker Min CV på vegne av bruker
             </Heading>
@@ -33,6 +34,8 @@ function VeilederBanner() {
                     politiske oppfatning.
                 </ListItem>
             </List>
+
+            {harIkkeSettHjemmel && <VeilederBekreftHjemmel />}
         </Alert>
     );
 }
