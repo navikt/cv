@@ -25,7 +25,8 @@ export default function ModiaDekoratør() {
         setTimeout(() => {
             mutate(PERSON_KEY);
             mutate(CV_KEY);
-        }, 1000);
+            console.log("Nå har jeg mutert");
+        }, 2000);
     };
 
     console.log(`Miljø: ${miljø}, proxyUrl: ${proxyUrl}`);
