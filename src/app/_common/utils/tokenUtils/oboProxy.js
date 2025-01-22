@@ -54,7 +54,7 @@ export const fetchModiaContextWithObo = async (url, scope, req, method = "GET") 
             headers: originalHeaders,
         };
 
-        if (req.method === "POST" || req.method === "PUT") {
+        if (method === "POST" || method === "PUT") {
             try {
                 const body = await new Response(req.body).json();
                 if (body) {
