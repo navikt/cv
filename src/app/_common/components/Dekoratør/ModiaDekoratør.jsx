@@ -21,12 +21,10 @@ export default function ModiaDekoratør() {
     );
 
     const refreshVedEndretFnr = () => {
-        console.log("Fnr er endret!");
         setTimeout(() => {
             mutate(PERSON_KEY);
             mutate(CV_KEY);
-            console.log("Nå har jeg mutert");
-        }, 2000);
+        }, 1000);
     };
 
     console.log(`Miljø: ${miljø}, proxyUrl: ${proxyUrl}`);
