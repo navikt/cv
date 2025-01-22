@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { logger } from "@navikt/next-logger";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
 
-export const fetchWithObo = async (url, scope, req, method = "GET") => {
+export const fetchModiaContextWithObo = async (url, scope, req, method = "GET") => {
     const isLocal = process.env.NEXT_PUBLIC_ENVIRONMENT === "localhost";
 
     if (!url) {

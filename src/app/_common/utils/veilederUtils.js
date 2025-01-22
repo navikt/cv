@@ -1,5 +1,5 @@
 import { serverConfig } from "@/app/_common/serverConfig";
-import { fetchWithObo } from "@/app/_common/utils/tokenUtils/oboProxy";
+import { fetchModiaContextWithObo } from "@/app/_common/utils/tokenUtils/oboProxy";
 import logger from "@/app/_common/utils/logger";
 
 export async function leggTilVeilederHeaders(headers, request) {
@@ -23,5 +23,10 @@ export async function leggTilVeilederHeaders(headers, request) {
 export const fetchAktivBruker = async (request) => {
     const { urls, scope } = serverConfig;
 
-    return fetchWithObo(`${urls.modiaDekorator}/context/v2/aktivbruker`, scope.modiaDekorator, request, "GET");
+    return fetchModiaContextWithObo(
+        `${urls.modiaDekorator}/context/v2/aktivbruker`,
+        scope.modiaDekorator,
+        request,
+        "GET",
+    );
 };
