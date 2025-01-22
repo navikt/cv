@@ -10,13 +10,14 @@ import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 function HeaderPanel({ title = "Min CV" }) {
     const { erVeileder } = useContext(ApplicationContext);
-    const { personalia } = usePerson();
+    const { personalia, personHarFeil } = usePerson();
     const { sistEndret } = useCv();
-    const [navn, setNavn] = useState(null);
+    const [navn, setNavn] = useState("");
 
     useEffect(() => {
-        if (personalia) setNavn(`${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase());
-    }, [personalia]);
+        if (personalia && !personHarFeil) setNavn(`${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase());
+        if (personHarFeil) setNavn("");
+    }, [personalia, personHarFeil]);
 
     const navnKomponent = !navn ? (
         <BodyShort as={Skeleton} size="small">
