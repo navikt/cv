@@ -7,10 +7,13 @@ import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 
 export const CV_KEY = "/min-cv/api/cv";
 
-export const useCv = () => {
+export const useCv = (erVeileder = false) => {
     const { erInnlogget } = useErInnlogget();
-    const { person } = usePerson();
-    const skalHente = erInnlogget && person;
+    const { person, erUnderOppfølging, harIkkeSettHjemmel, erManuell } = usePerson();
+
+    const veilederSkalHente = () => (erVeileder ? erUnderOppfølging && erManuell && !harIkkeSettHjemmel : true);
+
+    const skalHente = erInnlogget && person && erUnderOppfølging && veilederSkalHente();
     const { data, error, isLoading } = useSWR(skalHente ? CV_KEY : null, getAPI);
     return {
         cv: data,

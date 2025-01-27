@@ -13,8 +13,8 @@ export const ApplicationContext = React.createContext({});
 
 function ApplicationProvider({ children, erVeileder, erDemoApp }) {
     const { erInnlogget, innloggingLaster, innloggingHarFeil, harBlittUtlogget } = useErInnlogget();
-    const { harIkkeSettHjemmel, erUnderOppfølging, personHarFeil } = usePerson();
-    const { cvHarFeil } = useCv();
+    const { harIkkeSettHjemmel, erUnderOppfølging, personHarFeil, erManuell } = usePerson();
+    const { cvHarFeil } = useCv(erVeileder);
     const { notifikasjoner, suksessNotifikasjon, errorNotifikasjon } = useNotifikasjoner();
 
     const hentSideinnhold = () => {
@@ -29,7 +29,14 @@ function ApplicationProvider({ children, erVeileder, erDemoApp }) {
         }
 
         if (erUnderOppfølging === false) {
-            return <Feilside årsak={FeilsideÅrsak.IKKE_UNDER_OPPFØLGING} />;
+            const årsak = erVeileder
+                ? FeilsideÅrsak.IKKE_UNDER_OPPFØLGING_VEILEDER
+                : FeilsideÅrsak.IKKE_UNDER_OPPFØLGING;
+            return <Feilside årsak={årsak} />;
+        }
+
+        if (erVeileder && erManuell === false) {
+            return <Feilside årsak={FeilsideÅrsak.IKKE_MANUELL_VEILEDER} />;
         }
 
         if (harIkkeSettHjemmel === true) {

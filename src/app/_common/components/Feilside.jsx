@@ -56,6 +56,14 @@ export const FeilsideÅrsak = Object.freeze({
             </VStack>
         ),
     },
+    IKKE_UNDER_OPPFØLGING_VEILEDER: {
+        tittel: "Bruker er ikke under oppfølging",
+        body: "Brukeren er ikke under oppfølging, og du har som veileder derfor ikek tilgang til denne CVen.",
+    },
+    IKKE_MANUELL_VEILEDER: {
+        tittel: "Bruker er ikke manuell",
+        body: "Brukeren er ikke manuell, og du har som veileder derfor ikek tilgang til denne CVen her. Hvis du ønsker å se CVen til bruker må du gjøre det gjennom aktivitetsplanen i Modia",
+    },
     FETCH_ERROR: {
         tittel: "CV er ikke tilgjengelig",
         tekst: "Vi klarte dessverre ikke å hente din CV akkurat nå. Vennligst prøv igjen eller kom tilbake senere.",
