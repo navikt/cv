@@ -28,6 +28,18 @@ Da kan du nå applikasjonen med innlogging på [http://localhost:3000/min-cv](ht
 > [!TIP]
 > Selve applikasjonen kjører på http://localhost:3001, men siden alle requester må routes gjennom Wonderwall som kjører på port 3000 vil det fortsatt være https://localhost:3000 som gjelder
 
+### Teste veilederapplikasjonen
+
+For å kjøre opp veilederapplikasjonen følges samme oppskrift som over, men `setup_dependencies` og `dev` postfixes med `:veileder`
+
+```bash
+$ npm install
+$ npm run setup_dependencies:veileder
+$ npm run dev:veileder
+```
+
+Modia-dekoratøren fungerer ikke lokalt, men innlogging gjøres med wonderwall som vanlig.
+
 ### Test hjemmelsside
 
 Dersom man har behov for teste hjemmelsiden som kommer ved første innlogging kan man "trekke samtykke" lokalt ved å kjøre `npm run reset_samtykke`. Ved neste innlasting vil personen ikke lenger ha sett hjemmel.
