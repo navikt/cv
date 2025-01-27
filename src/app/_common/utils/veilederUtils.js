@@ -3,9 +3,14 @@ import { fetchModiaContextWithObo } from "@/app/_common/utils/tokenUtils/oboProx
 import logger from "@/app/_common/utils/logger";
 
 export async function leggTilVeilederHeaders(headers, request) {
-    const { erVeileder } = serverConfig;
+    const { erVeileder, nodeEnv } = serverConfig;
 
     if (!erVeileder) return headers;
+
+    if (nodeEnv === "development") {
+        headers.set("fnr", "04010100653");
+        return headers;
+    }
 
     const aktivBrukerResponse = await fetchAktivBruker(request);
 

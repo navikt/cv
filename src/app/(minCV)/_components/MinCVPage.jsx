@@ -13,14 +13,12 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import CvHovedinnhold from "@/app/(minCV)/_components/CvHovedinnhold";
 import styles from "../../page.module.css";
 
-export default function MinCVPage({ erVeileder, erDemoApp }) {
+export default function MinCVPage({ erVeileder }) {
     const { cvLaster } = useCv();
     const [visHovedinnhold, setVisHovedinnhold] = useState(true);
 
-    // TODO: Trekk ut hovedinnhold til egen komponent og send erVeileder / erDemoApp til ApplicationProvider
-
     return (
-        <ApplicationProvider erVeileder={erVeileder} erDemoApp={erDemoApp}>
+        <ApplicationProvider erVeileder={erVeileder}>
             {visHovedinnhold ? (
                 <>
                     <HeaderPanel />

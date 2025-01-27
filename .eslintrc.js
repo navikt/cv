@@ -7,6 +7,7 @@ module.exports = {
         "prettier",
         "plugin:jsx-a11y/recommended",
     ],
+    ignorePatterns: ["docker-compose/"],
     plugins: ["react", "prettier"],
     parserOptions: {
         ecmaFeatures: {
@@ -41,7 +42,7 @@ module.exports = {
 
         singleQuote: "off",
 
-        //TODO: Fix these errors!
+        // TODO: Fix these errors!
         "consistent-return": "warn",
         "react/jsx-filename-extension": "warn",
         "import/no-cycle": "warn",

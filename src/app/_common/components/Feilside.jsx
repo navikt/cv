@@ -58,11 +58,11 @@ export const FeilsideÅrsak = Object.freeze({
     },
     IKKE_UNDER_OPPFØLGING_VEILEDER: {
         tittel: "Bruker er ikke under oppfølging",
-        body: "Brukeren er ikke under oppfølging, og du har som veileder derfor ikek tilgang til denne CVen.",
+        tekst: "Brukeren er ikke under oppfølging, og du har som veileder derfor ikkk tilgang til CVen.",
     },
     IKKE_MANUELL_VEILEDER: {
         tittel: "Bruker er ikke manuell",
-        body: "Brukeren er ikke manuell, og du har som veileder derfor ikek tilgang til denne CVen her. Hvis du ønsker å se CVen til bruker må du gjøre det gjennom aktivitetsplanen i Modia",
+        tekst: 'Brukeren er ikke manuell, og du har som veileder derfor ikke tilgang til å brukers CV i "Min CV". Hvis du ønsker å se CV-en til bruker må du gjøre det i Modia.',
     },
     FETCH_ERROR: {
         tittel: "CV er ikke tilgjengelig",

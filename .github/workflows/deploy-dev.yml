@@ -5,7 +5,7 @@ on:
       - "**.md"
       - ".gitignore"
       - ".env.local"
-      - "docker-compose.yml"
+      - "docker-compose/*"
       - "LICENCE"
       - "CODEOWNERS"
     branches:

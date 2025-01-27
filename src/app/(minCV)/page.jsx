@@ -5,7 +5,7 @@ import logger from "@/app/_common/utils/logger";
 
 export default async function Page() {
     initInstrumentation();
-    const { erVeileder, erDemoApp } = serverConfig;
+    const { erVeileder } = serverConfig;
     logger.info(`Er veileder i page: ${erVeileder}`);
-    return <MinCVPage erVeileder={erVeileder} erDemoApp={erDemoApp} />;
+    return <MinCVPage erVeileder={erVeileder} />;
 }
