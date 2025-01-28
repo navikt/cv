@@ -3,6 +3,7 @@ import { getToken } from "@navikt/oasis";
 import { NextResponse } from "next/server";
 import { logger } from "@navikt/next-logger";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
+import { filterOutAmplitudeCookiesFromHeaders } from "@/app/api/utils";
 
 export const fetchModiaContextWithObo = async (url, scope, req, method = "GET") => {
     const isLocal = process.env.NEXT_PUBLIC_ENVIRONMENT === "localhost";
@@ -36,22 +37,11 @@ export const fetchModiaContextWithObo = async (url, scope, req, method = "GET") 
         originalHeaders.set("Content-Type", "application/json");
 
         // Filter out AMP_ cookies
-        const cookie = originalHeaders.get("cookie");
-        if (cookie) {
-            const filteredCookies = cookie
-                .split(";")
-                .filter((c) => !c.trim().startsWith("AMP_"))
-                .join(";");
-            if (filteredCookies) {
-                originalHeaders.set("cookie", filteredCookies);
-            } else {
-                originalHeaders.delete("cookie");
-            }
-        }
+        const filteredHeaders = filterOutAmplitudeCookiesFromHeaders(originalHeaders);
 
         const fetchOptions = {
             method: method,
-            headers: originalHeaders,
+            headers: filteredHeaders,
         };
 
         if (method === "POST" || method === "PUT") {

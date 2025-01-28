@@ -40,3 +40,27 @@ export const putData = async (url, audience, request) => {
     const data = await response.json();
     return Response.json(data);
 };
+
+export const filterOutAuthorizationHeader = (originalHeaders) => {
+    const requestHeaders = new Headers(originalHeaders);
+    requestHeaders.delete("Authorization");
+    return requestHeaders;
+};
+
+export const filterOutAmplitudeCookiesFromHeaders = (originalHeaders) => {
+    const requestHeaders = new Headers(originalHeaders);
+    const cookie = requestHeaders.get("cookie");
+    if (cookie) {
+        const filteredCookies = cookie
+            .split(";")
+            .filter((c) => !c.trim().startsWith("AMP_"))
+            .join(";");
+        if (filteredCookies) {
+            requestHeaders.set("cookie", filteredCookies);
+        } else {
+            requestHeaders.delete("cookie");
+        }
+    }
+
+    return requestHeaders;
+};
