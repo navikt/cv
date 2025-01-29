@@ -18,16 +18,14 @@ export const useHentArbeidsforhold = ({ oppdateringLaster, triggerOppdatering })
     const fetcher = async (url) => {
         const response = await simpleApiRequest(url, "GET");
 
-        if (!response.ok && response.status !== 404) {
+        if (!response.ok) {
             errorNotifikasjon("Det oppstod en feil ved henting av tidligere arbeidsforhold");
             const error = new Error(`Det oppstod en feil ved henting av arbeidsforhold fra AAREG.`);
             error.status = response.status;
             throw error;
         }
 
-        const data = await response.json();
-
-        if (data?.length === 0 || response.status === 404) {
+        if (data?.length === 0) {
             setAaregManglerData(true);
             setSkalViseSkeleton(false);
         } else {
