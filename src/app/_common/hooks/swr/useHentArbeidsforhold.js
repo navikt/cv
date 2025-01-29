@@ -25,6 +25,8 @@ export const useHentArbeidsforhold = ({ oppdateringLaster, triggerOppdatering })
             throw error;
         }
 
+        const data = await response.json();
+
         if (data?.length === 0) {
             setAaregManglerData(true);
             setSkalViseSkeleton(false);
