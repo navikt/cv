@@ -58,7 +58,7 @@ export const FeilsideÅrsak = Object.freeze({
     },
     IKKE_UNDER_OPPFØLGING_VEILEDER: {
         tittel: "Bruker er ikke under oppfølging",
-        tekst: "Brukeren er ikke under oppfølging, og du har som veileder derfor ikkk tilgang til CVen.",
+        tekst: "Brukeren er ikke under oppfølging, og du har som veileder derfor ikke tilgang til CVen.",
     },
     IKKE_MANUELL_VEILEDER: {
         tittel: "Bruker er ikke manuell",
