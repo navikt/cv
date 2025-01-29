@@ -33,9 +33,10 @@ jobs:
     if: "contains(github.ref, 'veileder/')"
     uses: navikt/pam-deploy/.github/workflows/deploy-next-js-dev.yml@v7
     with:
-      SKIP_DRAFT_RELEASE: true # Trenger ikke draft for begge appene da de prodsettes samtidig
       NAIS_VARS: .nais/veileder/dev.yml
       NAIS_RESOURCE: .nais/veileder/nais.yml
       NPM_BUILD_COMMAND: npm run build:veileder
       IMAGE_SUFFIX: cv-veileder
+      SKIP_DRAFT_RELEASE: true # Trenger ikke draft for begge appene da de prodsettes samtidig
+      CODEQL_ENABLED: false # Trenger ikke CodeQL for begge appene
     secrets: inherit
