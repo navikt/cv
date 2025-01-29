@@ -29,7 +29,7 @@ export async function GET(request) {
     });
     stopTimer();
 
-    if (!response.ok && response.status !== 404) {
+    if (!response.ok) {
         logger.warn(`Feil ved henting av arbeidsforhold fra aareg. Status code: ${response.status}. CallId: ${callId}`);
 
         return new Response(response.body, {
@@ -37,6 +37,6 @@ export async function GET(request) {
         });
     }
 
-    const data = response.status === 404 ? [] : await response.json();
+    const data = await response.json();
     return Response.json(data);
 }
