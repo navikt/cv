@@ -11,32 +11,31 @@ on:
     branches:
       - "**"
 
+permissions:
+  actions: read
+  contents: write
+  id-token: write
+  packages: write
+  security-events: write
+
 jobs:
-  build-and-deploy:
-    if: "(github.ref_name == 'master') || contains(github.event.head_commit.message, 'deploy:dev') || contains(github.ref, 'feature/')"
+  build-and-deploy-borger:
+    if: "(github.ref_name == 'master') || contains(github.event.head_commit.message, 'deploy:dev') || contains(github.ref, 'feature/') || contains(github.ref, 'veileder/')"
     uses: navikt/pam-deploy/.github/workflows/deploy-next-js-dev.yml@v7
-    permissions:
-      actions: read
-      contents: write
-      id-token: write
-      packages: write
-      security-events: write
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
-      NAIS_VARS: .nais/dev.yml
+      NAIS_VARS: .nais/borger/dev.yml
+      NAIS_RESOURCE: .nais/borger/nais.yml
+      NPM_BUILD_COMMAND: npm run build:borger
+      IMAGE_SUFFIX: cv
     secrets: inherit
   build-and-deploy-veileder:
     if: "contains(github.ref, 'veileder/')"
     uses: navikt/pam-deploy/.github/workflows/deploy-next-js-dev.yml@v7
-    permissions:
-      actions: read
-      contents: write
-      id-token: write
-      packages: write
-      security-events: write
     with:
-      SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
-      NAIS_RESOURCE: .nais/nais-veileder.yml
-      NAIS_VARS: .nais/dev-veileder.yml
+      SKIP_DRAFT_RELEASE: true # Trenger ikke draft for begge appene da de prodsettes samtidig
+      NAIS_VARS: .nais/veileder/dev.yml
+      NAIS_RESOURCE: .nais/veileder/nais.yml
       NPM_BUILD_COMMAND: npm run build:veileder
+      IMAGE_SUFFIX: cv-veileder
     secrets: inherit
