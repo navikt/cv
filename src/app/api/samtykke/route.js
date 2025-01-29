@@ -9,7 +9,7 @@ export async function POST(request) {
     const token = await exchangeToken(request, hentCvApiAudScope());
     const cvApiBaseUrl = serverConfig?.urls?.cvApi;
 
-    const path = erVeileder ? "seHjemmelPaaVegneAvBruker" : "godta-hjemmel";
+    const path = erVeileder ? "v2/samtykke" : "godta-hjemmel";
 
     const fullUrl = `${cvApiBaseUrl}/${path}`;
 
