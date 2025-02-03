@@ -22,6 +22,7 @@ export const useHentArbeidsforhold = ({ oppdateringLaster, triggerOppdatering })
             errorNotifikasjon("Det oppstod en feil ved henting av tidligere arbeidsforhold");
             const error = new Error(`Det oppstod en feil ved henting av arbeidsforhold fra AAREG.`);
             error.status = response.status;
+            setSkalHenteData(false);
             throw error;
         }
 
