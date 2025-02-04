@@ -27,8 +27,6 @@ export default function ModiaDekoratør() {
         }, 1000);
     };
 
-    console.log(`Miljø: ${miljø}, proxyUrl: ${proxyUrl}`);
-
     return (
         <InternflateDecorator
             proxy={proxyUrl}
