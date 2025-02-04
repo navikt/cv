@@ -7,18 +7,20 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useNotifikasjoner } from "@/app/_common/hooks/useNotifikasjoner";
 import { Notifikasjoner } from "@/app/_common/components/Notifikasjoner";
 import { Hjemmelside } from "@/app/(minCV)/_components/hjemmelside/Hjemmelside";
+import { HjemmelsideVeileder } from "@/app/(minCV)/_components/hjemmelside/HjemmelsideVeileder";
 
 export const ApplicationContext = React.createContext({});
 
-function ApplicationProvider({ children }) {
+function ApplicationProvider({ children, erVeileder }) {
     const { erInnlogget, innloggingLaster, innloggingHarFeil, harBlittUtlogget } = useErInnlogget();
-    const { harIkkeSettHjemmel, erUnderOppfølging, personHarFeil } = usePerson();
-    const { cvHarFeil } = useCv();
+    const { harIkkeSettHjemmel, erUnderOppfølging, personHarFeil, erManuell } = usePerson();
+    const { cvHarFeil } = useCv(erVeileder);
     const { notifikasjoner, suksessNotifikasjon, errorNotifikasjon } = useNotifikasjoner();
 
     const hentSideinnhold = () => {
         if (innloggingHarFeil || personHarFeil || cvHarFeil) {
-            return <Feilside årsak={FeilsideÅrsak.FETCH_ERROR} />;
+            const årsak = erVeileder ? FeilsideÅrsak.FETCH_ERROR_VEILEDER : FeilsideÅrsak.FETCH_ERROR;
+            return <Feilside årsak={årsak} />;
         }
 
         if (!erInnlogget && !innloggingLaster) {
@@ -27,10 +29,18 @@ function ApplicationProvider({ children }) {
         }
 
         if (erUnderOppfølging === false) {
-            return <Feilside årsak={FeilsideÅrsak.IKKE_UNDER_OPPFØLGING} />;
+            const årsak = erVeileder
+                ? FeilsideÅrsak.IKKE_UNDER_OPPFØLGING_VEILEDER
+                : FeilsideÅrsak.IKKE_UNDER_OPPFØLGING;
+            return <Feilside årsak={årsak} />;
+        }
+
+        if (erVeileder && erManuell === false) {
+            return <Feilside årsak={FeilsideÅrsak.IKKE_MANUELL_VEILEDER} />;
         }
 
         if (harIkkeSettHjemmel === true) {
+            if (erVeileder) return <HjemmelsideVeileder />;
             return <Hjemmelside />;
         }
 
@@ -38,7 +48,7 @@ function ApplicationProvider({ children }) {
     };
 
     return (
-        <ApplicationContext.Provider value={{ suksessNotifikasjon, errorNotifikasjon }}>
+        <ApplicationContext.Provider value={{ suksessNotifikasjon, errorNotifikasjon, erVeileder }}>
             {hentSideinnhold()}
             <Notifikasjoner notifikasjoner={notifikasjoner} />
         </ApplicationContext.Provider>

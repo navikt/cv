@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 export const simpleApiRequest = async (url, method, body = null, includeCredentials = true) => {
     const fetchOptions = {
         method: method,
-        headers: { "Nav-CallId": `min-side-cv-${uuidv4()}` },
+        headers: { "Nav-CallId": `min-cv-${uuidv4()}` },
     };
 
     if (includeCredentials) fetchOptions.credentials = "same-origin";

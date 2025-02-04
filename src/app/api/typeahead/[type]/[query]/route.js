@@ -1,11 +1,13 @@
 import logger from "@/app/_common/utils/logger";
 import { serverConfig } from "@/app/_common/serverConfig";
 import metrics from "@/app/_common/observability/prometheus";
+import { filterOutAuthorizationHeader } from "@/app/api/utils";
 
 export async function GET(request, context) {
     const { type } = context.params;
     const { query } = context.params;
-    const requestHeaders = new Headers(request.headers);
+    const originalHeaders = new Headers(request.headers);
+    const requestHeaders = filterOutAuthorizationHeader(originalHeaders);
     const callId = requestHeaders.get("nav-callid");
     const searchParams = new URLSearchParams({ q: query });
 
@@ -17,6 +19,7 @@ export async function GET(request, context) {
     const stopTimer = metrics.cvApiRequestTidsbrukHistorgram.startTimer({
         path: `${typeaheadBaseUrl}/${type}`,
     });
+
     const response = await fetch(fullUrl, {
         credentials: "same-origin",
         method: "GET",

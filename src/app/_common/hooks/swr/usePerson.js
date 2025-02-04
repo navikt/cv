@@ -17,5 +17,6 @@ export const usePerson = () => {
         harIkkeSettHjemmel: data ? !data.harSettHjemmelEllerSamtykket : null,
         måBekrefteTidligereCv: data ? data.maaBekrefteTidligereCv : null,
         erUnderOppfølging: data ? data.erUnderOppfoelging : null,
+        erManuell: data ? data.erManuell : null,
     };
 };

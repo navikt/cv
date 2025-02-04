@@ -1,14 +1,23 @@
+"use client";
+
 import { BodyShort, Box, Detail, Heading, Hide, HStack, Show, Skeleton, VStack } from "@navikt/ds-react";
 import { formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import styles from "@/app/page.module.css";
+import { useContext, useEffect, useState } from "react";
+import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 function HeaderPanel({ title = "Min CV" }) {
-    const { personalia } = usePerson();
+    const { erVeileder } = useContext(ApplicationContext);
+    const { personalia, personHarFeil } = usePerson();
     const { sistEndret } = useCv();
+    const [navn, setNavn] = useState("");
 
-    const navn = personalia ? `${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase() : null;
+    useEffect(() => {
+        if (personalia && !personHarFeil) setNavn(`${personalia?.fornavn} ${personalia?.etternavn}`.toUpperCase());
+        if (personHarFeil) setNavn("");
+    }, [personalia, personHarFeil]);
 
     const navnKomponent = !navn ? (
         <BodyShort as={Skeleton} size="small">
@@ -37,7 +46,7 @@ function HeaderPanel({ title = "Min CV" }) {
                         <VStack gap={{ xs: "3", md: "3" }}>
                             <HStack gap="6" align="center">
                                 <Heading level="1" size="large">
-                                    {title}
+                                    {`${title}${erVeileder ? " - Veileder" : ""}`}
                                 </Heading>
                             </HStack>
                             <Hide below="md">
