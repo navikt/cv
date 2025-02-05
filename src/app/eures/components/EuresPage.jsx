@@ -25,8 +25,8 @@ import { ArrowUndoIcon } from "@navikt/aksel-icons";
 import { EuresKategoriEnum } from "@/app/_common/enums/EuresEnums";
 import SamtykkeTekst from "@/app/eures/components/SamtykkeTekst";
 import SamtykkeModal from "@/app/eures/components/SamtykkeModal";
-import landData from "@/app/_common/data/land.json";
 import { useHentEuresSamtykke } from "@/app/_common/hooks/swr/useHentEuresSamtykke";
+import { euLand } from "@/app/_common/data/euLand";
 import styles from "../../page.module.css";
 import { samtykkeEuresMock } from "../../../../mocks/samtykkeEuresMock";
 
@@ -37,9 +37,8 @@ export default function EuresPage() {
         .slice(1, -1);
 
     const initSelectionLand = [];
-    const { land } = landData;
     samtykkeEuresMock.land.forEach((code) => {
-        const c = land.filter((i) => i.code === code)[0];
+        const c = euLand.filter((i) => i.code === code)[0];
         if (c) {
             initSelectionLand.push(c.name);
         }
@@ -63,13 +62,13 @@ export default function EuresPage() {
 
     const landSelectedOptionsCode = [];
     landSelectedOptions.forEach((name) => {
-        const c = land.filter((i) => i.name === name)[0];
+        const c = euLand.filter((i) => i.name === name)[0];
         if (c) {
             landSelectedOptionsCode.push(c.code);
         }
     });
 
-    const initialLandliste = land.map((item) => item.name);
+    const initialLandliste = euLand.map((item) => item.name);
     initialLandliste.unshift("Velg alle");
 
     const onToggleSelected = (option, isSelected) => {
