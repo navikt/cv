@@ -53,10 +53,15 @@ export default function EuresPage() {
     const [samtykke, setSamtykke] = useState(false);
     const [open, setOpen] = useState(false);
 
-    const VelgAlleKategorier = () => {
+    const velgAlleKategorier = () => {
         const k = [];
         Object.values(EuresKategoriEnum).map((verdi) => k.push(verdi));
         setKategorier(k);
+        setVisOppdater(true);
+    };
+
+    const fjernAlleKategorier = () => {
+        setKategorier([]);
         setVisOppdater(true);
     };
 
@@ -239,14 +244,25 @@ export default function EuresPage() {
                             </CheckboxGroup>
 
                             <HStack gap="6" className={styles.mb2}>
-                                <Button
-                                    aria-label="Velg alle kategorier"
-                                    className={styles.mb6}
-                                    variant="primary"
-                                    onClick={() => VelgAlleKategorier()}
-                                >
-                                    Velg alle kategorier
-                                </Button>
+                                {kategorier.length !== Object.keys(EuresKategoriEnum).length ? (
+                                    <Button
+                                        aria-label="Velg alle kategorier"
+                                        className={styles.mb6}
+                                        variant="primary"
+                                        onClick={() => velgAlleKategorier()}
+                                    >
+                                        Velg alle kategorier
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        aria-label="Fjern alle kategorier"
+                                        className={styles.mb6}
+                                        variant="danger"
+                                        onClick={() => fjernAlleKategorier()}
+                                    >
+                                        Fjern alle kategorier
+                                    </Button>
+                                )}
                                 <Button aria-label="Se hva du ønsker å dele" className={styles.mb6} variant="secondary">
                                     Se hva du ønsker å dele
                                 </Button>
