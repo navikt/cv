@@ -1,13 +1,14 @@
 import { Loader, Tag } from "@navikt/ds-react";
-import { CheckmarkIcon, XMarkIcon } from "@navikt/aksel-icons";
-import styles from "@/app/page.module.css";
+import { CheckmarkIcon, StarsEuIcon, XMarkIcon } from "@navikt/aksel-icons";
 
-export function DelingTag({ erDelt, deltMed, laster = false, error = false }) {
+export function DelingTag({ erDelt, deltMed, laster = false, error = false, erEures = false }) {
     let icon;
     if (laster) {
         icon = <Loader size="medium" title="Laster..." />;
     } else if (error || !erDelt) {
         icon = <XMarkIcon aria-hidden />;
+    } else if (erEures) {
+        icon = <StarsEuIcon aria-hidden />;
     } else {
         icon = <CheckmarkIcon aria-hidden />;
     }
@@ -16,7 +17,7 @@ export function DelingTag({ erDelt, deltMed, laster = false, error = false }) {
     if (error) {
         variant = "error-moderate";
     } else if (erDelt && !laster) {
-        variant = "success-moderate";
+        variant = "info";
     } else {
         variant = "neutral-moderate";
     }
@@ -26,12 +27,14 @@ export function DelingTag({ erDelt, deltMed, laster = false, error = false }) {
         tekst = "Det oppstod en feil";
     } else if (laster) {
         tekst = "Laster status";
+    } else if (erEures && erDelt) {
+        tekst = "Samtykket ditt utløper: 29.01.2026";
     } else {
         tekst = `CV-en er ${erDelt ? "" : "ikke "}delt med ${deltMed}`;
     }
 
     return (
-        <Tag variant={variant} icon={icon} className={styles.roundedTag}>
+        <Tag size="small" variant={variant} icon={icon}>
             {tekst}
         </Tag>
     );

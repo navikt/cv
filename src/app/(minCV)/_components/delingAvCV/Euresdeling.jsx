@@ -1,8 +1,9 @@
-import { BodyLong, BodyShort, HStack, Link, VStack } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Button, HStack, Link, Tag } from "@navikt/ds-react";
 import { useHentEuresSamtykke } from "@/app/_common/hooks/swr/useHentEuresSamtykke";
-import { arbeidsplassenBaseUrl } from "@/app/_common/utils/urlUtils";
 import { DelingTag } from "@/app/(minCV)/_components/delingAvCV/DelingTag";
+import { PencilIcon } from "@navikt/aksel-icons";
 import styles from "../../../page.module.css";
+import { samtykkeEuresMock } from "../../../../../mocks/samtykkeEuresMock";
 
 function EuresLogoIcon() {
     return (
@@ -150,24 +151,44 @@ function EuresLogoIcon() {
 export default function Euresdeling() {
     const { delerEures, euresIsLoading, euresIsError } = useHentEuresSamtykke();
 
+    const initKategorier = Object.keys(samtykkeEuresMock)
+        .filter((k) => samtykkeEuresMock[k])
+        .map(String)
+        .slice(1, -1);
+
     return (
-        <VStack>
+        <>
             <HStack gap="3" align="center" className={[styles.mb3, styles.mt16]}>
                 <EuresLogoIcon />
                 <BodyShort size="small" weight="semibold">
                     Deling med EURES
                 </BodyShort>
             </HStack>
-            <BodyLong spacing>
-                Den Europeiske Jobbmobilitetsportalen. Du kan{" "}
-                <Link rel="noopener noreferrer" href={`${arbeidsplassenBaseUrl}/eures/`} inlineText>
-                    lese mer om EURES eller endre status på deling på arbeidsplassen.no
+            <BodyLong className={styles.mb5}>Den Europeiske Jobbmobilitetsportalen.</BodyLong>
+            <BodyLong className={styles.mb5}>
+                Du kan{" "}
+                <Link href="/min-cv/eures" inlineText>
+                    lese mer om EURES eller endre status på deling her
                 </Link>
                 .
             </BodyLong>
-            <HStack gap="4" align="center">
-                <DelingTag deltMed="EURES" erDelt={delerEures} laster={euresIsLoading} error={euresIsError} />
+            <BodyLong className={styles.mb3} weight="semibold">
+                Dette deler du med Eures:
+            </BodyLong>
+            <HStack className={styles.mb3}>
+                {initKategorier.map((valg) => (
+                    <Tag key={valg} className={[styles.tagSpace, styles.roundedTag]} variant="neutral">
+                        {valg}
+                    </Tag>
+                ))}
             </HStack>
-        </VStack>
+
+            <HStack gap="4" align="center">
+                <DelingTag deltMed="EURES" erDelt={delerEures} laster={euresIsLoading} error={euresIsError} erEures />
+            </HStack>
+            <Button icon={<PencilIcon aria-hidden />} as="a" href="/min-cv/eures">
+                Endre valg
+            </Button>
+        </>
     );
 }
