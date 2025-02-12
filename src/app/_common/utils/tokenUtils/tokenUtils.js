@@ -1,8 +1,8 @@
 import { serverConfig } from "@/app/_common/serverConfig";
 import { exchangeEntraIdToken, isEntraIdTokenValid } from "@/app/_common/utils/tokenUtils/entraIdTokenUtils";
 import { exchangeIdPortenToken, isIdPortenTokenValid } from "@/app/_common/utils/tokenUtils/idPortenTokenUtils";
-import logger from "@/app/_common/utils/logger";
 import metrics from "@/app/_common/observability/prometheus";
+import { logger } from "@navikt/next-logger";
 
 export const CSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
 

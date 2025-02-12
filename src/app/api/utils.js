@@ -1,9 +1,9 @@
 import { headers } from "next/headers";
 import { hentCvApiAudScope, serverConfig } from "@/app/_common/serverConfig";
-import logger from "@/app/_common/utils/logger";
 import metrics from "@/app/_common/observability/prometheus";
 import { createAuthorizationAndContentTypeHeaders, exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
 import { leggTilVeilederHeaders } from "@/app/_common/utils/veilederUtils";
+import { logger } from "@navikt/next-logger";
 
 export const putData = async (url, audience, request) => {
     const headerList = headers();

@@ -1,6 +1,6 @@
 import { serverConfig } from "@/app/_common/serverConfig";
 import { fetchModiaContextWithObo } from "@/app/_common/utils/tokenUtils/oboProxy";
-import logger from "@/app/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 
 export async function leggTilVeilederHeaders(headers, request) {
     const { erVeileder, nodeEnv } = serverConfig;
