@@ -7,10 +7,8 @@ import { useCv } from "@/app/_common/hooks/swr/useCv";
 import styles from "@/app/page.module.css";
 import { useContext, useEffect, useState } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
-import { logger } from "@navikt/next-logger";
 
 function HeaderPanel({ title = "Min CV" }) {
-    logger.info("TESTLOGGING AV HEADERPANEL");
     const { erVeileder } = useContext(ApplicationContext);
     const { personalia, personHarFeil } = usePerson();
     const { sistEndret } = useCv();
