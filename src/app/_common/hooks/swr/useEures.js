@@ -10,6 +10,7 @@ export const useEures = () => {
 
     return {
         eures: data,
+        delerEures: data && error.status !== 404,
         euresLaster: isLoading || (!data && !error),
         euresHarFeil: error,
     };
