@@ -12,7 +12,7 @@ const sourceSansPro = Source_Sans_3({ subsets: ["latin"], adjustFontFallback: fa
 
 async function RootLayout({ children }) {
     if (process.env.NODE_ENV === "development") {
-        import("../../mocks/mirage").then(() => console.warn("Mirage mocks kjører!"));
+        import("../../mocks/mirage").then(() => logger.warn("Mirage mocks kjører!"));
     }
 
     const { erVeileder } = serverConfig;
