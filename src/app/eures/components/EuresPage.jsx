@@ -45,6 +45,7 @@ export default function EuresPage() {
     const [visHovedinnhold, setVisHovedinnhold] = useState(true);
 
     useEffect(() => {
+        console.log("useEffect-eures: ", eures);
         if (eures) {
             const initKategorier = Object.keys(eures)
                 .filter((k) => eures[k])
@@ -153,7 +154,7 @@ export default function EuresPage() {
         oppdateringprops.triggerOppdatering(null);
     };
 
-    console.log("delerEures: ", eures);
+    console.log("eures: ", eures);
     console.log("delerEures: ", delerEures);
     return (
         <ApplicationProvider>
