@@ -25,29 +25,18 @@ import { EuresKategoriEnum } from "@/app/_common/enums/EuresEnums";
 import SamtykkeTekst from "@/app/eures/components/SamtykkeTekst";
 import SamtykkeModal from "@/app/eures/components/SamtykkeModal";
 import { useHentEuresSamtykke } from "@/app/_common/hooks/swr/useHentEuresSamtykke";
+import { useEures } from "@/app/_common/hooks/swr/useEures";
 import { euLand } from "@/app/_common/data/euLand";
 import EuresForhandsvisning from "@/app/eures/components/EuresForhandsvisning";
+import { useOppdaterEures } from "@/app/_common/hooks/swr/useOppdaterEures";
 import styles from "../../page.module.css";
-import { samtykkeEuresMock } from "../../../../mocks/samtykkeEuresMock";
 
 export default function EuresPage() {
-    const initKategorier = Object.keys(samtykkeEuresMock)
-        .filter((k) => samtykkeEuresMock[k])
-        .map(String)
-        .slice(1, -1);
-
-    const initSelectionLand = [];
-    samtykkeEuresMock.land.forEach((code) => {
-        const c = euLand.filter((i) => i.code === code)[0];
-        if (c) {
-            initSelectionLand.push(c.name);
-        }
-    });
-
+    const { eures } = useEures();
     const { delerEures } = useHentEuresSamtykke();
-
-    const [kategorier, setKategorier] = useState(initKategorier);
-    const [landSelectedOptions, setLandSelectedOptions] = useState(initSelectionLand);
+    const oppdateringprops = useOppdaterEures();
+    const [kategorier, setKategorier] = useState([]);
+    const [landSelectedOptions, setLandSelectedOptions] = useState([]);
     const [landVerdi, setLandVerdi] = useState("");
     const [visOppdater, setVisOppdater] = useState(false);
     const [samtykke, setSamtykke] = useState(false);
@@ -56,10 +45,25 @@ export default function EuresPage() {
     const [visHovedinnhold, setVisHovedinnhold] = useState(true);
 
     useEffect(() => {
-        if (landSelectedOptions.length !== 0 && kategorier.length !== 0) {
-            setSamtykke(true);
+        if (eures) {
+            const initKategorier = Object.keys(eures)
+                .filter((k) => eures[k])
+                .map(String)
+                .slice(1, -1);
+            setKategorier(initKategorier);
+
+            const initSelectionLand = [];
+            if (eures.land) {
+                eures.land.forEach((code) => {
+                    const c = euLand.filter((i) => i.code === code)[0];
+                    if (c) {
+                        initSelectionLand.push(c.name);
+                    }
+                });
+                setLandSelectedOptions(initSelectionLand);
+            }
         }
-    }, []);
+    }, [eures]);
 
     const velgAlleKategorier = () => {
         const k = [];
@@ -97,23 +101,22 @@ export default function EuresPage() {
     };
 
     const oppdaterSamtykke = () => {
-        samtykkeEuresMock.personalia = kategorier.includes(EuresKategoriEnum.PERSONALIA);
-        samtykkeEuresMock.kurs = kategorier.includes(EuresKategoriEnum.KURS);
-        samtykkeEuresMock.spraak = kategorier.includes(EuresKategoriEnum.SPRÅK);
-        samtykkeEuresMock.utdanning = kategorier.includes(EuresKategoriEnum.UTDANNING);
-        samtykkeEuresMock.sammendrag = kategorier.includes(EuresKategoriEnum.SAMMENDRAG);
-        samtykkeEuresMock.kompetanser = kategorier.includes(EuresKategoriEnum.KOMPETANSER);
-        samtykkeEuresMock.andreGodkjenninger = kategorier.includes(EuresKategoriEnum.ANDRE_GODKJENNINGER);
-        samtykkeEuresMock.offentligeGodkjenninger = kategorier.includes(EuresKategoriEnum.OFFENTLIGE_GODKJENNINGER);
-        samtykkeEuresMock.foererkort = kategorier.includes(EuresKategoriEnum.FØRERKORT);
-        samtykkeEuresMock.arbeidserfaring = kategorier.includes(EuresKategoriEnum.ARBEIDSFORHOLD);
-        samtykkeEuresMock.fagbrev = kategorier.includes(EuresKategoriEnum.FAGBREV);
-
-        samtykkeEuresMock.land = landSelectedOptionsCode;
+        oppdateringprops.triggerOppdatering({
+            personalia: kategorier.includes(EuresKategoriEnum.PERSONALIA),
+            utdanning: kategorier.includes(EuresKategoriEnum.UTDANNING),
+            fagbrev: kategorier.includes(EuresKategoriEnum.FAGBREV),
+            arbeidserfaring: kategorier.includes(EuresKategoriEnum.ARBEIDSFORHOLD),
+            foererkort: kategorier.includes(EuresKategoriEnum.FØRERKORT),
+            offentligeGodkjenninger: kategorier.includes(EuresKategoriEnum.OFFENTLIGE_GODKJENNINGER),
+            andreGodkjenninger: kategorier.includes(EuresKategoriEnum.ANDRE_GODKJENNINGER),
+            kurs: kategorier.includes(EuresKategoriEnum.KURS),
+            spraak: kategorier.includes(EuresKategoriEnum.SPRÅK),
+            sammendrag: kategorier.includes(EuresKategoriEnum.SAMMENDRAG),
+            kompetanser: kategorier.includes(EuresKategoriEnum.KOMPETANSER),
+            land: landSelectedOptionsCode,
+        });
 
         setVisOppdater(false);
-
-        console.log(samtykkeEuresMock);
     };
 
     const onKategorierChange = (e) => {
@@ -150,7 +153,7 @@ export default function EuresPage() {
         setSamtykke(false);
     };
 
-    console.log(delerEures);
+    console.log("delerEures: ", delerEures);
     return (
         <ApplicationProvider>
             {visHovedinnhold ? (
