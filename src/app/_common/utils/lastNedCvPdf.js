@@ -10,6 +10,7 @@ import {
     formatterAdresse,
 } from "@/app/_common/utils/stringUtils";
 import { datosorterElementer } from "@/app/_common/utils/dateUtils";
+import { logger } from "@navikt/next-logger";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -650,6 +651,6 @@ export function lastNedCvPdf(cv, personalia) {
     try {
         pdfMake.createPdf(pdfDokument).download(filnavn);
     } catch (e) {
-        console.error(e);
+        logger.error(e);
     }
 }
