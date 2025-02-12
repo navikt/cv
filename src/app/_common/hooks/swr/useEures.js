@@ -12,6 +12,6 @@ export const useEures = () => {
         eures: data,
         euresLaster: isLoading || (!data && !error),
         euresHarFeil: error,
-        delerEures: data && error.status !== 404,
+        delerEures: data && error?.status !== 404,
     };
 };
