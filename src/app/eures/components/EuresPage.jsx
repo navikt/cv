@@ -150,9 +150,10 @@ export default function EuresPage() {
         setKategorier([]);
         setLandSelectedOptions([]);
 
-        setSamtykke(false);
+        oppdateringprops.triggerOppdatering(null);
     };
 
+    console.log("delerEures: ", eures);
     console.log("delerEures: ", delerEures);
     return (
         <ApplicationProvider>
