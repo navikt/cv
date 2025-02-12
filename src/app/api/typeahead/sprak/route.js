@@ -1,6 +1,6 @@
-import logger from "@/app/_common/utils/logger";
 import { serverConfig } from "@/app/_common/serverConfig";
 import metrics from "@/app/_common/observability/prometheus";
+import { logger } from "@navikt/next-logger";
 
 export async function GET(request) {
     const requestHeaders = new Headers(request.headers);

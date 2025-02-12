@@ -1,8 +1,7 @@
-import winston from "winston";
+import { configureLogger } from "@navikt/next-logger";
 
-const logger = winston.createLogger({
-    format: winston.format.json(),
-    transports: [new winston.transports.Console()],
-});
-
-export default logger;
+export default function initLogger() {
+    configureLogger({
+        basePath: "/min-cv",
+    });
+}

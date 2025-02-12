@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
-import logger from "@/app/_common/utils/logger";
 import { isTokenValid } from "@/app/_common/utils/tokenUtils/tokenUtils";
+import { logger } from "@navikt/next-logger";
 
 export async function GET(request) {
     const bearerToken = headers().get("authorization");
