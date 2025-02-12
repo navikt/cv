@@ -37,3 +37,25 @@ export const putAPI = async (url, body) => {
     const responseJson = await response.json();
     return responseJson;
 };
+
+export const postAPI = async (url, body) => {
+    const response = await simpleApiRequest(url, "POST", body);
+
+    if (!response.ok) {
+        const error = new Error(`Det oppstod en feil ved POST mot ${url}.`);
+        error.status = response.status;
+        throw error;
+    }
+    const responseJson = await response.json();
+    return responseJson;
+};
+
+export const deleteAPI = async (url) => {
+    const response = await simpleApiRequest(url, "DELETE");
+
+    if (!response.ok) {
+        const error = new Error(`Det oppstod en feil ved DELETE mot ${url}.`);
+        error.status = response.status;
+        throw error;
+    }
+};
