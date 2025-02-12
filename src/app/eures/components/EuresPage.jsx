@@ -152,10 +152,10 @@ export default function EuresPage() {
         oppdateringprops.triggerOppdatering(null);
     };
 
-    console.log("eures: ", eures);
-    console.log("delerEures: ", delerEures);
-    console.log("euresLaster: ", euresLaster);
-    console.log("euresHarFeil: ", euresHarFeil);
+    console.log("eures: ", eures && eures);
+    console.log("delerEures: ", delerEures && delerEures);
+    console.log("euresLaster: ", euresLaster && euresLaster);
+    console.log("euresHarFeil: ", euresHarFeil && euresHarFeil);
     return (
         <ApplicationProvider>
             {visHovedinnhold ? (
