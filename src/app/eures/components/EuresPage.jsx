@@ -24,7 +24,6 @@ import { ArrowUndoIcon } from "@navikt/aksel-icons";
 import { EuresKategoriEnum } from "@/app/_common/enums/EuresEnums";
 import SamtykkeTekst from "@/app/eures/components/SamtykkeTekst";
 import SamtykkeModal from "@/app/eures/components/SamtykkeModal";
-import { useHentEuresSamtykke } from "@/app/_common/hooks/swr/useHentEuresSamtykke";
 import { useEures } from "@/app/_common/hooks/swr/useEures";
 import { euLand } from "@/app/_common/data/euLand";
 import EuresForhandsvisning from "@/app/eures/components/EuresForhandsvisning";
@@ -32,8 +31,7 @@ import { useOppdaterEures } from "@/app/_common/hooks/swr/useOppdaterEures";
 import styles from "../../page.module.css";
 
 export default function EuresPage() {
-    const { eures } = useEures();
-    const { delerEures } = useHentEuresSamtykke();
+    const { eures, delerEures, euresLaster, euresHarFeil } = useEures();
     const oppdateringprops = useOppdaterEures();
     const [kategorier, setKategorier] = useState([]);
     const [landSelectedOptions, setLandSelectedOptions] = useState([]);
@@ -45,8 +43,8 @@ export default function EuresPage() {
     const [visHovedinnhold, setVisHovedinnhold] = useState(true);
 
     useEffect(() => {
-        console.log("useEffect-eures: ", eures);
         if (eures) {
+            console.log("useEffect-eures: ", eures);
             const initKategorier = Object.keys(eures)
                 .filter((k) => eures[k])
                 .map(String)
@@ -156,6 +154,8 @@ export default function EuresPage() {
 
     console.log("eures: ", eures);
     console.log("delerEures: ", delerEures);
+    console.log("euresLaster: ", euresLaster);
+    console.log("euresHarFeil: ", euresHarFeil);
     return (
         <ApplicationProvider>
             {visHovedinnhold ? (
