@@ -26,12 +26,12 @@ export const useOppdaterEures = () => {
                 suksessNotifikasjon("Euressamtykket er trukket");
             } else {
                 const response = await postAPI(url, body);
-                await mutate(EURES_KEY, { ...eures, eures: response }, { revalidate: false });
+                await mutate(EURES_KEY, { ...eures, response }, { revalidate: false });
                 suksessNotifikasjon("Euressamtykket er oppdatert");
             }
             return true;
         } catch (error) {
-            errorNotifikasjon("Det oppstod en feil ved lagring");
+            errorNotifikasjon(error);
             setVisFeilmelding(true);
             throw error;
         }
