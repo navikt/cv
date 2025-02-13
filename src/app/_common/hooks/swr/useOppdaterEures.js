@@ -31,7 +31,7 @@ export const useOppdaterEures = () => {
             }
             return true;
         } catch (error) {
-            errorNotifikasjon(error);
+            errorNotifikasjon("Det oppstod en feil ved lagring");
             setVisFeilmelding(true);
             throw error;
         }

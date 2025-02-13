@@ -28,6 +28,7 @@ import { useEures } from "@/app/_common/hooks/swr/useEures";
 import { euLand } from "@/app/_common/data/euLand";
 import EuresForhandsvisning from "@/app/eures/components/EuresForhandsvisning";
 import { useOppdaterEures } from "@/app/_common/hooks/swr/useOppdaterEures";
+import TestEures from "@/app/eures/components/TestEures";
 import styles from "../../page.module.css";
 
 export default function EuresPage() {
@@ -439,6 +440,7 @@ export default function EuresPage() {
                             {open && <SamtykkeModal open={open} setOpen={setOpen} />}
                         </section>
                     </HStack>
+                    <TestEures />
                 </div>
             ) : (
                 <>
