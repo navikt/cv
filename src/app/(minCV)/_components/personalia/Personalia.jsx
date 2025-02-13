@@ -16,7 +16,7 @@ export default function Personalia() {
     const modalProps = useCvModal(personalia, oppdateringprops);
     const { modalÅpen, toggleModal } = modalProps;
     const headingId = useId();
-
+    console.log(personalia);
     return (
         <section aria-labelledby={personLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.PERSONALIA}>
             {personLaster ? (
