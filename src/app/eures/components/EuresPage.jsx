@@ -31,7 +31,7 @@ import { useOppdaterEures } from "@/app/_common/hooks/swr/useOppdaterEures";
 import styles from "../../page.module.css";
 
 export default function EuresPage() {
-    const { eures, delerEures, euresLaster, euresHarFeil } = useEures();
+    const { eures, delerEures, euresLaster, euresHarFeil, kategori, land } = useEures();
     const oppdateringprops = useOppdaterEures();
     const [kategorier, setKategorier] = useState([]);
     const [landSelectedOptions, setLandSelectedOptions] = useState([]);
@@ -156,6 +156,8 @@ export default function EuresPage() {
     console.log("delerEures: ", delerEures && delerEures);
     console.log("euresLaster: ", euresLaster && euresLaster);
     console.log("euresHarFeil: ", euresHarFeil && euresHarFeil);
+    console.log("kategori: ", kategori);
+    console.log("land: ", land);
     return (
         <ApplicationProvider>
             {visHovedinnhold ? (
