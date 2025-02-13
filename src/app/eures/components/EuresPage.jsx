@@ -1,7 +1,5 @@
-"use client";
-
 import "@navikt/ds-css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     Box,
     HStack,
@@ -43,27 +41,20 @@ export default function EuresPage() {
     const [valider, setValider] = useState(false);
     const [visHovedinnhold, setVisHovedinnhold] = useState(true);
 
-    useEffect(() => {
-        if (eures) {
-            console.log("useEffect-eures: ", eures);
-            const initKategorier = Object.keys(eures)
-                .filter((k) => eures[k])
-                .map(String)
-                .slice(1, -1);
-            setKategorier(initKategorier);
+    const initKategorier = Object.keys(eures)
+        .filter((k) => eures[k])
+        .map(String)
+        .slice(1, -1);
+    setKategorier(initKategorier);
 
-            const initSelectionLand = [];
-            if (eures.land) {
-                eures.land.forEach((code) => {
-                    const c = euLand.filter((i) => i.code === code)[0];
-                    if (c) {
-                        initSelectionLand.push(c.name);
-                    }
-                });
-                setLandSelectedOptions(initSelectionLand);
-            }
+    const initSelectionLand = [];
+    eures.land.forEach((code) => {
+        const c = euLand.filter((i) => i.code === code)[0];
+        if (c) {
+            initSelectionLand.push(c.name);
         }
-    }, [eures]);
+    });
+    setLandSelectedOptions(initSelectionLand);
 
     const velgAlleKategorier = () => {
         const k = [];
