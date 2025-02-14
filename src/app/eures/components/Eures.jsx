@@ -25,6 +25,7 @@ import SamtykkeModal from "@/app/eures/components/SamtykkeModal";
 import EuresForhandsvisning from "@/app/eures/components/EuresForhandsvisning";
 import { useEffect, useState } from "react";
 import { euLand } from "@/app/_common/data/euLand";
+import { formatterDatoEttAarFremITid } from "@/app/_common/utils/stringUtils";
 
 export default function Eures() {
     const { eures, delerEures, euresLaster, euresHarFeil, kategori, land } = useEures();
@@ -394,23 +395,27 @@ export default function Eures() {
                                             <div className={styles.mb5}>
                                                 <div className={styles.borderEures} />
                                             </div>
-                                            <Box
-                                                background={
-                                                    delerEures ? "surface-success-subtle" : "surface-warning-subtle"
-                                                }
-                                                padding="4"
-                                                borderRadius="medium"
-                                                borderColor={delerEures ? "border-success" : "border-warning"}
-                                                borderWidth="1"
-                                            >
-                                                <Heading className={styles.mb9} level="4" size="medium">
-                                                    Status for samtykke
-                                                </Heading>
-                                                <BodyLong>
-                                                    Du har ikke samtykket til å dele CV-opplysninger med den Europeiske
-                                                    Jobbmobilitetsportalen.
-                                                </BodyLong>
-                                                {delerEures ? (
+                                            {delerEures ? (
+                                                <Box
+                                                    background="surface-success-subtle"
+                                                    padding="4"
+                                                    borderRadius="medium"
+                                                    borderColor="border-success"
+                                                    borderWidth="1"
+                                                >
+                                                    <HStack justify="space-between">
+                                                        <Heading className={styles.mb9} level="4" size="medium">
+                                                            Status for samtykke
+                                                        </Heading>
+                                                        <BodyLong size="small">
+                                                            {`Samtykket ditt utløper ${formatterDatoEttAarFremITid(eures.sistEndret)}`}
+                                                        </BodyLong>
+                                                    </HStack>
+                                                    <BodyLong>
+                                                        Dine valgte innholdskategorier deles nå til den Europeiske
+                                                        Jobbmobilitetsportalen. Hvis du legger til eller fjerner hvilke
+                                                        innholdskategorier du vil dele, må du oppdatere samtykket ditt.
+                                                    </BodyLong>
                                                     <Button
                                                         className={`${styles.mt4} ${styles.mb1} ${styles.button}`}
                                                         size="small"
@@ -419,7 +424,22 @@ export default function Eures() {
                                                     >
                                                         Trekk samtykke
                                                     </Button>
-                                                ) : (
+                                                </Box>
+                                            ) : (
+                                                <Box
+                                                    background="surface-warning-subtle"
+                                                    padding="4"
+                                                    borderRadius="medium"
+                                                    borderColor="border-warning"
+                                                    borderWidth="1"
+                                                >
+                                                    <Heading className={styles.mb9} level="4" size="medium">
+                                                        Status for samtykke
+                                                    </Heading>
+                                                    <BodyLong>
+                                                        Du har ikke samtykket til å dele CV-opplysninger med den
+                                                        Jobbmobilitetsportalen.
+                                                    </BodyLong>
                                                     <Checkbox
                                                         onChange={onSamtykkeChange}
                                                         className={styles.euresCheckbox}
@@ -427,8 +447,8 @@ export default function Eures() {
                                                     >
                                                         Jeg samtykker
                                                     </Checkbox>
-                                                )}
-                                            </Box>
+                                                </Box>
+                                            )}
                                         </>
                                     </ExpansionCard.Content>
                                 </ExpansionCard>
