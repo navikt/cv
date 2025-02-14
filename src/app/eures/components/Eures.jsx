@@ -356,7 +356,7 @@ export default function Eures() {
                                         </Chips>
                                     </VStack>
                                 )}
-                                {visOppdater && (
+                                {delerEures && visOppdater && (
                                     <Alert variant="warning" className={styles.mb12}>
                                         <HStack className={styles.mb6}>
                                             For å lagre endringene dine må du oppdatere samtykke ditt
