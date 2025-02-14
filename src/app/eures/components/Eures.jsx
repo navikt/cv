@@ -34,7 +34,8 @@ export default function Eures() {
     const [landVerdi, setLandVerdi] = useState("");
     const [visOppdater, setVisOppdater] = useState(false);
     const [open, setOpen] = useState(false);
-    const [valider, setValider] = useState(false);
+    const [validerKategorier, setValiderKategorier] = useState(false);
+    const [validerLand, setValiderLand] = useState(false);
     const [visHovedinnhold, setVisHovedinnhold] = useState(true);
 
     useEffect(() => {
@@ -116,22 +117,22 @@ export default function Eures() {
     const onKategorierChange = (e) => {
         setKategorier(e);
         setVisOppdater(true);
-        setValider(false);
     };
 
     const onLandChange = (e) => {
         setLandVerdi(e);
         setVisOppdater(true);
-        setValider(false);
     };
 
     const onSamtykkeChange = (e) => {
-        setValider(true);
+        setValiderKategorier(true);
+        setValiderLand(true);
         if (kategorier.length === 0) {
+            e.target.checked = false;
             const element = document.getElementById("kategorier");
             element.focus();
-            e.target.checked = false;
         } else if (landSelectedOptions.length === 0) {
+            e.target.checked = false;
             const element = document.getElementById("land");
             element.focus();
         } else {
@@ -254,7 +255,7 @@ export default function Eures() {
                                     description="Kryss av for innholdet i CV-en din som du ønsker å dele."
                                     onChange={onKategorierChange}
                                     value={kategorier}
-                                    error={valider && kategorier.length === 0 && "Du må velge minst et felt"}
+                                    error={validerKategorier && kategorier.length === 0 && "Du må velge minst et felt"}
                                 >
                                     <HStack className={styles.mt9}>
                                         <VStack>
@@ -322,7 +323,9 @@ export default function Eures() {
                                     shouldShowSelectedOptions={false}
                                     options={initialLandliste}
                                     value={landVerdi}
-                                    error={valider && landSelectedOptions.length === 0 && "Du må velge minst et land"}
+                                    error={
+                                        validerLand && landSelectedOptions.length === 0 && "Du må velge minst et land"
+                                    }
                                 />
                                 {landSelectedOptions.length === 0 ? (
                                     <BodyLong weight="regular" size="small" className={styles.mb12}>
