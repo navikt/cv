@@ -125,15 +125,15 @@ export default function Eures() {
         setVisOppdater(true);
     };
 
-    const onSamtykkeChange = (e) => {
+    const onOppdaterSamtykke = (e) => {
         setValiderKategorier(true);
         setValiderLand(true);
         if (kategorier.length === 0) {
-            e.target.checked = false;
+            if (e) e.target.checked = false;
             const element = document.getElementById("kategorier");
             element.focus();
         } else if (landSelectedOptions.length === 0) {
-            e.target.checked = false;
+            if (e) e.target.checked = false;
             const element = document.getElementById("land");
             element.focus();
         } else {
@@ -366,7 +366,7 @@ export default function Eures() {
                                                 aria-label="Oppdater samtykke"
                                                 className={`${styles.mb2} ${styles.oppdaterSamtykkeButton}`}
                                                 variant="primary"
-                                                onClick={() => oppdaterSamtykke()}
+                                                onClick={() => onOppdaterSamtykke()}
                                             >
                                                 Oppdater samtykke
                                             </Button>
@@ -441,7 +441,7 @@ export default function Eures() {
                                                         Jobbmobilitetsportalen.
                                                     </BodyLong>
                                                     <Checkbox
-                                                        onChange={onSamtykkeChange}
+                                                        onChange={onOppdaterSamtykke}
                                                         className={styles.euresCheckbox}
                                                         value="samtykker"
                                                     >
