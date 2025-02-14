@@ -417,7 +417,7 @@ export default function Eures() {
                                                         innholdskategorier du vil dele, må du oppdatere samtykket ditt.
                                                     </BodyLong>
                                                     <Button
-                                                        className={`${styles.mt4} ${styles.mb1} ${styles.button}`}
+                                                        className={`${styles.mt4} ${styles.mb1} ${styles.euresBackground}`}
                                                         size="small"
                                                         variant="secondary"
                                                         onClick={() => onTrekkSamtykke()}

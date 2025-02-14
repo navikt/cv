@@ -1,7 +1,8 @@
 import { Loader, Tag } from "@navikt/ds-react";
 import { CheckmarkIcon, StarsEuIcon, XMarkIcon } from "@navikt/aksel-icons";
+import { formatterDatoEttAarFremITid } from "@/app/_common/utils/stringUtils";
 
-export function DelingTag({ erDelt, deltMed, laster = false, error = false, erEures = false }) {
+export function DelingTag({ erDelt, deltMed, laster = false, error = false, sistEndret = false, erEures = false }) {
     let icon;
     if (laster) {
         icon = <Loader size="medium" title="Laster..." />;
@@ -28,7 +29,7 @@ export function DelingTag({ erDelt, deltMed, laster = false, error = false, erEu
     } else if (laster) {
         tekst = "Laster status";
     } else if (erEures && erDelt) {
-        tekst = "Samtykket ditt utløper: 29.01.2026";
+        tekst = `Samtykket ditt utløper: ${formatterDatoEttAarFremITid(sistEndret)}`;
     } else {
         tekst = `CV-en er ${erDelt ? "" : "ikke "}delt med ${deltMed}`;
     }

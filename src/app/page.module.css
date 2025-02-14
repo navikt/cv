@@ -93,6 +93,10 @@
     margin-top: var(--a-spacing-9) !important;
 }
 
+.mt10 {
+    margin-top: var(--a-spacing-10) !important;
+}
+
 .mt16 {
     margin-top: var(--a-spacing-16) !important;
 }
@@ -844,8 +848,4 @@
 
 .euresCheckbox {
     margin-top: 0.8rem;
-}
-
-.button {
-    background: var(--a-white);
 }
