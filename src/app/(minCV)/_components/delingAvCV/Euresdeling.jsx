@@ -182,7 +182,7 @@ export default function Euresdeling() {
                     </BodyLong>
                     <HStack className={styles.mb3}>
                         {kategorier.map((valg) => (
-                            <Tag key={valg} className={`${styles.tagSpace} ${styles.roundedTag}`} variant="neutral">
+                            <Tag key={valg} className={styles.roundedTag} variant="neutral">
                                 {valg}
                             </Tag>
                         ))}
