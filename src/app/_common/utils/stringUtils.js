@@ -54,6 +54,7 @@ export const formatterTidsenhet = (enhet, antall) => {
 export const storForbokstav = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
 export const fjernHtmlTags = (str) => {
+    if (!str) return str;
     const formattertString = str?.replace(/<br \/>/g, "\n") || "";
     return sanitizeHtml(formattertString, { allowedTags: [] });
 };
