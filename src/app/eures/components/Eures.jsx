@@ -34,7 +34,7 @@ import OppdaterSamtykkeModal from "@/app/eures/components/OppdaterSamtykkeModal"
 
 export default function Eures() {
     const { suksessNotifikasjon } = useContext(ApplicationContext);
-    const { eures, delerEures, euresLaster, euresHarFeil, kategori, land } = useEures();
+    const { eures, delerEures, euresLaster, euresHarFeil } = useEures();
     const oppdaterEures = useOppdaterEures();
     const [kategorier, setKategorier] = useState([]);
     const [landSelectedOptions, setLandSelectedOptions] = useState([]);
@@ -96,6 +96,7 @@ export default function Eures() {
         if (isSelected) {
             suksessNotifikasjon(`${option} valgt`);
             setVisOppdater(true);
+            setValiderLand(false);
             if (option === "Velg alle") {
                 setLandSelectedOptions([...initialLandliste].slice(1));
             } else {
@@ -128,6 +129,7 @@ export default function Eures() {
     const onKategorierChange = (e) => {
         setKategorier(e);
         setVisOppdater(true);
+        setValiderKategorier(false);
     };
 
     const onOppdaterSamtykke = (e) => {
@@ -164,8 +166,6 @@ export default function Eures() {
     console.log("delerEures: ", delerEures && delerEures);
     console.log("euresLaster: ", euresLaster && euresLaster);
     console.log("euresHarFeil: ", euresHarFeil && euresHarFeil);
-    console.log("kategori: ", kategori);
-    console.log("land: ", land);
     return (
         <div>
             {visHovedinnhold ? (
