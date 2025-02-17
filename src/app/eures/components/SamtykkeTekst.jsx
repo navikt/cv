@@ -10,7 +10,7 @@ export default function SamtykkeTekst() {
             <List as="ol" size="small">
                 <List.Item>
                     Å samtykke er frivillig og har ingen konsekvenser for eventuell oppfølging eller ytelser du mottar
-                    fra NAV. Samtykket gis ved å klikke “Jeg samtykker” knappen. Da samtykker du til at dine valgte
+                    fra Nav. Samtykket gis ved å klikke “Jeg samtykker” knappen. Da samtykker du til at dine valgte
                     CV-opplysningene overføres til den Europeiske jobbmobiltetsportalen.
                 </List.Item>
                 <List.Item>
@@ -34,12 +34,12 @@ export default function SamtykkeTekst() {
                 </List.Item>
                 <List.Item>
                     Hvilke innholdskategorier du velger å dele i den Europeiske Jobbmobilitetsportalen påvirker ikke
-                    innholdet ditt eller synligheten til CV-en din hos arbeidsplassen.no{" "}
+                    innholdet ditt eller synligheten til CV-en din hos nav.no{" "}
                 </List.Item>
                 <List.Item>
-                    Samtykket ditt slettes automatisk når du blir inaktiv på arbeidsplassen.no eller 1 år etter du sist
-                    oppdaterte samtykke. Du blir inaktiv når du trekker samtykket ditt til å ha CVen din på
-                    arbeidsplassen.no eller ikke lenger er under oppfølgning hos NAV.{" "}
+                    Samtykket ditt slettes automatisk når du blir inaktiv på nav.no eller 1 år etter du sist oppdaterte
+                    samtykke. Du blir inaktiv når du trekker samtykket ditt til å ha CVen din på nav.no eller ikke
+                    lenger er under oppfølgning hos Nav.{" "}
                 </List.Item>
             </List>
         </>

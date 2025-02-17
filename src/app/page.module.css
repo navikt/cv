@@ -137,7 +137,7 @@
     }
 
     .boxEures {
-        margin-top: 1.5rem;
+        margin: 1.5rem 2rem 0 2rem;
     }
 
     .PersonalInfoLabel {
@@ -823,7 +823,7 @@
 }
 
 .euresBackground {
-    background-color: var(--a-white);
+    background-color: var(--a-white) !important;
 }
 
 .textDecorationLine {

@@ -5,7 +5,7 @@ export default function SamtykkeModal({ open, setOpen }) {
         <Modal open={open} onClose={() => setOpen(false)} aria-labelledby="modal-heading">
             <Modal.Header>
                 <Heading size="large" level="2" id="modal-heading">
-                    Del CV med den Europeiske Jobbmobilitetsportalen - personvernerklæring:
+                    Del CV med den Europeiske Jobbmobilitetsportalen - personvernerklæring
                 </Heading>
             </Modal.Header>
             <Modal.Body>
@@ -13,10 +13,10 @@ export default function SamtykkeModal({ open, setOpen }) {
                     1. Innledning
                 </Heading>
                 <BodyLong spacing>
-                    Denne tjenesten lar deg overføre CV-en du har på NAV sin tjeneste arbeidsplassen.no til Den
-                    Europeiske Jobbmobilitetsportalen (EURES Portalen) slik at arbeidsgivere i EU/EØS + Sveits kan søke
-                    på og finne din CV. Tjenesten er et frivillig tilbud til deg som jobbsøker. Å samtykke er frivillig
-                    og har ingen konsekvenser for eventuell oppfølging eller ytelser du mottar fra NAV.
+                    Denne tjenesten lar deg overføre CV-en du har på Nav sin tjeneste nav.no til Den Europeiske
+                    Jobbmobilitetsportalen (EURES Portalen) slik at arbeidsgivere i EU/EØS + Sveits kan søke på og finne
+                    din CV. Tjenesten er et frivillig tilbud til deg som jobbsøker. Å samtykke er frivillig og har ingen
+                    konsekvenser for eventuell oppfølging eller ytelser du mottar fra Nav.
                 </BodyLong>
                 <BodyLong spacing>
                     Når du deler CV-en din med den Europeiske Jobbmobilitetsportalen, vil personopplysningene dine bli
@@ -62,22 +62,22 @@ export default function SamtykkeModal({ open, setOpen }) {
                     </Link>
                 </BodyLong>
                 <Heading size="xsmall" level="5" spacing>
-                    2.1 Tjenesten er tilgjengelig for brukere med en CV på arbeidsplassen.no
+                    2.1 Tjenesten er tilgjengelig for brukere med en CV på nav.no
                 </Heading>
                 <BodyLong spacing>
                     Som jobbsøker kan du selv velge å opprette en konto (jobbsøkerprofil) direkte på Den Europeiske
                     Jobbmobilitetsportalen eures.europa.eu, en slik konto blir ikke opprettet ved overføring av CV fra
-                    arbeidsplassen.no.
+                    nav.no.
                 </BodyLong>
                 <BodyLong spacing>
-                    Jobbsøkere som har registrert sin CV på arbeidsplassen.no, kan også velge å overføre sin CV til Den
-                    Europeiske Jobbmobilitetsportalen. CV-en blir da tilgjengelig for kandidatsøk på samme måte som en
-                    CV som er lagt direkte inn på den Europeiske Jobbmobilitetsportalen.
+                    Jobbsøkere som har registrert sin CV på nav.no, kan også velge å overføre sin CV til Den Europeiske
+                    Jobbmobilitetsportalen. CV-en blir da tilgjengelig for kandidatsøk på samme måte som en CV som er
+                    lagt direkte inn på den Europeiske Jobbmobilitetsportalen.
                 </BodyLong>
                 <BodyLong spacing>
-                    Ved overføring fra arbeidsplassen.no er det en kopi av hele eller deler av din CV på
-                    arbeidsplassen.no som blir overført til Den Europeiske Jobbmobilitetsportalen. Endring i hva som er
-                    delt gjøres på arbeidsplassen.no. Se også avsnitt 7.
+                    Ved overføring fra nav.no er det en kopi av hele eller deler av din CV på nav.no som blir overført
+                    til Den Europeiske Jobbmobilitetsportalen. Endring i hva som er delt gjøres på nav.no. Se også
+                    avsnitt 7.
                 </BodyLong>
                 <Heading size="small" level="4" spacing>
                     3. Rettslig grunnlag for databehandlingen
@@ -140,11 +140,11 @@ export default function SamtykkeModal({ open, setOpen }) {
                     5. Hvordan registreres opplysningene og av hvem?
                 </Heading>
                 <BodyLong spacing>
-                    Opplysningene registreres av deg når du legger inn din CV på NAV sin CV-tjeneste på
-                    arbeidsplassen.no. Om du ønsker å dele CV opplysningene dine med den Europeiske
-                    Jobbmobilitetsportalen, administrerer du delingen og hva som deles ved å benytte tjenesten «Del CV
-                    med den Europeiske Jobbmobilitetsportalen» på arbeidsplassen.no. Samtykker du til deling, så
-                    overfører NAV opplysningene til den Europeiske Jobbmobilitetsportalen.
+                    Opplysningene registreres av deg når du legger inn din CV på Nav sin CV-tjeneste på nav.no. Om du
+                    ønsker å dele CV opplysningene dine med den Europeiske Jobbmobilitetsportalen, administrerer du
+                    delingen og hva som deles ved å benytte tjenesten «Del CV med den Europeiske Jobbmobilitetsportalen»
+                    på nav.no. Samtykker du til deling, så overfører Nav opplysningene til den Europeiske
+                    Jobbmobilitetsportalen.
                 </BodyLong>
                 <Heading size="small" level="4" spacing>
                     6. Hvem har tilgang til dine personopplysninger, og hvem får se dem?
@@ -227,7 +227,7 @@ export default function SamtykkeModal({ open, setOpen }) {
                     til Den Europeiske Jobbmobilitetsportalen.
                 </BodyLong>
                 <BodyLong spacing>
-                    Arbeids- og velferdsdirektoratet (NAV) er i henhold til den generelle personvernsforordningen
+                    Arbeids- og velferdsdirektoratet (Nav) er i henhold til den generelle personvernsforordningen
                     behandlingsansvarlig for systemene som brukes ved innsamling av opplysninger fra jobbsøkere og
                     overføring av dem til Den Europeiske Jobbmobilitetsportalen. Der det er relevant, kan vi også yte
                     tjenester til arbeidsgivere som har tilgang til dataene gjennom Den Europeiske
@@ -244,32 +244,32 @@ export default function SamtykkeModal({ open, setOpen }) {
                 <BodyLong spacing>
                     En CV som er overført til Den Europeiske Jobbmobilitetsportalens CV-database sammen med instrukser
                     for behandling og visning som beskrevet over i avsnitt 4, er en kopi av opplysningene du har gitt i
-                    CV-en som er opprettet her på arbeidsplassen.no. Du kan når som helst kontrollere, endre eller
-                    slette delte opplysningene ved å logge inn på arbeidsplassen.no, utføre ønskede endringer, så
-                    overføres endringene til Den Europeiske Jobbmobilitetsportalen.
+                    CV-en som er opprettet her på nav.no. Du kan når som helst kontrollere, endre eller slette delte
+                    opplysningene ved å logge inn på nav.no, utføre ønskede endringer, så overføres endringene til Den
+                    Europeiske Jobbmobilitetsportalen.
                 </BodyLong>
                 <BodyLong spacing>
                     Har du en aktiv deling av CV med Den Europeiske Jobbmobilitetsportalen, og gjør endringer på CV-en
-                    din på arbeidsplassen.no så synkroniseres endringene med den CV som er delt med Den Europeiske
-                    Jobbmobilitetsportalen. Dette er merket tydelig i din CV på arbeidsplassen.no. Slik at du har full
-                    oversikt over hva du deler med den Europeiske Jobbmobilitetsportalen.
+                    din på nav.no så synkroniseres endringene med den CV som er delt med Den Europeiske
+                    Jobbmobilitetsportalen. Dette er merket tydelig i din CV på nav.no. Slik at du har full oversikt
+                    over hva du deler med den Europeiske Jobbmobilitetsportalen.
                 </BodyLong>
                 <BodyLong spacing>
-                    Hvis du bestemmer deg for å slette CV-en på arbeidsplassen.no, vil den også bli slettet på Den
-                    Europeiske Jobbmobilitetsportalen. Du kan også når som helst bestemme at du med umiddelbar virkning
-                    vil trekke tilbake eller endre hva du ønsker å overføre til Den Europeiske Jobbmobilitetsportalen.
-                    Hvis du trekker samtykket ditt tilbake, vil kopien av CV-en som er overført til Den Europeiske
+                    Hvis du bestemmer deg for å slette CV-en på nav.no, vil den også bli slettet på Den Europeiske
+                    Jobbmobilitetsportalen. Du kan også når som helst bestemme at du med umiddelbar virkning vil trekke
+                    tilbake eller endre hva du ønsker å overføre til Den Europeiske Jobbmobilitetsportalen. Hvis du
+                    trekker samtykket ditt tilbake, vil kopien av CV-en som er overført til Den Europeiske
                     Jobbmobilitetsportalen, slettes på Den Europeiske Jobbmobilitetsportalen, men opplysningene som
-                    ligger på arbeidsplassen.no, berøres ikke.
+                    ligger på nav.no, berøres ikke.
                 </BodyLong>
                 <Heading size="small" level="4" spacing>
                     9. Hvor lenge oppbevares opplysningene?
                 </Heading>
                 <BodyLong spacing>
                     CV-er som overføres til Den Europeiske Jobbmobilitetsportalen, vil bare bli lagret og være
-                    tilgjengelig der så lenge den opprinnelige CV-en som ble opprettet på arbeidsplassen.no, er
-                    tilgjengelig. Hvis du sletter dataene på arbeidsplassen.no eller trekker samtykket tilbake, vil
-                    opplysningene dine på Den Europeiske Jobbmobilitetsportalen slettes.
+                    tilgjengelig der så lenge den opprinnelige CV-en som ble opprettet på nav.no, er tilgjengelig. Hvis
+                    du sletter dataene på nav.no eller trekker samtykket tilbake, vil opplysningene dine på Den
+                    Europeiske Jobbmobilitetsportalen slettes.
                 </BodyLong>
                 <BodyLong>Samtykket og opplysningene du deler slettes automatisk når:</BodyLong>
                 <List as="ul">
@@ -277,18 +277,17 @@ export default function SamtykkeModal({ open, setOpen }) {
                         Etter et år. Ved å oppdatere ditt samtykke, forskyves den automatiske slettingen med 1 år.
                     </List.Item>
                     <List.Item>
-                        Om du er under oppfølging av NAV når du tar i bruk tjenestene på arbeidsplassen.no, blir du
-                        inaktiv når du ikke lenger er under oppfølging av NAV, og da slettes opplysningene du deler.
+                        Om du er under oppfølging av Nav når du tar i bruk tjenestene på nav.no, blir du inaktiv når du
+                        ikke lenger er under oppfølging av Nav, og da slettes opplysningene du deler.
                     </List.Item>
                     <List.Item>
-                        Dersom du ikke er under oppfølging av NAV, og har frivillig samtykket til å ta i bruk tjenestene
-                        på arbeidsplassen.no, blir du inaktiv om du sletter dette samtykket, da slettes opplysningene du
-                        deler.
+                        Dersom du ikke er under oppfølging av Nav, og har frivillig samtykket til å ta i bruk tjenestene
+                        på nav.no, blir du inaktiv om du sletter dette samtykket, da slettes opplysningene du deler.
                     </List.Item>
                 </List>
                 <BodyLong spacing>
                     Dersom du ønsker å fortsette å ha din CV hos den Europeiske Jobbmobilitetsportalen, også etter du er
-                    blitt inaktiv på arbeidsplassen.no, kan du opprette en egen profil direkte hos den Europeiske
+                    blitt inaktiv på nav.no, kan du opprette en egen profil direkte hos den Europeiske
                     Jobbmobilitetsportalen.
                 </BodyLong>
                 <BodyLong spacing>
@@ -326,12 +325,12 @@ export default function SamtykkeModal({ open, setOpen }) {
                     Rana
                 </BodyLong>
                 <BodyLong spacing>
-                    NAV leverer denne tjenesten, og er det organet som mottar og overfører din CV til Den Europeiske
+                    Nav leverer denne tjenesten, og er det organet som mottar og overfører din CV til Den Europeiske
                     Jobbmobilitetsportalen. Anmodninger om innsyn, endring eller sletting av opplysninger og begrensning
-                    av behandlingen samt dataportabilitet skal rettes til NAV.
+                    av behandlingen samt dataportabilitet skal rettes til Nav.
                 </BodyLong>
                 <BodyLong spacing>
-                    Du kan kontakte NAV ved å ringe 55553333. Du kan også logge inn på{" "}
+                    Du kan kontakte Nav ved å ringe 55553333. Du kan også logge inn på{" "}
                     <Link inlineText rel="noopener noreferrer" href="https://www.nav.no">
                         nav.no
                     </Link>{" "}
@@ -347,7 +346,7 @@ export default function SamtykkeModal({ open, setOpen }) {
                     senest innen 30 dager.
                 </BodyLong>
                 <BodyLong spacing>
-                    Personvernombudet i NAV kan gi deg råd og veiledning om hvordan vi behandler personopplysninger, og
+                    Personvernombudet i Nav kan gi deg råd og veiledning om hvordan vi behandler personopplysninger, og
                     hjelpe deg med å ivareta dine personverninteresser.{" "}
                     <Link
                         inlineText

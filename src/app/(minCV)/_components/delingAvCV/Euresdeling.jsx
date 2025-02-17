@@ -1,4 +1,4 @@
-import { BodyLong, BodyShort, Button, HStack, Link, Tag } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Button, HStack, Link, Loader, Tag } from "@navikt/ds-react";
 import { DelingTag } from "@/app/(minCV)/_components/delingAvCV/DelingTag";
 import { PencilIcon } from "@navikt/aksel-icons";
 import { useEures } from "@/app/_common/hooks/swr/useEures";
@@ -175,41 +175,49 @@ export default function Euresdeling() {
                 </BodyShort>
             </HStack>
             <BodyLong className={styles.mb5}>Den Europeiske Jobbmobilitetsportalen.</BodyLong>
-            {delerEures ? (
-                <>
-                    <BodyLong className={styles.mb3} weight="semibold">
-                        Dette deler du med Eures:
-                    </BodyLong>
-                    <HStack className={styles.mb3}>
-                        {kategorier.map((valg) => (
-                            <Tag key={valg} className={styles.roundedTag} variant="neutral">
-                                {valg}
-                            </Tag>
-                        ))}
-                    </HStack>
-                </>
+            {euresLaster ? (
+                <Loader size="medium" title="Laster..." />
             ) : (
-                <BodyLong className={styles.mb5}>
-                    Du kan{" "}
-                    <Link href="/min-cv/eures" inlineText>
-                        lese mer om EURES eller endre status på deling her
-                    </Link>
-                    .
-                </BodyLong>
+                <>
+                    {delerEures ? (
+                        <>
+                            <BodyLong className={styles.mb3} weight="semibold">
+                                Dette deler du med Eures:
+                            </BodyLong>
+                            <HStack className={styles.mb3}>
+                                {kategorier.map((valg) => (
+                                    <Tag key={valg} className={styles.roundedTag} variant="neutral">
+                                        {valg}
+                                    </Tag>
+                                ))}
+                            </HStack>
+                        </>
+                    ) : (
+                        <BodyLong className={styles.mb5}>
+                            Du kan{" "}
+                            <Link href="/min-cv/eures" inlineText>
+                                lese mer om EURES eller endre status på deling her
+                            </Link>
+                            .
+                        </BodyLong>
+                    )}
+                    <HStack gap="4" align="center">
+                        <DelingTag
+                            deltMed="EURES"
+                            erDelt={delerEures}
+                            laster={euresLaster}
+                            error={euresHarFeil}
+                            sistEndret={eures && eures.sistEndret}
+                            erEures
+                        />
+                    </HStack>
+                    {delerEures && (
+                        <Button className={styles.mt10} icon={<PencilIcon aria-hidden />} as="a" href="/min-cv/eures">
+                            Endre valg
+                        </Button>
+                    )}
+                </>
             )}
-            <HStack gap="4" align="center">
-                <DelingTag
-                    deltMed="EURES"
-                    erDelt={delerEures}
-                    laster={euresLaster}
-                    error={euresHarFeil}
-                    sistEndret={eures && eures.sistEndret}
-                    erEures
-                />
-            </HStack>
-            <Button className={styles.mt10} icon={<PencilIcon aria-hidden />} as="a" href="/min-cv/eures">
-                Endre valg
-            </Button>
         </>
     );
 }
