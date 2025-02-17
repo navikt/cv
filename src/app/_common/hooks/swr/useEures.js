@@ -7,7 +7,7 @@ import { euLand } from "@/app/_common/data/euLand";
 export const EURES_KEY = "/min-cv/api/samtykke/eures";
 
 export const useEures = () => {
-    const { data, error, isLoading } = useSWR(EURES_KEY, getAPI);
+    const { data, error, isLoading } = useSWR(EURES_KEY, getAPI, { shouldRetryOnError: (err) => err.status !== 404 });
 
     let initKategorier;
     const initSelectionLand = [];
