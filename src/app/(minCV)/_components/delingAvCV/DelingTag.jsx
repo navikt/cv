@@ -6,6 +6,8 @@ export function DelingTag({ erDelt, deltMed, laster = false, error = false, sist
     let icon;
     if (laster) {
         icon = <Loader size="medium" title="Laster..." />;
+    } else if (error && erEures && !erDelt) {
+        icon = <StarsEuIcon aria-hidden />;
     } else if (error || !erDelt) {
         icon = <XMarkIcon aria-hidden />;
     } else if (erEures) {
@@ -15,7 +17,9 @@ export function DelingTag({ erDelt, deltMed, laster = false, error = false, sist
     }
 
     let variant;
-    if (error) {
+    if (error && erEures && !erDelt) {
+        variant = "neutral-moderate";
+    } else if (error) {
         variant = "error-moderate";
     } else if (erDelt && !laster) {
         variant = "info";
@@ -24,7 +28,9 @@ export function DelingTag({ erDelt, deltMed, laster = false, error = false, sist
     }
 
     let tekst;
-    if (error) {
+    if (error && erEures && !erDelt) {
+        tekst = `CV-en er ikke delt med ${deltMed}`;
+    } else if (error) {
         tekst = "Det oppstod en feil";
     } else if (laster) {
         tekst = "Laster status";
