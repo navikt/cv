@@ -23,10 +23,10 @@ spec:
   resources:
     limits:
       cpu: 500m
-      memory: 512Mi
+      memory: 1Gi
     requests:
-      cpu: 200m
-      memory: 256Mi
+      cpu: 500m
+      memory: 1Gi
   vault:
     enabled: false
   idporten:
