@@ -280,18 +280,18 @@ export default function Eures() {
                                                     <Checkbox id="kategorier" value="personalia">
                                                         Personalia
                                                     </Checkbox>
+                                                    <Checkbox value="utdanning">Utdanning</Checkbox>
                                                     <Checkbox value="fagbrev">Fagbrev</Checkbox>
                                                     <Checkbox value="arbeidserfaring">Arbeidsforhold</Checkbox>
-                                                    <Checkbox value="foererkort">Førerkort</Checkbox>
-                                                    <Checkbox value="sammendrag">Sammendrag</Checkbox>
-                                                    <Checkbox value="andreGodkjenninger">Andre godkjenninger</Checkbox>
-                                                    <Checkbox value="utdanning">Utdanning</Checkbox>
-                                                    <Checkbox value="kurs">Kurs</Checkbox>
                                                     <Checkbox value="kompetanser">Kompetanser</Checkbox>
-                                                    <Checkbox value="spraak">Språk</Checkbox>
                                                     <Checkbox value="offentligeGodkjenninger">
                                                         Offentlige godkjenninger
                                                     </Checkbox>
+                                                    <Checkbox value="andreGodkjenninger">Andre godkjenninger</Checkbox>
+                                                    <Checkbox value="spraak">Språk</Checkbox>
+                                                    <Checkbox value="foererkort">Førerkort</Checkbox>
+                                                    <Checkbox value="kurs">Kurs</Checkbox>
+                                                    <Checkbox value="sammendrag">Sammendrag</Checkbox>
                                                 </VStack>
                                             </HStack>
                                         </CheckboxGroup>
