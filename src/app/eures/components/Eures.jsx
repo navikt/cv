@@ -126,6 +126,7 @@ export default function Eures({
         } else if (kategorier.includes(EuresKategoriEnum.PERSONALIA)) {
             oppdaterSamtykke();
         } else {
+            if (e) e.target.checked = false;
             setOpenOppdaterSamtykkeModal(true);
         }
     };
