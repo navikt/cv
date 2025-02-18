@@ -137,6 +137,8 @@ export default function Eures({
     };
 
     const onTrekkSamtykke = () => {
+        setValiderKategorier(false);
+        setValiderLand(false);
         setKategorier([]);
         setLandSelectedOptions([]);
         setOpenTrekkSamtykkeModal(false);
