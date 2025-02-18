@@ -441,7 +441,7 @@ export default function Eures() {
                                                                 du oppdatere samtykket ditt.
                                                             </BodyLong>
                                                             <Button
-                                                                className={`${styles.mt4} ${styles.mb1} ${styles.euresBackground}`}
+                                                                className={`${styles.mt4} ${styles.mb1} ${styles.trekkSamtykkeButton}`}
                                                                 size="small"
                                                                 variant="secondary"
                                                                 onClick={() => setOpenTrekkSamtykkeModal(true)}

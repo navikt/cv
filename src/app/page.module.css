@@ -846,3 +846,15 @@
 .euresCheckbox {
     margin-top: 0.8rem;
 }
+
+.trekkSamtykkeButton {
+    background-color: var(--a-white) !important;
+}
+
+.trekkSamtykkeButton:hover {
+    background-color: var(--a-blue-100) !important;
+}
+
+.trekkSamtykkeButton:active {
+    background-color: var(--a-blue-700) !important;
+}
