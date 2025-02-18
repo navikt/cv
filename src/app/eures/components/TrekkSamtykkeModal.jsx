@@ -16,13 +16,17 @@ export default function TrekkSamtykkeModal({ open, setOpen, onTrekkSamtykke }) {
                 <BodyLong>Er du sikker på at du vil trekke samtykket?</BodyLong>
             </Modal.Body>
             <Modal.Footer>
-                <HStack gap="4">
-                    <Button type="button" onClick={onTrekkSamtykke}>
-                        Trekk samtykke
-                    </Button>
-                    <Button type="button" onClick={() => setOpen(false)}>
-                        Avbryt
-                    </Button>
+                <HStack gap="4" justify="end">
+                    <HStack>
+                        <Button type="button" onClick={onTrekkSamtykke}>
+                            Trekk samtykke
+                        </Button>
+                    </HStack>
+                    <HStack>
+                        <Button type="button" onClick={() => setOpen(false)}>
+                            Avbryt
+                        </Button>
+                    </HStack>
                 </HStack>
             </Modal.Footer>
         </Modal>
