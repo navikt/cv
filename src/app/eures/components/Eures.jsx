@@ -22,8 +22,7 @@ import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import { EuresKategoriEnum } from "@/app/_common/enums/EuresEnums";
 import SamtykkeTekst from "@/app/eures/components/SamtykkeTekst";
 import SamtykkeModal from "@/app/eures/components/SamtykkeModal";
-import EuresForhandsvisning from "@/app/eures/components/EuresForhandsvisning";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { euLand } from "@/app/_common/data/euLand";
 import { formatterDatoEttAarFremITid } from "@/app/_common/utils/stringUtils";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
@@ -32,12 +31,17 @@ import { SamtykkeSkeleton } from "@/app/_common/components/SamtykkeSkeleton";
 import TrekkSamtykkeModal from "@/app/eures/components/TrekkSamtykkeModal";
 import OppdaterSamtykkeModal from "@/app/eures/components/OppdaterSamtykkeModal";
 
-export default function Eures() {
+export default function Eures({
+    eures,
+    kategorier,
+    setKategorier,
+    landSelectedOptions,
+    setLandSelectedOptions,
+    setVisHovedinnhold,
+}) {
     const { suksessNotifikasjon } = useContext(ApplicationContext);
-    const { eures, delerEures, euresLaster, euresHarFeil } = useEures();
+    const { delerEures, euresLaster, euresHarFeil } = useEures();
     const oppdaterEures = useOppdaterEures();
-    const [kategorier, setKategorier] = useState([]);
-    const [landSelectedOptions, setLandSelectedOptions] = useState([]);
     const [landVerdi, setLandVerdi] = useState("");
     const [visOppdater, setVisOppdater] = useState(false);
     const [openSamtykkeModal, setOpenSamtykkeModal] = useState(false);
@@ -45,29 +49,6 @@ export default function Eures() {
     const [openOppdaterSamtykkeModal, setOpenOppdaterSamtykkeModal] = useState(false);
     const [validerKategorier, setValiderKategorier] = useState(false);
     const [validerLand, setValiderLand] = useState(false);
-    const [visHovedinnhold, setVisHovedinnhold] = useState(true);
-
-    useEffect(() => {
-        if (eures) {
-            console.log("useEffect-eures: ", eures);
-            const initKategorier = Object.keys(eures)
-                .filter((k) => eures[k])
-                .map(String)
-                .slice(1, -1);
-            setKategorier(initKategorier);
-
-            const initSelectionLand = [];
-            if (eures.land) {
-                eures.land.forEach((code) => {
-                    const c = euLand.filter((i) => i.code === code)[0];
-                    if (c) {
-                        initSelectionLand.push(c.name);
-                    }
-                });
-                setLandSelectedOptions(initSelectionLand);
-            }
-        }
-    }, [eures]);
 
     const velgAlleKategorier = () => {
         const k = [];
@@ -167,338 +148,303 @@ export default function Eures() {
     console.log("euresLaster: ", euresLaster && euresLaster);
     console.log("euresHarFeil: ", euresHarFeil && euresHarFeil);
     return (
-        <div>
-            {visHovedinnhold ? (
-                <div className={styles.euresBackground}>
-                    <HeaderPanel title="CV-deling med den Europeiske jobbmobilitetsportalen" />
+        <div className={styles.euresBackground}>
+            <HeaderPanel title="CV-deling med den Europeiske jobbmobilitetsportalen" />
 
-                    <HStack className={styles.pageContainer}>
-                        <section>
-                            <Box background="surface-default" className={styles.boxEures}>
-                                <Link href="/min-cv">
-                                    <ArrowUndoIcon aria-hidden />
-                                    Tilbake til Min CV
-                                </Link>
+            <HStack className={styles.pageContainer}>
+                <section>
+                    <Box background="surface-default" className={styles.boxEures}>
+                        <Link href="/min-cv">
+                            <ArrowUndoIcon aria-hidden />
+                            Tilbake til Min CV
+                        </Link>
 
-                                <div className={styles.euresLogo} />
-                                <BodyLong className={styles.euresTekst}>EURES</BodyLong>
-                                <Heading level="2" size="large" align="start" spacing>
-                                    CV-deling med den Europeiske jobbmobilitetsportalen
-                                </Heading>
-                                <BodyLong size="small" weight="semibold" spacing>
-                                    Hva er den Europeiske Jobbmobilitetsportalen?
-                                </BodyLong>
-                                <BodyLong size="small" spacing>
-                                    Den Europeiske Jobbmobilitetsportalen er et tilbud til deg som ønsker å finne en
-                                    jobb i EU/EØS-området og Sveits. Portalen gir deg muligheten til å gjøre CV-en din
-                                    tilgjengelig for arbeidsgivere i EU/EØS og Sveits ved å dele CV-en du har på nav.no.
-                                </BodyLong>
-                                <BodyLong size="small" spacing>
-                                    Du kan også registrere din egen konto i den Europeiske Jobbmobilitetsportalen og
-                                    legge inn CV-en selv. Registrerte brukere kan lage søkeprofiler, få varsel på e-post
-                                    om stillinger eller abonnere på nyhetsbrev. Arbeidsgivere kan søke etter aktuelle
-                                    kandidater. Du kan lese mer om den Europeiske Jobbmobilitetsportalen og hvilke
-                                    muligheter og tjenester som ligger der ved å bruke lenken under.
-                                </BodyLong>
-                                <BodyLong spacing>
-                                    Gå til den{" "}
-                                    <Link rel="noopener noreferrer" href="https://eures.europa.eu/index_no" inlineText>
-                                        Europeiske Jobbmobilitetsportalen
-                                    </Link>
-                                    .
-                                </BodyLong>
+                        <div className={styles.euresLogo} />
+                        <BodyLong className={styles.euresTekst}>EURES</BodyLong>
+                        <Heading level="2" size="large" align="start" spacing>
+                            CV-deling med den Europeiske jobbmobilitetsportalen
+                        </Heading>
+                        <BodyLong size="small" weight="semibold" spacing>
+                            Hva er den Europeiske Jobbmobilitetsportalen?
+                        </BodyLong>
+                        <BodyLong size="small" spacing>
+                            Den Europeiske Jobbmobilitetsportalen er et tilbud til deg som ønsker å finne en jobb i
+                            EU/EØS-området og Sveits. Portalen gir deg muligheten til å gjøre CV-en din tilgjengelig for
+                            arbeidsgivere i EU/EØS og Sveits ved å dele CV-en du har på nav.no.
+                        </BodyLong>
+                        <BodyLong size="small" spacing>
+                            Du kan også registrere din egen konto i den Europeiske Jobbmobilitetsportalen og legge inn
+                            CV-en selv. Registrerte brukere kan lage søkeprofiler, få varsel på e-post om stillinger
+                            eller abonnere på nyhetsbrev. Arbeidsgivere kan søke etter aktuelle kandidater. Du kan lese
+                            mer om den Europeiske Jobbmobilitetsportalen og hvilke muligheter og tjenester som ligger
+                            der ved å bruke lenken under.
+                        </BodyLong>
+                        <BodyLong spacing>
+                            Gå til den{" "}
+                            <Link rel="noopener noreferrer" href="https://eures.europa.eu/index_no" inlineText>
+                                Europeiske Jobbmobilitetsportalen
+                            </Link>
+                            .
+                        </BodyLong>
 
-                                <div className={styles.hvaVilDuDeleIcon} />
-                                <Heading
-                                    className={styles.textDecorationLine}
-                                    level="3"
-                                    size="medium"
-                                    align="start"
-                                    spacing
+                        <div className={styles.hvaVilDuDeleIcon} />
+                        <Heading className={styles.textDecorationLine} level="3" size="medium" align="start" spacing>
+                            Velg ut hva du vil dele
+                        </Heading>
+                        <BodyLong size="small" spacing>
+                            Du velger selv ut hva fra CV-en din som du ønsker å dele med den Europeiske
+                            jobbmobilitetsportalen. Du kan når som helst endre eller slette hva du deler.
+                        </BodyLong>
+
+                        <div className={styles.vilkarIcon} />
+                        <Heading className={styles.textDecorationLine} level="3" size="medium" align="start" spacing>
+                            Gjør deg kjent med vilkårene
+                        </Heading>
+                        <BodyLong size="small" spacing>
+                            Hvis du ønsker å dele informasjon med den Europeiske Jobbmobilitetsportalen, må du gjøre deg
+                            kjent med vilkårene for deling av CV før du samtykker til deling.
+                        </BodyLong>
+                        <BodyLong size="small" weight="semibold" spacing>
+                            Å samtykke er frivillig, og samtykket kan trekkes når som helst.
+                        </BodyLong>
+
+                        <div className={styles.delCVIcon} />
+                        <Heading className={styles.textDecorationLine} level="3" size="medium" align="start" spacing>
+                            Del CV-en din
+                        </Heading>
+                        <BodyLong className={styles.mb16} size="small">
+                            Når du deler CV-en din kan arbeidsgivere i EU/EØS og Sveits kontakte deg om jobbmuligheter.
+                        </BodyLong>
+
+                        <Heading level="3" size="medium" align="start" spacing>
+                            Hvilket innhold vil du dele?
+                        </Heading>
+                        {euresLaster ? (
+                            <DeleInnholdSkeleton />
+                        ) : (
+                            <>
+                                <CheckboxGroup
+                                    className={styles.mb9}
+                                    legend=""
+                                    description="Kryss av for innholdet i CV-en din som du ønsker å dele."
+                                    onChange={onKategorierChange}
+                                    value={kategorier}
+                                    error={validerKategorier && kategorier.length === 0 && "Du må velge minst et felt"}
                                 >
-                                    Velg ut hva du vil dele
-                                </Heading>
-                                <BodyLong size="small" spacing>
-                                    Du velger selv ut hva fra CV-en din som du ønsker å dele med den Europeiske
-                                    jobbmobilitetsportalen. Du kan når som helst endre eller slette hva du deler.
-                                </BodyLong>
-
-                                <div className={styles.vilkarIcon} />
-                                <Heading
-                                    className={styles.textDecorationLine}
-                                    level="3"
-                                    size="medium"
-                                    align="start"
-                                    spacing
-                                >
-                                    Gjør deg kjent med vilkårene
-                                </Heading>
-                                <BodyLong size="small" spacing>
-                                    Hvis du ønsker å dele informasjon med den Europeiske Jobbmobilitetsportalen, må du
-                                    gjøre deg kjent med vilkårene for deling av CV før du samtykker til deling.
-                                </BodyLong>
-                                <BodyLong size="small" weight="semibold" spacing>
-                                    Å samtykke er frivillig, og samtykket kan trekkes når som helst.
-                                </BodyLong>
-
-                                <div className={styles.delCVIcon} />
-                                <Heading
-                                    className={styles.textDecorationLine}
-                                    level="3"
-                                    size="medium"
-                                    align="start"
-                                    spacing
-                                >
-                                    Del CV-en din
-                                </Heading>
-                                <BodyLong className={styles.mb16} size="small">
-                                    Når du deler CV-en din kan arbeidsgivere i EU/EØS og Sveits kontakte deg om
-                                    jobbmuligheter.
-                                </BodyLong>
-
-                                <Heading level="3" size="medium" align="start" spacing>
-                                    Hvilket innhold vil du dele?
-                                </Heading>
-                                {euresLaster ? (
-                                    <DeleInnholdSkeleton />
-                                ) : (
-                                    <>
-                                        <CheckboxGroup
-                                            className={styles.mb9}
-                                            legend=""
-                                            description="Kryss av for innholdet i CV-en din som du ønsker å dele."
-                                            onChange={onKategorierChange}
-                                            value={kategorier}
-                                            error={
-                                                validerKategorier &&
-                                                kategorier.length === 0 &&
-                                                "Du må velge minst et felt"
-                                            }
-                                        >
-                                            <HStack className={styles.mt9}>
-                                                <VStack>
-                                                    <Checkbox id="kategorier" value="personalia">
-                                                        Personalia
-                                                    </Checkbox>
-                                                    <Checkbox value="utdanning">Utdanning</Checkbox>
-                                                    <Checkbox value="fagbrev">Fagbrev</Checkbox>
-                                                    <Checkbox value="arbeidserfaring">Arbeidsforhold</Checkbox>
-                                                    <Checkbox value="kompetanser">Kompetanser</Checkbox>
-                                                    <Checkbox value="offentligeGodkjenninger">
-                                                        Offentlige godkjenninger
-                                                    </Checkbox>
-                                                    <Checkbox value="andreGodkjenninger">Andre godkjenninger</Checkbox>
-                                                    <Checkbox value="spraak">Språk</Checkbox>
-                                                    <Checkbox value="foererkort">Førerkort</Checkbox>
-                                                    <Checkbox value="kurs">Kurs</Checkbox>
-                                                    <Checkbox value="sammendrag">Sammendrag</Checkbox>
-                                                </VStack>
-                                            </HStack>
-                                        </CheckboxGroup>
-                                        <HStack gap="6" className={styles.mb2}>
-                                            {kategorier.length !== Object.keys(EuresKategoriEnum).length ? (
-                                                <Button
-                                                    aria-label="Velg alle kategorier"
-                                                    className={styles.mb6}
-                                                    variant="primary"
-                                                    onClick={() => velgAlleKategorier()}
-                                                >
-                                                    Velg alle kategorier
-                                                </Button>
-                                            ) : (
-                                                <Button
-                                                    aria-label="Fjern alle kategorier"
-                                                    className={styles.mb6}
-                                                    variant="danger"
-                                                    onClick={() => fjernAlleKategorier()}
-                                                >
-                                                    Fjern alle kategorier
-                                                </Button>
-                                            )}
-                                            <Button
-                                                aria-label="Se hva du ønsker å dele"
-                                                className={styles.mb6}
-                                                variant="secondary"
-                                                onClick={() => setVisHovedinnhold(false)}
-                                            >
-                                                Se hva du ønsker å dele
-                                            </Button>
-                                        </HStack>
-                                        <UNSAFE_Combobox
-                                            id="land"
+                                    <HStack className={styles.mt9}>
+                                        <VStack>
+                                            <Checkbox id="kategorier" value="personalia">
+                                                Personalia
+                                            </Checkbox>
+                                            <Checkbox value="utdanning">Utdanning</Checkbox>
+                                            <Checkbox value="fagbrev">Fagbrev</Checkbox>
+                                            <Checkbox value="arbeidserfaring">Arbeidsforhold</Checkbox>
+                                            <Checkbox value="kompetanser">Kompetanser</Checkbox>
+                                            <Checkbox value="offentligeGodkjenninger">
+                                                Offentlige godkjenninger
+                                            </Checkbox>
+                                            <Checkbox value="andreGodkjenninger">Andre godkjenninger</Checkbox>
+                                            <Checkbox value="spraak">Språk</Checkbox>
+                                            <Checkbox value="foererkort">Førerkort</Checkbox>
+                                            <Checkbox value="kurs">Kurs</Checkbox>
+                                            <Checkbox value="sammendrag">Sammendrag</Checkbox>
+                                        </VStack>
+                                    </HStack>
+                                </CheckboxGroup>
+                                <HStack gap="6" className={styles.mb2}>
+                                    {kategorier.length !== Object.keys(EuresKategoriEnum).length ? (
+                                        <Button
+                                            aria-label="Velg alle kategorier"
                                             className={styles.mb6}
-                                            placeholder="Velg"
-                                            label="Velg hvilke land du ønsker å jobbe i"
-                                            description="Du kan velge flere land hvis du ønsker"
-                                            shouldAutocomplete={false}
-                                            isMultiSelect={false}
-                                            onChange={(verdi) => setLandVerdi(verdi) || ""}
-                                            onToggleSelected={onToggleSelected}
-                                            selectedOptions={landSelectedOptions}
-                                            shouldShowSelectedOptions={false}
-                                            options={initialLandliste}
-                                            value={landVerdi}
-                                            error={
-                                                validerLand &&
-                                                landSelectedOptions.length === 0 &&
-                                                "Du må velge minst et land"
-                                            }
-                                        />
-                                        {landSelectedOptions.length === 0 ? (
-                                            <BodyLong weight="regular" size="small" className={styles.mb12}>
-                                                Du har ikke lagt til noen land som du ønsker å jobbe i
-                                            </BodyLong>
-                                        ) : (
-                                            <VStack>
-                                                <BodyLong weight="regular" size="small" className={styles.mb3}>
-                                                    Lagt til:
-                                                </BodyLong>
-                                                <Chips className={styles.mb12}>
-                                                    {landSelectedOptions.map((valg) => (
-                                                        <Chips.Removable
-                                                            key={valg}
-                                                            onClick={() => {
-                                                                setLandSelectedOptions((x) =>
-                                                                    x.length === 0
-                                                                        ? landSelectedOptions
-                                                                        : x.filter((y) => y !== valg),
-                                                                );
-                                                                setVisOppdater(true);
-                                                                suksessNotifikasjon(`${valg} fjernet`);
-                                                            }}
-                                                        >
-                                                            {valg}
-                                                        </Chips.Removable>
-                                                    ))}
-                                                </Chips>
-                                            </VStack>
-                                        )}
-                                    </>
-                                )}
-                                {delerEures && visOppdater && (
-                                    <Alert variant="warning" className={styles.mb12}>
-                                        <HStack className={styles.mb6}>
-                                            For å lagre endringene dine må du oppdatere samtykke ditt
-                                        </HStack>
-                                        <HStack>
-                                            <Button
-                                                aria-label="Oppdater samtykke"
-                                                className={`${styles.mb2} ${styles.oppdaterSamtykkeButton}`}
-                                                variant="primary"
-                                                onClick={() => onOppdaterSamtykke()}
-                                            >
-                                                Oppdater samtykke
-                                            </Button>
-                                        </HStack>
-                                    </Alert>
-                                )}
-                                <ExpansionCard defaultOpen size="small" aria-label="Demo med bare tittel">
-                                    <ExpansionCard.Header>
-                                        <ExpansionCard.Title as="h4" size="small">
-                                            Informasjon om samtykke
-                                        </ExpansionCard.Title>
-                                    </ExpansionCard.Header>
-                                    <ExpansionCard.Content>
-                                        <>
-                                            <SamtykkeTekst />
-                                            <BodyLong className={styles.mb4} size="small">
-                                                <Button
-                                                    className={`${styles.mt4} ${styles.mb1}`}
-                                                    size="small"
-                                                    variant="secondary"
-                                                    onClick={() => setOpenSamtykkeModal(true)}
+                                            variant="primary"
+                                            onClick={() => velgAlleKategorier()}
+                                        >
+                                            Velg alle kategorier
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            aria-label="Fjern alle kategorier"
+                                            className={styles.mb6}
+                                            variant="danger"
+                                            onClick={() => fjernAlleKategorier()}
+                                        >
+                                            Fjern alle kategorier
+                                        </Button>
+                                    )}
+                                    <Button
+                                        aria-label="Se hva du ønsker å dele"
+                                        className={styles.mb6}
+                                        variant="secondary"
+                                        onClick={() => setVisHovedinnhold(false)}
+                                    >
+                                        Se hva du ønsker å dele
+                                    </Button>
+                                </HStack>
+                                <UNSAFE_Combobox
+                                    id="land"
+                                    className={styles.mb6}
+                                    placeholder="Velg"
+                                    label="Velg hvilke land du ønsker å jobbe i"
+                                    description="Du kan velge flere land hvis du ønsker"
+                                    shouldAutocomplete={false}
+                                    isMultiSelect={false}
+                                    onChange={(verdi) => setLandVerdi(verdi) || ""}
+                                    onToggleSelected={onToggleSelected}
+                                    selectedOptions={landSelectedOptions}
+                                    shouldShowSelectedOptions={false}
+                                    options={initialLandliste}
+                                    value={landVerdi}
+                                    error={
+                                        validerLand && landSelectedOptions.length === 0 && "Du må velge minst et land"
+                                    }
+                                />
+                                {landSelectedOptions.length === 0 ? (
+                                    <BodyLong weight="regular" size="small" className={styles.mb12}>
+                                        Du har ikke lagt til noen land som du ønsker å jobbe i
+                                    </BodyLong>
+                                ) : (
+                                    <VStack>
+                                        <BodyLong weight="regular" size="small" className={styles.mb3}>
+                                            Lagt til:
+                                        </BodyLong>
+                                        <Chips className={styles.mb12}>
+                                            {landSelectedOptions.map((valg) => (
+                                                <Chips.Removable
+                                                    key={valg}
+                                                    onClick={() => {
+                                                        setLandSelectedOptions((x) =>
+                                                            x.length === 0
+                                                                ? landSelectedOptions
+                                                                : x.filter((y) => y !== valg),
+                                                        );
+                                                        setVisOppdater(true);
+                                                        suksessNotifikasjon(`${valg} fjernet`);
+                                                    }}
                                                 >
-                                                    Les mer om samtykke
-                                                </Button>
-                                            </BodyLong>
-                                            <div className={styles.mb5}>
-                                                <div className={styles.borderEures} />
-                                            </div>
-                                            {euresLaster ? (
-                                                <SamtykkeSkeleton />
+                                                    {valg}
+                                                </Chips.Removable>
+                                            ))}
+                                        </Chips>
+                                    </VStack>
+                                )}
+                            </>
+                        )}
+                        {delerEures && visOppdater && (
+                            <Alert variant="warning" className={styles.mb12}>
+                                <HStack className={styles.mb6}>
+                                    For å lagre endringene dine må du oppdatere samtykke ditt
+                                </HStack>
+                                <HStack>
+                                    <Button
+                                        aria-label="Oppdater samtykke"
+                                        className={`${styles.mb2} ${styles.oppdaterSamtykkeButton}`}
+                                        variant="primary"
+                                        onClick={() => onOppdaterSamtykke()}
+                                    >
+                                        Oppdater samtykke
+                                    </Button>
+                                </HStack>
+                            </Alert>
+                        )}
+                        <ExpansionCard defaultOpen size="small" aria-label="Demo med bare tittel">
+                            <ExpansionCard.Header>
+                                <ExpansionCard.Title as="h4" size="small">
+                                    Informasjon om samtykke
+                                </ExpansionCard.Title>
+                            </ExpansionCard.Header>
+                            <ExpansionCard.Content>
+                                <>
+                                    <SamtykkeTekst />
+                                    <BodyLong className={styles.mb4} size="small">
+                                        <Button
+                                            className={`${styles.mt4} ${styles.mb1}`}
+                                            size="small"
+                                            variant="secondary"
+                                            onClick={() => setOpenSamtykkeModal(true)}
+                                        >
+                                            Les mer om samtykke
+                                        </Button>
+                                    </BodyLong>
+                                    <div className={styles.mb5}>
+                                        <div className={styles.borderEures} />
+                                    </div>
+                                    {euresLaster ? (
+                                        <SamtykkeSkeleton />
+                                    ) : (
+                                        <div>
+                                            {delerEures ? (
+                                                <Box
+                                                    background="surface-success-subtle"
+                                                    padding="4"
+                                                    borderRadius="medium"
+                                                    borderColor="border-success"
+                                                    borderWidth="1"
+                                                >
+                                                    <HStack justify="space-between">
+                                                        <Heading level="4" size="medium">
+                                                            Status for samtykke
+                                                        </Heading>
+                                                        <BodyLong size="small">
+                                                            {`Samtykket ditt utløper ${formatterDatoEttAarFremITid(eures.sistEndret)}`}
+                                                        </BodyLong>
+                                                    </HStack>
+                                                    <BodyLong className={`${styles.mt6} ${styles.mb3}`}>
+                                                        Dine valgte innholdskategorier deles nå til den Europeiske
+                                                        Jobbmobilitetsportalen. Hvis du legger til eller fjerner hvilke
+                                                        innholdskategorier du vil dele, må du oppdatere samtykket ditt.
+                                                    </BodyLong>
+                                                    <Button
+                                                        className={`${styles.mt4} ${styles.mb1} ${styles.trekkSamtykkeButton}`}
+                                                        size="small"
+                                                        variant="secondary"
+                                                        onClick={() => setOpenTrekkSamtykkeModal(true)}
+                                                    >
+                                                        Trekk samtykke
+                                                    </Button>
+                                                </Box>
                                             ) : (
-                                                <div>
-                                                    {delerEures ? (
-                                                        <Box
-                                                            background="surface-success-subtle"
-                                                            padding="4"
-                                                            borderRadius="medium"
-                                                            borderColor="border-success"
-                                                            borderWidth="1"
-                                                        >
-                                                            <HStack justify="space-between">
-                                                                <Heading level="4" size="medium">
-                                                                    Status for samtykke
-                                                                </Heading>
-                                                                <BodyLong size="small">
-                                                                    {`Samtykket ditt utløper ${formatterDatoEttAarFremITid(eures.sistEndret)}`}
-                                                                </BodyLong>
-                                                            </HStack>
-                                                            <BodyLong className={`${styles.mt6} ${styles.mb3}`}>
-                                                                Dine valgte innholdskategorier deles nå til den
-                                                                Europeiske Jobbmobilitetsportalen. Hvis du legger til
-                                                                eller fjerner hvilke innholdskategorier du vil dele, må
-                                                                du oppdatere samtykket ditt.
-                                                            </BodyLong>
-                                                            <Button
-                                                                className={`${styles.mt4} ${styles.mb1} ${styles.trekkSamtykkeButton}`}
-                                                                size="small"
-                                                                variant="secondary"
-                                                                onClick={() => setOpenTrekkSamtykkeModal(true)}
-                                                            >
-                                                                Trekk samtykke
-                                                            </Button>
-                                                        </Box>
-                                                    ) : (
-                                                        <Box
-                                                            background="surface-warning-subtle"
-                                                            padding="4"
-                                                            borderRadius="medium"
-                                                            borderColor="border-warning"
-                                                            borderWidth="1"
-                                                        >
-                                                            <Heading className={styles.mb9} level="4" size="medium">
-                                                                Status for samtykke
-                                                            </Heading>
-                                                            <BodyLong>
-                                                                Du har ikke samtykket til å dele CV-opplysninger med den
-                                                                Europeiske Jobbmobilitetsportalen.
-                                                            </BodyLong>
-                                                            <Checkbox
-                                                                onChange={onOppdaterSamtykke}
-                                                                className={styles.euresCheckbox}
-                                                                value="samtykker"
-                                                            >
-                                                                Jeg samtykker
-                                                            </Checkbox>
-                                                        </Box>
-                                                    )}
-                                                </div>
+                                                <Box
+                                                    background="surface-warning-subtle"
+                                                    padding="4"
+                                                    borderRadius="medium"
+                                                    borderColor="border-warning"
+                                                    borderWidth="1"
+                                                >
+                                                    <Heading className={styles.mb9} level="4" size="medium">
+                                                        Status for samtykke
+                                                    </Heading>
+                                                    <BodyLong>
+                                                        Du har ikke samtykket til å dele CV-opplysninger med den
+                                                        Europeiske Jobbmobilitetsportalen.
+                                                    </BodyLong>
+                                                    <Checkbox
+                                                        onChange={onOppdaterSamtykke}
+                                                        className={styles.euresCheckbox}
+                                                        value="samtykker"
+                                                    >
+                                                        Jeg samtykker
+                                                    </Checkbox>
+                                                </Box>
                                             )}
-                                        </>
-                                    </ExpansionCard.Content>
-                                </ExpansionCard>
-                            </Box>
-                            <SamtykkeModal open={openSamtykkeModal} setOpen={setOpenSamtykkeModal} />
-                            <OppdaterSamtykkeModal
-                                open={openOppdaterSamtykkeModal}
-                                setOpen={setOpenOppdaterSamtykkeModal}
-                                onOppdaterUtenPersonalia={onOppdaterUtenPersonalia}
-                            />
-                            <TrekkSamtykkeModal
-                                open={openTrekkSamtykkeModal}
-                                setOpen={setOpenTrekkSamtykkeModal}
-                                onTrekkSamtykke={onTrekkSamtykke}
-                            />
-                        </section>
-                    </HStack>
-                </div>
-            ) : (
-                <>
-                    <HeaderPanel title="CV-innhold du ønsker å dele" />
-                    <EuresForhandsvisning setVisHovedinnhold={setVisHovedinnhold} kategorier={kategorier} />
-                </>
-            )}
+                                        </div>
+                                    )}
+                                </>
+                            </ExpansionCard.Content>
+                        </ExpansionCard>
+                    </Box>
+                    <SamtykkeModal open={openSamtykkeModal} setOpen={setOpenSamtykkeModal} />
+                    <OppdaterSamtykkeModal
+                        open={openOppdaterSamtykkeModal}
+                        setOpen={setOpenOppdaterSamtykkeModal}
+                        onOppdaterUtenPersonalia={onOppdaterUtenPersonalia}
+                    />
+                    <TrekkSamtykkeModal
+                        open={openTrekkSamtykkeModal}
+                        setOpen={setOpenTrekkSamtykkeModal}
+                        onTrekkSamtykke={onTrekkSamtykke}
+                    />
+                </section>
+            </HStack>
         </div>
     );
 }
