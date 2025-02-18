@@ -182,7 +182,7 @@ export default function SamtykkeModal({ open, setOpen }) {
                     <Link
                         inlineText
                         rel="noopener noreferrer"
-                        href="https://ec.europa.eu/eures/public/no/eures-in-your-country"
+                        href="https://eures.europa.eu/eures-services/eures-members-and-partners-your-country_no"
                     >
                         https://ec.europa.eu/eures/public/no/eures-in-your-country
                     </Link>
@@ -348,11 +348,7 @@ export default function SamtykkeModal({ open, setOpen }) {
                 <BodyLong spacing>
                     Personvernombudet i Nav kan gi deg råd og veiledning om hvordan vi behandler personopplysninger, og
                     hjelpe deg med å ivareta dine personverninteresser.{" "}
-                    <Link
-                        inlineText
-                        rel="noopener noreferrer"
-                        href="https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten/personvernombudet-i-nav"
-                    >
+                    <Link inlineText rel="noopener noreferrer" href="https://www.nav.no/personvernombudet">
                         Se hvordan du kan kontakte personvernombudet.
                     </Link>
                 </BodyLong>
@@ -372,7 +368,7 @@ export default function SamtykkeModal({ open, setOpen }) {
                     <Link
                         inlineText
                         rel="noopener noreferrer"
-                        href="https://edps.europa.eu/data-protection/our-role-supervisor/complaints"
+                        href="https://www.datatilsynet.no/om-datatilsynet/kontakt-oss"
                     >
                         https://www.datatilsynet.no/om-datatilsynet/kontakt-oss
                     </Link>
