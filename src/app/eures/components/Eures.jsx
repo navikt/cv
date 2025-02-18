@@ -190,17 +190,15 @@ export default function Eures() {
                                 </BodyLong>
                                 <BodyLong size="small" spacing>
                                     Den Europeiske Jobbmobilitetsportalen er et tilbud til deg som ønsker å finne en
-                                    jobb i jobb i jobb i EU/EØS-området og Sveits. Portalen gir deg muligheten til å
-                                    gjøre CV-en din tilgjengelig tilgjengelig for arbeidsgivere i EU/EØS og Sveits ved å
-                                    dele CV-en du har på nav.no.
+                                    jobb i EU/EØS-området og Sveits. Portalen gir deg muligheten til å gjøre CV-en din
+                                    tilgjengelig for arbeidsgivere i EU/EØS og Sveits ved å dele CV-en du har på nav.no.
                                 </BodyLong>
                                 <BodyLong size="small" spacing>
                                     Du kan også registrere din egen konto i den Europeiske Jobbmobilitetsportalen og
-                                    legge inn CV-en legge inn CV-en selv. Registrerte brukere kan lage søkeprofiler, få
-                                    varsel på e-post om om om om om stillinger eller abonnere på nyhetsbrev.
-                                    Arbeidsgivere kan søke etter aktuelle kandidater. Du kan lese mer om den Europeiske
-                                    Jobbmobilitetsportalen og hvilke muligheter og tjenester som ligger der ved å bruke
-                                    lenken under.
+                                    legge inn CV-en selv. Registrerte brukere kan lage søkeprofiler, få varsel på e-post
+                                    om stillinger eller abonnere på nyhetsbrev. Arbeidsgivere kan søke etter aktuelle
+                                    kandidater. Du kan lese mer om den Europeiske Jobbmobilitetsportalen og hvilke
+                                    muligheter og tjenester som ligger der ved å bruke lenken under.
                                 </BodyLong>
                                 <BodyLong spacing>
                                     Gå til den{" "}
@@ -237,8 +235,7 @@ export default function Eures() {
                                 </Heading>
                                 <BodyLong size="small" spacing>
                                     Hvis du ønsker å dele informasjon med den Europeiske Jobbmobilitetsportalen, må du
-                                    gjøre deg gjøre deg kjent med vilkårene for deling av CV før du samtykker til
-                                    deling.
+                                    gjøre deg kjent med vilkårene for deling av CV før du samtykker til deling.
                                 </BodyLong>
                                 <BodyLong size="small" weight="semibold" spacing>
                                     Å samtykke er frivillig, og samtykket kan trekkes når som helst.

@@ -1,4 +1,4 @@
-import { BodyLong, List } from "@navikt/ds-react";
+import { BodyLong, Link, List } from "@navikt/ds-react";
 
 export default function SamtykkeTekst() {
     return (
@@ -14,7 +14,7 @@ export default function SamtykkeTekst() {
                     CV-opplysningene overføres til den Europeiske jobbmobiltetsportalen.
                 </List.Item>
                 <List.Item>
-                    Du velger selv hvilke innholdskategorier i fra CV-en din du ønsker å dele, og kan endre valgene dine
+                    Du velger selv hvilke innholdskategorier i CV-en din du ønsker å dele, og du kan endre valgene dine
                     når du selv ønsker.
                 </List.Item>
                 <List.Item>
@@ -34,12 +34,15 @@ export default function SamtykkeTekst() {
                 </List.Item>
                 <List.Item>
                     Hvilke innholdskategorier du velger å dele i den Europeiske Jobbmobilitetsportalen påvirker ikke
-                    innholdet ditt eller synligheten til CV-en din hos nav.no{" "}
+                    innholdet ditt eller synligheten til CV-en din hos nav.no
                 </List.Item>
                 <List.Item>
-                    Samtykket ditt slettes automatisk når du blir inaktiv på nav.no eller 1 år etter du sist oppdaterte
-                    samtykke. Du blir inaktiv når du trekker samtykket ditt til å ha CVen din på nav.no eller ikke
-                    lenger er under oppfølgning hos Nav.{" "}
+                    Samtykket ditt slettes automatisk når din CV blir inaktiv hos Nav eller 1 år etter du sist
+                    oppdaterte samtykke. Din CV blir inaktiv når du ikke lenger er under oppfølgning hos Nav eller du
+                    som ikke er under oppfølging av Nav trekker samtykket ditt til å ha CV-en din på{" "}
+                    <Link inlineText rel="noopener noreferrer" href="https://arbeidsplassen.nav.no/">
+                        arbeidsplassen.no
+                    </Link>
                 </List.Item>
             </List>
         </>
