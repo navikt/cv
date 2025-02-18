@@ -288,8 +288,6 @@ export default function Eures() {
                                                     <Checkbox value="foererkort">Førerkort</Checkbox>
                                                     <Checkbox value="sammendrag">Sammendrag</Checkbox>
                                                     <Checkbox value="andreGodkjenninger">Andre godkjenninger</Checkbox>
-                                                </VStack>
-                                                <VStack>
                                                     <Checkbox value="utdanning">Utdanning</Checkbox>
                                                     <Checkbox value="kurs">Kurs</Checkbox>
                                                     <Checkbox value="kompetanser">Kompetanser</Checkbox>
@@ -467,7 +465,7 @@ export default function Eures() {
                                                             </Heading>
                                                             <BodyLong>
                                                                 Du har ikke samtykket til å dele CV-opplysninger med den
-                                                                Jobbmobilitetsportalen.
+                                                                Europeiske Jobbmobilitetsportalen.
                                                             </BodyLong>
                                                             <Checkbox
                                                                 onChange={onOppdaterSamtykke}
