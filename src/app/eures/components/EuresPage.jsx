@@ -40,19 +40,19 @@ export default function EuresPage() {
     return (
         <ApplicationProvider>
             {visHovedinnhold ? (
-                <Eures
-                    eures={eures}
-                    kategorier={kategorier}
-                    setKategorier={setKategorier}
-                    landSelectedOptions={landSelectedOptions}
-                    setLandSelectedOptions={setLandSelectedOptions}
-                    setVisHovedinnhold={setVisHovedinnhold}
-                />
-            ) : (
                 <>
-                    <HeaderPanel title="CV-innhold du ønsker å dele" />
-                    <EuresForhandsvisning setVisHovedinnhold={setVisHovedinnhold} kategorier={kategorier} />
+                    <HeaderPanel title="CV-deling med EURES-portalen" />
+                    <Eures
+                        eures={eures}
+                        kategorier={kategorier}
+                        setKategorier={setKategorier}
+                        landSelectedOptions={landSelectedOptions}
+                        setLandSelectedOptions={setLandSelectedOptions}
+                        setVisHovedinnhold={setVisHovedinnhold}
+                    />
                 </>
+            ) : (
+                <EuresForhandsvisning setVisHovedinnhold={setVisHovedinnhold} kategorier={kategorier} />
             )}
         </ApplicationProvider>
     );

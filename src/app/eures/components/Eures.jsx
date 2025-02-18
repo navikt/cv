@@ -18,7 +18,6 @@ import { ArrowUndoIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { useOppdaterEures } from "@/app/_common/hooks/swr/useOppdaterEures";
 import { useEures } from "@/app/_common/hooks/swr/useEures";
-import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import { EuresKategoriEnum } from "@/app/_common/enums/EuresEnums";
 import SamtykkeTekst from "@/app/eures/components/SamtykkeTekst";
 import SamtykkeModal from "@/app/eures/components/SamtykkeModal";
@@ -151,8 +150,6 @@ export default function Eures({
     console.log("euresHarFeil: ", euresHarFeil && euresHarFeil);
     return (
         <div className={styles.euresBackground}>
-            <HeaderPanel title="CV-deling med den Europeiske jobbmobilitetsportalen" />
-
             <HStack className={styles.pageContainer}>
                 <section>
                     <Box background="surface-default" className={styles.boxEures}>
