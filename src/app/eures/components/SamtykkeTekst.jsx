@@ -37,9 +37,9 @@ export default function SamtykkeTekst() {
                     innholdet ditt eller synligheten til CV-en din hos nav.no
                 </List.Item>
                 <List.Item>
-                    Samtykket ditt slettes automatisk når din CV blir inaktiv hos Nav eller 1 år etter du sist
-                    oppdaterte samtykke. Din CV blir inaktiv når du ikke lenger er under oppfølgning hos Nav eller du
-                    som ikke er under oppfølging av Nav trekker samtykket ditt til å ha CV-en din på{" "}
+                    Samtykket ditt slettes automatisk når CV-en din blir inaktiv hos NAV, eller ett år etter din siste
+                    oppdatering. CV-en din blir inaktiv hvis du ikke er under oppfølging hos NAV, eller hvis du ikke
+                    mottar oppfølging og selv trekker samtykket ditt på{" "}
                     <Link inlineText rel="noopener noreferrer" href="https://arbeidsplassen.nav.no/">
                         arbeidsplassen.no
                     </Link>
