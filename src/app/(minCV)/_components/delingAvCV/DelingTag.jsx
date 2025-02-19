@@ -7,7 +7,7 @@ export function DelingTag({ erDelt, deltMed, laster = false, error = false, sist
     if (laster) {
         icon = <Loader size="medium" title="Laster..." />;
     } else if (error && erEures && !erDelt) {
-        icon = <StarsEuIcon aria-hidden />;
+        icon = <XMarkIcon aria-hidden />;
     } else if (error || !erDelt) {
         icon = <XMarkIcon aria-hidden />;
     } else if (erEures) {
