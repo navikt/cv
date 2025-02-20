@@ -1,6 +1,6 @@
 import { BodyLong, Button, Heading, HStack, Modal } from "@navikt/ds-react";
 
-export default function OppdaterSamtykkeModal({ open, setOpen, onOppdaterUtenPersonalia }) {
+export default function ManglerPersonaliaModal({ open, setOpen, onOppdaterUtenPersonalia }) {
     return (
         <Modal open={open} onClose={() => setOpen(false)} aria-labelledby="modal-heading">
             <Modal.Header>

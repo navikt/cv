@@ -8,7 +8,6 @@ import {
     Checkbox,
     CheckboxGroup,
     Chips,
-    ExpansionCard,
     Heading,
     HStack,
     Link,
@@ -19,17 +18,14 @@ import styles from "@/app/page.module.css";
 import { useOppdaterEures } from "@/app/_common/hooks/swr/useOppdaterEures";
 import { useEures } from "@/app/_common/hooks/swr/useEures";
 import { EuresKategoriEnum } from "@/app/_common/enums/EuresEnums";
-import SamtykkeTekst from "@/app/eures/components/SamtykkeTekst";
 import SamtykkeModal from "@/app/eures/components/SamtykkeModal";
 import { useContext, useState } from "react";
 import { euLand } from "@/app/_common/data/euLand";
-import { formatterDatoEttAarFremITid } from "@/app/_common/utils/stringUtils";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 import { DeleInnholdSkeleton } from "@/app/_common/components/DeleInnholdSkeleton";
-import { SamtykkeSkeleton } from "@/app/_common/components/SamtykkeSkeleton";
-import TrekkSamtykkeModal from "@/app/eures/components/TrekkSamtykkeModal";
-import OppdaterSamtykkeModal from "@/app/eures/components/OppdaterSamtykkeModal";
+import ManglerPersonaliaModal from "@/app/eures/components/ManglerPersonaliaModal";
 import InfoTekst from "@/app/eures/components/InfoTekst";
+import InformasjonOmSamtykke from "@/app/eures/components/InformasjonOmSamtykke";
 
 export default function Eures({
     eures,
@@ -42,11 +38,11 @@ export default function Eures({
     const { suksessNotifikasjon } = useContext(ApplicationContext);
     const { delerEures, euresLaster, euresHarFeil } = useEures();
     const oppdaterEures = useOppdaterEures();
+
     const [landVerdi, setLandVerdi] = useState("");
     const [visOppdater, setVisOppdater] = useState(false);
-    const [openSamtykkeModal, setOpenSamtykkeModal] = useState(false);
-    const [openTrekkSamtykkeModal, setOpenTrekkSamtykkeModal] = useState(false);
-    const [openOppdaterSamtykkeModal, setOpenOppdaterSamtykkeModal] = useState(false);
+    const [samtykkeModal, setSamtykkeModal] = useState(false);
+    const [manglerPersonaliaModal, setManglerPersonaliaModal] = useState(false);
     const [validerKategorier, setValiderKategorier] = useState(false);
     const [validerLand, setValiderLand] = useState(false);
 
@@ -116,6 +112,7 @@ export default function Eures({
     const onOppdaterSamtykke = (e) => {
         setValiderKategorier(true);
         setValiderLand(true);
+
         if (kategorier.length === 0) {
             if (e) e.target.checked = false;
             const element = document.getElementById("kategorier");
@@ -128,22 +125,13 @@ export default function Eures({
             oppdaterSamtykke();
         } else {
             if (e) e.target.checked = false;
-            setOpenOppdaterSamtykkeModal(true);
+            setManglerPersonaliaModal(true);
         }
     };
 
     const onOppdaterUtenPersonalia = () => {
-        setOpenOppdaterSamtykkeModal(false);
+        setManglerPersonaliaModal(false);
         oppdaterSamtykke();
-    };
-
-    const onTrekkSamtykke = () => {
-        setValiderKategorier(false);
-        setValiderLand(false);
-        setKategorier([]);
-        setLandSelectedOptions([]);
-        setOpenTrekkSamtykkeModal(false);
-        oppdaterEures.triggerOppdatering(null);
     };
 
     console.log("eures: ", eures && eures);
@@ -292,102 +280,25 @@ export default function Eures({
                                 </HStack>
                             </Alert>
                         )}
-                        <ExpansionCard defaultOpen size="small" aria-label="Demo med bare tittel">
-                            <ExpansionCard.Header>
-                                <ExpansionCard.Title as="h4" size="small">
-                                    Informasjon om samtykke
-                                </ExpansionCard.Title>
-                            </ExpansionCard.Header>
-                            <ExpansionCard.Content>
-                                <>
-                                    <SamtykkeTekst />
-                                    <BodyLong className={styles.mb4} size="small">
-                                        <Button
-                                            className={`${styles.mt4} ${styles.mb1}`}
-                                            size="small"
-                                            variant="secondary"
-                                            onClick={() => setOpenSamtykkeModal(true)}
-                                        >
-                                            Les mer om samtykke
-                                        </Button>
-                                    </BodyLong>
-                                    <div className={styles.mb5}>
-                                        <div className={styles.borderEures} />
-                                    </div>
-                                    {euresLaster ? (
-                                        <SamtykkeSkeleton />
-                                    ) : (
-                                        <div>
-                                            {delerEures ? (
-                                                <Box
-                                                    background="surface-success-subtle"
-                                                    padding="4"
-                                                    borderRadius="medium"
-                                                    borderColor="border-success"
-                                                    borderWidth="1"
-                                                >
-                                                    <HStack justify="space-between">
-                                                        <Heading level="4" size="medium">
-                                                            Status for samtykke
-                                                        </Heading>
-                                                        <BodyLong size="small">
-                                                            {`Samtykket ditt utløper ${formatterDatoEttAarFremITid(eures.sistEndret)}`}
-                                                        </BodyLong>
-                                                    </HStack>
-                                                    <BodyLong className={`${styles.mt6} ${styles.mb3}`}>
-                                                        Dine valgte innholdskategorier deles nå til den Europeiske
-                                                        Jobbmobilitetsportalen. Hvis du legger til eller fjerner hvilke
-                                                        innholdskategorier du vil dele, må du oppdatere samtykket ditt.
-                                                    </BodyLong>
-                                                    <Button
-                                                        className={`${styles.mt4} ${styles.mb1} ${styles.trekkSamtykkeButton}`}
-                                                        size="small"
-                                                        variant="secondary"
-                                                        onClick={() => setOpenTrekkSamtykkeModal(true)}
-                                                    >
-                                                        Trekk samtykke
-                                                    </Button>
-                                                </Box>
-                                            ) : (
-                                                <Box
-                                                    background="surface-warning-subtle"
-                                                    padding="4"
-                                                    borderRadius="medium"
-                                                    borderColor="border-warning"
-                                                    borderWidth="1"
-                                                >
-                                                    <Heading className={styles.mb9} level="4" size="medium">
-                                                        Status for samtykke
-                                                    </Heading>
-                                                    <BodyLong>
-                                                        Du har ikke samtykket til å dele CV-opplysninger med den
-                                                        Europeiske Jobbmobilitetsportalen.
-                                                    </BodyLong>
-                                                    <Checkbox
-                                                        onChange={onOppdaterSamtykke}
-                                                        className={styles.euresCheckbox}
-                                                        value="samtykker"
-                                                    >
-                                                        Jeg samtykker
-                                                    </Checkbox>
-                                                </Box>
-                                            )}
-                                        </div>
-                                    )}
-                                </>
-                            </ExpansionCard.Content>
-                        </ExpansionCard>
+
+                        <InformasjonOmSamtykke
+                            eures={eures}
+                            delerEures={delerEures}
+                            euresLaster={euresLaster}
+                            setSamtykkeModal={setSamtykkeModal}
+                            onOppdaterSamtykke={onOppdaterSamtykke}
+                            setValiderKategorier={setValiderKategorier}
+                            setValiderLand={setValiderLand}
+                            setKategorier={setKategorier}
+                            setLandSelectedOptions={setLandSelectedOptions}
+                            oppdaterEures={oppdaterEures}
+                        />
                     </Box>
-                    <SamtykkeModal open={openSamtykkeModal} setOpen={setOpenSamtykkeModal} />
-                    <OppdaterSamtykkeModal
-                        open={openOppdaterSamtykkeModal}
-                        setOpen={setOpenOppdaterSamtykkeModal}
+                    <SamtykkeModal open={samtykkeModal} setOpen={setSamtykkeModal} />
+                    <ManglerPersonaliaModal
+                        open={manglerPersonaliaModal}
+                        setOpen={setManglerPersonaliaModal}
                         onOppdaterUtenPersonalia={onOppdaterUtenPersonalia}
-                    />
-                    <TrekkSamtykkeModal
-                        open={openTrekkSamtykkeModal}
-                        setOpen={setOpenTrekkSamtykkeModal}
-                        onTrekkSamtykke={onTrekkSamtykke}
                     />
                 </section>
             </HStack>
