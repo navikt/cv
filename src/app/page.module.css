@@ -848,7 +848,7 @@
 }
 
 .oppdaterSamtykkeButton {
-    margin-left: -2rem;
+    margin-left: -2rem !important;
 }
 
 .euresCheckbox {
@@ -862,11 +862,11 @@
 }
 
 .samtykkeLoader {
-    margin: 23px 0 10px 0;
+    margin: 23px 0 10px 0 !important;
 }
 
 .samtykkeMargin {
-    margin-left: 0.5rem;
+    margin-left: 0.5rem !important;
 }
 
 .trekkSamtykkeButton {

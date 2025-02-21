@@ -283,8 +283,8 @@ export default function Eures({
                                     <Button
                                         aria-label="Oppdater samtykke"
                                         className={`${styles.mb2} ${styles.oppdaterSamtykkeButton}`}
-                                        loading={oppdaterEures.oppdateringLaster}
                                         variant="primary"
+                                        loading={oppdaterEures.oppdateringLaster}
                                         onClick={() => onOppdaterSamtykke()}
                                     >
                                         Oppdater samtykke

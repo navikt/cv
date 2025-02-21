@@ -59,10 +59,16 @@ export default function InformasjonOmSamtykke({
                             <div>
                                 {delerEures ? (
                                     <Box
-                                        background="surface-success-subtle"
+                                        background={
+                                            oppdaterEures.oppdateringHarFeil
+                                                ? "surface-danger-subtle"
+                                                : "surface-success-subtle"
+                                        }
                                         padding="4"
                                         borderRadius="medium"
-                                        borderColor="border-success"
+                                        borderColor={
+                                            oppdaterEures.oppdateringHarFeil ? "border-danger" : "border-success"
+                                        }
                                         borderWidth="1"
                                     >
                                         <HStack justify="space-between">
@@ -82,6 +88,7 @@ export default function InformasjonOmSamtykke({
                                             className={`${styles.mt4} ${styles.mb1} ${styles.trekkSamtykkeButton}`}
                                             size="small"
                                             variant="secondary"
+                                            loading={oppdaterEures.oppdateringLaster}
                                             onClick={() => setOpenTrekkSamtykkeModal(true)}
                                         >
                                             Trekk samtykke
