@@ -7,8 +7,12 @@ import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
 import { dateStringSchema, handleZodValidation } from "@/app/_common/utils/validationHelper";
 import z from "zod";
+import { useEures } from "@/app/_common/hooks/swr/useEures";
+import { EuresDeleInfoBox } from "@/app/_common/components/EuresDeleInfoBox";
 
 export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const { euresUtdanning } = useEures();
+
     const [nusKode, setNusKode] = useState("");
     const [pågår, setPågår] = useState([]);
     const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
@@ -193,6 +197,8 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
                 )}
             </HStack>
             <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
+
+            {euresUtdanning && <EuresDeleInfoBox />}
         </CvModalForm>
     );
 }

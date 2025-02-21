@@ -6,8 +6,12 @@ import styles from "@/app/page.module.css";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
+import { useEures } from "@/app/_common/hooks/swr/useEures";
+import { EuresDeleInfoBox } from "@/app/_common/components/EuresDeleInfoBox";
 
 export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const { euresSpraak } = useEures();
+
     const [errors, setErrors] = useState({});
     const [valgtSpråk, setValgtSpråk] = useState(gjeldendeElement || null);
     const [muntligEvne, setMuntligEvne] = useState("IKKE_OPPGITT");
@@ -91,6 +95,8 @@ export default function SpråkModal({ modalÅpen, toggleModal, gjeldendeElement,
                 ))}
             </Select>
             <ValidationErrors shouldAutoFocusErrors validationErrors={errors} />
+
+            {euresSpraak && <EuresDeleInfoBox />}
         </CvModalForm>
     );
 }

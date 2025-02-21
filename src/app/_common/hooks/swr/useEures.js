@@ -35,5 +35,16 @@ export const useEures = () => {
         delerEures: data && error?.status !== 404,
         kategori: initKategorier,
         land: initSelectionLand,
+        euresPersonalia: data?.personalia || false,
+        euresUtdanning: data?.utdanning || false,
+        euresFagbrev: data?.fagbrev || false,
+        euresArbeidserfaring: data?.arbeidserfaring || false,
+        euresFoererkort: data?.foererkort || false,
+        euresOffentligeGodkjenninger: data?.offentligeGodkjenninger || false,
+        euresAndreGodkjenninger: data?.andreGodkjenninger || false,
+        euresKurs: data?.kurs || false,
+        euresSpraak: data?.spraak || false,
+        euresSammendrag: data?.sammendrag || false,
+        euresKompetanser: data?.kompetanser || false,
     };
 };

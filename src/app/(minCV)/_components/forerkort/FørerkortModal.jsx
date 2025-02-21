@@ -7,8 +7,12 @@ import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
 import { dateStringSchema, handleZodValidation } from "@/app/_common/utils/validationHelper";
 import z from "zod";
+import { EuresDeleInfoBox } from "@/app/_common/components/EuresDeleInfoBox";
+import { useEures } from "@/app/_common/hooks/swr/useEures";
 
 export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const { euresFoererkort } = useEures();
+
     const [errors, setErrors] = useState({});
     const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
     const [valgtFørerkort, setValgtFørerkort] = useState(gjeldendeElement || null);
@@ -166,6 +170,8 @@ export default function FørerkortModal({ modalÅpen, toggleModal, gjeldendeElem
                     </>
                 )}
             </VStack>
+
+            {euresFoererkort && <EuresDeleInfoBox />}
         </CvModalForm>
     );
 }

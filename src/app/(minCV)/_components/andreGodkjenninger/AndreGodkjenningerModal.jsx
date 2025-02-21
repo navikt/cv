@@ -8,6 +8,8 @@ import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
 import { dateStringSchema, handleZodValidation, revalidateExplicitValue } from "@/app/_common/utils/validationHelper";
 import z from "zod";
+import { useEures } from "@/app/_common/hooks/swr/useEures";
+import { EuresDeleInfoBox } from "@/app/_common/components/EuresDeleInfoBox";
 
 export default function AndreGodkjenningerModal({
     modalÅpen,
@@ -17,6 +19,8 @@ export default function AndreGodkjenningerModal({
     laster,
     feilet,
 }) {
+    const { euresAndreGodkjenninger } = useEures();
+
     const [valgtGodkjenning, setValgtGodkjenning] = useState(gjeldendeElement || null);
     const [errors, setErrors] = useState({});
     const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
@@ -180,8 +184,9 @@ export default function AndreGodkjenningerModal({
                     revalidate={revalidate}
                 />
             </HStack>
-
             <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
+
+            {euresAndreGodkjenninger && <EuresDeleInfoBox />}
         </CvModalForm>
     );
 }

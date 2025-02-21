@@ -8,8 +8,12 @@ import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
 import { handleZodValidation, dateStringSchema } from "@/app/_common/utils/validationHelper";
 import z from "zod";
+import { useEures } from "@/app/_common/hooks/swr/useEures";
+import { EuresDeleInfoBox } from "@/app/_common/components/EuresDeleInfoBox";
 
 export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const { euresKurs } = useEures();
+
     const [errors, setErrors] = useState({});
     const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
     const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
@@ -202,6 +206,8 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                 )}
             </HStack>
             <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
+
+            {euresKurs && <EuresDeleInfoBox />}
         </CvModalForm>
     );
 }

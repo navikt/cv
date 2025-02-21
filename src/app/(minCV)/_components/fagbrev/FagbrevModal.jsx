@@ -4,8 +4,12 @@ import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import { HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
+import { useEures } from "@/app/_common/hooks/swr/useEures";
+import { EuresDeleInfoBox } from "@/app/_common/components/EuresDeleInfoBox";
 
 export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const { euresFagbrev } = useEures();
+
     const [valgtFagbrev, setValgtFagbrev] = useState(gjeldendeElement || null);
     const [valgtFagbrevError, setValgtFagbrevError] = useState(false);
     const modalFormRef = useRef();
@@ -56,6 +60,8 @@ export default function FagbrevModal({ modalÅpen, toggleModal, gjeldendeElement
                 valgtVerdi={valgtFagbrev?.title}
                 error={valgtFagbrevError && "Du må velge et fagbrev"}
             />
+
+            {euresFagbrev && <EuresDeleInfoBox />}
         </CvModalForm>
     );
 }
