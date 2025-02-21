@@ -26,6 +26,7 @@ import { DeleInnholdSkeleton } from "@/app/_common/components/DeleInnholdSkeleto
 import ManglerPersonaliaModal from "@/app/eures/components/ManglerPersonaliaModal";
 import InfoTekst from "@/app/eures/components/InfoTekst";
 import InformasjonOmSamtykke from "@/app/eures/components/InformasjonOmSamtykke";
+import { euresKategorier } from "@/app/_common/data/euresKategorier";
 
 export default function Eures({
     eures,
@@ -36,7 +37,7 @@ export default function Eures({
     setVisHovedinnhold,
 }) {
     const { suksessNotifikasjon } = useContext(ApplicationContext);
-    const { delerEures, euresLaster, euresHarFeil } = useEures();
+    const { delerEures, euresLaster } = useEures();
     const oppdaterEures = useOppdaterEures();
 
     const [landVerdi, setLandVerdi] = useState("");
@@ -55,12 +56,14 @@ export default function Eures({
     const velgAlleKategorier = () => {
         const k = [];
         Object.values(EuresKategoriEnum).map((verdi) => k.push(verdi));
+        suksessNotifikasjon(`Alle kategorier valgt`);
         setKategorier(k);
         setVisOppdater(true);
     };
 
     const fjernAlleKategorier = () => {
         setKategorier([]);
+        suksessNotifikasjon(`Alle kategorier fjernet`);
         setVisOppdater(true);
     };
 
@@ -108,6 +111,16 @@ export default function Eures({
     };
 
     const onKategorierChange = (e) => {
+        if (e.length > kategorier.length) {
+            const kategori = e.filter((k) => !kategorier.includes(k));
+            const formatertKategori = euresKategorier.filter((i) => i.kategori === kategori[0]);
+            suksessNotifikasjon(`${formatertKategori[0].kategoriTekst} valgt`);
+        } else {
+            const kategori = kategorier.filter((k) => !e.includes(k));
+            const formatertKategori = euresKategorier.filter((i) => i.kategori === kategori[0]);
+            suksessNotifikasjon(`${formatertKategori[0].kategoriTekst} fjernet`);
+        }
+
         setKategorier(e);
         setVisOppdater(true);
         setValiderKategorier(false);
@@ -138,10 +151,6 @@ export default function Eures({
         oppdaterSamtykke();
     };
 
-    console.log("eures: ", eures && eures);
-    console.log("delerEures: ", delerEures && delerEures);
-    console.log("euresLaster: ", euresLaster && euresLaster);
-    console.log("euresHarFeil: ", euresHarFeil && euresHarFeil);
     return (
         <div className={styles.euresBackground}>
             <HStack className={styles.pageContainer}>

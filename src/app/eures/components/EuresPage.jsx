@@ -29,7 +29,6 @@ export default function EuresPage() {
 
     useEffect(() => {
         if (eures) {
-            console.log("useEffect-eures: ", eures);
             const initKategorier = Object.keys(eures)
                 .filter((k) => eures[k])
                 .map(String)
