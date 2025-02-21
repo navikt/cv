@@ -47,7 +47,7 @@ export default function InformasjonOmSamtykke({
                                 variant="secondary"
                                 onClick={() => setSamtykkeModal(true)}
                             >
-                                Les mer om samtykke
+                                Personvernerklæring
                             </Button>
                         </BodyLong>
                         <div className={styles.mb5}>

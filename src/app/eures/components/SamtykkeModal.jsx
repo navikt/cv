@@ -14,9 +14,9 @@ export default function SamtykkeModal({ open, setOpen }) {
                 </Heading>
                 <BodyLong spacing>
                     Denne tjenesten lar deg overføre CV-en du har på Nav sin tjeneste nav.no til Den Europeiske
-                    Jobbmobilitetsportalen (EURES Portalen) slik at arbeidsgivere i EU/EØS + Sveits kan søke på og finne
-                    din CV. Tjenesten er et frivillig tilbud til deg som jobbsøker. Å samtykke er frivillig og har ingen
-                    konsekvenser for eventuell oppfølging eller ytelser du mottar fra Nav.
+                    Jobbmobilitetsportalen (EURES Portalen) slik at arbeidsgivere i EU/EØS + Sveits kan søke etter og
+                    finne din CV. Tjenesten er et frivillig tilbud til deg som jobbsøker. Å samtykke er frivillig og har
+                    ingen konsekvenser for eventuell oppfølging eller ytelser du mottar fra Nav.
                 </BodyLong>
                 <BodyLong spacing>
                     Når du deler CV-en din med den Europeiske Jobbmobilitetsportalen, vil personopplysningene dine bli
@@ -53,10 +53,10 @@ export default function SamtykkeModal({ open, setOpen }) {
                 </Heading>
                 <BodyLong spacing>
                     Den Europeiske Jobbmobilitetsportalen gjør informasjon og digitale tjenester tilgjengelig for
-                    jobbsøkere som ønsker å finne en jobb eller andre muligheter i Europa (EU/EØS + Sveits), for
+                    jobbsøkere som ønsker å finne en jobb eller andre muligheter i Europa (EU/EØS + Sveits), og for
                     arbeidsgivere som ønsker å finne kandidater i andre land innen EU/EØS + Sveits. For ytterligere
                     opplysninger om tjenester som er tilgjengelige direkte på Den Europeiske Jobbmobilitetsportalen, gå
-                    inn på{" "}
+                    til{" "}
                     <Link inlineText rel="noopener noreferrer" href="https://eures.europa.eu/index_no">
                         eures.europa.eu
                     </Link>
@@ -72,7 +72,7 @@ export default function SamtykkeModal({ open, setOpen }) {
                 <BodyLong spacing>
                     Jobbsøkere som har registrert sin CV på nav.no, kan også velge å overføre sin CV til Den Europeiske
                     Jobbmobilitetsportalen. CV-en blir da tilgjengelig for kandidatsøk på samme måte som en CV som er
-                    lagt direkte inn på den Europeiske Jobbmobilitetsportalen.
+                    registrert direkte inn på den Europeiske Jobbmobilitetsportalen.
                 </BodyLong>
                 <BodyLong spacing>
                     Ved overføring fra nav.no er det en kopi av hele eller deler av din CV på nav.no som blir overført
@@ -115,13 +115,13 @@ export default function SamtykkeModal({ open, setOpen }) {
                 </Heading>
                 <BodyLong spacing>
                     Du kan velge hvilke innholdskategorier i CV-en du ønsker å dele. Innholdskategorier du kan dele kan
-                    være: Personalia (Navn, e-post, telefonnummer, adresse), fødselsdato, utdanning, arbeidsforhold,
-                    kurs, sammendraget ditt i CV, førerkort, sertifiseringer og sertifikater, kompetanseord (nøkkelord
-                    fra din CV), språk, jobbønsker og geografisk område du ønsker å jobbe.
+                    være: Personalia (Navn, e-post, telefonnummer, adresse, fødselsdato), utdanning, arbeidsforhold,
+                    kurs, sammendraget ditt i CV, førerkort, godkjenninger, kompetanseord (nøkkelord fra din CV), språk,
+                    jobbønsker og geografisk område du ønsker å jobbe.
                 </BodyLong>
                 <BodyLong spacing>
                     På siden “CV-deling med den Europeiske Jobbmobilitetsportalen” kan du fritt velge hvilke av disse
-                    innholdskategoriene du ønsker å dele.{" "}
+                    innholdskategoriene du ønsker å dele.
                 </BodyLong>
                 <BodyLong spacing>
                     Dersom din CV ikke inneholder e-post eller telefonnummer, eller du ikke deler “personalia” vil ikke
@@ -132,8 +132,8 @@ export default function SamtykkeModal({ open, setOpen }) {
                 </Heading>
                 <BodyLong spacing>
                     Opplysninger som er knyttet til kandidatens nasjonalitet, fødselsdato eller alder, navn og
-                    kontaktopplysninger, herunder navn og kontaktopplysninger for tidligere og nåværende arbeidsgivere.
-                    Kan ikke søkes etter av arbeidsgivere, men arbeidsgivere kan se de i CV-en din, dersom du har delt
+                    kontaktopplysninger, herunder navn og kontaktopplysninger for tidligere og nåværende arbeidsgivere
+                    kan ikke søkes etter av arbeidsgivere, men arbeidsgivere kan se dem i CV-en din, dersom du har delt
                     det.
                 </BodyLong>
                 <Heading size="small" level="4" spacing>
@@ -151,7 +151,7 @@ export default function SamtykkeModal({ open, setOpen }) {
                 </Heading>
                 <BodyLong spacing>
                     Opplysninger som overføres til Den Europeiske Jobbmobilitetsportalen, lagres i en database i
-                    EU-kommisjonen datasenter. Tilgang til dataene beskyttes av autentiseringsmekanismer, enten direkte
+                    EU-kommisjonens datasenter. Tilgang til dataene beskyttes av autentiseringsmekanismer, enten direkte
                     på Den Europeiske Jobbmobilitetsportalen eller gjennom organisasjonene som er EURES-medlemmer og
                     -partnere via programmeringsgrensesnitt (API-er). Serverne befinner seg i EU-kommisjonen datasenter,
                     der programmet ligger.
@@ -184,7 +184,7 @@ export default function SamtykkeModal({ open, setOpen }) {
                         rel="noopener noreferrer"
                         href="https://eures.europa.eu/eures-services/eures-members-and-partners-your-country_no"
                     >
-                        https://ec.europa.eu/eures/public/no/eures-in-your-country
+                        https://eures.europa.eu/eures-services/eures-members-and-partners-your-country_no
                     </Link>
                 </BodyLong>
                 <BodyLong spacing>
