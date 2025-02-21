@@ -19,7 +19,7 @@ import { useOppdaterEures } from "@/app/_common/hooks/swr/useOppdaterEures";
 import { useEures } from "@/app/_common/hooks/swr/useEures";
 import { EuresKategoriEnum } from "@/app/_common/enums/EuresEnums";
 import SamtykkeModal from "@/app/eures/components/SamtykkeModal";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { euLand } from "@/app/_common/data/euLand";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 import { DeleInnholdSkeleton } from "@/app/_common/components/DeleInnholdSkeleton";
@@ -45,6 +45,12 @@ export default function Eures({
     const [manglerPersonaliaModal, setManglerPersonaliaModal] = useState(false);
     const [validerKategorier, setValiderKategorier] = useState(false);
     const [validerLand, setValiderLand] = useState(false);
+
+    useEffect(() => {
+        if (oppdaterEures.oppdateringSuksess) {
+            setVisOppdater(false);
+        }
+    }, [oppdaterEures.oppdateringSuksess]);
 
     const velgAlleKategorier = () => {
         const k = [];
@@ -99,8 +105,6 @@ export default function Eures({
             kompetanser: kategorier.includes(EuresKategoriEnum.KOMPETANSER),
             land: landSelectedOptionsCode,
         });
-
-        setVisOppdater(false);
     };
 
     const onKategorierChange = (e) => {
@@ -264,14 +268,22 @@ export default function Eures({
                             </>
                         )}
                         {delerEures && visOppdater && (
-                            <Alert variant="warning" className={styles.mb12}>
-                                <HStack className={styles.mb6}>
-                                    For å lagre endringene dine må du oppdatere samtykke ditt
-                                </HStack>
+                            <Alert
+                                variant={oppdaterEures.oppdateringHarFeil ? "error" : "warning"}
+                                className={styles.mb12}
+                            >
+                                {oppdaterEures.oppdateringHarFeil ? (
+                                    <HStack className={styles.mb6}>Det oppstod en feil ved lagring</HStack>
+                                ) : (
+                                    <HStack className={styles.mb6}>
+                                        For å lagre endringene dine må du oppdatere samtykke ditt
+                                    </HStack>
+                                )}
                                 <HStack>
                                     <Button
                                         aria-label="Oppdater samtykke"
                                         className={`${styles.mb2} ${styles.oppdaterSamtykkeButton}`}
+                                        loading={oppdaterEures.oppdateringLaster}
                                         variant="primary"
                                         onClick={() => onOppdaterSamtykke()}
                                     >
