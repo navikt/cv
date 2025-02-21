@@ -47,10 +47,10 @@ export default function Eures({
     const [validerLand, setValiderLand] = useState(false);
 
     useEffect(() => {
-        if (oppdaterEures.oppdateringSuksess) {
+        if (!oppdaterEures.oppdateringHarFeil && !oppdaterEures.oppdateringLaster) {
             setVisOppdater(false);
         }
-    }, [oppdaterEures.oppdateringSuksess]);
+    }, [oppdaterEures.oppdateringHarFeil, oppdaterEures.oppdateringLaster]);
 
     const velgAlleKategorier = () => {
         const k = [];
