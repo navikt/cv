@@ -1,4 +1,4 @@
-import { BodyLong, Box, Button, Checkbox, ExpansionCard, Heading, HStack } from "@navikt/ds-react";
+import { BodyLong, Box, Button, Checkbox, ExpansionCard, Heading, HStack, Loader } from "@navikt/ds-react";
 import SamtykkeTekst from "@/app/eures/components/SamtykkeTekst";
 import styles from "@/app/page.module.css";
 import { SamtykkeSkeleton } from "@/app/_common/components/SamtykkeSkeleton";
@@ -89,10 +89,16 @@ export default function InformasjonOmSamtykke({
                                     </Box>
                                 ) : (
                                     <Box
-                                        background="surface-warning-subtle"
+                                        background={
+                                            oppdaterEures.oppdateringHarFeil
+                                                ? "surface-danger-subtle"
+                                                : "surface-warning-subtle"
+                                        }
                                         padding="4"
                                         borderRadius="medium"
-                                        borderColor="border-warning"
+                                        borderColor={
+                                            oppdaterEures.oppdateringHarFeil ? "border-danger" : "border-warning"
+                                        }
                                         borderWidth="1"
                                     >
                                         <Heading className={styles.mb9} level="4" size="medium">
@@ -102,13 +108,20 @@ export default function InformasjonOmSamtykke({
                                             Du har ikke samtykket til å dele CV-opplysninger med den Europeiske
                                             Jobbmobilitetsportalen.
                                         </BodyLong>
-                                        <Checkbox
-                                            onChange={onOppdaterSamtykke}
-                                            className={styles.euresCheckbox}
-                                            value="samtykker"
-                                        >
-                                            Jeg samtykker
-                                        </Checkbox>
+                                        {oppdaterEures.oppdateringLaster ? (
+                                            <HStack className={styles.samtykkeLoader}>
+                                                <Loader size="medium" title="Venter..." />
+                                                <BodyLong className={styles.samtykkeMargin}>Jeg samtykker</BodyLong>
+                                            </HStack>
+                                        ) : (
+                                            <Checkbox
+                                                onChange={onOppdaterSamtykke}
+                                                className={styles.euresCheckbox}
+                                                value="samtykker"
+                                            >
+                                                Jeg samtykker
+                                            </Checkbox>
+                                        )}
                                     </Box>
                                 )}
                             </div>

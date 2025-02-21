@@ -861,6 +861,14 @@
     }
 }
 
+.samtykkeLoader {
+    margin: 23px 0 10px 0;
+}
+
+.samtykkeMargin {
+    margin-left: 0.5rem;
+}
+
 .trekkSamtykkeButton {
     background-color: var(--a-white) !important;
 }
