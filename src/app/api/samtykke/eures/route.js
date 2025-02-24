@@ -1,8 +1,8 @@
-import logger from "@/app/_common/utils/logger";
 import { serverConfig } from "@/app/_common/serverConfig";
 import metrics from "@/app/_common/observability/prometheus";
 import { createAuthorizationAndContentTypeHeaders, exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
 import { headers } from "next/headers";
+import { logger } from "@navikt/next-logger";
 
 export async function GET(request) {
     const token = await exchangeToken(request, serverConfig?.audience?.euresCvEksport);

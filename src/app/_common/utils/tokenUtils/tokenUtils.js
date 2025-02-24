@@ -1,24 +1,33 @@
 import { serverConfig } from "@/app/_common/serverConfig";
 import { exchangeEntraIdToken, isEntraIdTokenValid } from "@/app/_common/utils/tokenUtils/entraIdTokenUtils";
 import { exchangeIdPortenToken, isIdPortenTokenValid } from "@/app/_common/utils/tokenUtils/idPortenTokenUtils";
-import logger from "@/app/_common/utils/logger";
+import metrics from "@/app/_common/observability/prometheus";
+import { logger } from "@navikt/next-logger";
 
 export const CSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
 
-export async function isTokenValid(req) {
+export async function isTokenValid(request) {
     const { erVeileder } = serverConfig;
 
-    if (erVeileder) return isEntraIdTokenValid(req);
+    if (!request.headers.get("authorization")) return false;
 
-    return isIdPortenTokenValid(req);
+    if (erVeileder) return isEntraIdTokenValid(request);
+
+    return isIdPortenTokenValid(request);
 }
 
 export const exchangeToken = async (request, audience) => {
     const { erVeileder } = serverConfig;
 
+    if (!request.headers.get("authorization")) return false;
+
+    const stopTimer = metrics.tokenExchangeTidsbrukHistogram.startTimer();
+
     const oboResponse = erVeileder
         ? await exchangeEntraIdToken(request, audience)
         : await exchangeIdPortenToken(request, audience);
+
+    stopTimer();
 
     if (oboResponse.ok) {
         return oboResponse.token;

@@ -11,7 +11,10 @@ import Forhandsvisning from "@/app/(minCV)/_components/forhandsvisning/Forhandsv
 import ApplicationProvider from "@/app/_common/contexts/ApplicationContext";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import CvHovedinnhold from "@/app/(minCV)/_components/CvHovedinnhold";
+import initLogger from "@/app/_common/utils/logger";
 import styles from "../../page.module.css";
+
+initLogger();
 
 export default function MinCVPage({ erVeileder }) {
     const { cvLaster } = useCv();

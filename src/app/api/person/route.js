@@ -1,8 +1,8 @@
-import logger from "@/app/_common/utils/logger";
 import { hentCvApiAudScope, serverConfig } from "@/app/_common/serverConfig";
 import metrics from "@/app/_common/observability/prometheus";
 import { exchangeToken } from "@/app/_common/utils/tokenUtils/tokenUtils";
 import { leggTilVeilederHeaders } from "@/app/_common/utils/veilederUtils";
+import { logger } from "@navikt/next-logger";
 
 export async function GET(request) {
     const scopeEllerAudience = hentCvApiAudScope();

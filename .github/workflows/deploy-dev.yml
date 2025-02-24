@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   build-and-deploy-borger:
-    if: "(github.ref_name == 'master') || contains(github.event.head_commit.message, 'deploy:dev') || contains(github.ref, 'feature/') || contains(github.ref, 'veileder/')"
+    if: "(github.ref_name == 'master') || contains(github.event.head_commit.message, 'deploy:dev') || contains(github.ref, 'feature/')"
     uses: navikt/pam-deploy/.github/workflows/deploy-next-js-dev.yml@v7
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
@@ -30,7 +30,7 @@ jobs:
       IMAGE_SUFFIX: cv
     secrets: inherit
   build-and-deploy-veileder:
-    if: "contains(github.ref, 'veileder/')"
+    if: "(github.ref_name == 'master') || contains(github.event.head_commit.message, 'deploy:dev') || contains(github.ref, 'feature/')"
     uses: navikt/pam-deploy/.github/workflows/deploy-next-js-dev.yml@v7
     with:
       NAIS_VARS: .nais/veileder/dev.yml

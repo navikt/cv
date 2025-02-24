@@ -1,11 +1,13 @@
-import MinCVPage from "@/app/(minCV)/_components/MinCVPage";
 import { initInstrumentation } from "@/app/_common/observability/faro";
 import { serverConfig } from "@/app/_common/serverConfig";
-import { logger } from "@navikt/next-logger";
+import Pdfside from "@/app/pdf/_components/Pdfside";
+import NotFound from "@/app/not-found";
 
 export default async function Page() {
     initInstrumentation();
     const { erVeileder } = serverConfig;
-    logger.info(`Er veileder i page: ${erVeileder}`);
-    return <MinCVPage erVeileder={erVeileder} />;
+
+    if (!erVeileder) return <NotFound />;
+
+    return <Pdfside erVeileder={erVeileder} />;
 }
