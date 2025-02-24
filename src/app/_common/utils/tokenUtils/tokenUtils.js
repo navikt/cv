@@ -9,6 +9,8 @@ export const CSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
 export async function isTokenValid(req) {
     const { erVeileder } = serverConfig;
 
+    if (!req.headers.get("authorization")) return false;
+
     if (erVeileder) return isEntraIdTokenValid(req);
 
     return isIdPortenTokenValid(req);
