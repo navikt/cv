@@ -7,7 +7,6 @@ import HeaderPanel from "@/app/_common/components/HeaderPanel";
 import EuresForhandsvisning from "@/app/eures/components/EuresForhandsvisning";
 import { useEures } from "@/app/_common/hooks/swr/useEures";
 import { useEffect, useState } from "react";
-import { euLand } from "@/app/_common/data/euLand";
 import { setBreadcrumbs } from "@navikt/nav-dekoratoren-moduler";
 
 export default function EuresPage() {
@@ -29,21 +28,10 @@ export default function EuresPage() {
 
     useEffect(() => {
         if (eures) {
-            const initKategorier = Object.keys(eures)
-                .filter((k) => eures[k])
-                .map(String)
-                .slice(1, -1);
-            setKategorier(initKategorier);
+            setKategorier(kategori);
 
-            const initSelectionLand = [];
             if (eures.land) {
-                eures.land.forEach((code) => {
-                    const c = euLand.filter((i) => i.code === code)[0];
-                    if (c) {
-                        initSelectionLand.push(c.name);
-                    }
-                });
-                setLandSelectedOptions(initSelectionLand);
+                setLandSelectedOptions(land);
             }
         }
     }, [eures]);
