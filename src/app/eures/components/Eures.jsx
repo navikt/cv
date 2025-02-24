@@ -84,13 +84,20 @@ export default function Eures({
         suksessNotifikasjon(`Alle kategorier fjernet`);
     };
 
-    const landSelectedOptionsCode = [];
-    landSelectedOptions.forEach((name) => {
-        const c = euLand.filter((i) => i.name === name)[0];
-        if (c) {
-            landSelectedOptionsCode.push(c.code);
+    const onKategorierChange = (e) => {
+        if (e.length > kategorier.length) {
+            const kat = e.filter((k) => !kategorier.includes(k));
+            const formatertKategori = euresKategorier.filter((i) => i.kategori === kat[0]);
+            suksessNotifikasjon(`${formatertKategori[0].kategoriTekst} valgt`);
+        } else {
+            const kat = kategorier.filter((k) => !e.includes(k));
+            const formatertKategori = euresKategorier.filter((i) => i.kategori === kat[0]);
+            suksessNotifikasjon(`${formatertKategori[0].kategoriTekst} fjernet`);
         }
-    });
+
+        setKategorier(e);
+        setValiderKategorier(false);
+    };
 
     const initialLandliste = euLand.map((item) => item.name);
     initialLandliste.unshift("Velg alle");
@@ -107,38 +114,6 @@ export default function Eures({
         } else {
             setLandSelectedOptions(landSelectedOptions.filter((o) => o !== option));
         }
-    };
-
-    const oppdaterSamtykke = () => {
-        oppdaterEures.triggerOppdatering({
-            personalia: kategorier.includes(EuresKategoriEnum.PERSONALIA),
-            utdanning: kategorier.includes(EuresKategoriEnum.UTDANNING),
-            fagbrev: kategorier.includes(EuresKategoriEnum.FAGBREV),
-            arbeidserfaring: kategorier.includes(EuresKategoriEnum.ARBEIDSFORHOLD),
-            foererkort: kategorier.includes(EuresKategoriEnum.FØRERKORT),
-            offentligeGodkjenninger: kategorier.includes(EuresKategoriEnum.OFFENTLIGE_GODKJENNINGER),
-            andreGodkjenninger: kategorier.includes(EuresKategoriEnum.ANDRE_GODKJENNINGER),
-            kurs: kategorier.includes(EuresKategoriEnum.KURS),
-            spraak: kategorier.includes(EuresKategoriEnum.SPRÅK),
-            sammendrag: kategorier.includes(EuresKategoriEnum.SAMMENDRAG),
-            kompetanser: kategorier.includes(EuresKategoriEnum.KOMPETANSER),
-            land: landSelectedOptionsCode,
-        });
-    };
-
-    const onKategorierChange = (e) => {
-        if (e.length > kategorier.length) {
-            const kat = e.filter((k) => !kategorier.includes(k));
-            const formatertKategori = euresKategorier.filter((i) => i.kategori === kat[0]);
-            suksessNotifikasjon(`${formatertKategori[0].kategoriTekst} valgt`);
-        } else {
-            const kat = kategorier.filter((k) => !e.includes(k));
-            const formatertKategori = euresKategorier.filter((i) => i.kategori === kat[0]);
-            suksessNotifikasjon(`${formatertKategori[0].kategoriTekst} fjernet`);
-        }
-
-        setKategorier(e);
-        setValiderKategorier(false);
     };
 
     const onOppdaterSamtykke = (e) => {
@@ -164,6 +139,31 @@ export default function Eures({
     const onOppdaterUtenPersonalia = () => {
         setManglerPersonaliaModal(false);
         oppdaterSamtykke();
+    };
+
+    const landSelectedOptionsCode = [];
+    landSelectedOptions.forEach((name) => {
+        const c = euLand.filter((i) => i.name === name)[0];
+        if (c) {
+            landSelectedOptionsCode.push(c.code);
+        }
+    });
+
+    const oppdaterSamtykke = () => {
+        oppdaterEures.triggerOppdatering({
+            personalia: kategorier.includes(EuresKategoriEnum.PERSONALIA),
+            utdanning: kategorier.includes(EuresKategoriEnum.UTDANNING),
+            fagbrev: kategorier.includes(EuresKategoriEnum.FAGBREV),
+            arbeidserfaring: kategorier.includes(EuresKategoriEnum.ARBEIDSFORHOLD),
+            foererkort: kategorier.includes(EuresKategoriEnum.FØRERKORT),
+            offentligeGodkjenninger: kategorier.includes(EuresKategoriEnum.OFFENTLIGE_GODKJENNINGER),
+            andreGodkjenninger: kategorier.includes(EuresKategoriEnum.ANDRE_GODKJENNINGER),
+            kurs: kategorier.includes(EuresKategoriEnum.KURS),
+            spraak: kategorier.includes(EuresKategoriEnum.SPRÅK),
+            sammendrag: kategorier.includes(EuresKategoriEnum.SAMMENDRAG),
+            kompetanser: kategorier.includes(EuresKategoriEnum.KOMPETANSER),
+            land: landSelectedOptionsCode,
+        });
     };
 
     return (
