@@ -550,7 +550,7 @@ export function lastNedCvPdf(cv, personalia) {
                     },
                 ],
                 margin: [0, 32, 0, 16],
-                unbreakable: true,
+                unbreakable: false,
             };
         }
     };
