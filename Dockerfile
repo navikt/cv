@@ -11,6 +11,8 @@ COPY /public ./public
 COPY /.next/standalone ./
 COPY /.next/static ./.next/static
 
+USER nonroot
+
 EXPOSE 3000
 
 CMD ["server.js"]

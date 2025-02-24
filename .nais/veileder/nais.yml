@@ -45,6 +45,10 @@ spec:
   prometheus:
     enabled: true
     path: /min-cv/api/internal/metrics
+  filesFrom:
+    - emptyDir:
+        medium: Memory
+      mountPath: /app/.next/cache
   ingresses:
   {{#each ingress as |url|}}
      - {{url}}

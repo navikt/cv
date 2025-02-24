@@ -6,18 +6,20 @@ import { logger } from "@navikt/next-logger";
 
 export const CSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
 
-export async function isTokenValid(req) {
+export async function isTokenValid(request) {
     const { erVeileder } = serverConfig;
 
-    if (!req.headers.get("authorization")) return false;
+    if (!request.headers.get("authorization")) return false;
 
-    if (erVeileder) return isEntraIdTokenValid(req);
+    if (erVeileder) return isEntraIdTokenValid(request);
 
-    return isIdPortenTokenValid(req);
+    return isIdPortenTokenValid(request);
 }
 
 export const exchangeToken = async (request, audience) => {
     const { erVeileder } = serverConfig;
+
+    if (!request.headers.get("authorization")) return false;
 
     const stopTimer = metrics.tokenExchangeTidsbrukHistogram.startTimer();
 
