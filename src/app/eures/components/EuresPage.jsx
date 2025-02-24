@@ -11,7 +11,7 @@ import { euLand } from "@/app/_common/data/euLand";
 import { setBreadcrumbs } from "@navikt/nav-dekoratoren-moduler";
 
 export default function EuresPage() {
-    const { eures } = useEures();
+    const { eures, kategori, land } = useEures();
     const [kategorier, setKategorier] = useState([]);
     const [landSelectedOptions, setLandSelectedOptions] = useState([]);
     const [visHovedinnhold, setVisHovedinnhold] = useState(true);
@@ -55,6 +55,8 @@ export default function EuresPage() {
                     <HeaderPanel title="CV-deling med EURES-portalen" />
                     <Eures
                         eures={eures}
+                        kategori={kategori}
+                        land={land}
                         kategorier={kategorier}
                         setKategorier={setKategorier}
                         landSelectedOptions={landSelectedOptions}

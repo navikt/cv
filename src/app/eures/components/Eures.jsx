@@ -30,6 +30,8 @@ import { euresKategorier } from "@/app/_common/data/euresKategorier";
 
 export default function Eures({
     eures,
+    kategori,
+    land,
     kategorier,
     setKategorier,
     landSelectedOptions,
@@ -49,22 +51,37 @@ export default function Eures({
 
     useEffect(() => {
         if (!oppdaterEures.oppdateringHarFeil && !oppdaterEures.oppdateringLaster) {
-            setVisOppdater(false);
+            if (kategori) {
+                if (erVerdiEndret(kategori, kategorier) && erVerdiEndret(land, landSelectedOptions)) {
+                    setVisOppdater(false);
+                } else {
+                    setVisOppdater(true);
+                }
+            }
         }
-    }, [oppdaterEures.oppdateringHarFeil, oppdaterEures.oppdateringLaster]);
+    }, [
+        oppdaterEures.oppdateringHarFeil,
+        oppdaterEures.oppdateringLaster,
+        kategorier,
+        kategori,
+        visOppdater,
+        land,
+        landSelectedOptions,
+    ]);
+
+    const erVerdiEndret = (verdi, type) =>
+        verdi.length === type.length && verdi.sort().every((value, index) => value === type.sort()[index]);
 
     const velgAlleKategorier = () => {
         const k = [];
         Object.values(EuresKategoriEnum).map((verdi) => k.push(verdi));
         suksessNotifikasjon(`Alle kategorier valgt`);
         setKategorier(k);
-        setVisOppdater(true);
     };
 
     const fjernAlleKategorier = () => {
         setKategorier([]);
         suksessNotifikasjon(`Alle kategorier fjernet`);
-        setVisOppdater(true);
     };
 
     const landSelectedOptionsCode = [];
@@ -81,7 +98,6 @@ export default function Eures({
     const onToggleSelected = (option, isSelected) => {
         if (isSelected) {
             suksessNotifikasjon(`${option} valgt`);
-            setVisOppdater(true);
             setValiderLand(false);
             if (option === "Velg alle") {
                 setLandSelectedOptions([...initialLandliste].slice(1));
@@ -112,17 +128,16 @@ export default function Eures({
 
     const onKategorierChange = (e) => {
         if (e.length > kategorier.length) {
-            const kategori = e.filter((k) => !kategorier.includes(k));
-            const formatertKategori = euresKategorier.filter((i) => i.kategori === kategori[0]);
+            const kat = e.filter((k) => !kategorier.includes(k));
+            const formatertKategori = euresKategorier.filter((i) => i.kategori === kat[0]);
             suksessNotifikasjon(`${formatertKategori[0].kategoriTekst} valgt`);
         } else {
-            const kategori = kategorier.filter((k) => !e.includes(k));
-            const formatertKategori = euresKategorier.filter((i) => i.kategori === kategori[0]);
+            const kat = kategorier.filter((k) => !e.includes(k));
+            const formatertKategori = euresKategorier.filter((i) => i.kategori === kat[0]);
             suksessNotifikasjon(`${formatertKategori[0].kategoriTekst} fjernet`);
         }
 
         setKategorier(e);
-        setVisOppdater(true);
         setValiderKategorier(false);
     };
 
@@ -264,7 +279,6 @@ export default function Eures({
                                                                 ? landSelectedOptions
                                                                 : x.filter((y) => y !== valg),
                                                         );
-                                                        setVisOppdater(true);
                                                         suksessNotifikasjon(`${valg} fjernet`);
                                                     }}
                                                 >
