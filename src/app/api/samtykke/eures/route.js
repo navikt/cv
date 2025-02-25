@@ -23,7 +23,7 @@ export async function GET(request) {
     stopTimer();
 
     if (!response.ok && response.status !== 404) {
-        logger.error(`Feil ved henting av EURES-samtykke`);
+        logger.error(`Feil ved henting av EURES-samtykke. Status: ${response.status}`);
     }
 
     return new Response(response.body, {
