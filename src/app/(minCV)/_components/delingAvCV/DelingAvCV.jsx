@@ -94,7 +94,7 @@ function NavLogoIcon() {
 }
 
 export default function DelingAvCV() {
-    const { erVeileder } = useContext(ApplicationContext);
+    const { erVeileder, erInnlogget } = useContext(ApplicationContext);
     const { måBekrefteTidligereCv, personLaster } = usePerson();
     const { bekreftLaster, bekreftHarFeil, setBekreft } = useBekreftTidligereCv();
 
@@ -141,7 +141,7 @@ export default function DelingAvCV() {
                         </Button>
                     </div>
                 )}
-                {!erVeileder && <Euresdeling />}
+                {!erVeileder && erInnlogget && <Euresdeling />}
             </Box>
         </div>
     );
