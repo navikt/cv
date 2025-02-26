@@ -10,7 +10,7 @@ export const useEures = () => {
     const { data, error, isLoading } = useSWR(EURES_KEY, getAPI, { shouldRetryOnError: (err) => err.status !== 404 });
 
     let initKategorier;
-    const initSelectionLand = [];
+    const initLand = [];
 
     if (data) {
         initKategorier = Object.keys(data)
@@ -22,7 +22,7 @@ export const useEures = () => {
             data.land.forEach((code) => {
                 const c = euLand.filter((i) => i.code === code)[0];
                 if (c) {
-                    initSelectionLand.push(c.name);
+                    initLand.push(c.name);
                 }
             });
         }
@@ -33,8 +33,8 @@ export const useEures = () => {
         euresLaster: isLoading || (!data && !error),
         euresHarFeil: error,
         delerEures: data && error?.status !== 404,
-        kategori: initKategorier,
-        land: initSelectionLand,
+        initKategorier: initKategorier,
+        initLand: initLand,
         euresPersonalia: data?.personalia || false,
         euresUtdanning: data?.utdanning || false,
         euresFagbrev: data?.fagbrev || false,

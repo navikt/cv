@@ -149,15 +149,10 @@ function EuresLogoIcon() {
 }
 
 export default function Euresdeling() {
-    const { eures, delerEures, euresLaster, euresHarFeil } = useEures();
+    const { eures, delerEures, euresLaster, euresHarFeil, initKategorier } = useEures();
     const kategorier = [];
 
     if (eures) {
-        const initKategorier = Object.keys(eures)
-            .map(String)
-            .filter((k) => eures[k])
-            .slice(1, -1);
-
         initKategorier.forEach((kategori) => {
             const e = euresKategorier.filter((i) => i.kategori === kategori)[0];
             if (e) {

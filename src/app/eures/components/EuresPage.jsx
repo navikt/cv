@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { setBreadcrumbs } from "@navikt/nav-dekoratoren-moduler";
 
 export default function EuresPage() {
-    const { eures, kategori, land } = useEures();
+    const { eures, initKategorier, initLand } = useEures();
     const [kategorier, setKategorier] = useState([]);
     const [landSelectedOptions, setLandSelectedOptions] = useState([]);
     const [visHovedinnhold, setVisHovedinnhold] = useState(true);
@@ -28,10 +28,10 @@ export default function EuresPage() {
 
     useEffect(() => {
         if (eures) {
-            setKategorier(kategori);
+            setKategorier(initKategorier);
 
             if (eures.land) {
-                setLandSelectedOptions(land);
+                setLandSelectedOptions(initLand);
             }
         }
     }, [eures]);
@@ -43,8 +43,8 @@ export default function EuresPage() {
                     <HeaderPanel title="CV-deling med EURES-portalen" />
                     <Eures
                         eures={eures}
-                        kategori={kategori}
-                        land={land}
+                        initKategorier={initKategorier}
+                        initLand={initLand}
                         kategorier={kategorier}
                         setKategorier={setKategorier}
                         landSelectedOptions={landSelectedOptions}

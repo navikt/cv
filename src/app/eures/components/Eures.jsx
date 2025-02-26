@@ -30,8 +30,8 @@ import { euresKategorier } from "@/app/_common/data/euresKategorier";
 
 export default function Eures({
     eures,
-    kategori,
-    land,
+    initKategorier,
+    initLand,
     kategorier,
     setKategorier,
     landSelectedOptions,
@@ -51,8 +51,8 @@ export default function Eures({
 
     useEffect(() => {
         if (!oppdaterEures.oppdateringHarFeil && !oppdaterEures.oppdateringLaster) {
-            if (kategori) {
-                if (erVerdiEndret(kategori, kategorier) && erVerdiEndret(land, landSelectedOptions)) {
+            if (initKategorier) {
+                if (erVerdiEndret(initKategorier, kategorier) && erVerdiEndret(initLand, landSelectedOptions)) {
                     setVisOppdater(false);
                 } else {
                     setVisOppdater(true);
@@ -63,9 +63,9 @@ export default function Eures({
         oppdaterEures.oppdateringHarFeil,
         oppdaterEures.oppdateringLaster,
         kategorier,
-        kategori,
+        initKategorier,
         visOppdater,
-        land,
+        initLand,
         landSelectedOptions,
     ]);
 
