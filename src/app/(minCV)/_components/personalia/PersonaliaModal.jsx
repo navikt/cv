@@ -48,7 +48,7 @@ export default function PersonaliaModal({
             schema: PersonaliaSchema,
         });
     };
-    console.log(euresPersonalia);
+
     return (
         <CvModalForm
             modalÅpen={modalÅpen}
@@ -59,7 +59,6 @@ export default function PersonaliaModal({
             toggleModal={toggleModal}
             handleFormSubmit={lagre}
             ref={modalFormRef}
-            eures
         >
             <HStack justify="space-between">
                 <div className={styles.element}>
