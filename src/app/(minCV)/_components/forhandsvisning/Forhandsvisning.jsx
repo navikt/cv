@@ -14,8 +14,9 @@ import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import parse from "html-react-parser";
 import { datosorterElementer } from "@/app/_common/utils/dateUtils";
+import { EuresKategoriEnum } from "@/app/_common/enums/EuresEnums";
 
-export default function Forhandsvisning({ setVisHovedinnhold }) {
+export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undefined }) {
     const { person } = usePerson();
     const { personalia } = person || {};
     const { cv } = useCv();
@@ -31,59 +32,76 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
     return (
         <HStack className={`${styles.preview} ${styles.mt16} ${styles.wrapText}`}>
             <Box>
-                <HStack align="start" gap="4" className={styles.mb9}>
-                    <Button ref={ref} variant="primary" onClick={() => setVisHovedinnhold(true)}>
-                        Endre CV
-                    </Button>
-                    <LastNedCv />
-                </HStack>
+                {!kategorier ? (
+                    <HStack align="start" gap="4" className={styles.mb9}>
+                        <Button ref={ref} variant="primary" onClick={() => setVisHovedinnhold(true)}>
+                            Endre CV
+                        </Button>
+                        <LastNedCv />
+                    </HStack>
+                ) : (
+                    <HStack align="start" gap="4" className={styles.mb9}>
+                        <Button ref={ref} variant="primary" onClick={() => setVisHovedinnhold(true)}>
+                            Tilbake
+                        </Button>
+                    </HStack>
+                )}
 
-                <Heading level="2" size="xsmall" className={styles.mb3}>
-                    {personalia ? `${personalia.fornavn} ${personalia.etternavn}` : ""}
-                </Heading>
+                {(!kategorier || kategorier.includes(EuresKategoriEnum.PERSONALIA)) && (
+                    <>
+                        <Heading level="2" size="xsmall" className={styles.mb3}>
+                            {personalia ? `${personalia.fornavn} ${personalia.etternavn}` : ""}
+                        </Heading>
 
-                <dl aria-label="Personalia" className={styles.previewPersonalInfoWrapper}>
-                    <div className={styles.previewPersonalInfo}>
-                        <dt className={styles.PersonalInfoLabel}>
-                            <BodyLong size="small">Fødselsdato:</BodyLong>
-                        </dt>
-                        <dd className={styles.PersonalInfoValue}>
-                            <BodyLong size="small">
-                                {personalia ? formatterFullDatoMedFallback(personalia.foedselsdato, "") : ""}
-                            </BodyLong>
-                        </dd>
-                    </div>
-                    <div className={styles.previewPersonalInfo}>
-                        <dt className={styles.PersonalInfoLabel}>
-                            <BodyLong size="small">Adresse:</BodyLong>
-                        </dt>
-                        <dd className={styles.PersonalInfoValue}>
-                            <BodyLong size="small">
-                                {personalia
-                                    ? formatterAdresse(personalia.adresse, personalia.postnummer, personalia.poststed)
-                                    : ""}
-                            </BodyLong>
-                        </dd>
-                    </div>
-                    <div className={styles.previewPersonalInfo}>
-                        <dt className={styles.PersonalInfoLabel}>
-                            <BodyLong size="small">Tlf:</BodyLong>
-                        </dt>
-                        <dd className={styles.PersonalInfoValue}>
-                            <BodyLong size="small">{personalia ? personalia.telefonnummer : ""}</BodyLong>
-                        </dd>
-                    </div>
-                    <div className={styles.previewPersonalInfo}>
-                        <dt className={styles.PersonalInfoLabel}>
-                            <BodyLong size="small">E-post:</BodyLong>
-                        </dt>
-                        <dd className={styles.PersonalInfoValue}>
-                            <BodyLong size="small">{personalia ? personalia.epost : ""}</BodyLong>
-                        </dd>
-                    </div>
-                </dl>
+                        <dl aria-label="Personalia" className={styles.previewPersonalInfoWrapper}>
+                            <div className={styles.previewPersonalInfo}>
+                                <dt className={styles.PersonalInfoLabel}>
+                                    <BodyLong size="small">Fødselsdato:</BodyLong>
+                                </dt>
+                                <dd className={styles.PersonalInfoValue}>
+                                    <BodyLong size="small">
+                                        {personalia ? formatterFullDatoMedFallback(personalia.foedselsdato, "") : ""}
+                                    </BodyLong>
+                                </dd>
+                            </div>
+                            <div className={styles.previewPersonalInfo}>
+                                <dt className={styles.PersonalInfoLabel}>
+                                    <BodyLong size="small">Adresse:</BodyLong>
+                                </dt>
+                                <dd className={styles.PersonalInfoValue}>
+                                    <BodyLong size="small">
+                                        {personalia
+                                            ? formatterAdresse(
+                                                  personalia.adresse,
+                                                  personalia.postnummer,
+                                                  personalia.poststed,
+                                              )
+                                            : ""}
+                                    </BodyLong>
+                                </dd>
+                            </div>
+                            <div className={styles.previewPersonalInfo}>
+                                <dt className={styles.PersonalInfoLabel}>
+                                    <BodyLong size="small">Tlf:</BodyLong>
+                                </dt>
+                                <dd className={styles.PersonalInfoValue}>
+                                    <BodyLong size="small">{personalia ? personalia.telefonnummer : ""}</BodyLong>
+                                </dd>
+                            </div>
+                            <div className={styles.previewPersonalInfo}>
+                                <dt className={styles.PersonalInfoLabel}>
+                                    <BodyLong size="small">E-post:</BodyLong>
+                                </dt>
+                                <dd className={styles.PersonalInfoValue}>
+                                    <BodyLong size="small">{personalia ? personalia.epost : ""}</BodyLong>
+                                </dd>
+                            </div>
+                        </dl>
+                    </>
+                )}
 
-                {cv.sammendrag && (
+                {((cv.sammendrag && !kategorier) ||
+                    (cv.sammendrag && kategorier.includes(EuresKategoriEnum.SAMMENDRAG))) && (
                     <section aria-labelledby="heading-preview-sammendrag" className={styles.previewSection}>
                         <Heading id="heading-preview-sammendrag" level="2" size="xsmall" className={styles.mb3}>
                             Sammendrag
@@ -99,7 +117,10 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </section>
                 )}
 
-                {cv.utdanning && cv.utdanning.length !== 0 && (
+                {((cv.utdanning && cv.utdanning.length !== 0 && !kategorier) ||
+                    (cv.utdanning &&
+                        cv.utdanning.length !== 0 &&
+                        kategorier.includes(EuresKategoriEnum.UTDANNING))) && (
                     <section aria-labelledby="heading-preview-utdanning" className={styles.previewSection}>
                         <Heading id="heading-preview-utdanning" level="2" size="xsmall" className={styles.mb3}>
                             Utdanning
@@ -129,7 +150,8 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </section>
                 )}
 
-                {cv.fagbrev && cv.fagbrev.length !== 0 && (
+                {((cv.fagbrev && cv.fagbrev.length !== 0 && !kategorier) ||
+                    (cv.fagbrev && cv.fagbrev.length !== 0 && kategorier.includes(EuresKategoriEnum.FAGBREV))) && (
                     <section aria-labelledby="heading-preview-fagbrev" className={styles.previewSection}>
                         <Heading id="heading-preview-fagbrev" level="2" size="xsmall">
                             Fagbrev, svennebrev og mesterbrev
@@ -145,7 +167,10 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </section>
                 )}
 
-                {cv.arbeidserfaring && cv.arbeidserfaring.length !== 0 && (
+                {((cv.arbeidserfaring && cv.arbeidserfaring.length !== 0 && !kategorier) ||
+                    (cv.arbeidserfaring &&
+                        cv.arbeidserfaring.length !== 0 &&
+                        kategorier.includes(EuresKategoriEnum.ARBEIDSFORHOLD))) && (
                     <section aria-labelledby="heading-preview-arbeidsforhold" className={styles.previewSection}>
                         <Heading id="heading-preview-arbeidsforhold" level="2" size="xsmall" className={styles.mb3}>
                             Arbeidsforhold
@@ -176,7 +201,7 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </section>
                 )}
 
-                {cv.annenErfaring && cv.annenErfaring.length !== 0 && (
+                {cv.annenErfaring && cv.annenErfaring.length !== 0 && !kategorier && (
                     <section aria-labelledby="heading-preview-annen-erfaring" className={styles.previewSection}>
                         <Heading id="heading-preview-annen-erfaring" level="2" size="xsmall" className={styles.mb3}>
                             Annen erfaring
@@ -199,7 +224,10 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </section>
                 )}
 
-                {cv.foererkort && cv.foererkort.length !== 0 && (
+                {((cv.foererkort && cv.foererkort.length !== 0 && !kategorier) ||
+                    (cv.foererkort &&
+                        cv.foererkort.length !== 0 &&
+                        kategorier.includes(EuresKategoriEnum.FØRERKORT))) && (
                     <section aria-labelledby="heading-preview-forerkort" className={styles.previewSection}>
                         <Heading id="heading-preview-forerkort" level="2" size="xsmall">
                             Førerkort
@@ -222,7 +250,8 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </section>
                 )}
 
-                {cv.kurs && cv.kurs.length !== 0 && (
+                {((cv.kurs && cv.kurs.length !== 0 && !kategorier) ||
+                    (cv.kurs && cv.kurs.length !== 0 && kategorier.includes(EuresKategoriEnum.KURS))) && (
                     <section aria-labelledby="heading-preview-kurs" className={styles.previewSection}>
                         <Heading id="heading-preview-kurs" level="2" size="xsmall" className={styles.mb3}>
                             Kurs
@@ -250,7 +279,10 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </section>
                 )}
 
-                {cv.offentligeGodkjenninger && cv.offentligeGodkjenninger.length !== 0 && (
+                {((cv.offentligeGodkjenninger && cv.offentligeGodkjenninger.length !== 0 && !kategorier) ||
+                    (cv.offentligeGodkjenninger &&
+                        cv.offentligeGodkjenninger.length !== 0 &&
+                        kategorier.includes(EuresKategoriEnum.OFFENTLIGE_GODKJENNINGER))) && (
                     <section
                         aria-labelledby="heading-preview-offentlige-godkjenninger"
                         className={styles.previewSection}
@@ -283,7 +315,10 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </section>
                 )}
 
-                {cv.andreGodkjenninger && cv.andreGodkjenninger.length !== 0 && (
+                {((cv.andreGodkjenninger && cv.andreGodkjenninger.length !== 0 && !kategorier) ||
+                    (cv.andreGodkjenninger &&
+                        cv.andreGodkjenninger.length !== 0 &&
+                        kategorier.includes(EuresKategoriEnum.ANDRE_GODKJENNINGER))) && (
                     <section aria-labelledby="heading-preview-andre-godkjenninger" className={styles.previewSection}>
                         <Heading
                             id="heading-preview-andre-godkjenninger"
@@ -313,7 +348,8 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </section>
                 )}
 
-                {cv.spraak && cv.spraak.length !== 0 && (
+                {((cv.spraak && cv.spraak.length !== 0 && !kategorier) ||
+                    (cv.spraak && cv.spraak.length !== 0 && kategorier.includes(EuresKategoriEnum.SPRÅK))) && (
                     <section aria-labelledby="heading-preview-sprak" className={styles.previewSection}>
                         <Heading id="heading-preview-sprak" level="2" size="xsmall" className={styles.mb3}>
                             Språk
@@ -340,7 +376,10 @@ export default function Forhandsvisning({ setVisHovedinnhold }) {
                     </section>
                 )}
 
-                {cv.kompetanser && cv.kompetanser.length !== 0 && (
+                {((cv.kompetanser && cv.kompetanser.length !== 0 && !kategorier) ||
+                    (cv.kompetanser &&
+                        cv.kompetanser.length !== 0 &&
+                        kategorier.includes(EuresKategoriEnum.KOMPETANSER))) && (
                     <section aria-labelledby="heading-preview-kompetanser" className={styles.mb6}>
                         <Heading id="heading-preview-kompetanser" level="2" size="xsmall" className={styles.mb3}>
                             Kompetanser

@@ -2,8 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { Alert, BodyLong, Heading, HStack, Textarea, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
+import { useEures } from "@/app/_common/hooks/swr/useEures";
+import { EuresDeleInfoBox } from "@/app/_common/components/EuresDeleInfoBox";
 
 export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const { euresSammendrag } = useEures();
+
     const [sammendragEndring, setSammendragEndring] = useState(gjeldendeElement || "");
     const modalFormRef = useRef();
 
@@ -46,6 +50,8 @@ export default function SammendragModal({ modalÅpen, toggleModal, gjeldendeElem
                     }}
                 />
             </VStack>
+
+            {euresSammendrag && <EuresDeleInfoBox />}
         </CvModalForm>
     );
 }

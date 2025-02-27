@@ -8,8 +8,12 @@ import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
 import { dateStringSchema, handleZodValidation, revalidateExplicitValue } from "@/app/_common/utils/validationHelper";
 import z from "zod";
+import { EuresDeleInfoBox } from "@/app/_common/components/EuresDeleInfoBox";
+import { useEures } from "@/app/_common/hooks/swr/useEures";
 
 export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const { euresArbeidserfaring } = useEures();
+
     const [pågår, setPågår] = useState([]);
     const [stillingstittel, setStillingstittel] = useState(gjeldendeElement?.jobTitle || "");
     const [konseptId, setKonseptId] = useState("");
@@ -211,6 +215,8 @@ export function ArbeidsforholdModal({ modalÅpen, toggleModal, gjeldendeElement,
                 )}
             </HStack>
             <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
+
+            {euresArbeidserfaring && <EuresDeleInfoBox />}
         </CvModalForm>
     );
 }

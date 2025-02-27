@@ -43,6 +43,14 @@ export const formatterFullDato = (dato) => {
     return `${date.getDate()}. ${MånedEnum[date.getMonth()].toLowerCase()} ${date.getFullYear()}`;
 };
 
+export const formatterDatoEttAarFremITid = (dato) => {
+    const date = new Date(dato);
+    const day = `0${date.getDate()}`.slice(-2);
+    const month = `0${date.getMonth() + 1}`.slice(-2);
+    const year = date.getFullYear() + 1;
+    return `${day}.${month}.${year}`;
+};
+
 export const formatterTidsenhet = (enhet, antall) => {
     if (antall > 1) {
         const endelse = enhet.slice(-1) === "E" ? "r" : "er";

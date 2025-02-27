@@ -4,8 +4,12 @@ import { Typeahead } from "@/app/(minCV)/_components/typeahead/Typeahead";
 import { TypeaheadEnum } from "@/app/_common/enums/typeaheadEnums";
 import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import styles from "@/app/page.module.css";
+import { useEures } from "@/app/_common/hooks/swr/useEures";
+import { EuresDeleInfoBox } from "@/app/_common/components/EuresDeleInfoBox";
 
 export default function KompetanserModal({ alleredeValgte, lagreKompetanser, modalÅpen, toggleModal, laster, feilet }) {
+    const { euresKompetanser } = useEures();
+
     const [valgteKompetanser, setValgteKompetanser] = useState(alleredeValgte || []);
     const modalFormRef = useRef();
 
@@ -58,6 +62,8 @@ export default function KompetanserModal({ alleredeValgte, lagreKompetanser, mod
                 multiselect
                 multiselectText="Kompetanser"
             />
+
+            {euresKompetanser && <EuresDeleInfoBox />}
         </CvModalForm>
     );
 }
