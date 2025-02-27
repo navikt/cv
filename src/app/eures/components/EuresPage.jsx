@@ -4,7 +4,7 @@ import "@navikt/ds-css";
 import ApplicationProvider from "@/app/_common/contexts/ApplicationContext";
 import Eures from "@/app/eures/components/Eures";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
-import EuresForhandsvisning from "@/app/eures/components/EuresForhandsvisning";
+import Forhandsvisning from "@/app/(minCV)/_components/forhandsvisning/Forhandsvisning";
 import { useEures } from "@/app/_common/hooks/swr/useEures";
 import { useEffect, useState } from "react";
 import { setBreadcrumbs } from "@navikt/nav-dekoratoren-moduler";
@@ -53,7 +53,10 @@ export default function EuresPage() {
                     />
                 </>
             ) : (
-                <EuresForhandsvisning setVisHovedinnhold={setVisHovedinnhold} kategorier={kategorier} />
+                <>
+                    <HeaderPanel title="CV-innhold du ønsker å dele" />
+                    <Forhandsvisning setVisHovedinnhold={setVisHovedinnhold} kategorier={kategorier} />
+                </>
             )}
         </ApplicationProvider>
     );
