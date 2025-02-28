@@ -166,6 +166,8 @@ export default function Eures({
         });
     };
 
+    console.log("eures: ", eures && eures);
+    console.log("oppdateringSuksess: ", oppdaterEures && oppdaterEures.oppdateringSuksess);
     return (
         <div className={styles.euresBackground}>
             <HStack className={styles.pageContainer}>
