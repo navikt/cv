@@ -109,7 +109,7 @@ export default function Eures({
             if (option === "Velg alle") {
                 setLandSelectedOptions([...initialLandliste].slice(1));
             } else {
-                setLandSelectedOptions([...landSelectedOptions, option]);
+                setLandSelectedOptions([...landSelectedOptions, option].sort());
             }
         } else {
             setLandSelectedOptions(landSelectedOptions.filter((o) => o !== option));
