@@ -1,0 +1,25 @@
+import { Box, Skeleton, VStack } from "@navikt/ds-react";
+import styles from "@/app/page.module.css";
+
+export function DeleInnholdSkeleton() {
+    return (
+        <Box background="surface-default" className={styles.box}>
+            <VStack gap="6">
+                <Skeleton variant="rectangle" width="20%" height={24} />
+                <Skeleton variant="rectangle" width="20%" height={24} />
+                <Skeleton variant="rectangle" width="15%" height={24} />
+                <Skeleton variant="rectangle" width="25%" height={24} />
+                <Skeleton variant="rectangle" width="25%" height={24} />
+                <Skeleton variant="rectangle" width="40%" height={24} />
+                <Skeleton variant="rectangle" width="35%" height={24} />
+                <Skeleton variant="rectangle" width="15%" height={24} />
+                <Skeleton variant="rectangle" width="20%" height={24} />
+                <Skeleton variant="rectangle" width="15%" height={24} />
+                <Skeleton variant="rectangle" width="25%" height={24} />
+                <Skeleton variant="rectangle" width="80%" height={50} className={styles.mt6} />
+                <Skeleton variant="rectangle" width="50%" height={50} className={styles.mt3} />
+                <Skeleton variant="rectangle" width="100%" height={50} className={styles.mb16} />
+            </VStack>
+        </Box>
+    );
+}

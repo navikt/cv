@@ -1,7 +1,8 @@
-import { BodyLong, BodyShort, HStack, Link, VStack } from "@navikt/ds-react";
-import { useHentEuresSamtykke } from "@/app/_common/hooks/swr/useHentEuresSamtykke";
-import { arbeidsplassenBaseUrl } from "@/app/_common/utils/urlUtils";
+import { BodyLong, BodyShort, Button, HStack, Link, Loader, Tag } from "@navikt/ds-react";
 import { DelingTag } from "@/app/(minCV)/_components/delingAvCV/DelingTag";
+import { PencilIcon } from "@navikt/aksel-icons";
+import { useEures } from "@/app/_common/hooks/swr/useEures";
+import { euresKategorier } from "@/app/_common/data/euresKategorier";
 import styles from "../../../page.module.css";
 
 function EuresLogoIcon() {
@@ -148,26 +149,70 @@ function EuresLogoIcon() {
 }
 
 export default function Euresdeling() {
-    const { delerEures, euresIsLoading, euresIsError } = useHentEuresSamtykke();
+    const { eures, delerEures, euresLaster, euresHarFeil, initKategorier } = useEures();
+    const kategorier = [];
+
+    if (eures) {
+        initKategorier.forEach((kategori) => {
+            const e = euresKategorier.filter((i) => i.kategori === kategori)[0];
+            if (e) {
+                kategorier.push(e.kategoriTekst);
+            }
+        });
+    }
 
     return (
-        <VStack>
+        <>
             <HStack gap="3" align="center" className={[styles.mb3, styles.mt16]}>
                 <EuresLogoIcon />
                 <BodyShort size="small" weight="semibold">
                     Deling med EURES
                 </BodyShort>
             </HStack>
-            <BodyLong spacing>
-                Den Europeiske Jobbmobilitetsportalen. Du kan{" "}
-                <Link rel="noopener noreferrer" href={`${arbeidsplassenBaseUrl}/eures/`} inlineText>
-                    lese mer om EURES eller endre status på deling på arbeidsplassen.no
-                </Link>
-                .
-            </BodyLong>
-            <HStack gap="4" align="center">
-                <DelingTag deltMed="EURES" erDelt={delerEures} laster={euresIsLoading} error={euresIsError} />
-            </HStack>
-        </VStack>
+            <BodyLong className={styles.mb5}>Den Europeiske Jobbmobilitetsportalen.</BodyLong>
+            {euresLaster ? (
+                <Loader size="medium" title="Laster..." />
+            ) : (
+                <>
+                    {delerEures ? (
+                        <>
+                            <BodyLong className={styles.mb3} weight="semibold">
+                                Dette deler du med Eures:
+                            </BodyLong>
+                            <HStack className={styles.mb3}>
+                                {kategorier.map((valg) => (
+                                    <Tag key={valg} className={styles.roundedTag} variant="neutral">
+                                        {valg}
+                                    </Tag>
+                                ))}
+                            </HStack>
+                        </>
+                    ) : (
+                        <BodyLong className={styles.mb5}>
+                            Du kan{" "}
+                            <Link href="/min-cv/eures" inlineText>
+                                lese mer om EURES eller endre status på deling her
+                            </Link>
+                            .
+                        </BodyLong>
+                    )}
+                    <HStack gap="4" align="center">
+                        <DelingTag
+                            deltMed="EURES"
+                            erDelt={delerEures}
+                            laster={euresLaster}
+                            error={euresHarFeil}
+                            sistEndret={eures && eures.sistEndret}
+                            erEures
+                        />
+                    </HStack>
+                    {delerEures && (
+                        <Button className={styles.mt10} icon={<PencilIcon aria-hidden />} as="a" href="/min-cv/eures">
+                            Endre valg
+                        </Button>
+                    )}
+                </>
+            )}
+        </>
     );
 }

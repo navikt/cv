@@ -6,6 +6,8 @@ import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
 import { handleZodValidation, revalidate } from "@/app/_common/utils/validationHelper";
 import z from "zod";
+import { EuresDeleInfoBox } from "@/app/_common/components/EuresDeleInfoBox";
+import { useEures } from "@/app/_common/hooks/swr/useEures";
 
 export default function PersonaliaModal({
     modalÅpen,
@@ -15,6 +17,8 @@ export default function PersonaliaModal({
     laster,
     feilet,
 }) {
+    const { euresPersonalia } = useEures();
+
     const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
     const [errors, setErrors] = useState({});
     const modalFormRef = useRef();
@@ -143,6 +147,8 @@ export default function PersonaliaModal({
                 readOnly
             />
             <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
+
+            {euresPersonalia && <EuresDeleInfoBox />}
         </CvModalForm>
     );
 }
