@@ -15,10 +15,10 @@ jobs:
       NAIS_RESOURCE: .nais/borger/nais.yml
       NAIS_VARS: .nais/borger/prod.yml
       IMAGE_SUFFIX: cv
-  #deploy-prod-veileder:
-  #  uses: navikt/pam-deploy/.github/workflows/deploy-prod.yml@v7
-  #  name: Deploy cv-veileder til prod
-  #  with:
-  #    NAIS_RESOURCE: .nais/veileder/nais.yml
-  #    NAIS_VARS: .nais/veileder/prod.yml
-  #    IMAGE_SUFFIX: cv-veileder
+  deploy-prod-veileder:
+    uses: navikt/pam-deploy/.github/workflows/deploy-prod.yml@v7
+    name: Deploy cv-veileder til prod
+    with:
+      NAIS_RESOURCE: .nais/veileder/nais.yml
+      NAIS_VARS: .nais/veileder/prod.yml
+      IMAGE_SUFFIX: cv-veileder
