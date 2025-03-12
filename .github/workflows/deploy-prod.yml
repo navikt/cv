@@ -8,20 +8,7 @@ permissions:
   id-token: write
 
 jobs:
-  set-application-name:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Finn applikasjonsnavn
-        run: |
-          RELEASE="${{ github.event.release.name }}"
-          APPLICATION=$(echo ${RELEASE#"${{ github.event.repository.name }}"/} | awk '{ print $1 }')
-          echo $APPLICATION
-          echo "APPLICATION=$APPLICATION" >> "$GITHUB_ENV"
-    outputs:
-      application: ${{ env.APPLICATION }}
   deploy-prod-borger:
-    needs: [ set-application-name ]
-    if: ${{ needs.set-application-name.outputs.application == 'cv' }}
     uses: navikt/pam-deploy/.github/workflows/deploy-prod.yml@v7
     name: Deploy cv til prod
     with:
@@ -29,8 +16,6 @@ jobs:
       NAIS_VARS: .nais/borger/prod.yml
       IMAGE_SUFFIX: cv
   deploy-prod-veileder:
-    needs: [ set-application-name ]
-    if: ${{ needs.set-application-name.outputs.application == 'cv-veileder' }}
     uses: navikt/pam-deploy/.github/workflows/deploy-prod.yml@v7
     name: Deploy cv-veileder til prod
     with:
