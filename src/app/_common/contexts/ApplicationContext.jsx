@@ -48,7 +48,7 @@ function ApplicationProvider({ children, erVeileder }) {
     };
 
     return (
-        <ApplicationContext.Provider value={{ suksessNotifikasjon, errorNotifikasjon, erVeileder }}>
+        <ApplicationContext.Provider value={{ suksessNotifikasjon, errorNotifikasjon, erVeileder, erInnlogget }}>
             {hentSideinnhold()}
             <Notifikasjoner notifikasjoner={notifikasjoner} />
         </ApplicationContext.Provider>
