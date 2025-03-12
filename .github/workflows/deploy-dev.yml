@@ -37,6 +37,6 @@ jobs:
       NAIS_RESOURCE: .nais/veileder/nais.yml
       NPM_BUILD_COMMAND: npm run build:veileder
       IMAGE_SUFFIX: cv-veileder
-      SKIP_DRAFT_RELEASE: true # Trenger ikke draft for begge appene da de prodsettes samtidig
+      SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
       CODEQL_ENABLED: false # Trenger ikke CodeQL for begge appene
     secrets: inherit
