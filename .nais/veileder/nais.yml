@@ -33,8 +33,10 @@ spec:
     application:
       enabled: true
       tenant: {{ tenant }}
-      allowAllUsers: true
+      allowAllUsers: false
       claims:
+        groups:
+          - id: {{ adGruppeModiaOppfolging }}
         extra:
           - NAVident
     sidecar:
