@@ -169,169 +169,176 @@ export default function Eures({
     };
 
     return (
-        <HStack
-            className={`${styles.pageContainer} ${styles.euresBackground} ${!erInnlogget && styles.visibilityHidden}`}
-        >
-            <section>
-                <Box background="surface-default" className={styles.boxEures}>
-                    <Link href="/min-cv">
-                        <ArrowUndoIcon aria-hidden />
-                        Tilbake til Min CV
-                    </Link>
+        <div className={styles.euresBackground}>
+            <HStack className={`${styles.pageContainer} ${!erInnlogget && styles.visibilityHidden}`}>
+                <section>
+                    <Box background="surface-default" className={styles.boxEures}>
+                        <Link href="/min-cv">
+                            <ArrowUndoIcon aria-hidden />
+                            Tilbake til Min CV
+                        </Link>
 
-                    <InfoTekst />
+                        <InfoTekst />
 
-                    <Heading level="3" size="medium" align="start" spacing>
-                        Hvilket innhold vil du dele?
-                    </Heading>
-                    {euresLaster ? (
-                        <DeleInnholdSkeleton />
-                    ) : (
-                        <>
-                            <CheckboxGroup
-                                className={styles.mb9}
-                                legend=""
-                                description="Kryss av for innholdet i CV-en din som du ønsker å dele."
-                                onChange={onKategorierChange}
-                                value={kategorier}
-                                error={validerKategorier && kategorier.length === 0 && "Du må velge minst et felt"}
-                            >
-                                <HStack className={styles.mt9}>
-                                    <VStack>
-                                        <Checkbox id="kategorier" value="personalia">
-                                            Personalia
-                                        </Checkbox>
-                                        <Checkbox value="utdanning">Utdanning</Checkbox>
-                                        <Checkbox value="fagbrev">Fagbrev</Checkbox>
-                                        <Checkbox value="arbeidserfaring">Arbeidsforhold</Checkbox>
-                                        <Checkbox value="kompetanser">Kompetanser</Checkbox>
-                                        <Checkbox value="offentligeGodkjenninger">Offentlige godkjenninger</Checkbox>
-                                        <Checkbox value="andreGodkjenninger">Andre godkjenninger</Checkbox>
-                                        <Checkbox value="spraak">Språk</Checkbox>
-                                        <Checkbox value="foererkort">Førerkort</Checkbox>
-                                        <Checkbox value="kurs">Kurs</Checkbox>
-                                        <Checkbox value="sammendrag">Sammendrag</Checkbox>
-                                    </VStack>
+                        <Heading level="3" size="medium" align="start" spacing>
+                            Hvilket innhold vil du dele?
+                        </Heading>
+                        {euresLaster ? (
+                            <DeleInnholdSkeleton />
+                        ) : (
+                            <>
+                                <CheckboxGroup
+                                    className={styles.mb9}
+                                    legend=""
+                                    description="Kryss av for innholdet i CV-en din som du ønsker å dele."
+                                    onChange={onKategorierChange}
+                                    value={kategorier}
+                                    error={validerKategorier && kategorier.length === 0 && "Du må velge minst et felt"}
+                                >
+                                    <HStack className={styles.mt9}>
+                                        <VStack>
+                                            <Checkbox id="kategorier" value="personalia">
+                                                Personalia
+                                            </Checkbox>
+                                            <Checkbox value="utdanning">Utdanning</Checkbox>
+                                            <Checkbox value="fagbrev">Fagbrev</Checkbox>
+                                            <Checkbox value="arbeidserfaring">Arbeidsforhold</Checkbox>
+                                            <Checkbox value="kompetanser">Kompetanser</Checkbox>
+                                            <Checkbox value="offentligeGodkjenninger">
+                                                Offentlige godkjenninger
+                                            </Checkbox>
+                                            <Checkbox value="andreGodkjenninger">Andre godkjenninger</Checkbox>
+                                            <Checkbox value="spraak">Språk</Checkbox>
+                                            <Checkbox value="foererkort">Førerkort</Checkbox>
+                                            <Checkbox value="kurs">Kurs</Checkbox>
+                                            <Checkbox value="sammendrag">Sammendrag</Checkbox>
+                                        </VStack>
+                                    </HStack>
+                                </CheckboxGroup>
+                                <HStack gap="6" className={styles.mb2}>
+                                    {kategorier.length !== Object.keys(EuresKategoriEnum).length ? (
+                                        <Button
+                                            aria-label="Velg alle kategorier"
+                                            className={styles.mb6}
+                                            variant="primary"
+                                            onClick={() => velgAlleKategorier()}
+                                        >
+                                            Velg alle kategorier
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            aria-label="Fjern alle kategorier"
+                                            className={styles.mb6}
+                                            variant="danger"
+                                            onClick={() => fjernAlleKategorier()}
+                                        >
+                                            Fjern alle kategorier
+                                        </Button>
+                                    )}
+                                    <Button
+                                        aria-label="Se hva du ønsker å dele"
+                                        className={styles.mb6}
+                                        variant="secondary"
+                                        onClick={() => setVisHovedinnhold(false)}
+                                    >
+                                        Se hva du ønsker å dele
+                                    </Button>
                                 </HStack>
-                            </CheckboxGroup>
-                            <HStack gap="6" className={styles.mb2}>
-                                {kategorier.length !== Object.keys(EuresKategoriEnum).length ? (
-                                    <Button
-                                        aria-label="Velg alle kategorier"
-                                        className={styles.mb6}
-                                        variant="primary"
-                                        onClick={() => velgAlleKategorier()}
-                                    >
-                                        Velg alle kategorier
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        aria-label="Fjern alle kategorier"
-                                        className={styles.mb6}
-                                        variant="danger"
-                                        onClick={() => fjernAlleKategorier()}
-                                    >
-                                        Fjern alle kategorier
-                                    </Button>
-                                )}
-                                <Button
-                                    aria-label="Se hva du ønsker å dele"
+                                <UNSAFE_Combobox
+                                    id="land"
                                     className={styles.mb6}
-                                    variant="secondary"
-                                    onClick={() => setVisHovedinnhold(false)}
-                                >
-                                    Se hva du ønsker å dele
-                                </Button>
-                            </HStack>
-                            <UNSAFE_Combobox
-                                id="land"
-                                className={styles.mb6}
-                                placeholder="Velg"
-                                label="Velg hvilke land du ønsker å jobbe i"
-                                description="Du kan velge flere land hvis du ønsker"
-                                shouldAutocomplete={false}
-                                isMultiSelect={false}
-                                onChange={(verdi) => setLandVerdi(verdi) || ""}
-                                onToggleSelected={onToggleSelected}
-                                selectedOptions={landSelectedOptions}
-                                shouldShowSelectedOptions={false}
-                                options={initialLandliste}
-                                value={landVerdi}
-                                error={validerLand && landSelectedOptions.length === 0 && "Du må velge minst et land"}
-                            />
-                            {landSelectedOptions.length === 0 ? (
-                                <BodyLong weight="regular" size="small" className={styles.mb12}>
-                                    Du har ikke lagt til noen land som du ønsker å jobbe i
-                                </BodyLong>
-                            ) : (
-                                <VStack>
-                                    <BodyLong weight="regular" size="small" className={styles.mb3}>
-                                        Lagt til:
+                                    placeholder="Velg"
+                                    label="Velg hvilke land du ønsker å jobbe i"
+                                    description="Du kan velge flere land hvis du ønsker"
+                                    shouldAutocomplete={false}
+                                    isMultiSelect={false}
+                                    onChange={(verdi) => setLandVerdi(verdi) || ""}
+                                    onToggleSelected={onToggleSelected}
+                                    selectedOptions={landSelectedOptions}
+                                    shouldShowSelectedOptions={false}
+                                    options={initialLandliste}
+                                    value={landVerdi}
+                                    error={
+                                        validerLand && landSelectedOptions.length === 0 && "Du må velge minst et land"
+                                    }
+                                />
+                                {landSelectedOptions.length === 0 ? (
+                                    <BodyLong weight="regular" size="small" className={styles.mb12}>
+                                        Du har ikke lagt til noen land som du ønsker å jobbe i
                                     </BodyLong>
-                                    <Chips className={styles.mb12}>
-                                        {landSelectedOptions.map((valg) => (
-                                            <Chips.Removable
-                                                key={valg}
-                                                onClick={() => {
-                                                    setLandSelectedOptions((x) =>
-                                                        x.length === 0
-                                                            ? landSelectedOptions
-                                                            : x.filter((y) => y !== valg),
-                                                    );
-                                                    suksessNotifikasjon(`${valg} fjernet`);
-                                                }}
-                                            >
-                                                {valg}
-                                            </Chips.Removable>
-                                        ))}
-                                    </Chips>
-                                </VStack>
-                            )}
-                        </>
-                    )}
-                    {delerEures && visOppdater && (
-                        <Alert variant={oppdaterEures.oppdateringHarFeil ? "error" : "warning"} className={styles.mb12}>
-                            {oppdaterEures.oppdateringHarFeil ? (
-                                <HStack className={styles.mb6}>Det oppstod en feil ved lagring</HStack>
-                            ) : (
-                                <HStack className={styles.mb6}>
-                                    For å lagre endringene dine må du oppdatere samtykke ditt
+                                ) : (
+                                    <VStack>
+                                        <BodyLong weight="regular" size="small" className={styles.mb3}>
+                                            Lagt til:
+                                        </BodyLong>
+                                        <Chips className={styles.mb12}>
+                                            {landSelectedOptions.map((valg) => (
+                                                <Chips.Removable
+                                                    key={valg}
+                                                    onClick={() => {
+                                                        setLandSelectedOptions((x) =>
+                                                            x.length === 0
+                                                                ? landSelectedOptions
+                                                                : x.filter((y) => y !== valg),
+                                                        );
+                                                        suksessNotifikasjon(`${valg} fjernet`);
+                                                    }}
+                                                >
+                                                    {valg}
+                                                </Chips.Removable>
+                                            ))}
+                                        </Chips>
+                                    </VStack>
+                                )}
+                            </>
+                        )}
+                        {delerEures && visOppdater && (
+                            <Alert
+                                variant={oppdaterEures.oppdateringHarFeil ? "error" : "warning"}
+                                className={styles.mb12}
+                            >
+                                {oppdaterEures.oppdateringHarFeil ? (
+                                    <HStack className={styles.mb6}>Det oppstod en feil ved lagring</HStack>
+                                ) : (
+                                    <HStack className={styles.mb6}>
+                                        For å lagre endringene dine må du oppdatere samtykke ditt
+                                    </HStack>
+                                )}
+                                <HStack>
+                                    <Button
+                                        aria-label="Oppdater samtykke"
+                                        className={`${styles.mb2} ${styles.oppdaterSamtykkeButton}`}
+                                        variant="primary"
+                                        loading={oppdaterEures.oppdateringLaster}
+                                        onClick={() => onOppdaterSamtykke()}
+                                    >
+                                        Oppdater samtykke
+                                    </Button>
                                 </HStack>
-                            )}
-                            <HStack>
-                                <Button
-                                    aria-label="Oppdater samtykke"
-                                    className={`${styles.mb2} ${styles.oppdaterSamtykkeButton}`}
-                                    variant="primary"
-                                    loading={oppdaterEures.oppdateringLaster}
-                                    onClick={() => onOppdaterSamtykke()}
-                                >
-                                    Oppdater samtykke
-                                </Button>
-                            </HStack>
-                        </Alert>
-                    )}
+                            </Alert>
+                        )}
 
-                    <InformasjonOmSamtykke
-                        eures={eures}
-                        delerEures={delerEures}
-                        euresLaster={euresLaster}
-                        setSamtykkeModal={setSamtykkeModal}
-                        onOppdaterSamtykke={onOppdaterSamtykke}
-                        setValiderKategorier={setValiderKategorier}
-                        setValiderLand={setValiderLand}
-                        setKategorier={setKategorier}
-                        setLandSelectedOptions={setLandSelectedOptions}
-                        oppdaterEures={oppdaterEures}
+                        <InformasjonOmSamtykke
+                            eures={eures}
+                            delerEures={delerEures}
+                            euresLaster={euresLaster}
+                            setSamtykkeModal={setSamtykkeModal}
+                            onOppdaterSamtykke={onOppdaterSamtykke}
+                            setValiderKategorier={setValiderKategorier}
+                            setValiderLand={setValiderLand}
+                            setKategorier={setKategorier}
+                            setLandSelectedOptions={setLandSelectedOptions}
+                            oppdaterEures={oppdaterEures}
+                        />
+                    </Box>
+                    <SamtykkeModal open={samtykkeModal} setOpen={setSamtykkeModal} />
+                    <ManglerPersonaliaModal
+                        open={manglerPersonaliaModal}
+                        setOpen={setManglerPersonaliaModal}
+                        onOppdaterUtenPersonalia={onOppdaterUtenPersonalia}
                     />
-                </Box>
-                <SamtykkeModal open={samtykkeModal} setOpen={setSamtykkeModal} />
-                <ManglerPersonaliaModal
-                    open={manglerPersonaliaModal}
-                    setOpen={setManglerPersonaliaModal}
-                    onOppdaterUtenPersonalia={onOppdaterUtenPersonalia}
-                />
-            </section>
-        </HStack>
+                </section>
+            </HStack>
+        </div>
     );
 }
