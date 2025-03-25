@@ -152,6 +152,7 @@ export default function Eures({
     const oppdaterSamtykke = () => {
         oppdaterEures.triggerOppdatering({
             personalia: kategorier.includes(EuresKategoriEnum.PERSONALIA),
+            jobboensker: kategorier.includes(EuresKategoriEnum.JOBBØNSKER),
             utdanning: kategorier.includes(EuresKategoriEnum.UTDANNING),
             fagbrev: kategorier.includes(EuresKategoriEnum.FAGBREV),
             arbeidserfaring: kategorier.includes(EuresKategoriEnum.ARBEIDSFORHOLD),
@@ -187,6 +188,7 @@ export default function Eures({
                             <>
                                 <CheckboxGroup
                                     className={styles.mb9}
+                                    id="kategorier"
                                     legend=""
                                     description="Kryss av for innholdet i CV-en din som du ønsker å dele."
                                     onChange={onKategorierChange}
@@ -195,21 +197,11 @@ export default function Eures({
                                 >
                                     <HStack className={styles.mt9}>
                                         <VStack>
-                                            <Checkbox id="kategorier" value="personalia">
-                                                Personalia
-                                            </Checkbox>
-                                            <Checkbox value="utdanning">Utdanning</Checkbox>
-                                            <Checkbox value="fagbrev">Fagbrev</Checkbox>
-                                            <Checkbox value="arbeidserfaring">Arbeidsforhold</Checkbox>
-                                            <Checkbox value="kompetanser">Kompetanser</Checkbox>
-                                            <Checkbox value="offentligeGodkjenninger">
-                                                Offentlige godkjenninger
-                                            </Checkbox>
-                                            <Checkbox value="andreGodkjenninger">Andre godkjenninger</Checkbox>
-                                            <Checkbox value="spraak">Språk</Checkbox>
-                                            <Checkbox value="foererkort">Førerkort</Checkbox>
-                                            <Checkbox value="kurs">Kurs</Checkbox>
-                                            <Checkbox value="sammendrag">Sammendrag</Checkbox>
+                                            {euresKategorier.map((kategori) => (
+                                                <Checkbox key={kategori.kategori} value={kategori.kategori}>
+                                                    {kategori.kategoriTekst}
+                                                </Checkbox>
+                                            ))}
                                         </VStack>
                                     </HStack>
                                 </CheckboxGroup>

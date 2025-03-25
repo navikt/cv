@@ -1,5 +1,6 @@
 export const EuresKategoriEnum = Object.freeze({
     PERSONALIA: "personalia",
+    JOBBØNSKER: "jobboensker",
     UTDANNING: "utdanning",
     FAGBREV: "fagbrev",
     ARBEIDSFORHOLD: "arbeidserfaring",
