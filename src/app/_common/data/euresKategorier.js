@@ -1,5 +1,6 @@
 export const euresKategorier = [
     { kategoriTekst: "Personalia", kategori: "personalia" },
+    { kategoriTekst: "Jobbønsker", kategori: "jobboensker" },
     { kategoriTekst: "Arbeidsforhold", kategori: "arbeidserfaring" },
     { kategoriTekst: "Utdanning", kategori: "utdanning" },
     { kategoriTekst: "Andre godkjenninger", kategori: "andreGodkjenninger" },
