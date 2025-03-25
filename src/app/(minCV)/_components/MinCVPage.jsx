@@ -24,43 +24,41 @@ export default function MinCVPage({ erVeileder }) {
 
     return (
         <ApplicationProvider erVeileder={erVeileder}>
-            <div className={!erInnlogget && styles.visibilityHidden}>
-                {visHovedinnhold ? (
-                    <>
-                        <HeaderPanel />
+            {visHovedinnhold ? (
+                <>
+                    <HeaderPanel />
 
-                        <HStack className={styles.pageContainer}>
-                            <Hide below="lg" className={styles.sidepanel}>
-                                <Hovedmeny />
-                            </Hide>
+                    <HStack className={`${styles.pageContainer} ${!erInnlogget && styles.visibilityHidden}`}>
+                        <Hide below="lg" className={styles.sidepanel}>
+                            <Hovedmeny />
+                        </Hide>
 
-                            <CvHovedinnhold cvLaster={cvLaster} setVisHovedinnhold={setVisHovedinnhold} />
+                        <CvHovedinnhold cvLaster={cvLaster} setVisHovedinnhold={setVisHovedinnhold} />
 
-                            <Hide below="xl" className={styles.sidepanel2}>
-                                <VStack gap="4">
-                                    <Button
-                                        icon={<EyeIcon aria-hidden />}
-                                        variant="primary"
-                                        onClick={() => setVisHovedinnhold(false)}
-                                        disabled={cvLaster}
-                                    >
-                                        Forhåndsvis CV
-                                    </Button>
-                                    <LastNedCv />
-                                    <Link inlineText href="/min-cv/personvern">
-                                        Personvernserklæring for Min CV
-                                    </Link>
-                                </VStack>
-                            </Hide>
-                        </HStack>
-                    </>
-                ) : (
-                    <>
-                        <HeaderPanel title="Forhåndsvis CV" />
-                        <Forhandsvisning setVisHovedinnhold={setVisHovedinnhold} />
-                    </>
-                )}
-            </div>
+                        <Hide below="xl" className={styles.sidepanel2}>
+                            <VStack gap="4">
+                                <Button
+                                    icon={<EyeIcon aria-hidden />}
+                                    variant="primary"
+                                    onClick={() => setVisHovedinnhold(false)}
+                                    disabled={cvLaster}
+                                >
+                                    Forhåndsvis CV
+                                </Button>
+                                <LastNedCv />
+                                <Link inlineText href="/min-cv/personvern">
+                                    Personvernserklæring for Min CV
+                                </Link>
+                            </VStack>
+                        </Hide>
+                    </HStack>
+                </>
+            ) : (
+                <>
+                    <HeaderPanel title="Forhåndsvis CV" />
+                    <Forhandsvisning setVisHovedinnhold={setVisHovedinnhold} />
+                </>
+            )}
         </ApplicationProvider>
     );
 }
