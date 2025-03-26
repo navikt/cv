@@ -27,6 +27,7 @@ import ManglerPersonaliaModal from "@/app/eures/components/ManglerPersonaliaModa
 import InfoTekst from "@/app/eures/components/InfoTekst";
 import InformasjonOmSamtykke from "@/app/eures/components/InformasjonOmSamtykke";
 import { euresKategorier } from "@/app/_common/data/euresKategorier";
+import { useErInnlogget } from "@/app/_common/hooks/swr/useErInnlogget";
 
 export default function Eures({
     eures,
@@ -41,6 +42,7 @@ export default function Eures({
     const { suksessNotifikasjon } = useContext(ApplicationContext);
     const { delerEures, euresLaster } = useEures();
     const oppdaterEures = useOppdaterEures();
+    const { erInnlogget } = useErInnlogget();
 
     const [landVerdi, setLandVerdi] = useState("");
     const [visOppdater, setVisOppdater] = useState(false);
@@ -169,7 +171,7 @@ export default function Eures({
 
     return (
         <div className={styles.euresBackground}>
-            <HStack className={styles.pageContainer}>
+            <HStack className={`${styles.pageContainer} ${!erInnlogget && styles.visibilityHidden}`}>
                 <section>
                     <Box background="surface-default" className={styles.boxEures}>
                         <Link href="/min-cv">
