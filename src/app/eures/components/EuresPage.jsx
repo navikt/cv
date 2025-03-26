@@ -40,7 +40,7 @@ export default function EuresPage() {
         <ApplicationProvider>
             {visHovedinnhold ? (
                 <>
-                    <HeaderPanel />
+                    <HeaderPanel title="CV-deling med EURES-portalen" />
                     <Eures
                         eures={eures}
                         initKategorier={initKategorier}
