@@ -8,8 +8,12 @@ import { CvModalForm } from "@/app/_common/components/CvModalForm";
 import { ValidationErrors } from "@/app/_common/components/ValidationErrors";
 import { handleZodValidation, revalidateExplicitValue } from "@/app/_common/utils/validationHelper";
 import z from "zod";
+import { EuresDeleInfoBox } from "@/app/_common/components/EuresDeleInfoBox";
+import { useEures } from "@/app/_common/hooks/swr/useEures";
 
 export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lagreElement, laster, feilet }) {
+    const { euresJobbønsker } = useEures();
+
     const [shouldAutoFocusErrors, setShouldAutoFocusErrors] = useState(false);
     const [errors, setErrors] = useState({});
     const [yrker, setYrker] = useState([]);
@@ -177,6 +181,8 @@ export function JobbonskerModal({ modalÅpen, toggleModal, gjeldendeElement, lag
                 ))}
             </RadioGroup>
             <ValidationErrors shouldAutoFocusErrors={shouldAutoFocusErrors} validationErrors={errors} />
+
+            {euresJobbønsker && <EuresDeleInfoBox />}
         </CvModalForm>
     );
 }

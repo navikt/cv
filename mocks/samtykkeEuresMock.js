@@ -1,6 +1,7 @@
 export const samtykkeEuresMock = {
     sistEndret: "2024-01-01T12:00:00.0+02:00",
     personalia: true,
+    jobboensker: true,
     utdanning: true,
     fagbrev: true,
     arbeidserfaring: true,
