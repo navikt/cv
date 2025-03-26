@@ -1,7 +1,13 @@
 import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useRef } from "react";
-import { SpråkEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
+import {
+    AnsettelsesformEnum,
+    OmfangEnum,
+    SpråkEnum,
+    StarttidspunktEnum,
+    UtdanningsnivåEnum,
+} from "@/app/_common/enums/cvEnums";
 import {
     formatterAdresse,
     formatterDato,
@@ -100,6 +106,59 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
                             </div>
                         </dl>
                     </>
+                )}
+
+                {cv.jobboensker && kategorier && kategorier.includes(EuresKategoriEnum.JOBBØNSKER) && (
+                    <section aria-labelledby="heading-preview-jobbønsker" className={styles.previewSection}>
+                        <Heading id="heading-preview-jobbønsker" level="2" size="xsmall" className={styles.mb3}>
+                            Jobbønsker
+                        </Heading>
+
+                        <dl aria-label="Jobbønsker" className={styles.previewBox}>
+                            <dt>Jobber og yrker</dt>
+                            <dd className={styles.previewBoxRight}>
+                                {cv.jobboensker.occupations.map((yrke) => (
+                                    <BodyLong key={`${yrke.conceptId}`} className={styles.mb3}>
+                                        {yrke.title}
+                                    </BodyLong>
+                                ))}
+                            </dd>
+
+                            <dt>Områder</dt>
+                            <dd className={styles.previewBoxRight}>
+                                {cv.jobboensker.locations.map((sted) => (
+                                    <BodyLong key={`${sted.conceptId}`} className={styles.mb3}>
+                                        {sted.location}
+                                    </BodyLong>
+                                ))}
+                            </dd>
+
+                            <dt>Heltid eller deltid</dt>
+                            <dd className={styles.previewBoxRight}>
+                                {cv.jobboensker.workLoadTypes.map((omfang) => (
+                                    <BodyLong key={`${omfang}`} className={styles.mb3}>
+                                        {OmfangEnum[omfang]}
+                                    </BodyLong>
+                                ))}
+                            </dd>
+
+                            <dt>Ansettelsesform</dt>
+                            <dd className={styles.previewBoxRight}>
+                                {cv.jobboensker.occupationTypes.map((ansettelsesform) => (
+                                    <BodyLong key={`${ansettelsesform}`} className={styles.mb3}>
+                                        {AnsettelsesformEnum[ansettelsesform]}
+                                    </BodyLong>
+                                ))}
+                            </dd>
+
+                            <dt>Oppstart</dt>
+                            <dd className={styles.previewBoxRight}>
+                                <BodyLong className={styles.mb3}>
+                                    {StarttidspunktEnum[cv.jobboensker.startOption]}
+                                </BodyLong>
+                            </dd>
+                        </dl>
+                    </section>
                 )}
 
                 {cv.sammendrag && skalViseKategori(EuresKategoriEnum.SAMMENDRAG) && (
