@@ -8,7 +8,9 @@ import styles from "@/app/page.module.css";
 import { useContext, useEffect, useState } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
-function HeaderPanel({ title = "Min CV" }) {
+const urlPathname = window.location.pathname.split("/").slice(-1)[0];
+
+function HeaderPanel({ title = urlPathname !== "eures" ? "Min CV" : "CV-deling med EURES-portalen" }) {
     const { erVeileder } = useContext(ApplicationContext);
     const { personalia, personHarFeil } = usePerson();
     const { sistEndret } = useCv();

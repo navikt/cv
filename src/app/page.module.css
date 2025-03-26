@@ -880,3 +880,7 @@
 .trekkSamtykkeButton:active {
     background-color: var(--a-blue-700) !important;
 }
+
+.visibilityHidden {
+    visibility: hidden;
+}
