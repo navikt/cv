@@ -1,13 +1,7 @@
 import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useRef } from "react";
-import {
-    AnsettelsesformEnum,
-    OmfangEnum,
-    SpråkEnum,
-    StarttidspunktEnum,
-    UtdanningsnivåEnum,
-} from "@/app/_common/enums/cvEnums";
+import { AnsettelsesformEnum, OmfangEnum, SpråkEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import {
     formatterAdresse,
     formatterDato,
@@ -124,15 +118,6 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
                                 ))}
                             </dd>
 
-                            <dt>Områder</dt>
-                            <dd className={styles.previewBoxRight}>
-                                {cv.jobboensker.locations.map((sted) => (
-                                    <BodyLong key={`${sted.conceptId}`} className={styles.mb3}>
-                                        {sted.location}
-                                    </BodyLong>
-                                ))}
-                            </dd>
-
                             <dt>Heltid eller deltid</dt>
                             <dd className={styles.previewBoxRight}>
                                 {cv.jobboensker.workLoadTypes.map((omfang) => (
@@ -149,13 +134,6 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
                                         {AnsettelsesformEnum[ansettelsesform]}
                                     </BodyLong>
                                 ))}
-                            </dd>
-
-                            <dt>Oppstart</dt>
-                            <dd className={styles.previewBoxRight}>
-                                <BodyLong className={styles.mb3}>
-                                    {StarttidspunktEnum[cv.jobboensker.startOption]}
-                                </BodyLong>
                             </dd>
                         </dl>
                     </section>
