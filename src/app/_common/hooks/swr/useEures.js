@@ -36,6 +36,7 @@ export const useEures = () => {
         initKategorier: initKategorier,
         initLand: initLand,
         euresPersonalia: data?.personalia || false,
+        euresJobbønsker: data?.jobboensker || false,
         euresUtdanning: data?.utdanning || false,
         euresFagbrev: data?.fagbrev || false,
         euresArbeidserfaring: data?.arbeidserfaring || false,

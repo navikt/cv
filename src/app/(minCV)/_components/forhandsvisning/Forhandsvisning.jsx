@@ -1,7 +1,7 @@
 import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import { useEffect, useRef } from "react";
-import { SpråkEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
+import { AnsettelsesformEnum, OmfangEnum, SpråkEnum, UtdanningsnivåEnum } from "@/app/_common/enums/cvEnums";
 import {
     formatterAdresse,
     formatterDato,
@@ -29,6 +29,8 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
         }
     }, [ref]);
 
+    const skalViseKategori = (kategori) => !kategorier || kategorier.includes(kategori);
+
     return (
         <HStack className={`${styles.preview} ${styles.mt16} ${styles.wrapText}`}>
             <Box>
@@ -47,7 +49,7 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
                     </HStack>
                 )}
 
-                {(!kategorier || kategorier.includes(EuresKategoriEnum.PERSONALIA)) && (
+                {skalViseKategori(EuresKategoriEnum.PERSONALIA) && (
                     <>
                         <Heading level="2" size="xsmall" className={styles.mb3}>
                             {personalia ? `${personalia.fornavn} ${personalia.etternavn}` : ""}
@@ -100,8 +102,44 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
                     </>
                 )}
 
-                {((cv.sammendrag && !kategorier) ||
-                    (cv.sammendrag && kategorier.includes(EuresKategoriEnum.SAMMENDRAG))) && (
+                {cv.jobboensker && kategorier && kategorier.includes(EuresKategoriEnum.JOBBØNSKER) && (
+                    <section aria-labelledby="heading-preview-jobbønsker" className={styles.previewSection}>
+                        <Heading id="heading-preview-jobbønsker" level="2" size="xsmall" className={styles.mb3}>
+                            Jobbønsker
+                        </Heading>
+
+                        <dl aria-label="Jobbønsker" className={styles.previewBox}>
+                            <dt>Jobber og yrker</dt>
+                            <dd className={styles.previewBoxRight}>
+                                {cv.jobboensker.occupations.map((yrke) => (
+                                    <BodyLong key={`${yrke.conceptId}`} className={styles.mb3}>
+                                        {yrke.title}
+                                    </BodyLong>
+                                ))}
+                            </dd>
+
+                            <dt>Heltid eller deltid</dt>
+                            <dd className={styles.previewBoxRight}>
+                                {cv.jobboensker.workLoadTypes.map((omfang) => (
+                                    <BodyLong key={`${omfang}`} className={styles.mb3}>
+                                        {OmfangEnum[omfang]}
+                                    </BodyLong>
+                                ))}
+                            </dd>
+
+                            <dt>Ansettelsesform</dt>
+                            <dd className={styles.previewBoxRight}>
+                                {cv.jobboensker.occupationTypes.map((ansettelsesform) => (
+                                    <BodyLong key={`${ansettelsesform}`} className={styles.mb3}>
+                                        {AnsettelsesformEnum[ansettelsesform]}
+                                    </BodyLong>
+                                ))}
+                            </dd>
+                        </dl>
+                    </section>
+                )}
+
+                {cv.sammendrag && skalViseKategori(EuresKategoriEnum.SAMMENDRAG) && (
                     <section aria-labelledby="heading-preview-sammendrag" className={styles.previewSection}>
                         <Heading id="heading-preview-sammendrag" level="2" size="xsmall" className={styles.mb3}>
                             Sammendrag
@@ -117,10 +155,7 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
                     </section>
                 )}
 
-                {((cv.utdanning && cv.utdanning.length !== 0 && !kategorier) ||
-                    (cv.utdanning &&
-                        cv.utdanning.length !== 0 &&
-                        kategorier.includes(EuresKategoriEnum.UTDANNING))) && (
+                {cv.utdanning && cv.utdanning.length !== 0 && skalViseKategori(EuresKategoriEnum.UTDANNING) && (
                     <section aria-labelledby="heading-preview-utdanning" className={styles.previewSection}>
                         <Heading id="heading-preview-utdanning" level="2" size="xsmall" className={styles.mb3}>
                             Utdanning
@@ -150,8 +185,7 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
                     </section>
                 )}
 
-                {((cv.fagbrev && cv.fagbrev.length !== 0 && !kategorier) ||
-                    (cv.fagbrev && cv.fagbrev.length !== 0 && kategorier.includes(EuresKategoriEnum.FAGBREV))) && (
+                {cv.fagbrev && cv.fagbrev.length !== 0 && skalViseKategori(EuresKategoriEnum.FAGBREV) && (
                     <section aria-labelledby="heading-preview-fagbrev" className={styles.previewSection}>
                         <Heading id="heading-preview-fagbrev" level="2" size="xsmall">
                             Fagbrev, svennebrev og mesterbrev
@@ -167,39 +201,38 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
                     </section>
                 )}
 
-                {((cv.arbeidserfaring && cv.arbeidserfaring.length !== 0 && !kategorier) ||
-                    (cv.arbeidserfaring &&
-                        cv.arbeidserfaring.length !== 0 &&
-                        kategorier.includes(EuresKategoriEnum.ARBEIDSFORHOLD))) && (
-                    <section aria-labelledby="heading-preview-arbeidsforhold" className={styles.previewSection}>
-                        <Heading id="heading-preview-arbeidsforhold" level="2" size="xsmall" className={styles.mb3}>
-                            Arbeidsforhold
-                        </Heading>
-                        <dl aria-label="Arbeidsforhold" className={[styles.previewBox]}>
-                            {datosorterElementer(cv.arbeidserfaring).map((erfaring) => (
-                                <>
-                                    <dt>{`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}</dt>
+                {cv.arbeidserfaring &&
+                    cv.arbeidserfaring.length !== 0 &&
+                    skalViseKategori(EuresKategoriEnum.ARBEIDSFORHOLD) && (
+                        <section aria-labelledby="heading-preview-arbeidsforhold" className={styles.previewSection}>
+                            <Heading id="heading-preview-arbeidsforhold" level="2" size="xsmall" className={styles.mb3}>
+                                Arbeidsforhold
+                            </Heading>
+                            <dl aria-label="Arbeidsforhold" className={[styles.previewBox]}>
+                                {datosorterElementer(cv.arbeidserfaring).map((erfaring) => (
+                                    <>
+                                        <dt>{`${formatterDato(erfaring.fromDate)} - ${formatterDato(erfaring.toDate)}`}</dt>
 
-                                    <dd className={styles.previewBoxRight}>
-                                        <Heading level="3" size="xsmall">
-                                            {`${erfaring.jobTitle}${erfaring.alternativeJobTitle ? ` (${erfaring.alternativeJobTitle})` : ""}`}
-                                        </Heading>
-                                        <BodyLong>
-                                            {erfaring.employer}
-                                            {erfaring.employer !== "" && erfaring.location !== "" ? ", " : ""}
-                                            {erfaring.location}
-                                        </BodyLong>
-                                        {erfaring.description && (
-                                            <BodyLong className={styles.mb3}>
-                                                {parse(erfaring.description.replace(/\n/g, "<br>"))}
+                                        <dd className={styles.previewBoxRight}>
+                                            <Heading level="3" size="xsmall">
+                                                {`${erfaring.jobTitle}${erfaring.alternativeJobTitle ? ` (${erfaring.alternativeJobTitle})` : ""}`}
+                                            </Heading>
+                                            <BodyLong>
+                                                {erfaring.employer}
+                                                {erfaring.employer !== "" && erfaring.location !== "" ? ", " : ""}
+                                                {erfaring.location}
                                             </BodyLong>
-                                        )}
-                                    </dd>
-                                </>
-                            ))}
-                        </dl>
-                    </section>
-                )}
+                                            {erfaring.description && (
+                                                <BodyLong className={styles.mb3}>
+                                                    {parse(erfaring.description.replace(/\n/g, "<br>"))}
+                                                </BodyLong>
+                                            )}
+                                        </dd>
+                                    </>
+                                ))}
+                            </dl>
+                        </section>
+                    )}
 
                 {cv.annenErfaring && cv.annenErfaring.length !== 0 && !kategorier && (
                     <section aria-labelledby="heading-preview-annen-erfaring" className={styles.previewSection}>
@@ -224,10 +257,7 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
                     </section>
                 )}
 
-                {((cv.foererkort && cv.foererkort.length !== 0 && !kategorier) ||
-                    (cv.foererkort &&
-                        cv.foererkort.length !== 0 &&
-                        kategorier.includes(EuresKategoriEnum.FØRERKORT))) && (
+                {cv.foererkort && cv.foererkort.length !== 0 && skalViseKategori(EuresKategoriEnum.FØRERKORT) && (
                     <section aria-labelledby="heading-preview-forerkort" className={styles.previewSection}>
                         <Heading id="heading-preview-forerkort" level="2" size="xsmall">
                             Førerkort
@@ -250,8 +280,7 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
                     </section>
                 )}
 
-                {((cv.kurs && cv.kurs.length !== 0 && !kategorier) ||
-                    (cv.kurs && cv.kurs.length !== 0 && kategorier.includes(EuresKategoriEnum.KURS))) && (
+                {cv.kurs && cv.kurs.length !== 0 && skalViseKategori(EuresKategoriEnum.KURS) && (
                     <section aria-labelledby="heading-preview-kurs" className={styles.previewSection}>
                         <Heading id="heading-preview-kurs" level="2" size="xsmall" className={styles.mb3}>
                             Kurs
@@ -279,77 +308,77 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
                     </section>
                 )}
 
-                {((cv.offentligeGodkjenninger && cv.offentligeGodkjenninger.length !== 0 && !kategorier) ||
-                    (cv.offentligeGodkjenninger &&
-                        cv.offentligeGodkjenninger.length !== 0 &&
-                        kategorier.includes(EuresKategoriEnum.OFFENTLIGE_GODKJENNINGER))) && (
-                    <section
-                        aria-labelledby="heading-preview-offentlige-godkjenninger"
-                        className={styles.previewSection}
-                    >
-                        <Heading
-                            id="heading-preview-offentlige-godkjenninger"
-                            level="2"
-                            size="xsmall"
-                            className={styles.mb3}
+                {cv.offentligeGodkjenninger &&
+                    cv.offentligeGodkjenninger.length !== 0 &&
+                    skalViseKategori(EuresKategoriEnum.OFFENTLIGE_GODKJENNINGER) && (
+                        <section
+                            aria-labelledby="heading-preview-offentlige-godkjenninger"
+                            className={styles.previewSection}
                         >
-                            Offentlige godkjenninger
-                        </Heading>
-                        <dl aria-label="Offentlige godkjenninger" className={[styles.previewBox]}>
-                            {cv.offentligeGodkjenninger.map((godkjenning) => (
-                                <>
-                                    <dt>
-                                        {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
-                                    </dt>
+                            <Heading
+                                id="heading-preview-offentlige-godkjenninger"
+                                level="2"
+                                size="xsmall"
+                                className={styles.mb3}
+                            >
+                                Offentlige godkjenninger
+                            </Heading>
+                            <dl aria-label="Offentlige godkjenninger" className={[styles.previewBox]}>
+                                {cv.offentligeGodkjenninger.map((godkjenning) => (
+                                    <>
+                                        <dt>
+                                            {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
+                                        </dt>
 
-                                    <dd className={styles.previewBoxRight}>
-                                        <Heading level="3" size="xsmall">
-                                            {godkjenning.title}
-                                        </Heading>
+                                        <dd className={styles.previewBoxRight}>
+                                            <Heading level="3" size="xsmall">
+                                                {godkjenning.title}
+                                            </Heading>
 
-                                        <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
-                                    </dd>
-                                </>
-                            ))}
-                        </dl>
-                    </section>
-                )}
+                                            <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
+                                        </dd>
+                                    </>
+                                ))}
+                            </dl>
+                        </section>
+                    )}
 
-                {((cv.andreGodkjenninger && cv.andreGodkjenninger.length !== 0 && !kategorier) ||
-                    (cv.andreGodkjenninger &&
-                        cv.andreGodkjenninger.length !== 0 &&
-                        kategorier.includes(EuresKategoriEnum.ANDRE_GODKJENNINGER))) && (
-                    <section aria-labelledby="heading-preview-andre-godkjenninger" className={styles.previewSection}>
-                        <Heading
-                            id="heading-preview-andre-godkjenninger"
-                            level="2"
-                            size="xsmall"
-                            className={styles.mb3}
+                {cv.andreGodkjenninger &&
+                    cv.andreGodkjenninger.length !== 0 &&
+                    skalViseKategori(EuresKategoriEnum.ANDRE_GODKJENNINGER) && (
+                        <section
+                            aria-labelledby="heading-preview-andre-godkjenninger"
+                            className={styles.previewSection}
                         >
-                            Andre godkjenninger
-                        </Heading>
-                        <dl aria-label="Andre godkjenninger" className={[styles.previewBox]}>
-                            {cv.andreGodkjenninger.map((godkjenning) => (
-                                <>
-                                    <dt>
-                                        {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
-                                    </dt>
+                            <Heading
+                                id="heading-preview-andre-godkjenninger"
+                                level="2"
+                                size="xsmall"
+                                className={styles.mb3}
+                            >
+                                Andre godkjenninger
+                            </Heading>
+                            <dl aria-label="Andre godkjenninger" className={[styles.previewBox]}>
+                                {cv.andreGodkjenninger.map((godkjenning) => (
+                                    <>
+                                        <dt>
+                                            {`${formatterFullDatoMedFallback(godkjenning.fromDate)}${godkjenning.toDate ? ` - ${formatterFullDatoMedFallback(godkjenning.toDate)}` : ""}`}
+                                        </dt>
 
-                                    <dd className={styles.previewBoxRight}>
-                                        <Heading level="3" size="xsmall">
-                                            {godkjenning.certificateName}
-                                        </Heading>
+                                        <dd className={styles.previewBoxRight}>
+                                            <Heading level="3" size="xsmall">
+                                                {godkjenning.certificateName}
+                                            </Heading>
 
-                                        <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
-                                    </dd>
-                                </>
-                            ))}
-                        </dl>
-                    </section>
-                )}
+                                            <BodyLong className={styles.mb3}>{godkjenning.issuer}</BodyLong>
+                                        </dd>
+                                    </>
+                                ))}
+                            </dl>
+                        </section>
+                    )}
 
-                {((cv.spraak && cv.spraak.length !== 0 && !kategorier) ||
-                    (cv.spraak && cv.spraak.length !== 0 && kategorier.includes(EuresKategoriEnum.SPRÅK))) && (
+                {cv.spraak && cv.spraak.length !== 0 && skalViseKategori(EuresKategoriEnum.SPRÅK) && (
                     <section aria-labelledby="heading-preview-sprak" className={styles.previewSection}>
                         <Heading id="heading-preview-sprak" level="2" size="xsmall" className={styles.mb3}>
                             Språk
@@ -376,10 +405,7 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
                     </section>
                 )}
 
-                {((cv.kompetanser && cv.kompetanser.length !== 0 && !kategorier) ||
-                    (cv.kompetanser &&
-                        cv.kompetanser.length !== 0 &&
-                        kategorier.includes(EuresKategoriEnum.KOMPETANSER))) && (
+                {cv.kompetanser && cv.kompetanser.length !== 0 && skalViseKategori(EuresKategoriEnum.KOMPETANSER) && (
                     <section aria-labelledby="heading-preview-kompetanser" className={styles.mb6}>
                         <Heading id="heading-preview-kompetanser" level="2" size="xsmall" className={styles.mb3}>
                             Kompetanser
