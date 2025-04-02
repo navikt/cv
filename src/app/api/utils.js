@@ -6,7 +6,7 @@ import { leggTilVeilederHeaders } from "@/app/_common/utils/veilederUtils";
 import { logger } from "@navikt/next-logger";
 
 export const putData = async (url, audience, request) => {
-    const headerList = headers();
+    const headerList = await headers();
     const callId = headerList.get("nav-callid");
 
     const token = await exchangeToken(request, hentCvApiAudScope());

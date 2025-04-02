@@ -3,7 +3,7 @@ import { isTokenValid } from "@/app/_common/utils/tokenUtils/tokenUtils";
 import { logger } from "@navikt/next-logger";
 
 export async function GET(request) {
-    const bearerToken = headers().get("authorization");
+    const bearerToken = (await headers()).get("authorization");
     if (bearerToken) {
         try {
             const validToken = await isTokenValid(request);
