@@ -12,7 +12,7 @@ import {
 import { datosorterElementer } from "@/app/_common/utils/dateUtils";
 import { logger } from "@navikt/next-logger";
 
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+if (pdfFonts.pdfMake !== undefined) pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export function lastNedCvPdf(cv, personalia) {
     const {

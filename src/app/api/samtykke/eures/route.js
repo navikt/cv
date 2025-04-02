@@ -36,7 +36,7 @@ export async function POST(request) {
     const { urls, audience } = serverConfig;
     const token = await exchangeToken(request, audience.euresCvEksport);
     const euresCvEksportUrl = urls.euresCvEksport;
-    const headerList = headers();
+    const headerList = await headers();
     const callId = headerList.get("nav-callid");
     const requestHeaders = createAuthorizationAndContentTypeHeaders(token, callId);
     const requestBody = await request.json();
@@ -68,7 +68,7 @@ export async function DELETE(request) {
     const { urls, audience } = serverConfig;
     const token = await exchangeToken(request, audience.euresCvEksport);
     const euresCvEksportUrl = urls.euresCvEksport;
-    const headerList = headers();
+    const headerList = await headers();
     const callId = headerList.get("nav-callid");
     const requestHeaders = createAuthorizationAndContentTypeHeaders(token, callId);
 

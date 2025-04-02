@@ -4,8 +4,7 @@ import { filterOutAuthorizationHeader } from "@/app/api/utils";
 import { logger } from "@navikt/next-logger";
 
 export async function GET(request, context) {
-    const { type } = context.params;
-    const { query } = context.params;
+    const { type, query } = await context.params;
     const originalHeaders = new Headers(request.headers);
     const requestHeaders = filterOutAuthorizationHeader(originalHeaders);
     const callId = requestHeaders.get("nav-callid");

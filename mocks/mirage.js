@@ -5,6 +5,7 @@ import { createServer } from "miragejs";
 import { samtykkeEuresMock } from "./samtykkeEuresMock";
 import { arbeidsforholdMock } from "./arbeidsforholdMock";
 import { veilederDekoratørMock } from "./veilederDekoratørMock";
+import { amplitudeMock } from "./amplitudeMock";
 
 createServer({
     namespace: "/min-cv",
@@ -19,5 +20,6 @@ createServer({
         this.passthrough("https://dekoratoren.ekstern.dev.nav.no/*");
         this.passthrough("https://www.nav.no/*");
         this.passthrough("https://cdn.nav.no/*");
+        this.post("https://amplitude.nav.no/collect", amplitudeMock);
     },
 });
