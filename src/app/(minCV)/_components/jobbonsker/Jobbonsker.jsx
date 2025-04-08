@@ -18,6 +18,7 @@ import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdater
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useBekreftModal } from "@/app/_common/hooks/useBekreftSlettModal";
 import { BekreftSlettModal } from "@/app/_common/components/BekreftSlettModal";
+import { jobbønskerErTomt } from "@/app/_common/utils/cvUtils";
 
 export default function Jobbonsker() {
     const { jobbønsker, cvLaster } = useCv();
@@ -43,9 +44,6 @@ export default function Jobbonsker() {
         triggerOppdatering(tommeJobbønsker);
     };
 
-    const jobbønskerErTomt = () =>
-        !jobbønsker || Object.keys(jobbønsker).length === 0 || jobbønsker?.locations?.length === 0;
-
     return (
         <section aria-labelledby={cvLaster ? undefined : headingId} data-section id={SeksjonsIdEnum.JOBBØNSKER}>
             {cvLaster ? (
@@ -61,7 +59,7 @@ export default function Jobbonsker() {
                         Jobbønsker
                     </Heading>
 
-                    {jobbønskerErTomt() ? (
+                    {jobbønskerErTomt(jobbønsker) ? (
                         <div>
                             <BodyLong weight="semibold" spacing>
                                 Du har ikke lagt til noen jobbønsker i CV-en

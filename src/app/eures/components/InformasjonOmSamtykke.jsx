@@ -7,6 +7,7 @@ import { useState } from "react";
 import TrekkSamtykkeModal from "@/app/eures/components/TrekkSamtykkeModal";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import ManglerCvAlert from "@/app/eures/components/ManglerCvAlert";
+import { cvHarInnhold } from "@/app/_common/utils/cvUtils";
 
 export default function InformasjonOmSamtykke({
     eures,
@@ -21,6 +22,7 @@ export default function InformasjonOmSamtykke({
     oppdaterEures,
 }) {
     const { cv } = useCv();
+
     const [openTrekkSamtykkeModal, setOpenTrekkSamtykkeModal] = useState(false);
 
     const onTrekkSamtykke = () => {
@@ -31,6 +33,8 @@ export default function InformasjonOmSamtykke({
         setOpenTrekkSamtykkeModal(false);
         oppdaterEures.triggerOppdatering(null);
     };
+
+    const samtykkeErDisabled = !delerEures && !cvHarInnhold(cv);
 
     return (
         <>
@@ -128,12 +132,12 @@ export default function InformasjonOmSamtykke({
                                                 onChange={onOppdaterSamtykke}
                                                 className={styles.euresCheckbox}
                                                 value="samtykker"
-                                                disabled={!cv}
+                                                disabled={samtykkeErDisabled}
                                             >
                                                 Jeg samtykker
                                             </Checkbox>
                                         )}
-                                        {!cv && <ManglerCvAlert inline />}
+                                        {samtykkeErDisabled && <ManglerCvAlert inline />}
                                     </Box>
                                 )}
                             </div>

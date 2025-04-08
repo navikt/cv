@@ -9,6 +9,7 @@ import { useEures } from "@/app/_common/hooks/swr/useEures";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import { useContext, useState } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
+import { cvHarInnhold } from "@/app/_common/utils/cvUtils";
 
 export default function DeleInnhold({
     setVisHovedinnhold,
@@ -23,7 +24,7 @@ export default function DeleInnhold({
     landSelectedOptions,
 }) {
     const { suksessNotifikasjon } = useContext(ApplicationContext);
-    const { euresLaster } = useEures();
+    const { delerEures, euresLaster } = useEures();
     const { cv, cvLaster } = useCv();
 
     const [landVerdi, setLandVerdi] = useState("");
@@ -70,7 +71,7 @@ export default function DeleInnhold({
     };
 
     if (euresLaster || cvLaster) return <DeleInnholdSkeleton />;
-    if (!cv) return <ManglerCvAlert />;
+    if (!delerEures && !cvHarInnhold(cv)) return <ManglerCvAlert />;
 
     return (
         <>
