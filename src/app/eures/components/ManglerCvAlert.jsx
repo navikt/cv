@@ -1,5 +1,5 @@
 import styles from "@/app/page.module.css";
-import { Alert, BodyLong, Heading, HStack, Link } from "@navikt/ds-react";
+import { Alert, BodyLong, Heading, Link } from "@navikt/ds-react";
 import { ArrowUndoIcon } from "@navikt/aksel-icons";
 
 export default function ManglerCvAlert({ inline = false }) {
@@ -19,12 +19,12 @@ export default function ManglerCvAlert({ inline = false }) {
                 Du har ikke registrert noen opplysninger i CV-en din
             </Heading>
             <BodyLong size="small">{bodyText}</BodyLong>
-            <HStack className={styles.mt6}>
-                <Link href="/min-cv">
+            <BodyLong size="small" className={styles.mt3}>
+                <Link href="/min-cv" inlineText>
                     <ArrowUndoIcon aria-hidden />
                     Tilbake til Min CV
                 </Link>
-            </HStack>
+            </BodyLong>
         </Alert>
     );
 }
