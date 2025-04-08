@@ -1,33 +1,17 @@
-import {
-    // eslint-disable-next-line camelcase
-    UNSAFE_Combobox,
-    Alert,
-    BodyLong,
-    Box,
-    Button,
-    Checkbox,
-    CheckboxGroup,
-    Chips,
-    Heading,
-    HStack,
-    Link,
-    VStack,
-} from "@navikt/ds-react";
+import { Alert, Box, Button, Heading, HStack, Link } from "@navikt/ds-react";
 import { ArrowUndoIcon } from "@navikt/aksel-icons";
 import styles from "@/app/page.module.css";
 import { useOppdaterEures } from "@/app/_common/hooks/swr/useOppdaterEures";
 import { useEures } from "@/app/_common/hooks/swr/useEures";
 import { EuresKategoriEnum } from "@/app/_common/enums/EuresEnums";
 import SamtykkeModal from "@/app/eures/components/SamtykkeModal";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { euLand } from "@/app/_common/data/euLand";
-import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
-import { DeleInnholdSkeleton } from "@/app/_common/components/DeleInnholdSkeleton";
 import ManglerPersonaliaModal from "@/app/eures/components/ManglerPersonaliaModal";
 import InfoTekst from "@/app/eures/components/InfoTekst";
 import InformasjonOmSamtykke from "@/app/eures/components/InformasjonOmSamtykke";
-import { euresKategorier } from "@/app/_common/data/euresKategorier";
 import { useErInnlogget } from "@/app/_common/hooks/swr/useErInnlogget";
+import DeleInnhold from "@/app/eures/components/DeleInnhold";
 
 export default function Eures({
     eures,
@@ -39,12 +23,10 @@ export default function Eures({
     setLandSelectedOptions,
     setVisHovedinnhold,
 }) {
-    const { suksessNotifikasjon } = useContext(ApplicationContext);
     const { delerEures, euresLaster } = useEures();
     const oppdaterEures = useOppdaterEures();
     const { erInnlogget } = useErInnlogget();
 
-    const [landVerdi, setLandVerdi] = useState("");
     const [visOppdater, setVisOppdater] = useState(false);
     const [samtykkeModal, setSamtykkeModal] = useState(false);
     const [manglerPersonaliaModal, setManglerPersonaliaModal] = useState(false);
@@ -74,49 +56,8 @@ export default function Eures({
     const erVerdiEndret = (verdi, type) =>
         verdi.length === type.length && verdi.sort().every((value, index) => value === type.sort()[index]);
 
-    const velgAlleKategorier = () => {
-        const k = [];
-        Object.values(EuresKategoriEnum).map((verdi) => k.push(verdi));
-        suksessNotifikasjon(`Alle kategorier valgt`);
-        setKategorier(k);
-    };
-
-    const fjernAlleKategorier = () => {
-        setKategorier([]);
-        suksessNotifikasjon(`Alle kategorier fjernet`);
-    };
-
-    const onKategorierChange = (e) => {
-        if (e.length > kategorier.length) {
-            const kat = e.filter((k) => !kategorier.includes(k));
-            const formatertKategori = euresKategorier.filter((i) => i.kategori === kat[0]);
-            suksessNotifikasjon(`${formatertKategori[0].kategoriTekst} valgt`);
-        } else {
-            const kat = kategorier.filter((k) => !e.includes(k));
-            const formatertKategori = euresKategorier.filter((i) => i.kategori === kat[0]);
-            suksessNotifikasjon(`${formatertKategori[0].kategoriTekst} fjernet`);
-        }
-
-        setKategorier(e);
-        setValiderKategorier(false);
-    };
-
     const initialLandliste = euLand.map((item) => item.name);
     initialLandliste.unshift("Velg alle");
-
-    const onToggleSelected = (option, isSelected) => {
-        if (isSelected) {
-            suksessNotifikasjon(`${option} valgt`);
-            setValiderLand(false);
-            if (option === "Velg alle") {
-                setLandSelectedOptions([...initialLandliste].slice(1));
-            } else {
-                setLandSelectedOptions([...landSelectedOptions, option].sort());
-            }
-        } else {
-            setLandSelectedOptions(landSelectedOptions.filter((o) => o !== option));
-        }
-    };
 
     const onOppdaterSamtykke = (e) => {
         setValiderKategorier(true);
@@ -184,106 +125,18 @@ export default function Eures({
                         <Heading level="3" size="medium" align="start" spacing>
                             Hvilket innhold vil du dele?
                         </Heading>
-                        {euresLaster ? (
-                            <DeleInnholdSkeleton />
-                        ) : (
-                            <>
-                                <CheckboxGroup
-                                    className={styles.mb9}
-                                    id="kategorier"
-                                    legend=""
-                                    description="Kryss av for innholdet i CV-en din som du ønsker å dele."
-                                    onChange={onKategorierChange}
-                                    value={kategorier}
-                                    error={validerKategorier && kategorier.length === 0 && "Du må velge minst et felt"}
-                                >
-                                    <HStack className={styles.mt9}>
-                                        <VStack>
-                                            {euresKategorier.map((kategori) => (
-                                                <Checkbox key={kategori.kategori} value={kategori.kategori}>
-                                                    {kategori.kategoriTekst}
-                                                </Checkbox>
-                                            ))}
-                                        </VStack>
-                                    </HStack>
-                                </CheckboxGroup>
-                                <HStack gap="6" className={styles.mb2}>
-                                    {kategorier.length !== Object.keys(EuresKategoriEnum).length ? (
-                                        <Button
-                                            aria-label="Velg alle kategorier"
-                                            className={styles.mb6}
-                                            variant="primary"
-                                            onClick={() => velgAlleKategorier()}
-                                        >
-                                            Velg alle kategorier
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            aria-label="Fjern alle kategorier"
-                                            className={styles.mb6}
-                                            variant="danger"
-                                            onClick={() => fjernAlleKategorier()}
-                                        >
-                                            Fjern alle kategorier
-                                        </Button>
-                                    )}
-                                    <Button
-                                        aria-label="Se hva du ønsker å dele"
-                                        className={styles.mb6}
-                                        variant="secondary"
-                                        onClick={() => setVisHovedinnhold(false)}
-                                    >
-                                        Se hva du ønsker å dele
-                                    </Button>
-                                </HStack>
-                                <UNSAFE_Combobox
-                                    id="land"
-                                    className={styles.mb6}
-                                    placeholder="Velg"
-                                    label="Velg hvilke land du ønsker å jobbe i"
-                                    description="Du kan velge flere land hvis du ønsker"
-                                    shouldAutocomplete={false}
-                                    isMultiSelect={false}
-                                    onChange={(verdi) => setLandVerdi(verdi) || ""}
-                                    onToggleSelected={onToggleSelected}
-                                    selectedOptions={landSelectedOptions}
-                                    shouldShowSelectedOptions={false}
-                                    options={initialLandliste}
-                                    value={landVerdi}
-                                    error={
-                                        validerLand && landSelectedOptions.length === 0 && "Du må velge minst et land"
-                                    }
-                                />
-                                {landSelectedOptions.length === 0 ? (
-                                    <BodyLong weight="regular" size="small" className={styles.mb12}>
-                                        Du har ikke lagt til noen land som du ønsker å jobbe i
-                                    </BodyLong>
-                                ) : (
-                                    <VStack>
-                                        <BodyLong weight="regular" size="small" className={styles.mb3}>
-                                            Lagt til:
-                                        </BodyLong>
-                                        <Chips className={styles.mb12}>
-                                            {landSelectedOptions.map((valg) => (
-                                                <Chips.Removable
-                                                    key={valg}
-                                                    onClick={() => {
-                                                        setLandSelectedOptions((x) =>
-                                                            x.length === 0
-                                                                ? landSelectedOptions
-                                                                : x.filter((y) => y !== valg),
-                                                        );
-                                                        suksessNotifikasjon(`${valg} fjernet`);
-                                                    }}
-                                                >
-                                                    {valg}
-                                                </Chips.Removable>
-                                            ))}
-                                        </Chips>
-                                    </VStack>
-                                )}
-                            </>
-                        )}
+                        <DeleInnhold
+                            kategorier={kategorier}
+                            setValiderKategorier={setValiderKategorier}
+                            setValiderLand={setValiderLand}
+                            setKategorier={setKategorier}
+                            validerKategorier={validerKategorier}
+                            validerLand={validerLand}
+                            initialLandliste={initialLandliste}
+                            landSelectedOptions={landSelectedOptions}
+                            setLandSelectedOptions={setLandSelectedOptions}
+                            setVisHovedinnhold={setVisHovedinnhold}
+                        />
                         {delerEures && visOppdater && (
                             <Alert
                                 variant={oppdaterEures.oppdateringHarFeil ? "error" : "warning"}
