@@ -29,6 +29,10 @@
             "kreverDato": false
         },
         {
+            "type": "B 96 - Personbil med tilhenger",
+            "kreverDato": false
+        },
+        {
             "type": "BE - Personbil med tilhenger",
             "kreverDato": false
         },
