@@ -1,17 +1,17 @@
 export const cvHarInnhold = (cv) =>
     !!cv &&
     !(
-        jobbønskerErTomt(cv?.jobboensker) ||
-        kategoriErTom(cv?.utdanning) ||
-        kategoriErTom(cv?.fagbrev) ||
-        kategoriErTom(cv?.arbeidserfaring) ||
-        kategoriErTom(cv?.annenErfaring) ||
-        kategoriErTom(cv?.andreGodkjenninger) ||
-        kategoriErTom(cv?.foererkort) ||
-        kategoriErTom(cv?.kompetanser) ||
-        kategoriErTom(cv?.kurs) ||
-        kategoriErTom(cv?.offentligeGodkjenninger) ||
-        kategoriErTom(cv?.spraak) ||
+        jobbønskerErTomt(cv?.jobboensker) &&
+        kategoriErTom(cv?.utdanning) &&
+        kategoriErTom(cv?.fagbrev) &&
+        kategoriErTom(cv?.arbeidserfaring) &&
+        kategoriErTom(cv?.annenErfaring) &&
+        kategoriErTom(cv?.andreGodkjenninger) &&
+        kategoriErTom(cv?.foererkort) &&
+        kategoriErTom(cv?.kompetanser) &&
+        kategoriErTom(cv?.kurs) &&
+        kategoriErTom(cv?.offentligeGodkjenninger) &&
+        kategoriErTom(cv?.spraak) &&
         !!cv?.sammendrag
     );
 
