@@ -7,7 +7,7 @@ module.exports = {
         "prettier",
         "plugin:jsx-a11y/recommended",
     ],
-    ignorePatterns: ["docker-compose/"],
+    ignorePatterns: ["docker-compose/", "*.json"],
     plugins: ["react", "prettier"],
     parserOptions: {
         ecmaFeatures: {
