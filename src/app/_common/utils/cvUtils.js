@@ -1,5 +1,5 @@
 export const cvHarInnhold = (cv) =>
-    !!cv &&
+    cv &&
     !(
         jobbønskerErTomt(cv?.jobboensker) &&
         kategoriErTom(cv?.utdanning) &&
@@ -12,10 +12,10 @@ export const cvHarInnhold = (cv) =>
         kategoriErTom(cv?.kurs) &&
         kategoriErTom(cv?.offentligeGodkjenninger) &&
         kategoriErTom(cv?.spraak) &&
-        !!cv?.sammendrag
+        !cv?.sammendrag
     );
 
-const kategoriErTom = (kategori) => !kategori && kategori?.length === 0;
+const kategoriErTom = (kategori) => !kategori || kategori?.length === 0;
 
 export const jobbønskerErTomt = (jobbønsker) =>
     !jobbønsker || Object.keys(jobbønsker).length === 0 || jobbønsker?.locations?.length === 0;
