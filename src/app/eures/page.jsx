@@ -3,7 +3,8 @@ import { serverConfig } from "@/app/_common/serverConfig";
 import NotFound from "@/app/not-found";
 
 export default async function Page() {
-    if (serverConfig.erVeileder) return <NotFound />;
+    const { erVeileder, erDemoApp } = serverConfig;
+    if (erVeileder) return <NotFound />;
 
-    return <EuresPage />;
+    return <EuresPage erDemoApp={erDemoApp} />;
 }

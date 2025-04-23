@@ -1,0 +1,22 @@
+export const tomPersonMock = {
+    harSettHjemmelEllerSamtykket: true,
+    samtykkeUtloeper: "2030-03-19T11:33:00.95411+01:00",
+    harCv: true,
+    erManuell: false,
+    erUnderOppfoelging: true,
+    maaBekrefteTidligereCv: false,
+    synligForArbeidsgivere: false,
+    personalia: {
+        fornavn: "Ola",
+        etternavn: "Nordmann",
+        epost: "ola.nordmann@test.no",
+        telefonnummer: "+4799999999",
+        adresse: "Fyrstikkalléen 1",
+        postnummer: "0661",
+        poststed: "Oslo",
+        foedselsdato: "1980-01-01",
+        sistEndret: "2025-04-01T12:00:00+02:00",
+    },
+    untattKandidatsoek: true,
+    erUnderFemten: false,
+};

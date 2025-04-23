@@ -1,0 +1,65 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: cv-demo
+  namespace: teampam
+  labels:
+    team: teampam
+spec:
+  image: {{ image }}
+  port: 8095
+  liveness:
+    path: /min-cv/api/internal/isAlive
+    initialDelay: 10
+  readiness:
+    path: /min-cv/api/internal/isReady
+    initialDelay: 10
+  replicas:
+    min: 1
+    max: 1
+    scalingStrategy:
+      cpu:
+        thresholdPercentage: 50
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+  prometheus:
+    enabled: true
+    path: /min-cv/api/internal/metrics
+  filesFrom:
+    - emptyDir:
+        medium: Memory
+      mountPath: /app/.next/cache
+  ingresses:
+  {{#each ingress as |url|}}
+     - {{url}}
+  {{/each}}
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
+    logging:
+      destinations:
+        - id: loki
+        - id: elastic
+  env:
+    - name: PORT
+      value: "8095"
+    - name: NEXT_PUBLIC_ENVIRONMENT
+      value: {{ next_public_environment }}
+    - name: BASE_URL
+      value: {{ base_url }}
+    - name: LOGIN_URL
+      value: {{ login_url }}
+    - name: PAM_ONTOLOGI_BASEURL
+      value: http://pam-ontologi/rest/typeahead
+    - name: NEXT_PUBLIC_TELEMETRY_URL
+      value: {{ next_public_telemetry_url }}
+  accessPolicy:
+    outbound:
+      rules:
+        - application: pam-ontologi

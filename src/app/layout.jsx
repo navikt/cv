@@ -11,11 +11,13 @@ export const dynamic = "force-dynamic";
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"], adjustFontFallback: false });
 
 async function RootLayout({ children }) {
-    if (process.env.NODE_ENV === "development") {
+    const { erVeileder, erDemoApp } = serverConfig;
+
+    if (erDemoApp) {
+        import("../../mocks/mirageDemo").then(() => logger.warn("Mirage mocks kjører i demo-modus!"));
+    } else if (process.env.NODE_ENV === "development") {
         import("../../mocks/mirage").then(() => logger.warn("Mirage mocks kjører!"));
     }
-
-    const { erVeileder } = serverConfig;
 
     logger.info(`Er veileder i layout: ${erVeileder}`);
 

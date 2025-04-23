@@ -2,10 +2,10 @@
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createServer } from "miragejs";
-import { samtykkeEuresMock } from "./samtykkeEuresMock";
-import { arbeidsforholdMock } from "./arbeidsforholdMock";
-import { veilederDekoratørMock } from "./veilederDekoratørMock";
-import { amplitudeMock } from "./amplitudeMock";
+import { samtykkeEuresMock } from "./mockData/samtykkeEuresMock";
+import { arbeidsforholdMock } from "./mockData/arbeidsforholdMock";
+import { veilederDekoratørMock } from "./mockData/veilederDekoratørMock";
+import { amplitudeMock } from "./mockData/amplitudeMock";
 
 createServer({
     namespace: "/min-cv",
