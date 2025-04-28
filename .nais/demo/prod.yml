@@ -1,0 +1,6 @@
+ingress:
+  - "https://cv-demo.ansatt.nav.no/min-cv"
+next_public_environment: "prod"
+next_public_telemetry_url: "https://telemetry.nav.no/collect"
+base_url: "https://cv-demo.ansatt.nav.no/min-cv"
+login_url: "https://login.nav.no/oauth2/login"

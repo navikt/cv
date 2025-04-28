@@ -50,8 +50,8 @@ jobs:
       NAIS_RESOURCE: .nais/veileder/nais.yml
       NPM_BUILD_COMMAND: npm run build:veileder
       IMAGE_SUFFIX: cv-veileder
-      SKIP_DRAFT_RELEASE: true # Trenger ikke draft for begge appene da de prodsettes samtidig
-      CODEQL_ENABLED: false # Trenger ikke CodeQL for begge appene
+      SKIP_DRAFT_RELEASE: true # Trenger ikke draft for alle appene da de prodsettes samtidig
+      CODEQL_ENABLED: false # Trenger ikke CodeQL for alle appene
       VERSION_TAG: ${{ needs.create-version-tag.outputs.version_tag }}
       NODE_VERSION: 22
     secrets: inherit
@@ -64,8 +64,8 @@ jobs:
       NAIS_RESOURCE: .nais/demo/nais.yml
       NPM_BUILD_COMMAND: npm run build:demo
       IMAGE_SUFFIX: cv-demo
-      SKIP_DRAFT_RELEASE: true # Trenger ikke draft for begge appene da de prodsettes samtidig
-      CODEQL_ENABLED: false # Trenger ikke CodeQL for begge appene
+      SKIP_DRAFT_RELEASE: true # Trenger ikke draft for alle appene da de prodsettes samtidig
+      CODEQL_ENABLED: false # Trenger ikke CodeQL for alle appene
       VERSION_TAG: ${{ needs.create-version-tag.outputs.version_tag }}
       NODE_VERSION: 22
     secrets: inherit

@@ -22,3 +22,10 @@ jobs:
       NAIS_RESOURCE: .nais/veileder/nais.yml
       NAIS_VARS: .nais/veileder/prod.yml
       IMAGE_SUFFIX: cv-veileder
+  deploy-prod-demo:
+    uses: navikt/pam-deploy/.github/workflows/deploy-prod.yml@v7
+    name: Deploy cv-demo til prod
+    with:
+      NAIS_RESOURCE: .nais/demo/nais.yml
+      NAIS_VARS: .nais/demo/prod.yml
+      IMAGE_SUFFIX: cv-demo

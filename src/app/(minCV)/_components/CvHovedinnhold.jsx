@@ -21,9 +21,12 @@ import { useContext } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 import VeilederBanner from "@/app/_common/components/VeilederBanner/VeilederBanner";
 import DemoBanner from "@/app/_common/components/DemoBanner/DemoBanner";
+import { logger } from "@navikt/next-logger";
 
 export default function CvHovedinnhold({ cvLaster, setVisHovedinnhold }) {
     const { erVeileder, erDemoApp } = useContext(ApplicationContext);
+
+    logger.info(`CvHovedInnhold erVeileder: ${erVeileder} - erDemoApp: ${erDemoApp}`);
 
     return (
         <div>
