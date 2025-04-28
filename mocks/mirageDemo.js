@@ -10,6 +10,8 @@ import { tomPersonMock } from "./mockData/tomPersonMock";
 // Må ha med en ID fordi mirage lagrer ting som arrays
 const DB_ID = 1;
 
+console.log("Kjører mirage");
+
 createServer({
     seeds(server) {
         server.db.loadData({
