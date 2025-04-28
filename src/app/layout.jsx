@@ -14,9 +14,15 @@ async function RootLayout({ children }) {
     const { erVeileder, erDemoApp } = serverConfig;
 
     if (erDemoApp === true) {
-        import("../../mocks/mirageDemo").then(() => logger.warn("Mirage mocks kjører i demo-modus!"));
+        import("../../mocks/mirageDemo").then((mirage) => {
+            mirage.makeDemoServer();
+            logger.warn("Mirage mocks kjører i demo-modus!");
+        });
     } else if (process.env.NODE_ENV === "development") {
-        import("../../mocks/mirage").then(() => logger.warn("Mirage mocks kjører!"));
+        import("../../mocks/mirage").then((mirage) => {
+            mirage.makeLocalhostServer();
+            logger.warn("Mirage mocks kjører!");
+        });
     }
 
     logger.info(`Er veileder i layout: ${erVeileder}, er demo i layout: ${erDemoApp}`);
