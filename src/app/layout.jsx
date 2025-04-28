@@ -13,7 +13,7 @@ const sourceSansPro = Source_Sans_3({ subsets: ["latin"], adjustFontFallback: fa
 async function RootLayout({ children }) {
     const { erVeileder, erDemoApp } = serverConfig;
 
-    if (erDemoApp === true) {
+    if (process.env.ER_DEMO_APP === "true") {
         import("../../mocks/mirageDemo").then((mirage) => {
             mirage.makeDemoServer();
             logger.warn("Mirage mocks kjører i demo-modus!");
@@ -25,7 +25,9 @@ async function RootLayout({ children }) {
         });
     }
 
-    logger.info(`Er veileder i layout: ${erVeileder}, er demo i layout: ${erDemoApp}`);
+    logger.info(
+        `Er veileder i layout: ${erVeileder} (direkte-sjekk: ${process.env.NODE_ENV === "development"}, er demo i layout: ${erDemoApp} (direkte-sjekk: ${process.env.ER_DEMO_APP === "true"}`,
+    );
 
     return erVeileder === true ? (
         <VeilederDekoratørWrapper fontClassName={sourceSansPro.className}>{children}</VeilederDekoratørWrapper>
