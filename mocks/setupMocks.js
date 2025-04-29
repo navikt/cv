@@ -1,13 +1,16 @@
-export async function setupMocks() {
-    let makeMock = () => console.log("Kjører i produksjonsmodus");
+import { logger } from "@navikt/next-logger";
 
-    if (process.env.ER_DEMO_APP === "true") {
-        const mockserver = await import("./mirageDemo");
-        makeMock = () => mockserver.makeMockServer();
-    } else if (process.env.NODE_ENV === "development") {
-        const mockserver = await import("./mirage");
-        makeMock = () => mockserver.makeMockServer();
+export async function setupMocks() {
+    if (!(process.env.ER_DEMO_APP === "true" || process.env.NODE_ENV === "development")) {
+        logger.info("Kjører i produksjonsmodus");
+        return;
     }
 
-    makeMock();
+    if (process.env.ER_DEMO_APP === "true") {
+        await import("./mirageDemo");
+        logger.warn("Miragejs kjører i demo-modus");
+    } else if (process.env.NODE_ENV === "development") {
+        await import("./mirage");
+        logger.warn("Miragejs kjører i localhost-modus");
+    }
 }
