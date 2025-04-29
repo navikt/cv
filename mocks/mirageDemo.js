@@ -6,6 +6,7 @@ import { arbeidsforholdMock } from "./mockData/arbeidsforholdMock";
 import { amplitudeMock } from "./mockData/amplitudeMock";
 import { tomCvMock } from "./mockData/tomCvMock";
 import { tomPersonMock } from "./mockData/tomPersonMock";
+import { språkMock } from "./mockData/språkMock";
 
 // Må ha med en ID fordi mirage lagrer ting som arrays
 const DB_ID = 1;
@@ -24,6 +25,7 @@ export function makeDemoServer() {
         logging: false,
         routes() {
             this.get("/api/arbeidsforhold", arbeidsforholdMock);
+            this.get("/api/typeahead/sprak", språkMock);
             this.get("/api/isAuthenticated", { message: "OK" });
 
             this.get("/api/cv", (schema) => schema.db.cv.find(DB_ID));
