@@ -59,6 +59,8 @@ spec:
       value: http://pam-ontologi/rest/typeahead
     - name: NEXT_PUBLIC_TELEMETRY_URL
       value: {{ next_public_telemetry_url }}
+    - name: ER_DEMO_APP
+      value: "true"
   accessPolicy:
     outbound:
       rules:
