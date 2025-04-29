@@ -18,14 +18,15 @@ async function RootLayout({ children }) {
         `Er veileder i layout: ${erVeileder} (direkte-sjekk: ${process.env.NODE_ENV === "development"}, er demo i layout: ${erDemoApp} (direkte-sjekk: ${process.env.ER_DEMO_APP === "true"}`,
     );
 
-    const innhold =
-        erVeileder === true ? (
-            <VeilederDekoratørWrapper fontClassName={sourceSansPro.className}>{children}</VeilederDekoratørWrapper>
-        ) : (
-            <BorgerDekoratørWrapper fontClassName={sourceSansPro.className}>{children}</BorgerDekoratørWrapper>
-        );
-
-    return <MockWrapper>{innhold}</MockWrapper>;
+    return erVeileder === true ? (
+        <VeilederDekoratørWrapper fontClassName={sourceSansPro.className}>
+            <MockWrapper>{children}</MockWrapper>
+        </VeilederDekoratørWrapper>
+    ) : (
+        <BorgerDekoratørWrapper fontClassName={sourceSansPro.className}>
+            <MockWrapper>{children}</MockWrapper>
+        </BorgerDekoratørWrapper>
+    );
 }
 
 function MockWrapper({ children }) {
