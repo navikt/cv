@@ -40,6 +40,17 @@ $ npm run dev:veileder
 
 Modia-dekoratøren fungerer ikke lokalt, men innlogging gjøres med wonderwall som vanlig.
 
+### Teste demoapplikasjonen
+
+For å kjøre opp demoappen følges samme oppskrift som over, men `setup_dependencies` trengs ikke, fordi den ikke har noen backendintegrasjon. `npm run dev` må fortsatt postfixes med `:demo`
+
+```bash
+$ npm install
+$ npm run dev:demo
+```
+
+Demo-appen har noen begrensninger; Dekoratøren og eures-deling er ikke tilgjengelig.
+
 ### Test hjemmelsside
 
 Dersom man har behov for teste hjemmelsiden som kommer ved første innlogging kan man "trekke samtykke" lokalt ved å kjøre `npm run reset_samtykke`. Ved neste innlasting vil personen ikke lenger ha sett hjemmel.
