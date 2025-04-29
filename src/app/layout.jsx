@@ -6,6 +6,7 @@ import { serverConfig } from "@/app/_common/serverConfig";
 import BorgerDekoratørWrapper from "@/app/_common/components/Dekoratør/BorgerDekoratørWrapper";
 import VeilederDekoratørWrapper from "@/app/_common/components/Dekoratør/VeilederDekoratørWrapper";
 import { logger } from "@navikt/next-logger";
+import { setupMocks } from "../../mocks/setupMocks";
 
 export const dynamic = "force-dynamic";
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"], adjustFontFallback: false });
@@ -13,11 +14,7 @@ const sourceSansPro = Source_Sans_3({ subsets: ["latin"], adjustFontFallback: fa
 async function RootLayout({ children }) {
     const { erVeileder, erDemoApp } = serverConfig;
 
-    if (process.env.ER_DEMO_APP === "true") {
-        import("../../mocks/mirageDemo").then(() => logger.warn("Mirage mocks kjører i demo-modus!"));
-    } else if (process.env.NODE_ENV === "development") {
-        import("../../mocks/mirage").then(() => logger.warn("Mirage mocks kjører!"));
-    }
+    setupMocks();
 
     logger.info(
         `Er veileder i layout: ${erVeileder} (direkte-sjekk: ${process.env.NODE_ENV === "development"}, er demo i layout: ${erDemoApp} (direkte-sjekk: ${process.env.ER_DEMO_APP === "true"}`,
