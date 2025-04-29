@@ -14,7 +14,7 @@ const sourceSansPro = Source_Sans_3({ subsets: ["latin"], adjustFontFallback: fa
 async function RootLayout({ children }) {
     const { erVeileder, erDemoApp } = serverConfig;
 
-    setupMocks();
+    await setupMocks();
 
     logger.info(
         `Er veileder i layout: ${erVeileder} (direkte-sjekk: ${process.env.NODE_ENV === "development"}, er demo i layout: ${erDemoApp} (direkte-sjekk: ${process.env.ER_DEMO_APP === "true"}`,
