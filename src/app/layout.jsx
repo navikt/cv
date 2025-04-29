@@ -33,7 +33,11 @@ function MockWrapper({ children }) {
     const erLocalhost = process.env.NODE_ENV === "development";
 
     if (erDemoApp || erLocalhost) {
-        return <MirageInitializer>{children}</MirageInitializer>;
+        return (
+            <MirageInitializer erDemoApp={erDemoApp} erLocalHost={erLocalhost}>
+                {children}
+            </MirageInitializer>
+        );
     }
 
     return children;

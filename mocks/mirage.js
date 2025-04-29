@@ -7,8 +7,6 @@ import { arbeidsforholdMock } from "./mockData/arbeidsforholdMock";
 import { veilederDekoratørMock } from "./mockData/veilederDekoratørMock";
 import { amplitudeMock } from "./mockData/amplitudeMock";
 
-console.log("Importerer localhost mirage");
-
 export function makeLocalhostServer() {
     console.log("Kjører localhost mirage");
     return createServer({
