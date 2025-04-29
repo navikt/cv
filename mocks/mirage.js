@@ -8,7 +8,7 @@ import { veilederDekoratørMock } from "./mockData/veilederDekoratørMock";
 import { amplitudeMock } from "./mockData/amplitudeMock";
 
 export function makeLocalhostServer() {
-    console.log("Kjører localhost mirage");
+    console.warn("Kjører localhost mirage");
     return createServer({
         namespace: "/min-cv",
         logging: false,

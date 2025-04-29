@@ -18,13 +18,10 @@ export function MirageInitializer({ erDemoApp, erLocalHost, children }) {
         if (!mirageServer) {
             try {
                 if (erDemoApp) {
-                    console.log("Starter Mirage demo server...");
                     mirageServer = makeDemoServer();
                 } else if (erLocalHost) {
-                    console.log("Starter Mirage localhost server...");
                     mirageServer = makeLocalhostServer();
                 }
-                console.log("Mirage server startet");
             } catch (error) {
                 console.error("klarte ikke å starte Mirage server:", error);
             }
