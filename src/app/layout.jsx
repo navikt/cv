@@ -5,25 +5,38 @@ import "./page.module.css";
 import { serverConfig } from "@/app/_common/serverConfig";
 import BorgerDekoratørWrapper from "@/app/_common/components/Dekoratør/BorgerDekoratørWrapper";
 import VeilederDekoratørWrapper from "@/app/_common/components/Dekoratør/VeilederDekoratørWrapper";
-import { logger } from "@navikt/next-logger";
+import { MirageInitializer } from "@/app/_common/components/MirageInitializer";
 
 export const dynamic = "force-dynamic";
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"], adjustFontFallback: false });
 
 async function RootLayout({ children }) {
-    if (process.env.NODE_ENV === "development") {
-        import("../../mocks/mirage").then(() => logger.warn("Mirage mocks kjører!"));
-    }
-
     const { erVeileder } = serverConfig;
 
-    logger.info(`Er veileder i layout: ${erVeileder}`);
-
     return erVeileder === true ? (
-        <VeilederDekoratørWrapper fontClassName={sourceSansPro.className}>{children}</VeilederDekoratørWrapper>
+        <VeilederDekoratørWrapper fontClassName={sourceSansPro.className}>
+            <MockWrapper>{children}</MockWrapper>
+        </VeilederDekoratørWrapper>
     ) : (
-        <BorgerDekoratørWrapper fontClassName={sourceSansPro.className}>{children}</BorgerDekoratørWrapper>
+        <BorgerDekoratørWrapper fontClassName={sourceSansPro.className}>
+            <MockWrapper>{children}</MockWrapper>
+        </BorgerDekoratørWrapper>
     );
+}
+
+function MockWrapper({ children }) {
+    const erDemoApp = process.env.ER_DEMO_APP === "true";
+    const erLocalhost = process.env.NODE_ENV === "development";
+
+    if (erDemoApp || erLocalhost) {
+        return (
+            <MirageInitializer erDemoApp={erDemoApp} erLocalHost={erLocalhost}>
+                {children}
+            </MirageInitializer>
+        );
+    }
+
+    return children;
 }
 
 export default RootLayout;

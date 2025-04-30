@@ -17,13 +17,13 @@ import styles from "../../page.module.css";
 
 initLogger();
 
-export default function MinCVPage({ erVeileder }) {
+export default function MinCVPage({ erVeileder, erDemoApp }) {
     const { cvLaster } = useCv();
     const { erInnlogget } = useErInnlogget();
     const [visHovedinnhold, setVisHovedinnhold] = useState(true);
 
     return (
-        <ApplicationProvider erVeileder={erVeileder}>
+        <ApplicationProvider erVeileder={erVeileder} erDemoApp={erDemoApp}>
             {visHovedinnhold ? (
                 <>
                     <HeaderPanel />

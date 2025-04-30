@@ -20,6 +20,7 @@ const hentServerConfigMap = () => ({
         modiaDekorator: process.env.MODIA_DEKORATOR_BASEURL,
     },
     erVeileder: process.env.ER_VEILEDER === "true",
+    erDemoApp: process.env.ER_DEMO_APP === "true",
 });
 
 export const serverConfig = hentServerConfigMap();

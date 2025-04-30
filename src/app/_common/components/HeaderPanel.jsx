@@ -9,7 +9,7 @@ import { useContext, useEffect, useState } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 
 function HeaderPanel({ title = "Min CV" }) {
-    const { erVeileder } = useContext(ApplicationContext);
+    const { erVeileder, erDemoApp } = useContext(ApplicationContext);
     const { personalia, personHarFeil } = usePerson();
     const { sistEndret } = useCv();
     const [navn, setNavn] = useState("");
@@ -35,6 +35,10 @@ function HeaderPanel({ title = "Min CV" }) {
         <Detail>{`Sist endret ${formatterFullDatoMedFallback(sistEndret)}`}</Detail>
     );
 
+    let tittelPostfiks = "";
+    if (erVeileder) tittelPostfiks = " - Veileder";
+    else if (erDemoApp) tittelPostfiks = " - Demoapplikasjon";
+
     return (
         <Box as="header" borderWidth="0 0 4 0" borderColor="surface-info">
             <Box background="surface-default" paddingInline="4" paddingBlock="6 6">
@@ -46,7 +50,7 @@ function HeaderPanel({ title = "Min CV" }) {
                         <VStack gap={{ xs: "3", md: "3" }}>
                             <HStack gap="6" align="center">
                                 <Heading level="1" size="large">
-                                    {`${title}${erVeileder ? " - Veileder" : ""}`}
+                                    {`${title}${tittelPostfiks}`}
                                 </Heading>
                             </HStack>
                             <Hide below="md">

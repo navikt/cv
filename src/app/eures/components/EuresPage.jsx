@@ -9,7 +9,7 @@ import { useEures } from "@/app/_common/hooks/swr/useEures";
 import { useEffect, useState } from "react";
 import { setBreadcrumbs } from "@navikt/nav-dekoratoren-moduler";
 
-export default function EuresPage() {
+export default function EuresPage({ erDemoApp }) {
     const { eures, initKategorier, initLand } = useEures();
     const [kategorier, setKategorier] = useState([]);
     const [landSelectedOptions, setLandSelectedOptions] = useState([]);
@@ -37,7 +37,7 @@ export default function EuresPage() {
     }, [eures]);
 
     return (
-        <ApplicationProvider>
+        <ApplicationProvider erDemoApp={erDemoApp}>
             {visHovedinnhold ? (
                 <>
                     <HeaderPanel title="CV-deling med EURES-portalen" />

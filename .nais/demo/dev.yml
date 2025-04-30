@@ -1,0 +1,6 @@
+ingress:
+  - "https://cv-demo.ansatt.dev.nav.no/min-cv"
+next_public_environment: "dev"
+next_public_telemetry_url: "https://telemetry.ekstern.dev.nav.no/collect"
+base_url: "https://cv-demo.ansatt.dev.nav.no/min-cv"
+login_url: "https://login.ekstern.dev.nav.no/oauth2/login"

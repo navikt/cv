@@ -11,7 +11,7 @@ import { HjemmelsideVeileder } from "@/app/(minCV)/_components/hjemmelside/Hjemm
 
 export const ApplicationContext = React.createContext({});
 
-function ApplicationProvider({ children, erVeileder }) {
+function ApplicationProvider({ children, erVeileder, erDemoApp }) {
     const { erInnlogget, innloggingLaster, innloggingHarFeil, harBlittUtlogget } = useErInnlogget();
     const { harIkkeSettHjemmel, erUnderOppfølging, personHarFeil, erManuell } = usePerson();
     const { cvHarFeil } = useCv(erVeileder);
@@ -48,7 +48,9 @@ function ApplicationProvider({ children, erVeileder }) {
     };
 
     return (
-        <ApplicationContext.Provider value={{ suksessNotifikasjon, errorNotifikasjon, erVeileder, erInnlogget }}>
+        <ApplicationContext.Provider
+            value={{ suksessNotifikasjon, errorNotifikasjon, erVeileder, erInnlogget, erDemoApp }}
+        >
             {hentSideinnhold()}
             <Notifikasjoner notifikasjoner={notifikasjoner} />
         </ApplicationContext.Provider>
