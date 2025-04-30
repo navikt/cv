@@ -38,7 +38,7 @@ export default function Kurs() {
                                 Du har ikke lagt til noen kurs i CV-en
                             </BodyLong>
                             <BodyLong className={styles.mb12}>
-                                Her kan du sette inn kurs som du har tatt, f.eks skredkurs.
+                                Her kan du sette inn kurs som du har tatt, f.eks Excel-kurs.
                             </BodyLong>
                         </div>
                     ) : (
