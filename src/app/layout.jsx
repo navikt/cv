@@ -5,38 +5,21 @@ import "./page.module.css";
 import { serverConfig } from "@/app/_common/serverConfig";
 import BorgerDekoratørWrapper from "@/app/_common/components/Dekoratør/BorgerDekoratørWrapper";
 import VeilederDekoratørWrapper from "@/app/_common/components/Dekoratør/VeilederDekoratørWrapper";
-import { MirageInitializer } from "@/app/_common/components/MirageInitializer";
+import { DemoDekoratørWrapper } from "@/app/_common/components/Dekoratør/DemoDekoratørWrapper";
 
 export const dynamic = "force-dynamic";
 const sourceSansPro = Source_Sans_3({ subsets: ["latin"], adjustFontFallback: false });
 
 async function RootLayout({ children }) {
-    const { erVeileder } = serverConfig;
+    const { erVeileder, erDemoApp } = serverConfig;
 
-    return erVeileder === true ? (
-        <VeilederDekoratørWrapper fontClassName={sourceSansPro.className}>
-            <MockWrapper>{children}</MockWrapper>
-        </VeilederDekoratørWrapper>
-    ) : (
-        <BorgerDekoratørWrapper fontClassName={sourceSansPro.className}>
-            <MockWrapper>{children}</MockWrapper>
-        </BorgerDekoratørWrapper>
-    );
-}
+    if (erVeileder === true)
+        return <VeilederDekoratørWrapper fontClassName={sourceSansPro.className}>{children}</VeilederDekoratørWrapper>;
 
-function MockWrapper({ children }) {
-    const erDemoApp = process.env.ER_DEMO_APP === "true";
-    const erLocalhost = process.env.NODE_ENV === "development";
+    if (erDemoApp)
+        return <DemoDekoratørWrapper fontClassName={sourceSansPro.className}>{children}</DemoDekoratørWrapper>;
 
-    if (erDemoApp || erLocalhost) {
-        return (
-            <MirageInitializer erDemoApp={erDemoApp} erLocalHost={erLocalhost}>
-                {children}
-            </MirageInitializer>
-        );
-    }
-
-    return children;
+    return <BorgerDekoratørWrapper fontClassName={sourceSansPro.className}>{children}</BorgerDekoratørWrapper>;
 }
 
 export default RootLayout;
