@@ -8,7 +8,7 @@ initLogger();
 
 export default function Pdfside({ erVeileder }) {
     return (
-        <ApplicationProvider erVeileder={erVeileder}>
+        <ApplicationProvider erVeileder={erVeileder} erPdf>
             <PdfNedlasting />
         </ApplicationProvider>
     );

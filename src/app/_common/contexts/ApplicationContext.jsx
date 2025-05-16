@@ -11,7 +11,7 @@ import { HjemmelsideVeileder } from "@/app/(minCV)/_components/hjemmelside/Hjemm
 
 export const ApplicationContext = React.createContext({});
 
-function ApplicationProvider({ children, erVeileder, erDemoApp }) {
+function ApplicationProvider({ children, erVeileder, erDemoApp, erPdf = false }) {
     const { erInnlogget, innloggingLaster, innloggingHarFeil, harBlittUtlogget } = useErInnlogget();
     const { harIkkeSettHjemmel, erUnderOppfølging, personHarFeil, erManuell } = usePerson();
     const { cvHarFeil } = useCv(erVeileder);
@@ -35,7 +35,7 @@ function ApplicationProvider({ children, erVeileder, erDemoApp }) {
             return <Feilside årsak={årsak} />;
         }
 
-        if (erVeileder && erManuell === false) {
+        if (erVeileder && erManuell === false && erPdf === false) {
             return <Feilside årsak={FeilsideÅrsak.IKKE_MANUELL_VEILEDER} />;
         }
 
