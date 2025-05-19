@@ -38,6 +38,7 @@ export default function ModiaDekoratør() {
             fetchActiveUserOnMount
             urlFormat="NAV_NO"
             onFnrChanged={refreshVedEndretFnr}
+            enhetSyncMode="ignore"
         />
     );
 }

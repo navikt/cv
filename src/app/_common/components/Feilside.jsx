@@ -62,7 +62,7 @@ export const FeilsideÅrsak = Object.freeze({
     },
     IKKE_MANUELL_VEILEDER: {
         tittel: "Bruker er ikke manuell",
-        tekst: 'Brukeren er ikke manuell, og du har som veileder derfor ikke tilgang til å brukers CV i "Min CV". Hvis du ønsker å se CV-en til bruker kan du gjøre det i Modia.',
+        tekst: 'Brukeren er ikke manuell, og du har som veileder derfor ikke tilgang til brukers CV i "Min CV". Hvis du ønsker å se CV-en til bruker kan du gjøre det i Modia.',
     },
     FETCH_ERROR: {
         tittel: "CV er ikke tilgjengelig",
