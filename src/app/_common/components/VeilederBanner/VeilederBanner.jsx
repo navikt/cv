@@ -39,7 +39,10 @@ function VeilederBanner({ className }) {
                 <LastbarTekst label="Født" value={fødselsdato} placeholder="1. januar 1970" />
                 <LastbarTekst label="Bosted" value={bosted} placeholder="Fyrstikkalleen 1, 0661 Oslo" />
             </VStack>
-            <List title="Husk at du som veileder må:" headingTag="span" size="small" className={styles.mb6}>
+            <Heading size="xsmall" level="3">
+                Husk at du som veileder må:
+            </Heading>
+            <List size="small" className={styles.mb6}>
                 <ListItem className={styles.mb3}>
                     fortelle bruker at all informasjon du som veileder nå legger inn i CV-en på vegne av bruker, kan bli
                     synlig for alle som jobber med arbeidsrettet oppfølging i NAV.

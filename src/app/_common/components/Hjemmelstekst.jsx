@@ -76,7 +76,10 @@ export default function Hjemmelstekst() {
                 ).
             </BodyLong>
 
-            <List title="Slik gjør vi det:" headingTag="span" className={styles.mb6}>
+            <Heading size="small" level="3">
+                Slik gjør vi det:
+            </Heading>
+            <List className={styles.mb6}>
                 <ListItem className={styles.mb3}>
                     Nav-veilederen kan gjøre et søk som finner CV-er som matcher en ledig stilling eller en jobbmesse.
                 </ListItem>
@@ -103,7 +106,10 @@ export default function Hjemmelstekst() {
                 hos arbeidsgiver automatisk slettet.
             </BodyLong>
 
-            <List title="Hva skjer hvis du ikke registrerer en CV?" headingTag="h2" className={styles.mb6}>
+            <Heading size="small" level="2">
+                Hva skjer hvis du ikke registrerer en CV?
+            </Heading>
+            <List className={styles.mb6}>
                 <ListItem className={styles.mb3}>
                     Du kan risikere at Nav ikke har mulighet til å gi deg oppfølgingen du trenger.
                 </ListItem>
@@ -119,7 +125,10 @@ export default function Hjemmelstekst() {
                 </ListItem>
             </List>
 
-            <List title="Utarbeide statistikk og analyser" headingTag="h2" className={styles.mb6}>
+            <Heading size="small" level="2">
+                Utarbeide statistikk og analyser
+            </Heading>
+            <List className={styles.mb6}>
                 <ListItem className={styles.mb3}>
                     Vi bruker personopplysninger til å utarbeide statistikk og analyser (
                     <Link
