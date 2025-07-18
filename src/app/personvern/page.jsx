@@ -37,7 +37,10 @@ async function Page() {
                             arbeidssøker hos Nav.
                         </BodyLong>
 
-                        <List title="Innhold" headingTag="h3" className={styles.mb6}>
+                        <Heading size="small" level="3">
+                            Innhold
+                        </Heading>
+                        <List className={styles.mb6}>
                             <ListItem>
                                 <Link href="#informasjon">Hvilke personopplysninger samler vi inn?</Link>
                             </ListItem>
@@ -72,11 +75,7 @@ async function Page() {
                         <BodyLong>
                             Når du tar i bruk CV på nav.no, innhenter vi grunnleggende personalia fra folkeregisteret:
                         </BodyLong>
-                        <List
-                            className={styles.mb3}
-                            title={<span className={styles.visuallyhidden}>Personalia</span>}
-                            headingTag="span"
-                        >
+                        <List className={styles.mb3}>
                             <ListItem>Navn</ListItem>
                             <ListItem>Telefonnummer</ListItem>
                             <ListItem>E-postadresse</ListItem>
@@ -98,15 +97,7 @@ async function Page() {
                             CV-opplysninger
                         </Heading>
                         <BodyLong>Du kan registrere følgende CV-opplysninger i vår CV-tjeneste:</BodyLong>
-                        <List
-                            className={styles.mb3}
-                            title={
-                                <span className={styles.visuallyhidden}>
-                                    Opplysninger du kan registrere i CV-tjenesten
-                                </span>
-                            }
-                            headingTag="span"
-                        >
+                        <List className={styles.mb3}>
                             <ListItem>Jobbønsker</ListItem>
                             <ListItem>Utdanninger</ListItem>
                             <ListItem>Fagbrev</ListItem>

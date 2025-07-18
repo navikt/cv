@@ -42,12 +42,7 @@ export default function Kompetanser() {
                             </BodyLong>
                         </div>
                     ) : (
-                        <List
-                            as="ul"
-                            className={styles.mb6}
-                            headingTag="div"
-                            title={<div className={styles.visuallyhidden}>Kompetanser</div>}
-                        >
+                        <List as="ul" className={styles.mb6}>
                             {kompetanser.map((kompetanse) => (
                                 <List.Item key={kompetanse.title}>{kompetanse.title}</List.Item>
                             ))}
