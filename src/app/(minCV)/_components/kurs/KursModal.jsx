@@ -35,14 +35,14 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                 .number()
                 .int({ error: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig` })
                 .optional()
-                .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
+                .refine((val) => (!tidsenhet && !val) || (val && !val.isNaN && parseInt(val, 10) > 0), {
                     error: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
                 })
                 .optional(),
         })
         .refine((data) => !(data.durationUnit && data.durationUnit !== "UKJENT" && !data.duration), {
             path: ["duration"],
-            error: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
+            error: `Du må må oppgi antall`,
         });
 
     const KursSchemaWithDate = z
@@ -57,14 +57,14 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
                 .number()
                 .int({ error: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig` })
                 .optional()
-                .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
+                .refine((val) => (!tidsenhet && !val) || (val && !val.isNaN && parseInt(val, 10) > 0), {
                     error: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
                 })
                 .optional(),
         })
         .refine((data) => !(data.durationUnit && data.durationUnit !== "UKJENT" && !data.duration), {
             path: ["duration"],
-            error: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
+            error: `Du må må oppgi antall`,
         });
 
     const getFormData = (target) => {
