@@ -27,7 +27,7 @@ export default function PersonaliaModal({
         fornavn: z.string().min(1, "Fornavn må fylles ut"),
         etternavn: z.string().min(1, "Etternavn må fylles ut"),
         telefonnummer: z.string().min(1, "Telefon må fylles ut"),
-        epost: z.string().email("Du har lagt inn en ugyldig e-post").min(1, "E-post må fylles ut"),
+        epost: z.email("Du har lagt inn en ugyldig e-post").min(1, "E-post må fylles ut"),
         postnummer: z.string().optional(),
         poststed: z.string().optional(),
         adresse: z.string().optional(),

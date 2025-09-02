@@ -9,7 +9,7 @@ export const hentDatoMedÅrsforskjell = (deltaÅr) => {
 const handleOneLevelZodError = (zodError) => {
     const errorMap = {};
 
-    zodError.errors.forEach((error) => {
+    zodError.issues.forEach((error) => {
         const path = error.path.join("."); // Join path segments to create a single key
         if (!errorMap[path]) {
             errorMap[path] = error.message; // Store only the first error for each path
@@ -71,8 +71,7 @@ export const revalidateExplicitValue = (name, value, schema, errors, setErrors) 
 export const dateStringSchema = (name) =>
     z
         .string({
-            required_error: `${name} må fylles ut`,
-            invalid_type_error: `${name} er ikke gyldig`,
+            error: () => (!name ? `${name} er ikke gyldig` : `${name} må fylles ut`),
         })
         .refine(
             (dateStr) => {
@@ -80,15 +79,15 @@ export const dateStringSchema = (name) =>
                 return dateRegex.test(dateStr);
             },
             {
-                message: `${name} er ikke gyldig`,
+                error: `${name} er ikke gyldig`,
             },
         )
         .transform((dateStr, ctx) => {
             const [day, month, year] = dateStr.split(".").map(Number);
 
             if (year < 1000 || year > 9999) {
-                ctx.addIssue({
-                    message: `${name} er ikke gyldig`,
+                ctx.issues.push({
+                    error: `${name} er ikke gyldig`,
                 });
                 return z.NEVER;
             }
@@ -96,8 +95,8 @@ export const dateStringSchema = (name) =>
             const date = new Date(year, month - 1, day);
 
             if (date.getDate() !== day || date.getMonth() + 1 !== month || date.getFullYear() !== year) {
-                ctx.addIssue({
-                    message: `${name} er ikke gyldig`,
+                ctx.issues.push({
+                    error: `${name} er ikke gyldig`,
                 });
                 return z.NEVER;
             }
@@ -111,6 +110,6 @@ export const dateStringSchema = (name) =>
                 return date >= firstValid;
             },
             {
-                message: `Velg ${name.toLowerCase()} etter: ${hentDatoMedÅrsforskjell(-70).getDate().toString().padStart(2, "0")}.${(hentDatoMedÅrsforskjell(-70).getMonth() + 1).toString().padStart(2, "0")}.${hentDatoMedÅrsforskjell(-70).getFullYear()}`,
+                error: `Velg ${name.toLowerCase()} etter: ${hentDatoMedÅrsforskjell(-70).getDate().toString().padStart(2, "0")}.${(hentDatoMedÅrsforskjell(-70).getMonth() + 1).toString().padStart(2, "0")}.${hentDatoMedÅrsforskjell(-70).getFullYear()}`,
             },
         );

@@ -33,16 +33,16 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
             durationUnit: z.enum([...Object.keys(TidsenhetEnum), ""]).optional(),
             duration: z.coerce
                 .number()
-                .int({ message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig` })
+                .int({ error: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig` })
                 .optional()
                 .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
-                    message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
+                    error: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
                 })
                 .optional(),
         })
         .refine((data) => !(data.durationUnit && data.durationUnit !== "UKJENT" && !data.duration), {
             path: ["duration"],
-            message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
+            error: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
         });
 
     const KursSchemaWithDate = z
@@ -55,16 +55,16 @@ export default function KursModal({ modalÅpen, toggleModal, gjeldendeElement, l
             durationUnit: z.enum([...Object.keys(TidsenhetEnum), ""]).optional(),
             duration: z.coerce
                 .number()
-                .int({ message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig` })
+                .int({ error: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig` })
                 .optional()
                 .refine((val) => !val.isNaN && parseInt(val, 10) > 0, {
-                    message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
+                    error: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
                 })
                 .optional(),
         })
         .refine((data) => !(data.durationUnit && data.durationUnit !== "UKJENT" && !data.duration), {
             path: ["duration"],
-            message: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
+            error: `Antall ${formatterTidsenhet(tidsenhet, 2)} er ikke gyldig`,
         });
 
     const getFormData = (target) => {

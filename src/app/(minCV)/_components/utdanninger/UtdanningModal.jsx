@@ -33,7 +33,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
         nuskode: z.string().min(1, "Du må velge utdanningsnivå"),
         hasAuthorization: z.string().optional(),
         startDate: dateStringSchema("Fra dato").refine((data) => data <= new Date(), {
-            message: "Fra dato kan ikke være frem i tid",
+            error: "Fra dato kan ikke være frem i tid",
         }),
         ongoing: z.boolean().optional(),
         description: z.string().optional(),
@@ -43,7 +43,7 @@ export function UtdanningModal({ modalÅpen, toggleModal, gjeldendeElement, lagr
         endDate: dateStringSchema("Til dato"),
     }).refine((data) => data.endDate >= data.startDate, {
         path: ["endDate"],
-        message: "Til dato må være etter fra dato",
+        error: "Til dato må være etter fra dato",
     });
 
     const getFormData = (target) => {
