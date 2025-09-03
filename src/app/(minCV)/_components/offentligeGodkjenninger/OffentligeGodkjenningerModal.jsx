@@ -38,7 +38,7 @@ export default function OffentligeGodkjenningerModal({
         conceptId: z.coerce.string().optional(),
         issuer: z.string().optional(),
         fromDate: dateStringSchema("Fullført").refine((data) => data <= new Date(), {
-            message: "Fullført kan ikke være frem i tid",
+            error: "Fullført kan ikke være frem i tid",
         }),
     });
 
@@ -54,7 +54,7 @@ export default function OffentligeGodkjenningerModal({
         },
         {
             path: ["toDate"],
-            message: "Til dato må være etter fra dato",
+            error: "Til dato må være etter fra dato",
         },
     );
 

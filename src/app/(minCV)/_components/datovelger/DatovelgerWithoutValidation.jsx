@@ -32,8 +32,8 @@ export function DatovelgerWithoutValidation({
                 try {
                     inputRef.current.value = e.toLocaleDateString("no-nb", {
                         year: "numeric",
-                        month: "numeric",
-                        day: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
                     });
                     // Don`t do anything here
                     // eslint-disable-next-line no-empty
