@@ -1,0 +1,2 @@
+# Brukes for å sette riktig java-versjon for å kjøre pam-cv-api-gcp lokalt
+java=23.0.2-tem

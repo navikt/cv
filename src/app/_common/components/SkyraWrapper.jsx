@@ -1,7 +1,7 @@
-import { BodyLong, GuidePanel, Heading, Link, VStack } from "@navikt/ds-react";
+import { BodyLong, GuidePanel, Heading, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 
-export function HotjarWrapper() {
+export function SkyraWrapper() {
     return (
         <GuidePanel poster className={[styles.box, styles.hotjarWrapper]}>
             <VStack gap="2">
@@ -15,9 +15,9 @@ export function HotjarWrapper() {
                 </BodyLong>
 
                 <BodyLong>
-                    <Link href="https://surveys.hotjar.com/256c1d1c-9b49-4a18-9d7b-28c7e570a174">
+                    <skyra-survey slug="arbeids-og-velferdsetaten-nav/navno-cv-feil-og-mangler">
                         Skriv en anonym tilbakemelding (åpner i en ny fane)
-                    </Link>
+                    </skyra-survey>
                 </BodyLong>
             </VStack>
         </GuidePanel>

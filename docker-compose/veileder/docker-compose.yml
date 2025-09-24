@@ -22,7 +22,6 @@ services:
       --openid.well-known-url=http://host.docker.internal:8237/azure/.well-known/openid-configuration
       --openid.client-id=local-azure-client-id
       --openid.post-logout-redirect-uri=http://localhost:3000/
-      --session.refresh=true
       --session.max-lifetime=30m0s
       --session.inactivity-timeout=30m0s
       --redis.tls=false

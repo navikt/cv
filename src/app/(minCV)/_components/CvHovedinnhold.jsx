@@ -14,7 +14,7 @@ import Forerkort from "@/app/(minCV)/_components/forerkort/Forerkort";
 import Kurs from "@/app/(minCV)/_components/kurs/Kurs";
 import Sammendrag from "@/app/(minCV)/_components/sammendrag/Sammendrag";
 import DelingAvCV from "@/app/(minCV)/_components/delingAvCV/DelingAvCV";
-import { HotjarWrapper } from "@/app/_common/components/HotjarWrapper";
+import { SkyraWrapper } from "@/app/_common/components/SkyraWrapper";
 import { EyeIcon } from "@navikt/aksel-icons";
 import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 import { useContext } from "react";
@@ -46,7 +46,7 @@ export default function CvHovedinnhold({ cvLaster, setVisHovedinnhold }) {
                         <Kurs />
                         <Sammendrag />
                         <DelingAvCV />
-                        <HotjarWrapper />
+                        <SkyraWrapper />
                     </VStack>
                 </HStack>
             </Box>

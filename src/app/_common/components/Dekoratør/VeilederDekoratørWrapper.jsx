@@ -2,6 +2,7 @@ import Script from "next/script";
 import { serverConfig } from "@/app/_common/serverConfig";
 import ModiaDekoratør from "@/app/_common/components/Dekoratør/ModiaDekoratør";
 import { MockWrapper } from "@/app/_common/components/MockWrapper";
+import Skyra from "@/app/_common/components/Dekoratør/Skyra";
 
 export default async function VeilederDekoratørWrapper({ children, fontClassName }) {
     const devBundle = "https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/bundle.js";
@@ -17,6 +18,7 @@ export default async function VeilederDekoratørWrapper({ children, fontClassNam
             <head>
                 <title>Min CV - nav.no - Veileder</title>
                 <Script src={bundle} strategy="afterInteractive" />
+                <Skyra />
             </head>
             <body className={fontClassName}>
                 <ModiaDekoratør />
