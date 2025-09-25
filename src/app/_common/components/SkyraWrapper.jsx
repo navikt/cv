@@ -3,7 +3,7 @@ import styles from "@/app/page.module.css";
 
 export function SkyraWrapper() {
     return (
-        <GuidePanel poster className={[styles.box, styles.hotjarWrapper]}>
+        <GuidePanel poster className={[styles.box, styles.skyraWrapper]}>
             <VStack gap="2">
                 <Heading level="2" size="medium" id="feedback-panel-title">
                     Noe som mangler?
