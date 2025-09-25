@@ -1,13 +1,28 @@
 import { BodyLong, GuidePanel, Heading, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function SkyraWrapper() {
-    // const skyraSurveyRef = useRef(null);
     const [undersøkelseFerdig, setUndersøkelseFerdig] = useState(false);
-    // const [initialCheckDone, setInitialCheckDone] = useState(false);
+    const [skyraMounted, setSkyraMounted] = useState(false);
+    const intervalID = useRef(null);
 
     useEffect(() => {
+        intervalID.current = setInterval(() => {
+            if (skyraMounted) {
+                clearInterval(intervalID.current);
+                intervalID.current = null;
+                return;
+            }
+            if (typeof window !== "undefined" && window.skyra?.on) setSkyraMounted(true);
+        }, 250);
+
+        return () => clearInterval(intervalID.current);
+    }, [skyraMounted]);
+
+    useEffect(() => {
+        if (!skyraMounted) return;
+
         const onSurveyCompleted = (data) => {
             if (data.type !== "surveyCompleted") return;
             setUndersøkelseFerdig(true);
@@ -18,26 +33,20 @@ export function SkyraWrapper() {
             setUndersøkelseFerdig(true);
         };
 
-        const registrerSkyraEvents = () => {
-            if (typeof window === "undefined") return;
-
-            const skyraEvents = window.skyra;
-            if (skyraEvents?.on) {
-                skyraEvents.on("surveyCompleted", onSurveyCompleted);
-                skyraEvents.on("surveyRejected", onSurveyRejected);
-            }
-        };
-
-        registrerSkyraEvents();
+        const skyraEvents = window.skyra;
+        if (skyraEvents?.on) {
+            skyraEvents.on("surveyCompleted", onSurveyCompleted);
+            skyraEvents.on("surveyRejected", onSurveyRejected);
+        }
 
         // eslint-disable-next-line consistent-return
         return () => {
-            if (window?.skyra?.off) {
-                window.skyra.off("surveyCompleted", onSurveyCompleted);
-                window.skyra.off("surveyRejected", onSurveyRejected);
+            if (skyraEvents?.off) {
+                skyraEvents.off("surveyCompleted", onSurveyCompleted);
+                skyraEvents.off("surveyRejected", onSurveyRejected);
             }
         };
-    }, []);
+    }, [skyraMounted]);
 
     useEffect(() => {
         console.log("Undersøkelse ferdig?", undersøkelseFerdig);
