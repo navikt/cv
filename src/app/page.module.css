@@ -769,7 +769,7 @@
 .skyraWrapper {
     padding-bottom: 0;
     padding-top: 0;
-    margin-top: var(--a-spacing-24) !important;
+    margin-top: var(--a-spacing-20) !important;
 }
 
 .errorSummary:focus {
