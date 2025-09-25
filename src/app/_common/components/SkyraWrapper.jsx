@@ -54,7 +54,7 @@ export function SkyraWrapper() {
 
     return (
         <GuidePanel poster className={[styles.box, styles.skyraWrapper]}>
-            <VStack gap="2" minHeight="180px">
+            <VStack gap="2" minHeight="80px">
                 {undersøkelseFerdig ? (
                     <>
                         <Heading level="2" size="medium" id="feedback-panel-title">
