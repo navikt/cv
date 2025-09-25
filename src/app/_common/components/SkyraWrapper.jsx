@@ -52,60 +52,9 @@ export function SkyraWrapper() {
         console.log("Undersøkelse ferdig?", undersøkelseFerdig);
     }, [undersøkelseFerdig]);
 
-    /*
-    useEffect(() => {
-        if (!skyraSurveyRef.current) {
-            setInitialCheckDone(false);
-            return;
-        }
-
-        const checkShadowContent = () => {
-            const element = skyraSurveyRef.current;
-            return !!(element && element.shadowRoot && element.shadowRoot.childElementCount > 0);
-        };
-
-        const initialCheckTimeout = setTimeout(() => {
-            const hasShadowContent = checkShadowContent();
-
-            if (!hasShadowContent && undersøkelseFerdig) {
-                setUndersøkelseFerdig(false);
-            }
-
-            setInitialCheckDone(true);
-        }, 250);
-
-        const observer = new MutationObserver(() => {
-            if (initialCheckDone && !checkShadowContent() && undersøkelseFerdig) {
-                setUndersøkelseFerdig(false);
-                window.location.reload();
-            }
-        });
-
-        if (skyraSurveyRef.current) {
-            observer.observe(skyraSurveyRef.current, {
-                childList: true,
-                subtree: true,
-                attributes: true,
-            });
-
-            if (skyraSurveyRef.current.shadowRoot) {
-                observer.observe(skyraSurveyRef.current.shadowRoot, {
-                    childList: true,
-                    subtree: true,
-                });
-            }
-        }
-
-        // eslint-disable-next-line consistent-return
-        return () => {
-            clearTimeout(initialCheckTimeout);
-            observer.disconnect();
-        };
-    }, [undersøkelseFerdig, initialCheckDone]); */
-
     return (
         <GuidePanel poster className={[styles.box, styles.skyraWrapper]}>
-            <VStack gap="2">
+            <VStack gap="2" minHeight="180px">
                 {undersøkelseFerdig ? (
                     <>
                         <Heading level="2" size="medium" id="feedback-panel-title">
