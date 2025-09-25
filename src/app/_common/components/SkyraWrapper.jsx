@@ -8,8 +8,6 @@ export function SkyraWrapper() {
     // const [initialCheckDone, setInitialCheckDone] = useState(false);
 
     useEffect(() => {
-        if (typeof window === "undefined") return;
-
         const onSurveyCompleted = (data) => {
             if (data.type !== "surveyCompleted") return;
             setUndersøkelseFerdig(true);
@@ -20,17 +18,23 @@ export function SkyraWrapper() {
             setUndersøkelseFerdig(true);
         };
 
-        const skyraEvents = window.skyra;
-        if (skyraEvents?.on) {
-            skyraEvents.on("surveyCompleted", onSurveyCompleted);
-            skyraEvents.on("surveyRejected", onSurveyRejected);
-        }
+        const registrerSkyraEvents = () => {
+            if (typeof window === "undefined") return;
+
+            const skyraEvents = window.skyra;
+            if (skyraEvents?.on) {
+                skyraEvents.on("surveyCompleted", onSurveyCompleted);
+                skyraEvents.on("surveyRejected", onSurveyRejected);
+            }
+        };
+
+        registrerSkyraEvents();
 
         // eslint-disable-next-line consistent-return
         return () => {
-            if (skyraEvents?.off) {
-                skyraEvents.off("surveyCompleted", onSurveyCompleted);
-                skyraEvents.off("surveyRejected", onSurveyRejected);
+            if (window?.skyra?.off) {
+                window.skyra.off("surveyCompleted", onSurveyCompleted);
+                window.skyra.off("surveyRejected", onSurveyRejected);
             }
         };
     }, []);
