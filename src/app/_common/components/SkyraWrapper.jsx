@@ -63,9 +63,9 @@ export function SkyraWrapper() {
                 {undersøkelseFerdig ? (
                     <>
                         <Heading level="2" size="medium" id="feedback-panel-title">
-                            Tusen takk!
+                            Tusen takk! 🙌
                         </Heading>
-                        <BodyLong className={styles.mb3}>Vi har mottatt tilbakemeldingen din</BodyLong>
+                        <BodyLong className={styles.mb3}>Vi setter pris på tilbakemeldingen</BodyLong>
                     </>
                 ) : (
                     <skyra-survey
