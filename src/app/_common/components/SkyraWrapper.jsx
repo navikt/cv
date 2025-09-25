@@ -8,6 +8,10 @@ export function SkyraWrapper() {
     const [initialCheckDone, setInitialCheckDone] = useState(false);
 
     useEffect(() => {
+        console.log("Undersøkelse ferdig?", undersøkelseFerdig);
+    }, [undersøkelseFerdig]);
+
+    useEffect(() => {
         if (!skyraSurveyRef.current) {
             setInitialCheckDone(false);
             return;
