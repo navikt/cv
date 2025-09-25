@@ -49,19 +49,24 @@ export function SkyraWrapper() {
     }, [skyraMounted]);
 
     useEffect(() => {
-        console.log("Undersøkelse ferdig?", undersøkelseFerdig);
+        if (undersøkelseFerdig) {
+            const element = document.getElementById("tilbakemelding-container");
+            element.tabIndex = 0;
+            element.focus();
+            element.tabIndex = -1;
+        }
     }, [undersøkelseFerdig]);
 
     return (
-        <GuidePanel poster className={[styles.box, styles.skyraWrapper]}>
+        <GuidePanel poster id="tilbakemelding-container" className={[styles.box, styles.skyraWrapper]}>
             <VStack gap="2" minHeight="80px">
                 {undersøkelseFerdig ? (
-                    <>
+                    <div aria-live="polite">
                         <Heading level="2" size="medium" id="feedback-panel-title">
                             Tusen takk! 🙌
                         </Heading>
                         <BodyLong className={styles.mb3}>Vi setter pris på tilbakemeldingen</BodyLong>
-                    </>
+                    </div>
                 ) : (
                     <skyra-survey
                         className="skyra-survey"
