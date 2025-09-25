@@ -8,9 +8,13 @@ export function SkyraWrapper() {
     // const [initialCheckDone, setInitialCheckDone] = useState(false);
 
     useEffect(() => {
-        window.skyra.on("surveyStarted", () => console.log("surveyStarted"));
-        window.skyra.on("surveyCompleted", () => setUndersøkelseFerdig(true));
-        window.skyra.on("surveyCompleted", () => setUndersøkelseFerdig(true));
+        setTimeout(() => {
+            if (!!window.skyra && window.skyra.on && typeof window?.skyra?.on === "function") {
+                window.skyra.on("surveyStarted", () => console.log("surveyStarted"));
+                window.skyra.on("surveyCompleted", () => setUndersøkelseFerdig(true));
+                window.skyra.on("surveyRejected", () => setUndersøkelseFerdig(true));
+            }
+        }, 250);
     }, []);
 
     useEffect(() => {
