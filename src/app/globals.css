@@ -45,7 +45,7 @@ dl dt {
 skyra-survey {
     --skyra-text-color: rgb(0, 0, 0);
     --skyra-action-color: rgb(0, 103, 197);
-    --skyra-action-text-color: #000;
+    --skyra-action-text-color: rgb(255, 255, 255);
     --skyra-font-size: 18px;
     --skyra-font-body: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
     --skyra-font-heading: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
@@ -53,4 +53,5 @@ skyra-survey {
 
 skyra-survey::part(heading) {
     font-size: 24px;
+    font-weight: 600;
 }
