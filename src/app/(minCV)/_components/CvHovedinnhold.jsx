@@ -46,7 +46,7 @@ export default function CvHovedinnhold({ cvLaster, setVisHovedinnhold }) {
                         <Kurs />
                         <Sammendrag />
                         <DelingAvCV />
-                        <SkyraWrapper />
+                        {!erDemoApp && <SkyraWrapper />}
                     </VStack>
                 </HStack>
             </Box>
