@@ -772,19 +772,6 @@
     margin-top: var(--a-spacing-24) !important;
 }
 
-.skyra-survey {
-    --skyra-text-color: rgb(0, 0, 0);
-    --skyra-action-color: rgb(0, 103, 197);
-    --skyra-action-text-color: #000;
-    --skyra-font-size: 18px;
-    --skyra-font-body: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
-    --skyra-font-heading: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
-}
-
-.skyra-survey::part(heading) {
-    font-size: 24px;
-}
-
 .errorSummary:focus {
     box-shadow:
         0 0 0 1px var(--a-border-on-inverted),

@@ -14,14 +14,7 @@ export function SkyraWrapper() {
                     det du ville registrere i CV-en?
                 </BodyLong>
 
-                <BodyLong>
-                    <skyra-survey
-                        className="skyra-survey"
-                        slug="arbeids-og-velferdsetaten-nav/navno-cv-feil-og-mangler"
-                    >
-                        Skriv en anonym tilbakemelding (åpner i en ny fane)
-                    </skyra-survey>
-                </BodyLong>
+                <skyra-survey className="skyra-survey" slug="arbeids-og-velferdsetaten-nav/navno-cv-feil-og-mangler" />
             </VStack>
         </GuidePanel>
     );
