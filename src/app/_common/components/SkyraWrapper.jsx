@@ -1,16 +1,23 @@
 import { BodyLong, GuidePanel, Heading, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export function SkyraWrapper() {
-    const skyraSurveyRef = useRef(null);
+    // const skyraSurveyRef = useRef(null);
     const [undersøkelseFerdig, setUndersøkelseFerdig] = useState(false);
-    const [initialCheckDone, setInitialCheckDone] = useState(false);
+    // const [initialCheckDone, setInitialCheckDone] = useState(false);
+
+    useEffect(() => {
+        window.skyra.on("surveyStarted", () => console.log("surveyStarted"));
+        window.skyra.on("surveyCompleted", () => setUndersøkelseFerdig(true));
+        window.skyra.on("surveyCompleted", () => setUndersøkelseFerdig(true));
+    }, []);
 
     useEffect(() => {
         console.log("Undersøkelse ferdig?", undersøkelseFerdig);
     }, [undersøkelseFerdig]);
 
+    /*
     useEffect(() => {
         if (!skyraSurveyRef.current) {
             setInitialCheckDone(false);
@@ -59,7 +66,7 @@ export function SkyraWrapper() {
             clearTimeout(initialCheckTimeout);
             observer.disconnect();
         };
-    }, [undersøkelseFerdig, initialCheckDone]);
+    }, [undersøkelseFerdig, initialCheckDone]); */
 
     return (
         <GuidePanel poster className={[styles.box, styles.skyraWrapper]}>
