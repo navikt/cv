@@ -2,7 +2,7 @@ import { BodyLong, Box, Button, Heading, HStack, Link, VStack } from "@navikt/ds
 import NextLink from "next/link";
 import styles from "@/app/page.module.css";
 import HeaderPanel from "@/app/_common/components/HeaderPanel";
-import { arbeidsplassenBaseUrl, navBaseUrl } from "@/app/_common/utils/urlUtils";
+import { navBaseUrl } from "@/app/_common/utils/urlUtils";
 
 export function Feilside({ årsak }) {
     return (
@@ -44,14 +44,7 @@ export const FeilsideÅrsak = Object.freeze({
         body: (
             <VStack gap="4" className={styles.mb12}>
                 <BodyLong className="text-center">
-                    Du er ikke under oppfølging av NAV og har ikke tilgang til din CV her.
-                </BodyLong>
-                <BodyLong className="text-center">
-                    For å se og endre din CV, gå til{" "}
-                    <Link rel="noopener noreferrer" href={`${arbeidsplassenBaseUrl}/cv`} inlineText>
-                        arbeidsplassen.no/cv
-                    </Link>
-                    .
+                    Du er ikke under oppfølging av Nav og har derfor ikke tilgang til å bruke CV-tjenestene på nav.no.
                 </BodyLong>
             </VStack>
         ),
