@@ -15,7 +15,10 @@ export function SkyraWrapper() {
                 </BodyLong>
 
                 <BodyLong>
-                    <skyra-survey slug="arbeids-og-velferdsetaten-nav/navno-cv-feil-og-mangler">
+                    <skyra-survey
+                        className="skyra-survey"
+                        slug="arbeids-og-velferdsetaten-nav/navno-cv-feil-og-mangler"
+                    >
                         Skriv en anonym tilbakemelding (åpner i en ny fane)
                     </skyra-survey>
                 </BodyLong>
