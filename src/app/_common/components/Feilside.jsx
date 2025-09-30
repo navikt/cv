@@ -17,8 +17,11 @@ export function Feilside({ årsak }) {
                         {årsak.body ? (
                             årsak.body
                         ) : (
-                            <BodyLong className={["text-center", styles.mb12]}>{årsak.tekst}</BodyLong>
+                            <BodyLong className={["text-center", styles.mb6]}>{årsak.tekst}</BodyLong>
                         )}
+                        <Link inlineText className={["text-center", styles.mb12]} href="/min-cv/personvern">
+                            Personvernserklæring for Min CV
+                        </Link>
                         <HStack gap="4" className={styles.mb3}>
                             <NextLink href={`${navBaseUrl}/person/kontakt-oss/nb`} passHref legacyBehavior>
                                 <Button variant="primary" as="a" role="link">
@@ -68,7 +71,7 @@ export const FeilsideÅrsak = Object.freeze({
     IKKE_LOGGET_INN: {
         tittel: "Du er ikke logget inn",
         body: (
-            <BodyLong className={["text-center", styles.mb12]}>
+            <BodyLong className={["text-center", styles.mb6]}>
                 Du er ikke logget inn. "Min CV" er en innlogget tjeneste. Vennligst{" "}
                 <Link rel="noopener noreferrer" href="/min-cv/api/login" inlineText>
                     logg inn
@@ -80,7 +83,7 @@ export const FeilsideÅrsak = Object.freeze({
     LOGGET_UT: {
         tittel: "Du har blitt logget ut",
         body: (
-            <BodyLong className={["text-center", styles.mb12]}>
+            <BodyLong className={["text-center", styles.mb6]}>
                 Du har blitt logget ut på grunn av inaktivitet. Vennligst{" "}
                 <Link rel="noopener noreferrer" href="/min-cv/api/login" inlineText>
                     logg inn
