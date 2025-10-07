@@ -5,7 +5,7 @@ networks:
 
 services:
   wonderwall:
-    platform: linux/amd64
+    platform: linux/arm64 # Bytt ut med linux/amd64 dersom du ikke er på en Apple Silicon-maskin
     image: ghcr.io/nais/wonderwall:latest
     ports:
       - "3000:3000"
