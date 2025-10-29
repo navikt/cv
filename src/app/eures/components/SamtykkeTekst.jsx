@@ -4,7 +4,7 @@ export default function SamtykkeTekst() {
     return (
         <>
             <BodyLong size="small" spacing>
-                Hvis du ønsker å dele innholdet fra CV-en din med den Europeiske Jobbmobilitetsportalen (EURES-portalen)
+                Hvis du ønsker å dele innhold fra CV-en din med den Europeiske Jobbmobilitetsportalen (EURES-portalen)
                 må du aktivt samtykke til dette. Nedenfor er hovedpunktene som gjelder for samtykket.
             </BodyLong>
             <List as="ol" size="small">
