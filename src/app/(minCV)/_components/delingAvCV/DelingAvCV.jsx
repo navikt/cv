@@ -1,6 +1,5 @@
-import { BodyLong, BodyShort, Box, Button, Heading, HStack, Link } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Box, Heading, HStack, Link } from "@navikt/ds-react";
 import { SeksjonsIdEnum } from "@/app/_common/enums/cvEnums";
-import { useBekreftTidligereCv } from "@/app/_common/hooks/swr/useBekreftTidligereCv";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import Euresdeling from "@/app/(minCV)/_components/delingAvCV/Euresdeling";
 import { DelingTag } from "@/app/(minCV)/_components/delingAvCV/DelingTag";
@@ -95,12 +94,7 @@ function NavLogoIcon() {
 
 export default function DelingAvCV() {
     const { erVeileder, erInnlogget } = useContext(ApplicationContext);
-    const { måBekrefteTidligereCv, personLaster } = usePerson();
-    const { bekreftLaster, bekreftHarFeil, setBekreft } = useBekreftTidligereCv();
-
-    const bekreftTidligereCv = () => {
-        if (måBekrefteTidligereCv) setBekreft(true);
-    };
+    const { personLaster } = usePerson();
 
     return (
         <div data-section id={SeksjonsIdEnum.DELING_AV_CV}>
@@ -124,23 +118,7 @@ export default function DelingAvCV() {
                     </Link>
                     .
                 </BodyLong>
-                <DelingTag
-                    deltMed="Nav"
-                    erDelt={!måBekrefteTidligereCv}
-                    laster={bekreftLaster || personLaster}
-                    error={bekreftHarFeil}
-                />
-                {måBekrefteTidligereCv && (
-                    <div>
-                        <BodyLong spacing className={styles.mt6}>
-                            Før du deler CV-en din, kan du slette eller endre innhold du ikke ønsker å dele. Du vil
-                            fortsatt ha mulighet til å endre innholdet i CV-en etter deling.
-                        </BodyLong>
-                        <Button loading={bekreftLaster} onClick={() => bekreftTidligereCv()}>
-                            Del CV
-                        </Button>
-                    </div>
-                )}
+                <DelingTag deltMed="Nav" erDelt laster={personLaster} />
                 {!erVeileder && erInnlogget && <Euresdeling />}
             </Box>
         </div>
