@@ -4,8 +4,8 @@ import { Alert, BodyShort, Heading, HStack, List, Skeleton, VStack } from "@navi
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import styles from "@/app/page.module.css";
 import { formatterAdresse, formatterFullDatoMedFallback } from "@/app/_common/utils/stringUtils";
-import { ListItem } from "@navikt/ds-react/List";
 import VeilederBekreftHjemmel from "@/app/_common/components/VeilederBanner/VeilederBekreftHjemmel";
+import { ListItem } from "@navikt/ds-react/List";
 
 function LastbarTekst({ label, value, placeholder }) {
     return (

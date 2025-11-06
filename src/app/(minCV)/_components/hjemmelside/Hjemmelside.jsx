@@ -20,10 +20,14 @@ export function Hjemmelside() {
 
     return (
         <div>
-            <HeaderPanel title="Slik bruker Nav CV-opplysningene" />
+            <HeaderPanel title="Personvernerklæring for Min CV" />
             <Box className={[styles.main, styles.mb16]}>
                 <Box background="surface-default" padding="10" className={styles.box}>
                     <Hjemmelstekst />
+
+                    <BodyLong spacing>
+                        Hvis du vil lese denne teksten igjen, finner du den under &#34;Deling av CV&#34;-seksjonen.
+                    </BodyLong>
 
                     {måBekrefteTidligereCv && (
                         <>
