@@ -112,9 +112,10 @@ export default function DelingAvCV() {
                     </BodyShort>
                 </HStack>
                 <BodyLong spacing>
-                    Alle opplysninger i din CV og jobbønsker deles med Nav så lenge du er registrert hos Nav.{" "}
+                    Alle opplysninger i din CV og jobbønsker deles med Nav så lenge du er registrert hos Nav. Her kan du
+                    lese{" "}
                     <Link rel="noopener noreferrer" href="/min-cv/personvern" inlineText>
-                        Les mer om hvordan Nav bruker opplysningene dine
+                        Personvernerklæring for Min CV
                     </Link>
                     .
                 </BodyLong>
