@@ -31,12 +31,14 @@ jobs:
   build-and-deploy-borger:
     if: "(github.ref_name == 'master') || contains(github.event.head_commit.message, 'deploy:dev') || contains(github.ref, 'feature/')"
     needs: [ create-version-tag ]
-    uses: navikt/pam-deploy/.github/workflows/deploy-next-js-dev.yml@v7
+    uses: navikt/pam-deploy/.github/workflows/deploy-next-js-dev.yml@v8
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
       NAIS_VARS: .nais/borger/dev.yml
       NAIS_RESOURCE: .nais/borger/nais.yml
-      NPM_BUILD_COMMAND: npm run build:borger
+      PACKAGE_MANAGER: npm
+
+      BUILD_COMMAND: npm run build:borger
       IMAGE_SUFFIX: cv
       VERSION_TAG: ${{ needs.create-version-tag.outputs.version_tag }}
       NODE_VERSION: 22
