@@ -1,4 +1,4 @@
-import { Box, Button, HStack, Link, Show, VStack } from "@navikt/ds-react";
+import { Box, HStack, Show, VStack } from "@navikt/ds-react";
 import styles from "@/app/page.module.css";
 import Personalia from "@/app/(minCV)/_components/personalia/Personalia";
 import Jobbonsker from "@/app/(minCV)/_components/jobbonsker/Jobbonsker";
@@ -15,12 +15,11 @@ import Kurs from "@/app/(minCV)/_components/kurs/Kurs";
 import Sammendrag from "@/app/(minCV)/_components/sammendrag/Sammendrag";
 import DelingAvCV from "@/app/(minCV)/_components/delingAvCV/DelingAvCV";
 import { SkyraWrapper } from "@/app/_common/components/SkyraWrapper";
-import { EyeIcon } from "@navikt/aksel-icons";
-import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 import { useContext } from "react";
 import { ApplicationContext } from "@/app/_common/contexts/ApplicationContext";
 import VeilederBanner from "@/app/_common/components/VeilederBanner/VeilederBanner";
 import DemoBanner from "@/app/_common/components/DemoBanner/DemoBanner";
+import HøyreSidemeny from "@/app/_common/components/HøyreSidemeny";
 
 export default function CvHovedinnhold({ cvLaster, setVisHovedinnhold }) {
     const { erVeileder, erDemoApp } = useContext(ApplicationContext);
@@ -52,20 +51,7 @@ export default function CvHovedinnhold({ cvLaster, setVisHovedinnhold }) {
             </Box>
             <Show below="xl">
                 <HStack justify="center" style={{ padding: "4rem 0 2rem 0" }}>
-                    <VStack gap="4">
-                        <Button
-                            icon={<EyeIcon aria-hidden />}
-                            variant="primary"
-                            onClick={() => setVisHovedinnhold(false)}
-                            disabled={cvLaster}
-                        >
-                            Forhåndsvis CV
-                        </Button>
-                        <LastNedCv />
-                        <Link inlineText href="/min-cv/personvern">
-                            Personvernserklæring for Min CV
-                        </Link>
-                    </VStack>
+                    <HøyreSidemeny cvLaster={cvLaster} setVisHovedinnhold={setVisHovedinnhold} />
                 </HStack>
             </Show>
         </div>
