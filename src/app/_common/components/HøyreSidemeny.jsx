@@ -1,5 +1,5 @@
 import { Button, Link, VStack } from "@navikt/ds-react";
-import { ExternalLinkIcon, EyeIcon } from "@navikt/aksel-icons";
+import { EyeIcon } from "@navikt/aksel-icons";
 import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 
 export default function HøyreSidemeny({ cvLaster, setVisHovedinnhold }) {
@@ -17,8 +17,8 @@ export default function HøyreSidemeny({ cvLaster, setVisHovedinnhold }) {
             <Link inlineText href="/min-cv/personvern">
                 Personvernserklæring for Min CV
             </Link>
-            <Link inlineText rel="noopener noreferrer" href="https://vimeo.com/778413745">
-                Se video om hvordan du fyller ut CV-en din <ExternalLinkIcon title="Skriv ut dokument" />
+            <Link inlineText rel="noopener noreferrer" href="https://vimeo.com/778413745" target="_blank">
+                Se video om hvordan du fyller ut CV-en din (åpner i en ny fane)
             </Link>
         </VStack>
     );
