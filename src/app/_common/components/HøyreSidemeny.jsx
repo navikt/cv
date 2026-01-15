@@ -18,7 +18,7 @@ export default function HøyreSidemeny({ cvLaster, setVisHovedinnhold }) {
                 Personvernserklæring for Min CV
             </Link>
             <Link inlineText rel="noopener noreferrer" href="https://vimeo.com/778413745" target="_blank">
-                Se video om hvordan du fyller ut CV-en din <ExternalLinkIcon title="(åpner i en ny fane)" />)
+                Se video om hvordan du fyller ut CV-en din <ExternalLinkIcon title="(åpner i en ny fane)" />
             </Link>
         </VStack>
     );
