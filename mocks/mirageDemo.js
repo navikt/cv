@@ -1,6 +1,5 @@
 "use client";
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { createServer } from "miragejs";
 import { arbeidsforholdMock } from "./mockData/arbeidsforholdMock";
 import { amplitudeMock } from "./mockData/amplitudeMock";

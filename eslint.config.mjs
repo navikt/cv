@@ -8,15 +8,14 @@ import prettierPlugin from "eslint-plugin-prettier";
 import nextPlugin from "@next/eslint-plugin-next";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 
-
 const config = defineConfig([
     {
         plugins: {
             react: reactPlugin,
+            prettier: prettierPlugin,
             "react-hooks": reactHooksPlugin,
             "jsx-a11y": jsxA11yPlugin,
             "unused-imports": unusedImportsPlugin,
-            prettier: prettierPlugin,
             "@next/next": nextPlugin,
         },
 

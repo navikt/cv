@@ -62,7 +62,6 @@ jobs:
     with:
       NAIS_VARS: .nais/demo/dev.yml
       NAIS_RESOURCE: .nais/demo/nais.yml
-      PACKAGE_MANAGER: npm
       BUILD_COMMAND: pnpm run build:demo
       IMAGE_SUFFIX: cv-demo
       SKIP_DRAFT_RELEASE: true # Trenger ikke draft for alle appene da de prodsettes samtidig
