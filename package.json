@@ -12,7 +12,7 @@
         "build:veileder": "cross-env ER_VEILEDER=true ER_DEMO_APP=false next build",
         "build:demo": "cross-env ER_VEILEDER=false ER_DEMO_APP=true next build",
         "start": "next start",
-        "test": "jest --passWithNoTests",
+        "test": "prettier --check \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
         "lint": "next lint",
         "lint:fix": "next lint --fix",
         "prepare": "husky",
