@@ -24,8 +24,8 @@ importers:
         specifier: 3.6.1
         version: 3.6.1(csp-header@6.3.0)(html-react-parser@5.2.11(@types/react@19.2.8)(react@19.2.3))(jsdom@27.4.0)(react@19.2.3)
       '@navikt/navspa':
-        specifier: 7.4.0
-        version: 7.4.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        specifier: 6.2.0
+        version: 6.2.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@navikt/next-logger':
         specifier: 4.4.5
         version: 4.4.5(next@16.1.2(@babel/core@7.28.6)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(pino@9.14.0)
@@ -612,11 +612,11 @@ packages:
       react:
         optional: true
 
-  '@navikt/navspa@7.4.0':
-    resolution: {integrity: sha512-WQCyOnbBHJRxtp6Hq1CMmHFW83z0zuJ2HNBajhHtVhcnR5dV01GfxMFX1clqNsigByrU9yTaxEbFNLacoSgLSA==, tarball: https://npm.pkg.github.com/download/@navikt/navspa/7.4.0/8e7cfa5ca022fa7301e85796f39de4374eaf47ac}
+  '@navikt/navspa@6.2.0':
+    resolution: {integrity: sha512-ix3lqWZWIhIAlmFL883hbmD9kjWk9qeijEGXiQOxPzanpWZ4EeeZhEsXng+MftDurJk04y3Q9i/1x0V7l34O9w==, tarball: https://npm.pkg.github.com/download/@navikt/navspa/6.2.0/fedd207df70dff922a729cef18a28112274202c6}
     peerDependencies:
-      react: '>=19.2.1'
-      react-dom: '>=19.2.1'
+      react: '>=16.6.0 || 17 || 18'
+      react-dom: '>=16.6.0 || 17 || 18'
 
   '@navikt/next-logger@4.4.5':
     resolution: {integrity: sha512-2t+OoMkuxeMs88r35cCfP/C5pjfGHVSd7w5Ax4oHB4YyudwiV95LunyoTRcs8hqnsCH1wuFACmXHHd3pH/nP6Q==, tarball: https://npm.pkg.github.com/download/@navikt/next-logger/4.4.5/fa0045a0018358aad90b6532643b78b3b0870f06}
@@ -3672,7 +3672,7 @@ snapshots:
     optionalDependencies:
       react: 19.2.3
 
-  '@navikt/navspa@7.4.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+  '@navikt/navspa@6.2.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       loadjs: 4.3.0
       react: 19.2.3

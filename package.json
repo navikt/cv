@@ -32,7 +32,7 @@
         "@navikt/ds-css": "7.40.0",
         "@navikt/ds-react": "7.40.0",
         "@navikt/nav-dekoratoren-moduler": "3.6.1",
-        "@navikt/navspa": "7.4.0",
+        "@navikt/navspa": "6.2.0",
         "@navikt/next-logger": "4.4.5",
         "@navikt/oasis": "3.8.0",
         "@next/env": "16.1.2",
