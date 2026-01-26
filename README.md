@@ -15,12 +15,43 @@ For lokal kjøring vil dekoratøren kun være til pynt. Vi bruker wonderwall lok
 3. Sørg for at du har tilgang til @navikt sine npm-pakker, dette er beskrevet [i eget avsnitt](#tilgang-til-navs-npm-registry).
 4. Start Docker Desktop / Kolima
 
+## pnpm, ikke npm
+
+Prosjektet bruker **pnpm** (ikke npm/yarn) og er låst til `pnpm@10.28.0` via `packageManager` i `package.json`.
+
+### Sett opp pnpm (første gang per maskin)
+
+Dette trenger du normalt bare å gjøre én gang per Node-versjon:
+
+```bash
+npm install -g corepack@latest
+corepack enable pnpm
+
+# Sjekk at pnpm-versjonen matcher packageManager i package.json (pnpm@10.28.0)
+pnpm -v
+
+# Hvis versjonen ikke stemmer, kan du bruke:
+corepack use pnpm@10.28.0
+```
+
+Heretter bruker du `pnpm` i stedet for `npm` eller `yarn`, feks `pnpm install` eller `pnpm run dev`.
+
+### Viktig om pakkehåndtering
+
+- Ikke bruk npm install eller yarn i dette prosjektet.
+- Når du legger til nye avhengigheter, bruk alltid pnpm:
+
+```bash
+pnpm add <pakke>
+pnpm add -D <pakke>   # devDependency
+```
+
 ### Start avhengigheter og applikasjonen
 
 ```bash
-$ npm install # Installerer NPM-avhengigheter
-$ npm run setup_dependencies # Starter docker-containere for wonderwall, redis og mock-oauth2, og starter Lokal versjon av pam-cv-api-gcp
-$ npm run dev # Kjører dev
+$ pnpm install # Installerer NPM-avhengigheter
+$ pnpm run setup_dependencies # Starter docker-containere for wonderwall, redis og mock-oauth2, og starter Lokal versjon av pam-cv-api-gcp
+$ pnpm run dev # Kjører dev
 ```
 
 Da kan du nå applikasjonen med innlogging på [http://localhost:3000/min-cv](http://localhost:3000/min-cv). Bruk testbruker `04010100653`.
@@ -33,20 +64,20 @@ Da kan du nå applikasjonen med innlogging på [http://localhost:3000/min-cv](ht
 For å kjøre opp veilederapplikasjonen følges samme oppskrift som over, men `setup_dependencies` og `dev` postfixes med `:veileder`
 
 ```bash
-$ npm install
-$ npm run setup_dependencies:veileder
-$ npm run dev:veileder
+$ pnpm install
+$ pnpm run setup_dependencies:veileder
+$ pnpm run dev:veileder
 ```
 
 Modia-dekoratøren fungerer ikke lokalt, men innlogging gjøres med wonderwall som vanlig.
 
 ### Teste demoapplikasjonen
 
-For å kjøre opp demoappen følges samme oppskrift som over, men `setup_dependencies` trengs ikke, fordi den ikke har noen backendintegrasjon. `npm run dev` må fortsatt postfixes med `:demo`
+For å kjøre opp demoappen følges samme oppskrift som over, men `setup_dependencies` trengs ikke, fordi den ikke har noen backendintegrasjon. `pnpm run dev` må fortsatt postfixes med `:demo`
 
 ```bash
-$ npm install
-$ npm run dev:demo
+$ pnpm install
+$ pnpm run dev:demo
 ```
 
 Demo-appen har noen begrensninger; Dekoratøren og eures-deling er ikke tilgjengelig.

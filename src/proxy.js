@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(request) {
+export function proxy(request) {
     const cookies = request.cookies.getAll();
 
     // Filter out cookies that start with "AMP_"

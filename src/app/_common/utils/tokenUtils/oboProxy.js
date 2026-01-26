@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { getToken } from "@navikt/oasis";
 import { NextResponse } from "next/server";
 import { logger } from "@navikt/next-logger";

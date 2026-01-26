@@ -1,0 +1,11 @@
+packages:
+  - .
+
+# 4 døgn i minutter
+minimumReleaseAge: 5760
+
+# Anbefalt ekstra guardrail (hindrer å gå til versjoner med mindre "trust evidence")
+# trustPolicy: no-downgrade
+
+minimumReleaseAgeExclude:
+  - '@navikt/*'
