@@ -34,7 +34,6 @@ const compareDates = (firstDate, secondDate, startDate = "fromDate", endDate = "
     return -1;
 };
 
-// TODO:
 export const datosorterElementer = (elementer, startDate = "fromDate", endDate = "toDate", ongoing = "ongoing") => {
     if (!elementer) return elementer;
     return elementer.sort((a, b) => compareDates(a, b, startDate, endDate, ongoing));
