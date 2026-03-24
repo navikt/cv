@@ -610,7 +610,7 @@ export function lastNedCvPdf(cv, personalia) {
             personaliaRad("Fødselsdato:", formatterFullDatoMedFallback(personalia.foedselsdato)),
             verticalLine(),
             sammendragRad(sammendrag),
-            utdanningListe(datosorterElementer(utdanning)),
+            utdanningListe(datosorterElementer(utdanning, "startDate", "endDate")),
             fagdokumentasjonListe(fagbrev),
             arbeidserfaringListe(datosorterElementer(arbeidserfaring)),
             annenerfaringListe(datosorterElementer(annenErfaring)),
