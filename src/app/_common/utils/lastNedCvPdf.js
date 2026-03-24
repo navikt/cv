@@ -232,9 +232,10 @@ export function lastNedCvPdf(cv, personalia) {
 
     const utdanningListe = (utdanningInnhold) => {
         if (utdanningInnhold && utdanningInnhold.length > 0) {
+            const datosortertUtdanning = datosorterElementer(utdanningInnhold, "startDate", "endDate");
             return [
-                utdanningHeader(utdanningInnhold[0]),
-                utdanningInnhold
+                utdanningHeader(datosortertUtdanning[0]),
+                datosortertUtdanning
                     .slice(1)
                     .map((u) =>
                         hovedinnholdRad(
@@ -272,9 +273,10 @@ export function lastNedCvPdf(cv, personalia) {
 
     const arbeidserfaringListe = (arbeidserfaringInnhold) => {
         if (arbeidserfaringInnhold && arbeidserfaringInnhold.length > 0) {
+            const datosortertArbeidserfaring = datosorterElementer(arbeidserfaringInnhold);
             return [
-                arbeidserfaringHeader(arbeidserfaringInnhold[0]),
-                arbeidserfaringInnhold
+                arbeidserfaringHeader(datosortertArbeidserfaring[0]),
+                datosortertArbeidserfaring
                     .slice(1)
                     .map((a) =>
                         hovedinnholdRad(
@@ -290,26 +292,27 @@ export function lastNedCvPdf(cv, personalia) {
         }
     };
 
-    const annenerfaringHeader = (førsteAnnenerfaring) => ({
+    const annenErfaringHeader = (førsteAnnenErfaring) => ({
         stack: [
             { margin: [0, 32, 0, 16], style: "subheader", text: "Annen erfaring" },
             hovedinnholdRad(
-                førsteAnnenerfaring.fromDate,
-                førsteAnnenerfaring.toDate,
-                førsteAnnenerfaring.ongoing,
+                førsteAnnenErfaring.fromDate,
+                førsteAnnenErfaring.toDate,
+                førsteAnnenErfaring.ongoing,
                 "",
-                førsteAnnenerfaring.role,
-                fjernHtmlTags(førsteAnnenerfaring.description) || " ",
+                førsteAnnenErfaring.role,
+                fjernHtmlTags(førsteAnnenErfaring.description) || " ",
             ),
         ],
-        unbreakable: førsteAnnenerfaring.description && førsteAnnenerfaring.description.length < 1000,
+        unbreakable: førsteAnnenErfaring.description && førsteAnnenErfaring.description.length < 1000,
     });
 
-    const annenerfaringListe = (annenerfaringInnhold) => {
-        if (annenerfaringInnhold && annenerfaringInnhold.length > 0) {
+    const annenErfaringListe = (annenErfaringInnhold) => {
+        if (annenErfaringInnhold && annenErfaringInnhold.length > 0) {
+            const datosortertAnnenErfaring = datosorterElementer(annenErfaringInnhold);
             return [
-                annenerfaringHeader(annenerfaringInnhold[0]),
-                annenerfaringInnhold
+                annenErfaringHeader(datosortertAnnenErfaring[0]),
+                datosortertAnnenErfaring
                     .slice(1)
                     .map((a) =>
                         hovedinnholdRad(
@@ -613,7 +616,7 @@ export function lastNedCvPdf(cv, personalia) {
             utdanningListe(datosorterElementer(utdanning)),
             fagdokumentasjonListe(fagbrev),
             arbeidserfaringListe(datosorterElementer(arbeidserfaring)),
-            annenerfaringListe(datosorterElementer(annenErfaring)),
+            annenErfaringListe(datosorterElementer(annenErfaring)),
             førerkortListe(foererkort),
             kursListe(kurs),
             godkjenningerListe(offentligeGodkjenninger),
