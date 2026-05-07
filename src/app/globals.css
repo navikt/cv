@@ -43,6 +43,7 @@ dl dt {
 }
 
 skyra-survey {
+    background-color: rgb(255, 255, 255);
     --skyra-text-color: rgb(0, 0, 0);
     --skyra-action-color: rgb(0, 103, 197);
     --skyra-action-text-color: rgb(255, 255, 255);
