@@ -13,7 +13,7 @@ import { LastNedCv } from "@/app/(minCV)/_components/lastNedCv/LastNedCv";
 import { usePerson } from "@/app/_common/hooks/swr/usePerson";
 import { useCv } from "@/app/_common/hooks/swr/useCv";
 import parse from "html-react-parser";
-import { datosorterElementer } from "@/app/_common/utils/dateUtils";
+import { datosorterElementer, datosorterElementerMedEnDato } from "@/app/_common/utils/dateUtils";
 import { EuresKategoriEnum } from "@/app/_common/enums/EuresEnums";
 
 export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undefined }) {
@@ -286,7 +286,7 @@ export default function Forhandsvisning({ setVisHovedinnhold, kategorier = undef
                             Kurs
                         </Heading>
                         <dl aria-label="Kurs" className={[styles.previewBox]}>
-                            {cv.kurs.map((kurs) => (
+                            {datosorterElementerMedEnDato(cv.kurs).map((kurs) => (
                                 <>
                                     <dt>{formatterFullDato(kurs.date) || ""}</dt>
 
