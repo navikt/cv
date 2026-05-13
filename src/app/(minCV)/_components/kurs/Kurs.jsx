@@ -9,6 +9,7 @@ import { SeksjonSkeleton } from "@/app/_common/components/SeksjonSkeleton";
 import { useOppdaterCvSeksjonNoCache } from "@/app/_common/hooks/swr/useOppdaterCvSeksjonNoCache";
 import { useCvModal } from "@/app/_common/hooks/useCvModal";
 import { useId } from "react";
+import { datosorterElementerMedEnDato } from "@/app/_common/utils/dateUtils";
 
 export default function Kurs() {
     const { kurs, cvLaster } = useCv();
@@ -43,7 +44,7 @@ export default function Kurs() {
                         </div>
                     ) : (
                         <div className={styles.mb6}>
-                            {kurs.map((k, index) => (
+                            {datosorterElementerMedEnDato(kurs).map((k, index) => (
                                 <div key={index}>
                                     <FormSummary style={{ marginBottom: "1rem" }}>
                                         <FormSummary.Header>

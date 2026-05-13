@@ -9,7 +9,7 @@ import {
     storForbokstav,
     formatterAdresse,
 } from "@/app/_common/utils/stringUtils";
-import { datosorterElementer } from "@/app/_common/utils/dateUtils";
+import { datosorterElementer, datosorterElementerMedEnDato } from "@/app/_common/utils/dateUtils";
 import { logger } from "@navikt/next-logger";
 
 if (pdfFonts.pdfMake !== undefined) pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -615,7 +615,7 @@ export function lastNedCvPdf(cv, personalia) {
             arbeidserfaringListe(datosorterElementer(arbeidserfaring)),
             annenerfaringListe(datosorterElementer(annenErfaring)),
             førerkortListe(foererkort),
-            kursListe(kurs),
+            kursListe(datosorterElementerMedEnDato(kurs)),
             godkjenningerListe(offentligeGodkjenninger),
             sertifikaterListe(andreGodkjenninger),
             sprakListe(spraak),

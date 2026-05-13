@@ -39,3 +39,8 @@ export const datosorterElementer = (elementer, startDate = "fromDate", endDate =
     if (!elementer) return elementer;
     return elementer.sort((a, b) => compareDates(a, b, startDate, endDate, ongoing));
 };
+
+export const datosorterElementerMedEnDato = (elementer, datofelt = "date") => {
+    if (!elementer) return elementer;
+    return elementer.sort((a, b) => a[datofelt] > b[datofelt]);
+};
