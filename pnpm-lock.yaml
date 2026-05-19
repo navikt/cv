@@ -817,9 +817,6 @@ packages:
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
 
-  '@types/node@25.0.8':
-    resolution: {integrity: sha512-powIePYMmC3ibL0UJ2i2s0WIbq6cg6UyVFQxSCpaPxxzAaziRfimGivjdF943sSGV6RADVbk0Nvlm5P/FB44Zg==}
-
   '@types/react@19.2.8':
     resolution: {integrity: sha512-3MbSL37jEchWZz2p2mjntRZtPt837ij10ApxKfgmXCTuHWagYg7iA5bqPw6C8BMPfwidlvfPI/fxOc42HLhcyg==}
 
@@ -2603,8 +2600,8 @@ packages:
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
 
-  protobufjs@8.0.3:
-    resolution: {integrity: sha512-LBYnMWkKLB8fE/ljROPDbCl7mgLSlI+oBe1fAAr5MTqFg4TIi0tYrVVurJvQggOjnUYMQtEZBjrej59ojMNTHQ==}
+  protobufjs@8.3.0:
+    resolution: {integrity: sha512-JpJpFaR7yKNb6WqKvJJ1MLbiuIQWQnbUUb06nDtf2/i8YWYYLEfP6xf9BwSJoJQg1wAy61EQB8dssQg64oX4aA==}
     engines: {node: '>=12.0.0'}
 
   pump@3.0.3:
@@ -3098,9 +3095,6 @@ packages:
   unbox-primitive@1.1.0:
     resolution: {integrity: sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==}
     engines: {node: '>= 0.4'}
-
-  undici-types@7.16.0:
-    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
   unicode-properties@1.4.1:
     resolution: {integrity: sha512-CLjCCLQ6UuMxWnbIylkisbRj31qxHPAurvena/0iwSVbQ2G1VY5/HjV0IRabOEbDHlzZlRdCrD4NhB0JtU40Pg==}
@@ -3826,7 +3820,7 @@ snapshots:
       '@opentelemetry/sdk-logs': 0.215.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-metrics': 2.7.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-trace-base': 2.7.0(@opentelemetry/api@1.9.0)
-      protobufjs: 8.0.3
+      protobufjs: 8.3.0
 
   '@opentelemetry/resources@2.7.0(@opentelemetry/api@1.9.0)':
     dependencies:
@@ -3879,10 +3873,6 @@ snapshots:
   '@types/json-schema@7.0.15': {}
 
   '@types/json5@0.0.29': {}
-
-  '@types/node@25.0.8':
-    dependencies:
-      undici-types: 7.16.0
 
   '@types/react@19.2.8':
     dependencies:
@@ -5849,9 +5839,8 @@ snapshots:
       object-assign: 4.1.1
       react-is: 16.13.1
 
-  protobufjs@8.0.3:
+  protobufjs@8.3.0:
     dependencies:
-      '@types/node': 25.0.8
       long: 5.3.2
 
   pump@3.0.3:
@@ -6498,8 +6487,6 @@ snapshots:
       has-bigints: 1.1.0
       has-symbols: 1.1.0
       which-boxed-primitive: 1.1.1
-
-  undici-types@7.16.0: {}
 
   unicode-properties@1.4.1:
     dependencies:
