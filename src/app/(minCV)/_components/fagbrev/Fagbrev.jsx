@@ -37,7 +37,8 @@ export default function Fagbrev() {
                                     Du har ikke lagt til noen fagbrev i CV-en
                                 </BodyLong>
                                 <BodyLong className={styles.mb12}>
-                                    Her kan du sette inn ulike fagbrev som du har tatt, f.eks i bilpleie.
+                                    Her kan du registrere fagbrev, svennebrev, mesterbrev, kompetansebevis og
+                                    yrkeskompetanse.
                                 </BodyLong>
                             </div>
                         ) : (

@@ -65,7 +65,8 @@ export default function Jobbonsker() {
                                 Du har ikke lagt til noen jobbønsker i CV-en
                             </BodyLong>
                             <BodyLong className={styles.mb12}>
-                                Når du skal legge til jobbønsker velger du hvilke yrker du er interessert i å jobbe som
+                                Når du skal legge til jobbønsker velger du hvilke yrker du er interessert i å jobbe som,
+                                og hvor og når du kan jobbe.
                             </BodyLong>
                             <Button
                                 aria-label="Legg til jobbønsker"

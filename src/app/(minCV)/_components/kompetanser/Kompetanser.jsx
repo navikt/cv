@@ -37,8 +37,7 @@ export default function Kompetanser() {
                                 Du har ikke lagt til noen kompetanser i CV-en
                             </BodyLong>
                             <BodyLong className={styles.mb12}>
-                                Her kan du sette inn de ulike kompetanser som spesifikke egenskaper f.eks undervisning
-                                eller butikkarbeid.
+                                Her kan du registrere hva du kan, ting du har lært på skole, jobb og i fritiden.
                             </BodyLong>
                         </div>
                     ) : (
