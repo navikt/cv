@@ -96,8 +96,8 @@ importers:
         specifier: ^7.40.0
         version: 7.40.0
       '@next/eslint-plugin-next':
-        specifier: ^16.2.4
-        version: 16.2.4
+        specifier: ^16.2.6
+        version: 16.2.6
       brfs:
         specifier: 2.0.2
         version: 2.0.2
@@ -632,9 +632,6 @@ packages:
       '@types/react': ^17.0.30 || ^18 || ^19
       react: ^17 || ^18 || ^19
       react-dom: ^17 || ^18 || ^19
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
 
   '@navikt/ds-tokens@7.40.0':
     resolution: {integrity: sha512-zBaBKLS5R2OZyXI4UUPOmiB15L/u/aJPHiyoccJDtmqrv5wRkc1oM6UCjzKK0D4gLZHBoxp7YBT0sR9Mp4DXFQ==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/7.40.0/36f981e12d4d90f18155615b7666b737039a3ff0}
@@ -645,9 +642,6 @@ packages:
     peerDependencies:
       html-react-parser: '>=5.x'
       react: '>=17.x'
-    peerDependenciesMeta:
-      react:
-        optional: true
 
   '@navikt/navspa@6.2.0':
     resolution: {integrity: sha512-ix3lqWZWIhIAlmFL883hbmD9kjWk9qeijEGXiQOxPzanpWZ4EeeZhEsXng+MftDurJk04y3Q9i/1x0V7l34O9w==, tarball: https://npm.pkg.github.com/download/@navikt/navspa/6.2.0/fedd207df70dff922a729cef18a28112274202c6}
@@ -676,6 +670,9 @@ packages:
 
   '@next/eslint-plugin-next@16.2.4':
     resolution: {integrity: sha512-tOX826JJ96gYK/go18sPUgMq9FK1tqxBFfUCEufJb5XIkWFFmpgU7mahJANKGkHs7F41ir3tReJ3Lv5La0RvhA==}
+
+  '@next/eslint-plugin-next@16.2.6':
+    resolution: {integrity: sha512-Z8l6o4JWKUl755x4R+wogD86KPeU+Ckw4K+SYG4kHeOJtRenDeK+OSbGcqZpDtbwn9DsJVdir2UxmwXuinUbUw==}
 
   '@next/swc-darwin-arm64@16.2.6':
     resolution: {integrity: sha512-ZJGkkcNfYgrrMkqOdZ7zoLa1TOy0qpcMfk/z4Mh/FKUz40gVO+HNQWqmLxf67Z5WB64DRp0dhEbyHfel+6sJUg==}
@@ -3697,13 +3694,12 @@ snapshots:
       '@floating-ui/react-dom': 2.1.6(react-dom@19.2.3(react@19.2.5))(react@19.2.5)
       '@navikt/aksel-icons': 7.40.0
       '@navikt/ds-tokens': 7.40.0
+      '@types/react': 19.2.8
       clsx: 2.1.1
       date-fns: 4.1.0
       react: 19.2.5
       react-day-picker: 9.7.0(react@19.2.5)
       react-dom: 19.2.3(react@19.2.5)
-    optionalDependencies:
-      '@types/react': 19.2.8
 
   '@navikt/ds-tokens@7.40.0': {}
 
@@ -3712,7 +3708,6 @@ snapshots:
       csp-header: 6.3.1
       html-react-parser: 5.2.11(@types/react@19.2.8)(react@19.2.5)
       js-cookie: 3.0.7
-    optionalDependencies:
       react: 19.2.5
 
   '@navikt/navspa@6.2.0(react-dom@19.2.3(react@19.2.5))(react@19.2.5)':
@@ -3746,6 +3741,10 @@ snapshots:
   '@next/env@16.2.6': {}
 
   '@next/eslint-plugin-next@16.2.4':
+    dependencies:
+      fast-glob: 3.3.1
+
+  '@next/eslint-plugin-next@16.2.6':
     dependencies:
       fast-glob: 3.3.1
 
@@ -3864,7 +3863,6 @@ snapshots:
   '@types/react@19.2.8':
     dependencies:
       csstype: 3.2.3
-    optional: true
 
   '@typescript-eslint/eslint-plugin@8.53.0(@typescript-eslint/parser@8.53.0(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3)':
     dependencies:
@@ -4331,8 +4329,7 @@ snapshots:
       css-tree: 3.1.0
       lru-cache: 11.2.4
 
-  csstype@3.2.3:
-    optional: true
+  csstype@3.2.3: {}
 
   d@1.0.2:
     dependencies:
