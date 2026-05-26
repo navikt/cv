@@ -176,6 +176,7 @@ export function lastNedCvPdf(cv, personalia) {
             },
             {
                 layout: {
+                    hLineWidth: () => 0,
                     paddingBottom: () => 0.1,
                     paddingLeft: () => 10,
                     paddingTop: () => 0.1,
@@ -183,18 +184,22 @@ export function lastNedCvPdf(cv, personalia) {
                 },
                 table: {
                     body: [
+                        ...(sted !== ""
+                            ? [
+                                  [
+                                      {
+                                          border: [1, 0, 0, 0],
+                                          margin: [0, 4, 0, 0],
+                                          style: "fontNormal",
+                                          text: sted,
+                                      },
+                                  ],
+                              ]
+                            : []),
                         [
                             {
                                 border: [1, 0, 0, 0],
-                                margin: sted === "" ? [0, 0, 0, 0] : [0, 4, 0, 0],
-                                style: "fontNormal",
-                                text: sted,
-                            },
-                        ],
-                        [
-                            {
-                                border: [1, 0, 0, 0],
-                                margin: [0, sted === "" ? 4 : 0, 0, 0],
+                                margin: [0, 4, 0, 0],
                                 style: "fontBold",
                                 text: tittel,
                             },
