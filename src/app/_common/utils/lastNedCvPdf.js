@@ -81,138 +81,75 @@ export function lastNedCvPdf(cv, personalia) {
         }
     };
 
-    const språkRad = (språk, muntlig, skriftlig) => ({
-        columns: [
-            {
-                margin: [5.1, 5.1, 5.1, 5.1],
-                style: {
-                    fontSize: "11",
-                    lineHeight: "1.2",
-                },
-                text: "",
-                width: "24%",
-            },
-            {
-                layout: {
-                    paddingBottom: () => 2,
-                    paddingLeft: () => 10,
-                    paddingTop: () => 4,
-                    vLineColor: () => "#b7b1a9",
-                },
-                table: {
-                    body: [
-                        [
-                            {
-                                border: [1, 0, 0, 0],
-                                margin: [0, 0, 0, 0],
-                                style: "fontBold",
-                                text: språk,
-                            },
-                        ],
-                        [
-                            {
-                                border: [1, 0, 0, 0],
-                                margin: [0, 0, 0, 0],
-                                style: "fontNormal",
-                                text: skriftlig,
-                            },
-                        ],
-                        [
-                            {
-                                border: [1, 0, 0, 0],
-                                margin: [0, 0, 0, 0],
-                                style: "fontNormal",
-                                text: muntlig,
-                            },
-                        ],
-                    ],
-                },
-            },
-        ],
-        unbreakable: true,
-    });
+    const språkRad = (språk, muntlig, skriftlig) => {
+        const rows = [
+            { text: språk, style: "fontBold" },
+            { text: skriftlig, style: "fontNormal" },
+            { text: muntlig, style: "fontNormal" },
+        ]
+            .filter((row) => row.text && row.text !== "")
+            .map((row) => [{ border: [1, 0, 0, 0], margin: [0, 0, 0, 0], style: row.style, text: row.text }]);
 
-    const førerkortRad = (gyldigFra, gyldigTil, nåværende, beskrivelse, datoformat = "DD MM YY") => ({
-        columns: [
-            {
-                margin: [0, 5.1, 5.1, 5.1],
-                style: {
-                    fontSize: "11",
-                    lineHeight: "1.2",
+        return {
+            columns: [
+                {
+                    margin: [5.1, 5.1, 5.1, 5.1],
+                    style: {
+                        fontSize: "11",
+                        lineHeight: "1.2",
+                    },
+                    text: "",
+                    width: "24%",
                 },
-                text: tidsperiode(gyldigFra, gyldigTil, nåværende, datoformat),
-                width: "24%",
-            },
-            {
-                layout: {
-                    paddingBottom: () => 5.1,
-                    paddingLeft: () => 10,
-                    paddingTop: () => 5.1,
-                    vLineColor: () => "#b7b1a9",
+                {
+                    layout: {
+                        paddingBottom: () => 2,
+                        paddingLeft: () => 10,
+                        paddingTop: () => 4,
+                        vLineColor: () => "#b7b1a9",
+                    },
+                    table: {
+                        body: rows.length > 0 ? rows : [[{ border: [1, 0, 0, 0], text: " " }]],
+                    },
                 },
-                table: {
-                    body: [
-                        [
-                            {
-                                border: [1, 0, 0, 0],
-                                margin: [0, 0, 0, 0],
-                                style: "fontNormal",
-                                text: beskrivelse,
-                            },
-                        ],
-                    ],
-                },
-            },
-        ],
-        unbreakable: true,
-    });
+            ],
+            unbreakable: true,
+        };
+    };
 
-    const hovedinnholdRad = (fraDato, tilDato, nåværende, sted, tittel, beskrivelse, datoformat = "MMMM YYYY") => ({
-        columns: [
-            {
-                style: ["tidsperiode", "fontNormal"],
-                text: tidsperiode(fraDato, tilDato, nåværende, datoformat),
-                width: "24%",
-            },
-            {
-                layout: {
-                    paddingBottom: () => 0.1,
-                    paddingLeft: () => 10,
-                    paddingTop: () => 0.1,
-                    vLineColor: () => "#b7b1a9",
+    const hovedinnholdRad = (fraDato, tilDato, nåværende, sted, tittel, beskrivelse, datoformat = "MMMM YYYY") => {
+        const harSted = sted && sted !== "";
+        const rows = [
+            { text: sted, style: "fontNormal", margin: [0, 4, 0, 0] },
+            { text: tittel, style: "fontBold", margin: [0, harSted ? 0 : 4, 0, 0] },
+            { text: beskrivelse, style: "fontNormal", margin: [0, 0, 0, 4] },
+        ]
+            .filter((row) => row.text && row.text !== "")
+            .map((row) => [{ border: [1, 0, 0, 0], margin: row.margin, style: row.style, text: row.text }]);
+
+        return {
+            columns: [
+                {
+                    style: ["tidsperiode", "fontNormal"],
+                    text: tidsperiode(fraDato, tilDato, nåværende, datoformat),
+                    width: "24%",
                 },
-                table: {
-                    body: [
-                        [
-                            {
-                                border: [1, 0, 0, 0],
-                                margin: sted === "" ? [0, 0, 0, 0] : [0, 4, 0, 0],
-                                style: "fontNormal",
-                                text: sted,
-                            },
-                        ],
-                        [
-                            {
-                                border: [1, 0, 0, 0],
-                                margin: [0, sted === "" ? 4 : 0, 0, 0],
-                                style: "fontBold",
-                                text: tittel,
-                            },
-                        ],
-                        [
-                            {
-                                border: [1, 0, 0, 0],
-                                margin: [0, 0, 0, 4],
-                                style: "fontNormal",
-                                text: beskrivelse,
-                            },
-                        ],
-                    ],
+                {
+                    layout: {
+                        paddingBottom: () => 0.1,
+                        paddingLeft: () => 10,
+                        paddingTop: () => 0.1,
+                        vLineColor: () => "#b7b1a9",
+                    },
+                    table: {
+                        widths: ["*"],
+                        body: rows.length > 0 ? rows : [[{ border: [1, 0, 0, 0], text: " " }]],
+                    },
                 },
-            },
-        ],
-        unbreakable: beskrivelse.length < 1000,
-    });
+            ],
+            unbreakable: (beskrivelse || "").length < 1000,
+        };
+    };
 
     const utdanningHeader = (førsteUtdanning) => ({
         stack: [
@@ -329,9 +266,41 @@ export function lastNedCvPdf(cv, personalia) {
         if (førerkortInnhold && førerkortInnhold.length > 0) {
             return [
                 { margin: [0, 32, 0, 16], style: "subheader", text: "Førerkort" },
-                førerkortInnhold.map((f) =>
-                    førerkortRad(f.acquiredDate, f.expiryDate, "", `Førerkort klasse ${f.type}`),
-                ),
+                {
+                    columns: [
+                        {
+                            style: {
+                                fontSize: "11",
+                                lineHeight: "1.2",
+                            },
+                            stack: førerkortInnhold.map((f) => ({
+                                margin: [0, 5.1, 5.1, 5.1],
+                                text: tidsperiode(f.acquiredDate, f.expiryDate, "", "DD MM YY"),
+                            })),
+                            width: "24%",
+                        },
+                        {
+                            layout: {
+                                hLineWidth: () => 0,
+                                paddingBottom: () => 5.1,
+                                paddingLeft: () => 10,
+                                paddingTop: () => 5.1,
+                                vLineColor: () => "#b7b1a9",
+                            },
+                            table: {
+                                body: førerkortInnhold.map((f) => [
+                                    {
+                                        border: [1, 0, 0, 0],
+                                        margin: [0, 0, 0, 0],
+                                        style: "fontNormal",
+                                        text: `Førerkort klasse ${f.type}`,
+                                    },
+                                ]),
+                            },
+                        },
+                    ],
+                    unbreakable: true,
+                },
             ];
         }
     };
@@ -344,8 +313,8 @@ export function lastNedCvPdf(cv, personalia) {
                 "",
                 "",
                 førsteKurs.issuer,
-                førsteKurs.title || " ",
-                calculateVarighetOgEnhet(førsteKurs.duration, førsteKurs.durationUnit) || " ",
+                førsteKurs.title || "",
+                calculateVarighetOgEnhet(førsteKurs.duration, førsteKurs.durationUnit) || "",
             ),
         ],
         unbreakable: true,
@@ -363,8 +332,8 @@ export function lastNedCvPdf(cv, personalia) {
                             "",
                             "",
                             k.issuer,
-                            k.title || " ",
-                            calculateVarighetOgEnhet(k.duration, k.durationUnit) || " ",
+                            k.title || "",
+                            calculateVarighetOgEnhet(k.duration, k.durationUnit) || "",
                         ),
                     ),
             ];
