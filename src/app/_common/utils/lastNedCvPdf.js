@@ -130,6 +130,7 @@ export function lastNedCvPdf(cv, personalia) {
             },
             {
                 layout: {
+                    hLineWidth: () => 0,
                     paddingBottom: () => 5.1,
                     paddingLeft: () => 10,
                     paddingTop: () => 5.1,
