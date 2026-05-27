@@ -153,9 +153,10 @@ export function lastNedCvPdf(cv, personalia) {
     });
 
     const hovedinnholdRad = (fraDato, tilDato, nåværende, sted, tittel, beskrivelse, datoformat = "MMMM YYYY") => {
+        const harSted = sted && sted !== "";
         const rows = [
             { text: sted, style: "fontNormal", margin: [0, 4, 0, 0] },
-            { text: tittel, style: "fontBold", margin: [0, 4, 0, 0] },
+            { text: tittel, style: "fontBold", margin: [0, harSted ? 0 : 4, 0, 0] },
             { text: beskrivelse, style: "fontNormal", margin: [0, 0, 0, 4] },
         ]
             .filter((row) => row.text && row.text !== "")
