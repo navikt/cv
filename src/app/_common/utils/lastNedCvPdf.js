@@ -81,56 +81,41 @@ export function lastNedCvPdf(cv, personalia) {
         }
     };
 
-    const språkRad = (språk, muntlig, skriftlig) => ({
-        columns: [
-            {
-                margin: [5.1, 5.1, 5.1, 5.1],
-                style: {
-                    fontSize: "11",
-                    lineHeight: "1.2",
+    const språkRad = (språk, muntlig, skriftlig) => {
+        const rows = [
+            { text: språk, style: "fontBold" },
+            { text: skriftlig, style: "fontNormal" },
+            { text: muntlig, style: "fontNormal" },
+        ]
+            .filter((row) => row.text && row.text !== "")
+            .map((row) => [{ border: [1, 0, 0, 0], margin: [0, 0, 0, 0], style: row.style, text: row.text }]);
+
+        return {
+            columns: [
+                {
+                    margin: [5.1, 5.1, 5.1, 5.1],
+                    style: {
+                        fontSize: "11",
+                        lineHeight: "1.2",
+                    },
+                    text: "",
+                    width: "24%",
                 },
-                text: "",
-                width: "24%",
-            },
-            {
-                layout: {
-                    paddingBottom: () => 2,
-                    paddingLeft: () => 10,
-                    paddingTop: () => 4,
-                    vLineColor: () => "#b7b1a9",
+                {
+                    layout: {
+                        paddingBottom: () => 2,
+                        paddingLeft: () => 10,
+                        paddingTop: () => 4,
+                        vLineColor: () => "#b7b1a9",
+                    },
+                    table: {
+                        body: rows.length > 0 ? rows : [[{ border: [1, 0, 0, 0], text: " " }]],
+                    },
                 },
-                table: {
-                    body: [
-                        [
-                            {
-                                border: [1, 0, 0, 0],
-                                margin: [0, 0, 0, 0],
-                                style: "fontBold",
-                                text: språk,
-                            },
-                        ],
-                        [
-                            {
-                                border: [1, 0, 0, 0],
-                                margin: [0, 0, 0, 0],
-                                style: "fontNormal",
-                                text: skriftlig,
-                            },
-                        ],
-                        [
-                            {
-                                border: [1, 0, 0, 0],
-                                margin: [0, 0, 0, 0],
-                                style: "fontNormal",
-                                text: muntlig,
-                            },
-                        ],
-                    ],
-                },
-            },
-        ],
-        unbreakable: true,
-    });
+            ],
+            unbreakable: true,
+        };
+    };
 
     const førerkortRad = (gyldigFra, gyldigTil, nåværende, beskrivelse, datoformat = "DD MM YY") => ({
         columns: [
@@ -329,8 +314,8 @@ export function lastNedCvPdf(cv, personalia) {
                 "",
                 "",
                 førsteKurs.issuer,
-                førsteKurs.title || " ",
-                calculateVarighetOgEnhet(førsteKurs.duration, førsteKurs.durationUnit) || " ",
+                førsteKurs.title || "",
+                calculateVarighetOgEnhet(førsteKurs.duration, førsteKurs.durationUnit) || "",
             ),
         ],
         unbreakable: true,
@@ -348,8 +333,8 @@ export function lastNedCvPdf(cv, personalia) {
                             "",
                             "",
                             k.issuer,
-                            k.title || " ",
-                            calculateVarighetOgEnhet(k.duration, k.durationUnit) || " ",
+                            k.title || "",
+                            calculateVarighetOgEnhet(k.duration, k.durationUnit) || "",
                         ),
                     ),
             ];
