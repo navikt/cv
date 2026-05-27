@@ -167,57 +167,37 @@ export function lastNedCvPdf(cv, personalia) {
         unbreakable: true,
     });
 
-    const hovedinnholdRad = (fraDato, tilDato, nåværende, sted, tittel, beskrivelse, datoformat = "MMMM YYYY") => ({
-        columns: [
-            {
-                style: ["tidsperiode", "fontNormal"],
-                text: tidsperiode(fraDato, tilDato, nåværende, datoformat),
-                width: "24%",
-            },
-            {
-                layout: {
-                    hLineWidth: () => 0,
-                    paddingBottom: () => 0.1,
-                    paddingLeft: () => 10,
-                    paddingTop: () => 0.1,
-                    vLineColor: () => "#b7b1a9",
+    const hovedinnholdRad = (fraDato, tilDato, nåværende, sted, tittel, beskrivelse, datoformat = "MMMM YYYY") => {
+        const rows = [
+            { text: sted, style: "fontNormal", margin: [0, 4, 0, 0] },
+            { text: tittel, style: "fontBold", margin: [0, 4, 0, 0] },
+            { text: beskrivelse, style: "fontNormal", margin: [0, 0, 0, 4] },
+        ]
+            .filter((row) => row.text && row.text.trim() !== "")
+            .map((row) => [{ border: [1, 0, 0, 0], margin: row.margin, style: row.style, text: row.text }]);
+
+        return {
+            columns: [
+                {
+                    style: ["tidsperiode", "fontNormal"],
+                    text: tidsperiode(fraDato, tilDato, nåværende, datoformat),
+                    width: "24%",
                 },
-                table: {
-                    body: [
-                        ...(sted !== ""
-                            ? [
-                                  [
-                                      {
-                                          border: [1, 0, 0, 0],
-                                          margin: [0, 4, 0, 0],
-                                          style: "fontNormal",
-                                          text: sted,
-                                      },
-                                  ],
-                              ]
-                            : []),
-                        [
-                            {
-                                border: [1, 0, 0, 0],
-                                margin: [0, 4, 0, 0],
-                                style: "fontBold",
-                                text: tittel,
-                            },
-                        ],
-                        [
-                            {
-                                border: [1, 0, 0, 0],
-                                margin: [0, 0, 0, 4],
-                                style: "fontNormal",
-                                text: beskrivelse,
-                            },
-                        ],
-                    ],
+                {
+                    layout: {
+                        paddingBottom: () => 0.1,
+                        paddingLeft: () => 10,
+                        paddingTop: () => 0.1,
+                        vLineColor: () => "#b7b1a9",
+                    },
+                    table: {
+                        body: rows.length > 0 ? rows : [[{ border: [1, 0, 0, 0], text: " " }]],
+                    },
                 },
-            },
-        ],
-        unbreakable: beskrivelse.length < 1000,
-    });
+            ],
+            unbreakable: (beskrivelse || "").length < 1000,
+        };
+    };
 
     const utdanningHeader = (førsteUtdanning) => ({
         stack: [
