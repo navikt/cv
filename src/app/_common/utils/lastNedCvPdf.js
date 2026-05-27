@@ -173,7 +173,7 @@ export function lastNedCvPdf(cv, personalia) {
             { text: tittel, style: "fontBold", margin: [0, 4, 0, 0] },
             { text: beskrivelse, style: "fontNormal", margin: [0, 0, 0, 4] },
         ]
-            .filter((row) => row.text && row.text.trim() !== "")
+            .filter((row) => row.text && row.text !== "")
             .map((row) => [{ border: [1, 0, 0, 0], margin: row.margin, style: row.style, text: row.text }]);
 
         return {
