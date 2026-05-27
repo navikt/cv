@@ -142,6 +142,7 @@ export function lastNedCvPdf(cv, personalia) {
                         vLineColor: () => "#b7b1a9",
                     },
                     table: {
+                        widths: ["*"],
                         body: rows.length > 0 ? rows : [[{ border: [1, 0, 0, 0], text: " " }]],
                     },
                 },
