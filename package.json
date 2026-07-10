@@ -75,6 +75,11 @@
         "stylelint-config-recommended": "^18.0.0",
         "transform-loader": "^0.2.4"
     },
+    "pnpm": {
+        "overrides": {
+            "@opentelemetry/core": "2.8.0"
+        }
+    },
     "lint-staged": {
         "./*/**/*.{js,jsx,ts,tsx,json,yml,yaml}": [
             "npx prettier --write",
