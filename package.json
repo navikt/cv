@@ -35,7 +35,7 @@
         "@navikt/navspa": "6.2.0",
         "@navikt/next-logger": "4.5.1",
         "@navikt/oasis": "3.8.0",
-        "@next/env": "16.2.6",
+        "@next/env": "16.2.10",
         "html-react-parser": "6.1.4",
         "jsdom": "27.4.0",
         "next": "16.2.10",
