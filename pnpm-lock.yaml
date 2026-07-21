@@ -30,16 +30,16 @@ importers:
         version: 7.40.0
       '@navikt/ds-react':
         specifier: 7.40.0
-        version: 7.40.0(@types/react@19.2.8)(react-dom@19.2.6(react@19.2.7))(react@19.2.7)
+        version: 7.40.0(@types/react@19.2.8)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@navikt/nav-dekoratoren-moduler':
         specifier: 3.7.3
         version: 3.7.3(html-react-parser@6.1.4(@types/react@19.2.8)(react@19.2.7))(react@19.2.7)
       '@navikt/navspa':
         specifier: 6.2.0
-        version: 6.2.0(react-dom@19.2.6(react@19.2.7))(react@19.2.7)
+        version: 6.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@navikt/next-logger':
         specifier: 4.5.1
-        version: 4.5.1(next@16.2.10(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.6(react@19.2.7))(react@19.2.7))(pino@9.14.0)
+        version: 4.5.1(next@16.2.10(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(pino@9.14.0)
       '@navikt/oasis':
         specifier: 3.8.0
         version: 3.8.0
@@ -54,7 +54,7 @@ importers:
         version: 27.4.0
       next:
         specifier: 16.2.10
-        version: 16.2.10(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.6(react@19.2.7))(react@19.2.7)
+        version: 16.2.10(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       pdfmake:
         specifier: 0.3.11
         version: 0.3.11
@@ -71,8 +71,8 @@ importers:
         specifier: 19.2.7
         version: 19.2.7
       react-dom:
-        specifier: 19.2.6
-        version: 19.2.6(react@19.2.7)
+        specifier: 19.2.7
+        version: 19.2.7(react@19.2.7)
       sanitize-html:
         specifier: 2.17.4
         version: 2.17.4
@@ -2677,10 +2677,10 @@ packages:
     peerDependencies:
       react: '>=16.8.0'
 
-  react-dom@19.2.6:
-    resolution: {integrity: sha512-0prMI+hvBbPjsWnxDLxlCGyM8PN6UuWjEUCYmZhO67xIV9Xasa/r/vDnq+Xyq4Lo27g8QSbO5YzARu0D1Sps3g==}
+  react-dom@19.2.7:
+    resolution: {integrity: sha512-t0BRVXvbiE/o20Hfw669rLbMCDWtYZLvmJigy2f0MxsXF+71pxhR3xOkspmsO8h3ZlNzyibAmtCa3l4lYKk6gQ==}
     peerDependencies:
-      react: ^19.2.6
+      react: ^19.2.7
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -3572,18 +3572,18 @@ snapshots:
       '@floating-ui/core': 1.7.3
       '@floating-ui/utils': 0.2.10
 
-  '@floating-ui/react-dom@2.1.6(react-dom@19.2.6(react@19.2.7))(react@19.2.7)':
+  '@floating-ui/react-dom@2.1.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@floating-ui/dom': 1.7.4
       react: 19.2.7
-      react-dom: 19.2.6(react@19.2.7)
+      react-dom: 19.2.7(react@19.2.7)
 
-  '@floating-ui/react@0.27.8(react-dom@19.2.6(react@19.2.7))(react@19.2.7)':
+  '@floating-ui/react@0.27.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
-      '@floating-ui/react-dom': 2.1.6(react-dom@19.2.6(react@19.2.7))(react@19.2.7)
+      '@floating-ui/react-dom': 2.1.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@floating-ui/utils': 0.2.10
       react: 19.2.7
-      react-dom: 19.2.6(react@19.2.7)
+      react-dom: 19.2.7(react@19.2.7)
       tabbable: 6.4.0
 
   '@floating-ui/utils@0.2.10': {}
@@ -3749,10 +3749,10 @@ snapshots:
 
   '@navikt/ds-css@7.40.0': {}
 
-  '@navikt/ds-react@7.40.0(@types/react@19.2.8)(react-dom@19.2.6(react@19.2.7))(react@19.2.7)':
+  '@navikt/ds-react@7.40.0(@types/react@19.2.8)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
-      '@floating-ui/react': 0.27.8(react-dom@19.2.6(react@19.2.7))(react@19.2.7)
-      '@floating-ui/react-dom': 2.1.6(react-dom@19.2.6(react@19.2.7))(react@19.2.7)
+      '@floating-ui/react': 0.27.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@floating-ui/react-dom': 2.1.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@navikt/aksel-icons': 7.40.0
       '@navikt/ds-tokens': 7.40.0
       '@types/react': 19.2.8
@@ -3760,7 +3760,7 @@ snapshots:
       date-fns: 4.1.0
       react: 19.2.7
       react-day-picker: 9.7.0(react@19.2.7)
-      react-dom: 19.2.6(react@19.2.7)
+      react-dom: 19.2.7(react@19.2.7)
 
   '@navikt/ds-tokens@7.40.0': {}
 
@@ -3771,16 +3771,16 @@ snapshots:
       js-cookie: 3.0.7
       react: 19.2.7
 
-  '@navikt/navspa@6.2.0(react-dom@19.2.6(react@19.2.7))(react@19.2.7)':
+  '@navikt/navspa@6.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       loadjs: 4.3.0
       react: 19.2.7
-      react-dom: 19.2.6(react@19.2.7)
+      react-dom: 19.2.7(react@19.2.7)
 
-  '@navikt/next-logger@4.5.1(next@16.2.10(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.6(react@19.2.7))(react@19.2.7))(pino@9.14.0)':
+  '@navikt/next-logger@4.5.1(next@16.2.10(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(pino@9.14.0)':
     dependencies:
       '@navikt/pino-logger': 4.5.1(pino@9.14.0)
-      next: 16.2.10(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.6(react@19.2.7))(react@19.2.7)
+      next: 16.2.10(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       pino: 9.14.0
 
   '@navikt/oasis@3.8.0':
@@ -5698,7 +5698,7 @@ snapshots:
 
   next-tick@1.1.0: {}
 
-  next@16.2.10(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.6(react@19.2.7))(react@19.2.7):
+  next@16.2.10(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
     dependencies:
       '@next/env': 16.2.10
       '@swc/helpers': 0.5.15
@@ -5706,7 +5706,7 @@ snapshots:
       caniuse-lite: 1.0.30001803
       postcss: 8.5.16
       react: 19.2.7
-      react-dom: 19.2.6(react@19.2.7)
+      react-dom: 19.2.7(react@19.2.7)
       styled-jsx: 5.1.6(@babel/core@7.29.0)(react@19.2.7)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.2.10
@@ -6027,7 +6027,7 @@ snapshots:
       date-fns-jalali: 4.1.0-0
       react: 19.2.7
 
-  react-dom@19.2.6(react@19.2.7):
+  react-dom@19.2.7(react@19.2.7):
     dependencies:
       react: 19.2.7
       scheduler: 0.27.0
