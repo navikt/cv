@@ -44,8 +44,8 @@ importers:
         specifier: 3.8.0
         version: 3.8.0
       '@next/env':
-        specifier: 16.2.6
-        version: 16.2.6
+        specifier: 16.2.10
+        version: 16.2.10
       html-react-parser:
         specifier: 6.1.4
         version: 6.1.4(@types/react@19.2.8)(react@19.2.7)
@@ -665,9 +665,6 @@ packages:
 
   '@next/env@16.2.10':
     resolution: {integrity: sha512-zLPxg9M0MEHmygpj5OuxjQ+vHMiy/K7cSp74G8ecYolmgUWw0RwN02tF56npup/+qaI8JB97hQgS/r2Hb6QwVA==}
-
-  '@next/env@16.2.6':
-    resolution: {integrity: sha512-gd8HoHN4ufj73WmR3JmVolrpJR47ILK6LouP5xElPglaVxir6e1a7VzvTvDWkOoPXT9rkkTzyCxBu4yeZfZwcw==}
 
   '@next/eslint-plugin-next@16.2.6':
     resolution: {integrity: sha512-Z8l6o4JWKUl755x4R+wogD86KPeU+Ckw4K+SYG4kHeOJtRenDeK+OSbGcqZpDtbwn9DsJVdir2UxmwXuinUbUw==}
@@ -3774,8 +3771,6 @@ snapshots:
       pino-socket: 7.4.0
 
   '@next/env@16.2.10': {}
-
-  '@next/env@16.2.6': {}
 
   '@next/eslint-plugin-next@16.2.6':
     dependencies:
