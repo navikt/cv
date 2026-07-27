@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/nodejs22-debian12
+FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/node:26-slim
 
 ENV NODE_ENV=production
 ENV TZ="Europe/Oslo"
@@ -10,8 +10,6 @@ WORKDIR /app
 COPY /public ./public
 COPY /.next/standalone ./
 COPY /.next/static ./.next/static
-
-USER nonroot
 
 EXPOSE 3000
 
