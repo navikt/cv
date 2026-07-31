@@ -30,16 +30,16 @@ importers:
         version: 7.40.0
       '@navikt/ds-react':
         specifier: 7.40.0
-        version: 7.40.0(@types/react@19.2.8)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 7.40.0(@types/react@19.2.8)(react-dom@19.2.7(react@19.2.8))(react@19.2.8)
       '@navikt/nav-dekoratoren-moduler':
         specifier: 3.7.3
-        version: 3.7.3(html-react-parser@6.1.4(@types/react@19.2.8)(react@19.2.7))(react@19.2.7)
+        version: 3.7.3(html-react-parser@6.1.4(@types/react@19.2.8)(react@19.2.8))(react@19.2.8)
       '@navikt/navspa':
         specifier: 6.2.0
-        version: 6.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 6.2.0(react-dom@19.2.7(react@19.2.8))(react@19.2.8)
       '@navikt/next-logger':
         specifier: 4.5.1
-        version: 4.5.1(next@16.2.11(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(pino@9.14.0)
+        version: 4.5.1(next@16.2.11(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.8))(react@19.2.8))(pino@9.14.0)
       '@navikt/oasis':
         specifier: 3.8.0
         version: 3.8.0
@@ -48,13 +48,13 @@ importers:
         version: 16.2.10
       html-react-parser:
         specifier: 6.1.4
-        version: 6.1.4(@types/react@19.2.8)(react@19.2.7)
+        version: 6.1.4(@types/react@19.2.8)(react@19.2.8)
       jsdom:
         specifier: 27.4.0
         version: 27.4.0
       next:
         specifier: 16.2.11
-        version: 16.2.11(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 16.2.11(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.8))(react@19.2.8)
       pdfmake:
         specifier: 0.3.11
         version: 0.3.11
@@ -68,17 +68,17 @@ importers:
         specifier: 15.8.1
         version: 15.8.1
       react:
-        specifier: 19.2.7
-        version: 19.2.7
+        specifier: 19.2.8
+        version: 19.2.8
       react-dom:
         specifier: 19.2.7
-        version: 19.2.7(react@19.2.7)
+        version: 19.2.7(react@19.2.8)
       sanitize-html:
         specifier: 2.17.6
         version: 2.17.6
       swr:
         specifier: 2.4.2
-        version: 2.4.2(react@19.2.7)
+        version: 2.4.2(react@19.2.8)
       uuid:
         specifier: 14.0.1
         version: 14.0.1
@@ -2699,8 +2699,8 @@ packages:
   react-property@2.0.2:
     resolution: {integrity: sha512-+PbtI3VuDV0l6CleQMsx2gtK0JZbZKbpdu5ynr+lbsuvtmgbNcS3VM0tuY2QjFNOcWxvXeHjDpy42RO+4U2rug==}
 
-  react@19.2.7:
-    resolution: {integrity: sha512-HNe9WslTbXmFK8o8cmwgAeJFSBvt1bPdHCVKtaaV+WlAN36mpT4hcRpwbf3fY56ar2oIXzsBpOAiIRHAdY0OlQ==}
+  react@19.2.8:
+    resolution: {integrity: sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==}
     engines: {node: '>=0.10.0'}
 
   readable-stream@2.3.8:
@@ -3598,18 +3598,18 @@ snapshots:
       '@floating-ui/core': 1.7.3
       '@floating-ui/utils': 0.2.10
 
-  '@floating-ui/react-dom@2.1.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@floating-ui/react-dom@2.1.6(react-dom@19.2.7(react@19.2.8))(react@19.2.8)':
     dependencies:
       '@floating-ui/dom': 1.7.4
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
+      react: 19.2.8
+      react-dom: 19.2.7(react@19.2.8)
 
-  '@floating-ui/react@0.27.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@floating-ui/react@0.27.8(react-dom@19.2.7(react@19.2.8))(react@19.2.8)':
     dependencies:
-      '@floating-ui/react-dom': 2.1.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@floating-ui/react-dom': 2.1.6(react-dom@19.2.7(react@19.2.8))(react@19.2.8)
       '@floating-ui/utils': 0.2.10
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
+      react: 19.2.8
+      react-dom: 19.2.7(react@19.2.8)
       tabbable: 6.4.0
 
   '@floating-ui/utils@0.2.10': {}
@@ -3775,38 +3775,38 @@ snapshots:
 
   '@navikt/ds-css@7.40.0': {}
 
-  '@navikt/ds-react@7.40.0(@types/react@19.2.8)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@navikt/ds-react@7.40.0(@types/react@19.2.8)(react-dom@19.2.7(react@19.2.8))(react@19.2.8)':
     dependencies:
-      '@floating-ui/react': 0.27.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      '@floating-ui/react-dom': 2.1.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@floating-ui/react': 0.27.8(react-dom@19.2.7(react@19.2.8))(react@19.2.8)
+      '@floating-ui/react-dom': 2.1.6(react-dom@19.2.7(react@19.2.8))(react@19.2.8)
       '@navikt/aksel-icons': 7.40.0
       '@navikt/ds-tokens': 7.40.0
       '@types/react': 19.2.8
       clsx: 2.1.1
       date-fns: 4.1.0
-      react: 19.2.7
-      react-day-picker: 9.7.0(react@19.2.7)
-      react-dom: 19.2.7(react@19.2.7)
+      react: 19.2.8
+      react-day-picker: 9.7.0(react@19.2.8)
+      react-dom: 19.2.7(react@19.2.8)
 
   '@navikt/ds-tokens@7.40.0': {}
 
-  '@navikt/nav-dekoratoren-moduler@3.7.3(html-react-parser@6.1.4(@types/react@19.2.8)(react@19.2.7))(react@19.2.7)':
+  '@navikt/nav-dekoratoren-moduler@3.7.3(html-react-parser@6.1.4(@types/react@19.2.8)(react@19.2.8))(react@19.2.8)':
     dependencies:
       csp-header: 6.3.1
-      html-react-parser: 6.1.4(@types/react@19.2.8)(react@19.2.7)
+      html-react-parser: 6.1.4(@types/react@19.2.8)(react@19.2.8)
       js-cookie: 3.0.7
-      react: 19.2.7
+      react: 19.2.8
 
-  '@navikt/navspa@6.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@navikt/navspa@6.2.0(react-dom@19.2.7(react@19.2.8))(react@19.2.8)':
     dependencies:
       loadjs: 4.3.0
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
+      react: 19.2.8
+      react-dom: 19.2.7(react@19.2.8)
 
-  '@navikt/next-logger@4.5.1(next@16.2.11(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(pino@9.14.0)':
+  '@navikt/next-logger@4.5.1(next@16.2.11(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.8))(react@19.2.8))(pino@9.14.0)':
     dependencies:
       '@navikt/pino-logger': 4.5.1(pino@9.14.0)
-      next: 16.2.11(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      next: 16.2.11(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.8))(react@19.2.8)
       pino: 9.14.0
 
   '@navikt/oasis@3.8.0':
@@ -5303,11 +5303,11 @@ snapshots:
     transitivePeerDependencies:
       - '@exodus/crypto'
 
-  html-react-parser@6.1.4(@types/react@19.2.8)(react@19.2.7):
+  html-react-parser@6.1.4(@types/react@19.2.8)(react@19.2.8):
     dependencies:
       domhandler: 6.0.1
       html-dom-parser: 8.0.0
-      react: 19.2.7
+      react: 19.2.8
       react-property: 2.0.2
       style-to-js: 2.0.1
     optionalDependencies:
@@ -5737,16 +5737,16 @@ snapshots:
 
   next-tick@1.1.0: {}
 
-  next@16.2.11(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
+  next@16.2.11(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.7(react@19.2.8))(react@19.2.8):
     dependencies:
       '@next/env': 16.2.11
       '@swc/helpers': 0.5.15
       baseline-browser-mapping: 2.11.4
       caniuse-lite: 1.0.30001806
       postcss: 8.5.23
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-      styled-jsx: 5.1.6(@babel/core@7.29.0)(react@19.2.7)
+      react: 19.2.8
+      react-dom: 19.2.7(react@19.2.8)
+      styled-jsx: 5.1.6(@babel/core@7.29.0)(react@19.2.8)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.2.11
       '@next/swc-darwin-x64': 16.2.11
@@ -6065,23 +6065,23 @@ snapshots:
       minimist: 1.2.8
       through2: 2.0.5
 
-  react-day-picker@9.7.0(react@19.2.7):
+  react-day-picker@9.7.0(react@19.2.8):
     dependencies:
       '@date-fns/tz': 1.2.0
       date-fns: 4.1.0
       date-fns-jalali: 4.1.0-0
-      react: 19.2.7
+      react: 19.2.8
 
-  react-dom@19.2.7(react@19.2.7):
+  react-dom@19.2.7(react@19.2.8):
     dependencies:
-      react: 19.2.7
+      react: 19.2.8
       scheduler: 0.27.0
 
   react-is@16.13.1: {}
 
   react-property@2.0.2: {}
 
-  react@19.2.7: {}
+  react@19.2.8: {}
 
   readable-stream@2.3.8:
     dependencies:
@@ -6503,10 +6503,10 @@ snapshots:
     dependencies:
       inline-style-parser: 0.2.7
 
-  styled-jsx@5.1.6(@babel/core@7.29.0)(react@19.2.7):
+  styled-jsx@5.1.6(@babel/core@7.29.0)(react@19.2.8):
     dependencies:
       client-only: 0.0.1
-      react: 19.2.7
+      react: 19.2.8
     optionalDependencies:
       '@babel/core': 7.29.0
 
@@ -6570,11 +6570,11 @@ snapshots:
 
   svg-tags@1.0.0: {}
 
-  swr@2.4.2(react@19.2.7):
+  swr@2.4.2(react@19.2.8):
     dependencies:
       dequal: 2.0.3
-      react: 19.2.7
-      use-sync-external-store: 1.6.0(react@19.2.7)
+      react: 19.2.8
+      use-sync-external-store: 1.6.0(react@19.2.8)
 
   symbol-tree@3.2.4: {}
 
@@ -6779,9 +6779,9 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  use-sync-external-store@1.6.0(react@19.2.7):
+  use-sync-external-store@1.6.0(react@19.2.8):
     dependencies:
-      react: 19.2.7
+      react: 19.2.8
 
   util-deprecate@1.0.2: {}
 
