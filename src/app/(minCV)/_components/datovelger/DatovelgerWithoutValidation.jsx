@@ -26,7 +26,7 @@ export function DatovelgerWithoutValidation({
 
     const { datepickerProps, inputProps, setSelected } = useDatepicker({
         fromDate: hentDatoMedÅrsforskjell(-70),
-        toDate: hentDatoMedÅrsforskjell(fremtid ? 25 : 0),
+        toDate: hentDatoMedÅrsforskjell(fremtid ? 100 : 0),
         onDateChange: (e) => {
             if (inputRef.current && e instanceof Date) {
                 try {
