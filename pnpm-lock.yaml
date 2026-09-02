@@ -74,8 +74,8 @@ importers:
         specifier: 19.2.8
         version: 19.2.8(react@19.2.8)
       sanitize-html:
-        specifier: 2.17.6
-        version: 2.17.6
+        specifier: 2.17.7
+        version: 2.17.7
       swr:
         specifier: 2.4.2
         version: 2.4.2(react@19.2.8)
@@ -1345,8 +1345,8 @@ packages:
   dateformat@4.6.3:
     resolution: {integrity: sha512-2P0p0pFGzHS5EMnhdxQi7aJN+iMheud0UhG4dlE1DLAlvL8JHjJJTX/CSm4JXwV0Ka5nGk3zC5mcb5bUQUxxMA==}
 
-  dayjs@1.11.21:
-    resolution: {integrity: sha512-98IT+HOahAisibz/yjKbzuOBwYcjJ7BCLPzARyHiyEBmRz4fatF+KPJszEHXsGYjUG234aH/cOjW1wwTbKUZlA==}
+  dayjs@1.11.23:
+    resolution: {integrity: sha512-QDTCU0M0MxR3hQfnlDJfwekQiaanm1ubOD231u73WBckQ/fsamwRLiE2GBz6D3a/xF1NgfiDLJjXBa1hYOYTtQ==}
 
   debug@3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
@@ -1664,6 +1664,7 @@ packages:
   eslint@9.39.5:
     resolution: {integrity: sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -2092,8 +2093,8 @@ packages:
     resolution: {integrity: sha512-lJJV/5dYS+RcL8uQdBDW9c9uWFLLBNRyFhnAKXw5tVqLlKZ4RMGZKv+YQ/IA3OhD+RpbJa1LLFM1FQPGyIXvOA==}
     engines: {node: '>=12'}
 
-  is-plain-object@5.0.0:
-    resolution: {integrity: sha512-VRSzKkbMm5jMDoKLbltAkFQ5Qr7VDiTFGXxYFXXowVj387GeGNOCsOH6Msy00SGZ3Fp84b1Naa1psqgcCIEP5Q==}
+  is-plain-object@5.1.0:
+    resolution: {integrity: sha512-bUi/yjmtKYcRVUtWRGr0UA6xEFh2I6zWUwMrUXB3s7bmYCaZ8a+0ZsTRkrawh/mzlSD1Y0Ph8bp/U+TvBpWDNw==}
     engines: {node: '>=0.10.0'}
 
   is-potential-custom-element-name@1.0.1:
@@ -2337,6 +2338,11 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanoid@3.3.18:
+    resolution: {integrity: sha512-DTg4MJbGMWkfi6VZFdNt2/caMbQy4Ou+Op/hJQvGEWcnVfoA1QA+xzRKAzw9jD6+GVOOeYr/mIcuDSdug6F6+w==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
   napi-postinstall@0.3.4:
     resolution: {integrity: sha512-PHI5f1O0EP5xJ9gQmFGMS6IZcrVvTjpXjz7Na41gTE7eE2hK11lg04CECCYEEjdc17EV4DO+fkGEtt7TpTaTiQ==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
@@ -2549,16 +2555,16 @@ packages:
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
 
-  postcss@8.5.19:
-    resolution: {integrity: sha512-Mz8SaolMd8nB+G13WkORcxQKHZ/NE4xXevtkJHVuG+guo9/wYKlIMTKAqGdEmYOXR2ijPjTYNHssizdaVSUNdQ==}
-    engines: {node: ^10 || ^12 || >=14}
-
   postcss@8.5.23:
     resolution: {integrity: sha512-g50586zr4bZmwFiTlflMu8E0bDTb5I5gertgwAKmsdUlTQIhZtunzUlD1WSzwcVWPoAVpsrA6vlfCD7oXvRwgg==}
     engines: {node: ^10 || ^12 || >=14}
 
   postcss@8.5.25:
     resolution: {integrity: sha512-DTPx3RWSSnWyzLxQnlH0rJP+EW5ekl16ZU4/psbIhA0e53kJfdgaN5vKM+xP7yJtXVu+nfdVFmlgFDEKAe4Pyw==}
+    engines: {node: ^10 || ^12 || >=14}
+
+  postcss@8.5.26:
+    resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
     engines: {node: ^10 || ^12 || >=14}
 
   precond@0.2.3:
@@ -2594,6 +2600,7 @@ packages:
   prom-client@15.1.3:
     resolution: {integrity: sha512-6ZiOBfCywsD4k1BN9IX0uZhF+tJkV8q8llP64G5Hajs4JOeVLPCwpPVcpXy3BwYiUGgyJzsJJQeOIv7+hDSq8g==}
     engines: {node: ^16 || ^18 || >=20}
+    deprecated: prom-client has been replaced by @prometheus-io/client
 
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
@@ -2726,8 +2733,8 @@ packages:
     resolution: {integrity: sha512-b3rppTKm9T+PsVCBEOUR46GWI7fdOs00VKZ1+9c1EWDaDMvjQc6tUwuFyIprgGgTcWoVHSKrU8H31ZHA2e0RHA==}
     engines: {node: '>=10'}
 
-  sanitize-html@2.17.6:
-    resolution: {integrity: sha512-M4bo9tfv1yfhQZZKkc6dL07ALrGJtfvNOuhX3hU9AVPR/uPQ+nKOJBqTYc7LfMQblTW04mtSWDJWEyLvygJsLA==}
+  sanitize-html@2.17.7:
+    resolution: {integrity: sha512-PGtEkc9cbnedU3s9TmzDbpsZ8w086g/0Q8k8/oIO1NLNU3i5k9yn835CrjJSajp1KMmkisbO1qPXxNKO3welAg==}
     engines: {node: '>=22.12.0'}
 
   sax@1.6.0:
@@ -4370,7 +4377,7 @@ snapshots:
 
   dateformat@4.6.3: {}
 
-  dayjs@1.11.21: {}
+  dayjs@1.11.23: {}
 
   debug@3.2.7:
     dependencies:
@@ -5337,7 +5344,7 @@ snapshots:
 
   is-path-inside@4.0.0: {}
 
-  is-plain-object@5.0.0: {}
+  is-plain-object@5.1.0: {}
 
   is-potential-custom-element-name@1.0.1: {}
 
@@ -5482,7 +5489,7 @@ snapshots:
 
   launder@1.7.1:
     dependencies:
-      dayjs: 1.11.21
+      dayjs: 1.11.23
 
   levn@0.3.0:
     dependencies:
@@ -5584,6 +5591,8 @@ snapshots:
   ms@2.1.3: {}
 
   nanoid@3.3.16: {}
+
+  nanoid@3.3.18: {}
 
   napi-postinstall@0.3.4: {}
 
@@ -5844,12 +5853,6 @@ snapshots:
 
   postcss-value-parser@4.2.0: {}
 
-  postcss@8.5.19:
-    dependencies:
-      nanoid: 3.3.16
-      picocolors: 1.1.1
-      source-map-js: 1.2.1
-
   postcss@8.5.23:
     dependencies:
       nanoid: 3.3.16
@@ -5859,6 +5862,12 @@ snapshots:
   postcss@8.5.25:
     dependencies:
       nanoid: 3.3.16
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
+
+  postcss@8.5.26:
+    dependencies:
+      nanoid: 3.3.18
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -6050,15 +6059,15 @@ snapshots:
 
   safe-stable-stringify@2.5.0: {}
 
-  sanitize-html@2.17.6:
+  sanitize-html@2.17.7:
     dependencies:
       deepmerge: 4.3.1
       escape-string-regexp: 4.0.0
       htmlparser2: 12.0.0
-      is-plain-object: 5.0.0
+      is-plain-object: 5.1.0
       launder: 1.7.1
       parse-srcset: 1.0.2
-      postcss: 8.5.19
+      postcss: 8.5.26
 
   sax@1.6.0: {}
 
