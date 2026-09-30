@@ -1,0 +1,17 @@
+spec:
+  ingresses:
+    - https://arbeidsplassen.intern.dev.nav.no/min-cv
+    - https://www.ansatt.dev.nav.no/min-cv
+  env:
+    - name: NEXT_PUBLIC_ENVIRONMENT
+      value: dev
+    - name: BASE_URL
+      value: https://www.ansatt.dev.nav.no/min-cv
+    - name: LOGIN_URL
+      value: https://login.ekstern.dev.nav.no/oauth2/login
+    - name: PAM_CV_API_AUDIENCE
+      value: dev-gcp:teampam:pam-cv-api-gcp
+    - name: PAM_EURES_CV_EKSPORT_AUDIENCE
+      value: dev-gcp:teampam:pam-eures-cv-eksport
+    - name: NEXT_PUBLIC_TELEMETRY_URL
+      value: https://telemetry.ekstern.dev.nav.no/collect

@@ -1,0 +1,16 @@
+spec:
+  ingresses:
+    - https://www.nav.no/min-cv
+  env:
+    - name: NEXT_PUBLIC_ENVIRONMENT
+      value: prod
+    - name: BASE_URL
+      value: https://www.nav.no/min-cv
+    - name: LOGIN_URL
+      value: https://login.nav.no/oauth2/login
+    - name: PAM_CV_API_AUDIENCE
+      value: prod-gcp:teampam:pam-cv-api-gcp
+    - name: PAM_EURES_CV_EKSPORT_AUDIENCE
+      value: prod-gcp:teampam:pam-eures-cv-eksport
+    - name: NEXT_PUBLIC_TELEMETRY_URL
+      value: https://telemetry.nav.no/collect
