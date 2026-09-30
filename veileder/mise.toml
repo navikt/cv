@@ -1,0 +1,14 @@
+[tools]
+node = "26"
+pnpm = "10.28.0"
+
+[tasks.build]
+dir = "{{config_root}}/.."
+env = { HUSKY = "0" }
+run = [
+  '[ -z "$READER_TOKEN" ] || pnpm config set //npm.pkg.github.com/:_authToken "$READER_TOKEN"',
+  "pnpm install --frozen-lockfile",
+  "pnpm run lint",
+  "pnpm test",
+  "pnpm run build:veileder",
+]

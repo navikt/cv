@@ -1,0 +1,26 @@
+spec:
+  ingresses:
+    - https://cv-veileder.intern.nav.no/min-cv
+  azure:
+    application:
+      tenant: nav.no
+      claims:
+        groups:
+          - id: b9bc6348-d25c-450d-85c2-044c0955fbe3
+  env:
+    - name: NEXT_PUBLIC_ENVIRONMENT
+      value: prod
+    - name: BASE_URL
+      value: https://www.ansatt.dev.nav.no/min-cv
+    - name: LOGIN_URL
+      value: https://login.nav.no/oauth2/login
+    - name: PAM_CV_API_AUDIENCE
+      value: ""
+    - name: PAM_CV_API_SCOPE
+      value: api://prod-gcp.teampam.pam-cv-api-gcp/.default
+    - name: MODIA_DEKORATOR_SCOPE
+      value: api://prod-gcp.personoversikt.modiacontextholder/.default
+    - name: PAM_EURES_CV_EKSPORT_AUDIENCE
+      value: ""
+    - name: NEXT_PUBLIC_TELEMETRY_URL
+      value: https://telemetry.nav.no/collect

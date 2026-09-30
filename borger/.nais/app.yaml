@@ -1,12 +1,11 @@
-apiVersion: "nais.io/v1alpha1"
-kind: "Application"
+apiVersion: nais.io/v1alpha1
+kind: Application
 metadata:
   name: cv
   namespace: teampam
   labels:
     team: teampam
 spec:
-  image: {{ image }}
   port: 8095
   liveness:
     path: /min-cv/api/internal/isAlive
@@ -43,10 +42,6 @@ spec:
     - emptyDir:
         medium: Memory
       mountPath: /app/.next/cache
-  ingresses:
-  {{#each ingress as |url|}}
-     - {{url}}
-  {{/each}}
   observability:
     autoInstrumentation:
       enabled: true
@@ -58,24 +53,12 @@ spec:
   env:
     - name: PORT
       value: "8095"
-    - name: NEXT_PUBLIC_ENVIRONMENT
-      value: {{ next_public_environment }}
-    - name: BASE_URL
-      value: {{ base_url }}
-    - name: LOGIN_URL
-      value: {{ login_url }}
     - name: PAM_CV_API_BASEURL
       value: http://pam-cv-api-gcp/pam-cv-api/rest
-    - name: PAM_CV_API_AUDIENCE
-      value: {{ pam_cv_api_audience }}
     - name: PAM_ONTOLOGI_BASEURL
       value: http://pam-ontologi/rest/typeahead
     - name: PAM_EURES_CV_EKSPORT_BASEURL
       value: http://pam-eures-cv-eksport/pam-eures-cv-eksport/samtykke
-    - name: PAM_EURES_CV_EKSPORT_AUDIENCE
-      value: {{ pam_eures_cv_eksport_audience }}
-    - name: NEXT_PUBLIC_TELEMETRY_URL
-      value: {{ next_public_telemetry_url }}
   accessPolicy:
     outbound:
       rules:
