@@ -6,6 +6,7 @@ const dekoratørProps = {
     params: {
         utilsBackground: "white",
         context: "privatperson",
+        origin: "cv",
         redirectToApp: true,
         breadcrumbs: [
             {
