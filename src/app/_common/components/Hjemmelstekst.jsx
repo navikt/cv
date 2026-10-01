@@ -53,7 +53,7 @@ export default function Hjemmelstekst() {
                 Dette omfatter arbeidsformidling, vurdering av ditt bistandsbehov, arbeidsevne og rett til dagpenger.
             </BodyLong>
 
-            <Heading size="small" level="3" spacing>
+            <Heading size="small" level="3" spacing id="deling-av-cv-med-arbeidsgivere">
                 Deling av CV med arbeidsgivere
             </Heading>
             <BodyLong spacing>
