@@ -3,7 +3,6 @@ const nextConfig = {
     basePath: "/min-cv",
     output: "standalone",
     webpack: (config, options) => {
-        config.resolve.alias["fs"] = "pdfkit/js/virtual-fs.js";
         config.resolve.fallback = { ...config.resolve.fallback, fs: false };
         config.module.rules.push(
             { enforce: "post", test: /fontkit[/\\]index.js$/, loader: "transform-loader", options: { brfs: {} } },
